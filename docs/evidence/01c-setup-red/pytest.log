@@ -1,0 +1,123 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_native.py::test_native_owned_numbers_and_status ERROR         [100%]
+
+=================================== ERRORS ====================================
+___________ ERROR at setup of test_native_owned_numbers_and_status ____________
+
+self = <Coroutine test_native_owned_numbers_and_status>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:28: in hass
+    instance = await make_hass(tmp_path / "ha")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:18: in make_hass
+    assert await async_load_base_functionality(hass)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def async_load_base_functionality(hass: core.HomeAssistant) -> bool:
+        """Load the registries and modules that will do blocking I/O.
+    
+        Return whether loading succeeded.
+        """
+        if DATA_REGISTRIES_LOADED in hass.data:
+            return True
+    
+        hass.data[DATA_REGISTRIES_LOADED] = None
+        entity.async_setup(hass)
+        frame.async_setup(hass)
+        template.async_setup(hass)
+        translation.async_setup(hass)
+    
+        recovery = hass.config.recovery_mode
+        device_registry.async_setup(hass)
+        try:
+            await asyncio.gather(
+                create_eager_task(get_internal_store_manager(hass).async_initialize()),
+                create_eager_task(area_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(category_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(device_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(entity_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(floor_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(issue_registry.async_load(hass, load_empty=recovery)),
+                create_eager_task(label_registry.async_load(hass, load_empty=recovery)),
+                hass.async_add_executor_job(_init_blocking_io_modules_in_executor),
+                create_eager_task(template.async_load_custom_templates(hass)),
+                create_eager_task(restore_state.async_load(hass, load_empty=recovery)),
+>               create_eager_task(hass.config_entries.async_initialize()),
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                create_eager_task(async_get_system_info(hass)),
+                create_eager_task(condition.async_setup(hass)),
+                create_eager_task(trigger.async_setup(hass)),
+            )
+E           AttributeError: 'NoneType' object has no attribute 'async_initialize'
+
+.venv\Lib\site-packages\homeassistant\bootstrap.py:492: AttributeError
+============================== warnings summary ===============================
+tests/test_native.py::test_native_owned_numbers_and_status
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_native.py::test_native_owned_numbers_and_status
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_native.py::test_native_owned_numbers_and_status
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_native.py::test_native_owned_numbers_and_status
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_native.py::test_native_owned_numbers_and_status
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR tests/test_native.py::test_native_owned_numbers_and_status - AttributeE...
+======================== 5 warnings, 1 error in 2.45s =========================

@@ -1,0 +1,1816 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+EEEEEEEEEEEEFRESH_PROCESS_STORAGE=[{"version": "2026.10.4", "entry_id": "01M6EB3770FEZTMF13FPZGF87Z", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}, {"version": "2026.10.4", "entry_id": "01M6EB3770FEZTMF13FPZGF87Z", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}]
+..EEEEEEEEEEEEEEEEEEEEEEE
+=================================== ERRORS ====================================
+_ ERROR at setup of test_config_flow_selects_existing_sensors_and_options_rebind _
+
+self = <Coroutine test_config_flow_selects_existing_sensors_and_options_rebind>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_selects_exist0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002557D87F950>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides0] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides0]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255024A4B90>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides1] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides1]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255024A8AF0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides2] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides2]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025503749650>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides3] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides3]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255024B7200>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides4] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides4]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025502487A10>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_config_flow_rejects_invalid_binding_or_freshness[overrides5] _
+
+self = <Coroutine test_config_flow_rejects_invalid_binding_or_freshness[overrides5]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_config_flow_rejects_inval5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255023C5D90>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+___ ERROR at setup of test_periodic_expiry_and_equal_value_report_recovery ____
+
+self = <Coroutine test_periodic_expiry_and_equal_value_report_recovery>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_periodic_expiry_and_equal0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255025B3B70>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_________ ERROR at setup of test_unloaded_and_queued_writes_rejected __________
+
+self = <Coroutine test_unloaded_and_queued_writes_rejected>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_unloaded_and_queued_write0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255025B5DB0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_registry_targets_follow_rename_disable_delete _____
+
+self = <Coroutine test_registry_targets_follow_rename_disable_delete>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_registry_targets_follow_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550255B9B0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+__ ERROR at setup of test_two_same_name_tanks_are_isolated_and_reload_stable __
+
+self = <Coroutine test_two_same_name_tanks_are_isolated_and_reload_stable>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_two_same_name_tanks_are_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550265FCD0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+___________ ERROR at setup of test_native_owned_numbers_and_status ____________
+
+self = <Coroutine test_native_owned_numbers_and_status>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_native_owned_numbers_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376C1A0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[6.0-pH-out_of_range-ph_out_of_range] _
+
+self = <Coroutine test_source_changes_publish_quality[6.0-pH-out_of_range-ph_out_of_range]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376C750>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[5.4-pH-within_range-None] _
+
+self = <Coroutine test_source_changes_publish_quality[5.4-pH-within_range-None]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025503759DA0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[5.8-pH-within_range-None] _
+
+self = <Coroutine test_source_changes_publish_quality[5.8-pH-within_range-None]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376DD30>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[unknown-pH-invalid-ph_invalid] _
+
+self = <Coroutine test_source_changes_publish_quality[unknown-pH-invalid-ph_invalid]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036DF690>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[unavailable-pH-invalid-ph_invalid] _
+
+self = <Coroutine test_source_changes_publish_quality[unavailable-pH-invalid-ph_invalid]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376EAC0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[bad-pH-invalid-ph_invalid] _
+
+self = <Coroutine test_source_changes_publish_quality[bad-pH-invalid-ph_invalid]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376C8A0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[nan-pH-invalid-ph_invalid] _
+
+self = <Coroutine test_source_changes_publish_quality[nan-pH-invalid-ph_invalid]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036CCC90>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[inf-pH-invalid-ph_invalid] _
+
+self = <Coroutine test_source_changes_publish_quality[inf-pH-invalid-ph_invalid]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036DC910>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[5.6-wrong-invalid-ph_unit] _
+
+self = <Coroutine test_source_changes_publish_quality[5.6-wrong-invalid-ph_unit]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036CFEE0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_ ERROR at setup of test_source_changes_publish_quality[5.6-None-within_range-None] _
+
+self = <Coroutine test_source_changes_publish_quality[5.6-None-within_range-None]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_changes_publish_qu9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376D400>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_ec_microsiemens_is_rejected_not_misinterpreted ____
+
+self = <Coroutine test_ec_microsiemens_is_rejected_not_misinterpreted>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_ec_microsiemens_is_reject0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036CE0B0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+__________ ERROR at setup of test_source_deletion_invalidates_status __________
+
+self = <Coroutine test_source_deletion_invalidates_status>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_source_deletion_invalidat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376FB60>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+______ ERROR at setup of test_invalid_native_write_is_atomic[ph_low-5.8] ______
+
+self = <Coroutine test_invalid_native_write_is_atomic[ph_low-5.8]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002550376EC80>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_____ ERROR at setup of test_invalid_native_write_is_atomic[ec_high-0.8] ______
+
+self = <Coroutine test_invalid_native_write_is_atomic[ec_high-0.8]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036CF8C0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_invalid_native_write_is_atomic[level_low-2.4] _____
+
+self = <Coroutine test_invalid_native_write_is_atomic[level_low-2.4]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025502631400>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+_____ ERROR at setup of test_invalid_native_write_is_atomic[ph_low-5.45] ______
+
+self = <Coroutine test_invalid_native_write_is_atomic[ph_low-5.45]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025502631DA0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+__ ERROR at setup of test_invalid_native_write_is_atomic[refill_timeout-1.5] __
+
+self = <Coroutine test_invalid_native_write_is_atomic[refill_timeout-1.5]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025502632740>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_invalid_native_write_is_atomic[mix_duration-0] ____
+
+self = <Coroutine test_invalid_native_write_is_atomic[mix_duration-0]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255026ABAF0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+______ ERROR at setup of test_invalid_native_write_is_atomic[ec_low-nan] ______
+
+self = <Coroutine test_invalid_native_write_is_atomic[ec_low-nan]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255026A95C0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_invalid_native_write_is_atomic[level_low-inf] _____
+
+self = <Coroutine test_invalid_native_write_is_atomic[level_low-inf]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255026302F0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+______ ERROR at setup of test_invalid_native_write_is_atomic[ph_high--1] ______
+
+self = <Coroutine test_invalid_native_write_is_atomic[ph_high--1]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_invalid_native_write_is_a8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255026AB620>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+____ ERROR at setup of test_concurrent_conflicting_writes_keep_valid_pair _____
+
+self = <Coroutine test_concurrent_conflicting_writes_keep_valid_pair>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_concurrent_conflicting_wr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025502633930>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+___ ERROR at setup of test_native_write_updates_status_siblings_and_options ___
+
+self = <Coroutine test_native_write_updates_status_siblings_and_options>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/ivanl/AppData/Local/Temp/pytest-of-ivanl/pytest-27/test_native_write_updates_stat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000255036CEDD0>
+
+    @pytest_asyncio.fixture
+    async def hass(tmp_path, monkeypatch):
+        instance = await make_hass(tmp_path / "ha")
+        native_call = instance.services.async_call
+        async def guarded_call(domain, service, *args, **kwargs):
+            assert domain == "number", f"Forbidden service call: {domain}.{service}"
+            return await native_call(domain, service, *args, **kwargs)
+>       monkeypatch.setattr(instance.services, "async_call", guarded_call)
+E       AttributeError: 'ServiceRegistry' object attribute 'async_call' is read-only
+
+tests\conftest.py:32: AttributeError
+============================== warnings summary ===============================
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides0]
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides1]
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides2]
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides3]
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides4]
+ERROR tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides5]
+ERROR tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+ERROR tests/test_lifecycle.py::test_unloaded_and_queued_writes_rejected - Att...
+ERROR tests/test_lifecycle.py::test_registry_targets_follow_rename_disable_delete
+ERROR tests/test_lifecycle.py::test_two_same_name_tanks_are_isolated_and_reload_stable
+ERROR tests/test_native.py::test_native_owned_numbers_and_status - AttributeE...
+ERROR tests/test_sources.py::test_source_changes_publish_quality[6.0-pH-out_of_range-ph_out_of_range]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[5.4-pH-within_range-None]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[5.8-pH-within_range-None]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[unknown-pH-invalid-ph_invalid]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[unavailable-pH-invalid-ph_invalid]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[bad-pH-invalid-ph_invalid]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[nan-pH-invalid-ph_invalid]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[inf-pH-invalid-ph_invalid]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[5.6-wrong-invalid-ph_unit]
+ERROR tests/test_sources.py::test_source_changes_publish_quality[5.6-None-within_range-None]
+ERROR tests/test_sources.py::test_ec_microsiemens_is_rejected_not_misinterpreted
+ERROR tests/test_sources.py::test_source_deletion_invalidates_status - Attrib...
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[ec_high-0.8]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[level_low-2.4]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.45]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[refill_timeout-1.5]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[mix_duration-0]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[ec_low-nan]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[level_low-inf]
+ERROR tests/test_validation.py::test_invalid_native_write_is_atomic[ph_high--1]
+ERROR tests/test_validation.py::test_concurrent_conflicting_writes_keep_valid_pair
+ERROR tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+2 passed, 5 warnings, 35 errors in 14.70s

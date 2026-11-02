@@ -1,0 +1,8 @@
+COMMAND=['D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe', '-m', 'compileall', '-q', 'custom_components', 'tests']
+RETURN_CODE=0
+COMMAND=['.venv/Scripts/ruff.exe', 'check', 'custom_components', 'tests', 'tools/evidence.py']
+RETURN_CODE=0
+All checks passed!
+COMMAND=['.venv/Scripts/ruff.exe', 'format', '--check', 'custom_components', 'tests', 'tools/evidence.py']
+RETURN_CODE=0
+20 files already formatted

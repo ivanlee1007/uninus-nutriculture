@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-02T14:25:09.418024+00:00",
+  "command": [
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests",
+    "-q"
+  ],
+  "returncode": 0,
+  "sha256": {
+    "custom_components\\uninus_nutriculture\\config_flow.py": "a92e2a751487331fe5a30d183593efaaef6d4561b83207871ab19d1895683e73",
+    "custom_components\\uninus_nutriculture\\const.py": "d5b717f135b96073cb48aad312a9784cf10abf64aed65f1e2718bb7946e2e0b8",
+    "custom_components\\uninus_nutriculture\\manager.py": "91ac4db9c81a5d70b739c89632ef7ae0140232edfd0bc4f739c5950c171cae55",
+    "custom_components\\uninus_nutriculture\\manifest.json": "4b2b0c3807da72f957654666caef6140cda991683fac865b25925c84c8b51ccb",
+    "custom_components\\uninus_nutriculture\\number.py": "047c368c1ee3fa78e46b2ba10bfc2419926395199bd931cb76d6918df700f716",
+    "custom_components\\uninus_nutriculture\\sensor.py": "30ad11175c88509342d53c41feaa784558d8be61962787a5ccee6e86b0839c26",
+    "custom_components\\uninus_nutriculture\\__init__.py": "e7d2b570066c645eaf3401809953c6a8f699bb5e46e922e567e06fb0fca770ec",
+    "tests\\conftest.py": "263ad71f1ab826e03c2811eeb1981659df5bc7d1d9d763ec9f0502ef8a56bfda",
+    "tests\\test_native.py": "6691d796362a2d3abd96ab7c776788f01e06cb8984e9e650e628de1398b061f8",
+    "tests\\test_validation.py": "1632074e539695684686ab3a5ad1ec015d60dd5f7c472216aafdb2204fac1740",
+    "tests\\test_writes.py": "e1e673e5558dd8129ccc147f9e0d0eb2b453274b13524b04ca7798e032c6e892"
+  }
+}

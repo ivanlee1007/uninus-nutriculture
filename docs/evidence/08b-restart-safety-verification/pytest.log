@@ -1,0 +1,29 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+............FRESH_PROCESS_STORAGE=[{"version": "2026.10.4", "entry_id": "01M6EB5H9X69ZPJQEJVTDMZX43", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}, {"version": "2026.10.4", "entry_id": "01M6EB5H9X69ZPJQEJVTDMZX43", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}]
+.........................
+============================== warnings summary ===============================
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+37 passed, 5 warnings in 27.70s

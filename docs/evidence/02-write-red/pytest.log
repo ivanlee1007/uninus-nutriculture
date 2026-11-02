@@ -1,0 +1,148 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options FAILED [100%]
+
+================================== FAILURES ===================================
+____________ test_native_write_updates_status_siblings_and_options ____________
+
+entity = <entity number.tank_ph_low=5.4>
+service_call = <ServiceCall number.set_value (c:01M6EA8KXAT84NKGC6C05HQQ62): entity_id=['number.tank_ph_low'], value=5.5>
+
+    async def _async_set_value(entity: NumberEntity, service_call: ServiceCall) -> None:
+        """Service call wrapper to set a new value."""
+        value = service_call.data["value"]
+        if value < entity.min_value or value > entity.max_value:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="out_of_range",
+                translation_placeholders={
+                    "value": value,
+                    "entity_id": entity.entity_id,
+                    "min_value": str(entity.min_value),
+                    "max_value": str(entity.max_value),
+                },
+            )
+    
+        try:
+            native_value = entity.convert_to_native_value(value)
+            # Clamp to the native range
+            native_value = min(
+                max(native_value, entity.native_min_value), entity.native_max_value
+            )
+>           await entity.async_set_native_value(native_value)
+
+.venv\Lib\site-packages\homeassistant\components\number\services.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\homeassistant\components\number\__init__.py:420: in async_set_native_value
+    await self.hass.async_add_executor_job(self.set_native_value, value)
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\concurrent\futures\thread.py:86: in run
+    result = ctx.run(self.task)
+             ^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\concurrent\futures\thread.py:73: in run
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <entity number.tank_ph_low=5.4>, value = 5.5
+
+    def set_native_value(self, value: float) -> None:
+        """Set new value."""
+>       raise NotImplementedError
+E       NotImplementedError
+
+.venv\Lib\site-packages\homeassistant\components\number\__init__.py:416: NotImplementedError
+
+During handling of the above exception, another exception occurred:
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_native_write_updates_status_siblings_and_options(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+>       await change(hass, entities["ph_low"], 5.5)
+
+tests\test_writes.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_writes.py:10: in change
+    await hass.services.async_call("number", "set_value", {"entity_id":entity_id, "value":value}, blocking=True)
+.venv\Lib\site-packages\homeassistant\core.py:2963: in async_call
+    response_data = await coro
+                    ^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\core.py:3006: in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\helpers\service.py:918: in entity_service_call
+    response_data = await _async_handle_entity_calls(
+.venv\Lib\site-packages\homeassistant\helpers\service.py:791: in _async_handle_entity_calls
+    single_result = await entity.async_request_call(_with_context(entity, coro))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\helpers\entity.py:1745: in async_request_call
+    return await coro
+           ^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\helpers\service.py:786: in _with_context
+    return await coro
+           ^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\helpers\service.py:870: in _handle_single_entity_call
+    result = await task
+             ^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\components\number\services.py:39: in _async_set_value
+    await entity.async_set_value(value)
+.venv\Lib\site-packages\homeassistant\components\number\__init__.py:430: in async_set_value
+    await self.hass.async_add_executor_job(self.set_value, value)
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\concurrent\futures\thread.py:86: in run
+    result = ctx.run(self.task)
+             ^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\concurrent\futures\thread.py:73: in run
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <entity number.tank_ph_low=5.4>, value = 5.5
+
+    @final
+    def set_value(self, value: float) -> None:
+        """Set new value."""
+>       raise NotImplementedError
+E       NotImplementedError
+
+.venv\Lib\site-packages\homeassistant\components\number\__init__.py:425: NotImplementedError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_writes.py::test_native_write_updates_status_siblings_and_options
+======================== 1 failed, 5 warnings in 2.92s ========================

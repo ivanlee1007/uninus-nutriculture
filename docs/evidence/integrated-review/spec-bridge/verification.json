@@ -1,0 +1,154 @@
+{
+  "runs": {
+    "bridge": {
+      "command": [
+        "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-spec-recheck-evidence\\bridge.py"
+      ],
+      "returncode": 0
+    },
+    "identity": {
+      "command": [
+        "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "tests/test_identity.py",
+        "-v",
+        "-s",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-spec-recheck-evidence\\pytest-temp"
+      ],
+      "returncode": 0
+    }
+  },
+  "checks": {
+    "actual_step_blocks_5_55": true,
+    "native_success_and_status_readback": true,
+    "native_pair_rejection_preserves_draft_options": true,
+    "all_ten_real_service_writes": true,
+    "quality_recomputed_both_directions": true,
+    "registry_rename_real_target": true,
+    "unavailable_number_omitted": true,
+    "card_blocks_unavailable_number": true,
+    "no_output_services_shadow_only": true
+  },
+  "all_bridge_checks_true": true,
+  "card_payload_count": 15,
+  "service_event_count": 15,
+  "candidate": {
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\manager.py": "3dc48ecec534b7a9e9091933cf713156a7de6376e78ab634b7571fdb4b57b3e1",
+    "uninus-nutriculture\\.gitattributes": "96b57590ce1dfbe377da32104a2dbf2a31ee15cd789ba6654dcd4c986a9c6a3e",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\__init__.py": "ac3b8270ab609ffde9a950291d80b5ad1a711a330b25cb12bb0ded0841a2ac18",
+    "uninus-nutriculture\\docs\\P1_HANDOFF.md": "34b3c6fa0caea51110913acdf507abc4e92347f9e9642448bbcc635422102d65",
+    "uninus-nutriculture\\requirements-test.txt": "5cad58750209bc17b7203ece2a3fafaae919196712699cf4ff4f025b8357f0cb",
+    "uninus-nutriculture\\tests\\test_sources.py": "ab17ac0349e8b3165683a31104a2803bdac6db04749082bd2f6271a12579ff98",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\number.py": "03e885ea85f615f1a93d3850d9f417a0445d92e470a4e324fd7760e072cc81d8",
+    "uninus-nutriculture\\tests\\test_writes.py": "827a4a9e94eedcbe3c42df5c82a15573392c6c15b6d388bed0b089d6e4c2cbdd",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\translations\\en.json": "ce38d570b9fc9436ff415ef82270077a74bc0459cee2521427e75c7c4b58bbe2",
+    "uninus-nutriculture\\tests\\conftest.py": "664e904ce9ef7311c1b6c625af63caa9a8bebf5783216606b8016be2512332d9",
+    "uninus-nutriculture\\.gitignore": "a1de577dac06c1cf366fa08b977afb7d8f3c06a6486009d913ddae5d9eb58ac8",
+    "uninus-nutriculture\\tests\\test_validation.py": "4d511069a8a64fb54df551ead0396fa143a01fa6efa14dea3e56304f437056f6",
+    "uninus-nutriculture\\.github\\workflows\\tests.yml": "f09b51765b17928eed3d9667496eb923515a75d9d2cb34830fb19627597638f6",
+    "uninus-nutriculture\\tests\\test_lifecycle.py": "a36fffd03db63f6e940cd07f611a4c2ca6f0190042a882c83f3399e2f4d8c7be",
+    "uninus-nutriculture\\tests\\test_identity.py": "a9807122cce1a78c941cc0d163fa7e17fdfbedf0c416ddffe660aafafe91d4ad",
+    "uninus-nutriculture\\hacs.json": "cc9bd34208eda0edc6d25cf1ed70659af62d41f7413ac5acc0b80df205c9c4bd",
+    "uninus-nutriculture\\tests\\test_safety.py": "c15a0b1cfd07dacbd074d0eb9a59ad8bbb2d6b111919b68f925e81454978a4ac",
+    "uninus-nutriculture\\tests\\test_freshness.py": "075f9f34f3e323ba8c2ebb8ebc4efe685dddb42aa3d6c1d321685575ee03c742",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\translations\\zh-Hant.json": "7330086251466b3a34c74a6bb535d5811664a023d664f94783923e9b122f769b",
+    "uninus-nutriculture\\tests\\restart_worker.py": "f5dd8068180ac95a469f798c64e7c3cfb0aa63ab1881d1de8818cd0300055821",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\config_flow.py": "d5e8254fe9dfb13564fbc221ee9c2cd3f67d7d83e963ced61fe7740e88967a58",
+    "uninus-nutriculture\\tests\\test_native.py": "8662d07a0ab5595aa7bccfb24304474eab94cc2b044fb692fc13e27002e7762e",
+    "uninus-nutriculture\\README.md": "5b3d5df39a2108e1cd7b95bdc0b782acf982f18c854676e668a77ba80a074e33",
+    "uninus-nutriculture\\tests\\test_boundaries.py": "7d6307ea2fe397dded74ae6ca3f0669ad504aee626bc42addf3c7131cac003e1",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\strings.json": "ce38d570b9fc9436ff415ef82270077a74bc0459cee2521427e75c7c4b58bbe2",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\sensor.py": "2831a11aeffa13a06afff1cb7cec493f8e0958ae116c37ed1bd1436dba3fbd8f",
+    "uninus-nutriculture\\pyproject.toml": "a36d0db4af18fb821ea12d5ed3a9437009058720b7340ccc5071683a9a5eead6",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\const.py": "8a8cdcaa9c3953ef82807a287f6f42e6d729b04e8cda89431467144ae7bdaf1a",
+    "uninus-nutriculture\\docs\\DEVELOPMENT_PLAN.md": "2dbbdea2dbf430d85a4b7b91c5646cfb45587c824e9652f1171477ed1b778100",
+    "uninus-nutriculture\\docs\\TESTING.md": "a4127447c37a09e587c10ef3feb13ef403fad47348e1e6568f25fdb13bf71266",
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\manifest.json": "4b2b0c3807da72f957654666caef6140cda991683fac865b25925c84c8b51ccb",
+    "uninus-nutriculture\\tools\\evidence.py": "53762fe07cf95b15ddf9eaa0636cdddec7ddbaaed78e004194141593841803da",
+    "uninus-nutriculture\\tests\\test_flows.py": "d71e028e4d7b58b4842084d500da1c4172d979836aa0f4e3f8c446f6acbded25",
+    "uninus-nutriculture\\tests\\test_restart.py": "1ff67a592e5edc2044ac50482af9f8511676ba6e44f5aa70a67a2d9e2e220fad",
+    "uninus-nutriculture-card\\tests\\test_contract.cjs": "68bcc09902ac6df3d1ca6de92f18dd6328376392a454231ffe2746fbaae0d137",
+    "uninus-nutriculture-card\\README.md": "7958dfd911dfb8b418ebe90dbac4b4e48c90b1a66018bc4e12007efb93ba474b",
+    "uninus-nutriculture-card\\package.json": "c2ef171eaaef8b12ae6c2a4bb51dfc6d66586f9b08a2957e305f8d55c116cb27",
+    "uninus-nutriculture-card\\demo\\index.html": "ac35d26df53456b47cd34808d761cacf5efea7a20ec10324d4847c7362dcd2f0",
+    "uninus-nutriculture-card\\.gitignore": "1a3c5d91e2efed0c89018560a5b2ad9360776e0c9b959fb1998590797e6fc4b9",
+    "uninus-nutriculture-card\\.gitattributes": "0b0c1f86a5fe997cf2583e6b0f9fddf3e722882ac4bc8842ec9d409c8d4a484f",
+    "uninus-nutriculture-card\\tests\\check.py": "9430c9454e3744f06c8a2bdfb5eda37dfe6dfd9d68e41a6c4e4d6ad736450271",
+    "uninus-nutriculture-card\\docs\\P1_HANDOFF.md": "254c12e75f6f1042df0c68a14a7c0a118e8d0de5d5b9730b702c3a80aa4267ef",
+    "uninus-nutriculture-card\\tests\\test_browser.py": "887bf9c82e8f8b6dc2fa62a3690dc77692ba671dbdd2799767052225757926a4",
+    "uninus-nutriculture-card\\tests\\record_run.py": "a9248634e6a8cb7c41eb42403ef5dfcdf7b451f382dd801d8707f3cf295fce27",
+    "uninus-nutriculture-card\\docs\\DEVELOPMENT_PLAN.md": "2dbbdea2dbf430d85a4b7b91c5646cfb45587c824e9652f1171477ed1b778100",
+    "uninus-nutriculture-card\\requirements-test.txt": "237f68beb9e5198d94b217868a1d08f3a26a58f9d9837a10b3ce09bec8a8727f",
+    "uninus-nutriculture-card\\uninus-nutriculture-card.js": "e4b7d29962e10bbd9139a29923e2e4e35f21017714d04bb61474f5e40ea9ec25",
+    "uninus-nutriculture-card\\.github\\workflows\\validate.yml": "8f7d317a3c521fea87efead9d1a043fa7cf3355e13255d5782541a13241a6462",
+    "uninus-nutriculture-card\\docs\\TESTING.md": "82755132d0d075da31ca02c3bba2a62fee6b7e5820317f690547de0f3c8a3d1b",
+    "uninus-nutriculture-card\\hacs.json": "2cfe26af42164cf8d07bb1292eec780745b758912da4536ed9c881e56bc528f8"
+  },
+  "changes_from_prior": {
+    "uninus-nutriculture\\custom_components\\uninus_nutriculture\\manager.py": {
+      "prior": "7f628fa8d7e2e119e5626aa00442a0adf989b4454a56055fb8bbb8c795c2411b",
+      "current": "3dc48ecec534b7a9e9091933cf713156a7de6376e78ab634b7571fdb4b57b3e1"
+    },
+    "uninus-nutriculture\\.gitattributes": {
+      "prior": "ef501d5f61cdab2c836fced228c59ca34cc4a5d2cfebf6f57ebb4c6fbbbd8804",
+      "current": "96b57590ce1dfbe377da32104a2dbf2a31ee15cd789ba6654dcd4c986a9c6a3e"
+    },
+    "uninus-nutriculture\\docs\\P1_HANDOFF.md": {
+      "prior": "d026e87504fb1f812976016bacb291d2789dce5705d2efc8de76a26ff460850a",
+      "current": "34b3c6fa0caea51110913acdf507abc4e92347f9e9642448bbcc635422102d65"
+    },
+    "uninus-nutriculture\\tests\\test_identity.py": {
+      "prior": "0e0b3ed15b188a6c75ba966156ec1c52f60f63dad74553f849d04cb60182e9b2",
+      "current": "a9807122cce1a78c941cc0d163fa7e17fdfbedf0c416ddffe660aafafe91d4ad"
+    },
+    "uninus-nutriculture\\README.md": {
+      "prior": "824da8e710a8c8692f16e2c43699b1cefb254fdf5b2de57ee1d10357dbb97731",
+      "current": "5b3d5df39a2108e1cd7b95bdc0b782acf982f18c854676e668a77ba80a074e33"
+    },
+    "uninus-nutriculture\\docs\\TESTING.md": {
+      "prior": "26f6c55bffcbbf463676b8d814311aa702afefd70edda33666fe7fd2c037c135",
+      "current": "a4127447c37a09e587c10ef3feb13ef403fad47348e1e6568f25fdb13bf71266"
+    },
+    "uninus-nutriculture-card\\docs\\P1_HANDOFF.md": {
+      "prior": "0fbf1bf7f19be1b681226b3c217724d0abcd752b7b85d10faf2b94d56ac9b000",
+      "current": "254c12e75f6f1042df0c68a14a7c0a118e8d0de5d5b9730b702c3a80aa4267ef"
+    }
+  },
+  "missing_prior_files": {},
+  "existing_test_nodes_preserved": true,
+  "archive": {
+    "11-target-red": {
+      "returncode": 1,
+      "hash_mismatches": {
+        "custom_components\\uninus_nutriculture\\manager.py": {
+          "receipt": "7f628fa8d7e2e119e5626aa00442a0adf989b4454a56055fb8bbb8c795c2411b",
+          "current": "3dc48ecec534b7a9e9091933cf713156a7de6376e78ab634b7571fdb4b57b3e1"
+        }
+      },
+      "summary": [
+        "=================== 6 failed, 5 passed, 5 warnings in 5.93s ==================="
+      ]
+    },
+    "11-target-green": {
+      "returncode": 0,
+      "hash_mismatches": {},
+      "summary": [
+        "======================= 11 passed, 5 warnings in 3.11s ========================"
+      ]
+    },
+    "12-target-full-native": {
+      "returncode": 0,
+      "hash_mismatches": {},
+      "summary": [
+        "======================= 59 passed, 5 warnings in 30.64s ======================="
+      ]
+    }
+  },
+  "original_evidence_unchanged": true,
+  "candidate_unchanged_during_execution": true
+}

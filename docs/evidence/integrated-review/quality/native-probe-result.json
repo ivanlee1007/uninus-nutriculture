@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "stale_options_form_preserves_later_number_write": true,
+    "cancelled_queued_write_has_no_effect_and_lock_recovers": true,
+    "options_abort_is_nonmutating": true,
+    "no_foreign_service_dispatch": true
+  },
+  "service_events": [
+    "number.set_value",
+    "number.set_value"
+  ]
+}

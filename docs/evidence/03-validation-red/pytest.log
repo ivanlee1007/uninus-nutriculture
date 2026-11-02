@@ -1,0 +1,168 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+FFFFF.F..F                                                               [100%]
+================================== FAILURES ===================================
+_______________ test_invalid_native_write_is_atomic[ph_low-5.8] _______________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'ph_low', value = 5.8
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+______________ test_invalid_native_write_is_atomic[ec_high-0.8] _______________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'ec_high', value = 0.8
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____________ test_invalid_native_write_is_atomic[level_low-2.4] ______________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'level_low', value = 2.4
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+______________ test_invalid_native_write_is_atomic[ph_low-5.45] _______________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'ph_low', value = 5.45
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___________ test_invalid_native_write_is_atomic[refill_timeout-1.5] ___________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'refill_timeout', value = 1.5
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_______________ test_invalid_native_write_is_atomic[ec_low-nan] _______________
+
+hass = <HomeAssistant NOT_RUNNING>, key = 'ec_low', value = nan
+
+    @pytest.mark.parametrize(('key','value'), [('ph_low',5.8),('ec_high',0.8),('level_low',2.4),('ph_low',5.45),('refill_timeout',1.5),('mix_duration',0),('ec_low',float('nan')),('level_low',float('inf')),('ph_high',-1)])
+    async def test_invalid_native_write_is_atomic(hass, key, value):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        before = dict(hass.states.get(entities['status']).attributes['parameters'])
+        options = dict(tank.options)
+>       with pytest.raises((HomeAssistantError, ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (HomeAssistantError, ValueError)
+
+tests\test_validation.py:15: Failed
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____________ test_concurrent_conflicting_writes_keep_valid_pair ______________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_concurrent_conflicting_writes_keep_valid_pair(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        results = await asyncio.gather(change(hass,entities['ph_low'],5.7), change(hass,entities['ph_high'],5.5), return_exceptions=True)
+>       assert sum(isinstance(x,HomeAssistantError) for x in results) == 1
+E       assert 0 == 1
+E        +  where 0 = sum(<generator object test_concurrent_conflicting_writes_keep_valid_pair.<locals>.<genexpr> at 0x0000025C330E0BA0>)
+
+tests\test_validation.py:28: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8]
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[ec_high-0.8]
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[level_low-2.4]
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.45]
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[refill_timeout-1.5]
+FAILED tests/test_validation.py::test_invalid_native_write_is_atomic[ec_low-nan]
+FAILED tests/test_validation.py::test_concurrent_conflicting_writes_keep_valid_pair
+7 failed, 3 passed, 5 warnings in 4.87s

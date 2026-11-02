@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-11-02T14:37:35.900720+00:00",
+  "command": [
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests",
+    "-q",
+    "-s"
+  ],
+  "returncode": 1,
+  "sha256": {
+    "custom_components\\uninus_nutriculture\\config_flow.py": "b8f0c9814c8b83262e63022511e72084549b96b1da4f1ae123feeea18c15e588",
+    "custom_components\\uninus_nutriculture\\const.py": "d5b717f135b96073cb48aad312a9784cf10abf64aed65f1e2718bb7946e2e0b8",
+    "custom_components\\uninus_nutriculture\\manager.py": "b918d3dc4ab757704a4282217b26fea92a744934f76e42a529a57fbf8ced3e50",
+    "custom_components\\uninus_nutriculture\\manifest.json": "4b2b0c3807da72f957654666caef6140cda991683fac865b25925c84c8b51ccb",
+    "custom_components\\uninus_nutriculture\\number.py": "9e582a18592ba6f146749b2ba3ebb437a2e418bbe982500c8faf75f97ddadb52",
+    "custom_components\\uninus_nutriculture\\sensor.py": "9b0a035c2440535db73bd907bbb124c5da75d703237d60c5a397c48a794d1c29",
+    "custom_components\\uninus_nutriculture\\__init__.py": "9b3875550955146202372f0a083f27b7367ca0668e625280e9ea5b159fed3095",
+    "tests\\conftest.py": "e15b9db8123f02304cbaac3e94c034ccfac2f2e368d495e94c10f10a6422ce43",
+    "tests\\restart_worker.py": "a7296dc21fa243e6447da741334af41660fa6533d1996cbaa9dd87c9b2f74ca1",
+    "tests\\test_flows.py": "1416cf75ea11fbc17719fac5e65fee5eca7bcd9069ac02eaa83667b3e4dc44ee",
+    "tests\\test_freshness.py": "c1ecd3da0bb79a4ce5083c8d1ecb26a7a33df7e923afd8b95cd63ff31847fe48",
+    "tests\\test_lifecycle.py": "ad876d78dcdc3ef418ead72d810416f084d0434420e2b690002c96ca4712951c",
+    "tests\\test_native.py": "6691d796362a2d3abd96ab7c776788f01e06cb8984e9e650e628de1398b061f8",
+    "tests\\test_restart.py": "35feeb447b82e278d440f54a8dd8c1c9d7a754902ba5298ea87ce5f70b82319f",
+    "tests\\test_safety.py": "654e09a63f76660a284afe208e4331a8c6c1e6b2cbcd171bf6dede61a57ec385",
+    "tests\\test_sources.py": "686164216edfcd43e67380d095bd73b52cdd75b6bec65da691315a426494be09",
+    "tests\\test_validation.py": "1632074e539695684686ab3a5ad1ec015d60dd5f7c472216aafdb2204fac1740",
+    "tests\\test_writes.py": "e1e673e5558dd8129ccc147f9e0d0eb2b453274b13524b04ca7798e032c6e892"
+  }
+}

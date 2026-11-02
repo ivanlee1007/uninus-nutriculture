@@ -1,0 +1,64 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+........F..........................                                      [100%]
+================================== FAILURES ===================================
+__________________ test_unloaded_and_queued_writes_rejected ___________________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_unloaded_and_queued_writes_rejected(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass,tank)
+        manager = tank.runtime_data
+        entity = hass.data['number'].get_entity(entities['ph_low'])
+        before = dict(tank.options)
+        await manager.lock.acquire()
+        queued = asyncio.create_task(entity.async_set_native_value(5.5))
+        await asyncio.sleep(0)
+        assert not queued.done()
+        assert await hass.config_entries.async_unload(tank.entry_id)
+        manager.lock.release()
+        with pytest.raises(HomeAssistantError):
+            await queued
+        with pytest.raises(HomeAssistantError):
+            await entity.async_set_native_value(5.5)
+        assert tank.options == before
+        assert not manager.listeners
+>       assert hass.states.get(entities['status']) is None
+E       AssertionError: assert <state sensor.tank_status=unavailable; restored=True, friendly_name=Tank status, supported_features=0 @ 2026-11-02T14:35:19.454322+00:00> is None
+E        +  where <state sensor.tank_status=unavailable; restored=True, friendly_name=Tank status, supported_features=0 @ 2026-11-02T14:35:19.454322+00:00> = get('sensor.tank_status')
+E        +    where get = <homeassistant.core.StateMachine object at 0x000001B44BE596C0>.get
+E        +      where <homeassistant.core.StateMachine object at 0x000001B44BE596C0> = <HomeAssistant NOT_RUNNING>.states
+
+tests\test_lifecycle.py:29: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_lifecycle.py::test_unloaded_and_queued_writes_rejected - As...
+1 failed, 34 passed, 5 warnings in 15.67s

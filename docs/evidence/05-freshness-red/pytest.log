@@ -1,0 +1,57 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_periodic_expiry_and_equal_value_report_recovery _____________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_periodic_expiry_and_equal_value_report_recovery(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        status_id = ids(hass,tank)['status']
+        now = dt_util.utcnow()
+        # Native timestamp parameter, not a fake State object or changed HA class.
+        for key in ('ph','ec','level'):
+            state = hass.states.get('sensor.'+key)
+            hass.states.async_set(state.entity_id,state.state,state.attributes, timestamp=(now-timedelta(seconds=301)).timestamp())
+        await asyncio.sleep(5.2)
+        await hass.async_block_till_done()
+        state = hass.states.get(status_id)
+>       assert state.state == 'invalid'
+E       AssertionError: assert 'within_range' == 'invalid'
+E         
+E         - invalid
+E         + within_range
+
+tests\test_freshness.py:20: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery
+1 failed, 5 warnings in 7.67s

@@ -1,0 +1,16 @@
+We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+{
+  "checks": {
+    "actual_step_blocks_5_55": true,
+    "native_success_and_status_readback": true,
+    "native_pair_rejection_preserves_draft_options": true,
+    "all_ten_real_service_writes": true,
+    "quality_recomputed_both_directions": true,
+    "registry_rename_real_target": true,
+    "unavailable_number_omitted": true,
+    "card_blocks_unavailable_number": true,
+    "no_output_services_shadow_only": true
+  },
+  "card_payload_count": 15,
+  "service_event_count": 15
+}

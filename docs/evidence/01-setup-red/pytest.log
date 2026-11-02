@@ -1,0 +1,93 @@
+D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_native.py::test_native_owned_numbers_and_status ERROR         [100%]
+
+=================================== ERRORS ====================================
+___________ ERROR at setup of test_native_owned_numbers_and_status ____________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    @callback
+    def async_get(hass: HomeAssistant) -> DeviceRegistry:
+        """Get device registry."""
+        try:
+>           return hass.data[DATA_REGISTRY]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'device_registry'
+
+.venv\Lib\site-packages\homeassistant\helpers\device_registry.py:4628: KeyError
+
+The above exception was the direct cause of the following exception:
+
+self = <Coroutine test_native_owned_numbers_and_status>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+        # When loop factories are configured, resolve the loop factory
+        # fixture early so that a factory variant change cascades cache
+        # invalidation before any async fixture checks its cache.
+        hook_caller = self.config.hook.pytest_asyncio_loop_factories
+        if hook_caller.get_hookimpls():
+            _ = self._request.getfixturevalue(_asyncio_loop_factory.__name__)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:559: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:945: in pytest_fixture_setup
+    hook_result = yield
+                  ^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:408: in _asyncgen_fixture_wrapper
+    result = runner.run(setup(), context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py:127: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py:719: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pytest_asyncio\plugin.py:404: in setup
+    res = await gen_obj.__anext__()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:29: in hass
+    instance = await make_hass(tmp_path / "ha")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\conftest.py:18: in make_hass
+    await entity_registry.async_load(hass)
+.venv\Lib\site-packages\homeassistant\helpers\entity_registry.py:2621: in async_load
+    await async_get(hass).async_load(load_empty=load_empty)
+.venv\Lib\site-packages\homeassistant\helpers\registry.py:98: in async_load
+    await self._async_load()
+.venv\Lib\site-packages\homeassistant\helpers\entity_registry.py:2280: in _async_load
+    device_registry = dr.async_get(self.hass)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    @callback
+    def async_get(hass: HomeAssistant) -> DeviceRegistry:
+        """Get device registry."""
+        try:
+            return hass.data[DATA_REGISTRY]
+        except KeyError as ex:
+>           raise RuntimeError("Device registry not set up") from ex
+E           RuntimeError: Device registry not set up
+
+.venv\Lib\site-packages\homeassistant\helpers\device_registry.py:4630: RuntimeError
+=========================== short test summary info ===========================
+ERROR tests/test_native.py::test_native_owned_numbers_and_status - RuntimeErr...
+============================== 1 error in 0.82s ===============================

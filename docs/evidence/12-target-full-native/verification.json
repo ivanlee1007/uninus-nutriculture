@@ -1,0 +1,19 @@
+{
+  "11-target-red": {
+    "returncode": 1,
+    "snapshot_files_verified": 26,
+    "summary": "=================== 6 failed, 5 passed, 5 warnings in 5.93s ==================="
+  },
+  "11-target-green": {
+    "returncode": 0,
+    "snapshot_files_verified": 26,
+    "summary": "======================= 11 passed, 5 warnings in 3.11s ========================"
+  },
+  "12-target-full-native": {
+    "returncode": 0,
+    "snapshot_files_verified": 26,
+    "summary": "======================= 59 passed, 5 warnings in 30.64s ======================="
+  },
+  "historical_10_final_native_worktree_drift_from_index": "",
+  "current_executable_input_hashes_match_full_run": true
+}

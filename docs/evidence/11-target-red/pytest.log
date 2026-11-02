@@ -1,0 +1,303 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 11 items
+
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename] PASSED [  9%]
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[disable] PASSED [ 18%]
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[delete] PASSED [ 27%]
+tests/test_identity.py::test_native_metadata_all_ten_exact_and_missing_target_omitted PASSED [ 36%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unavailable] FAILED [ 45%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unknown] FAILED [ 54%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[NaN] FAILED [ 63%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[Infinity] FAILED [ 72%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[-Infinity] FAILED [ 81%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[not-a-number] FAILED [ 90%]
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[None] PASSED [100%]
+
+================================== FAILURES ===================================
+_ test_unusable_number_omitted_from_status_until_native_recovery[unavailable] _
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = 'unavailable'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___ test_unusable_number_omitted_from_status_until_native_recovery[unknown] ___
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = 'unknown'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____ test_unusable_number_omitted_from_status_until_native_recovery[NaN] _____
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = 'NaN'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__ test_unusable_number_omitted_from_status_until_native_recovery[Infinity] ___
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = 'Infinity'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__ test_unusable_number_omitted_from_status_until_native_recovery[-Infinity] __
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = '-Infinity'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_unusable_number_omitted_from_status_until_native_recovery[not-a-number] _
+
+hass = <HomeAssistant NOT_RUNNING>, unusable = 'not-a-number'
+
+    @pytest.mark.parametrize(
+        "unusable", ["unavailable", "unknown", "NaN", "Infinity", "-Infinity", "not-a-number", None]
+    )
+    async def test_unusable_number_omitted_from_status_until_native_recovery(hass, unusable):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        entity_id = entities["ph_low"]
+        number = hass.data["number"].get_entity(entity_id)
+        original = hass.states.get(entity_id)
+        expected = dict(hass.states.get(entities["status"]).attributes["parameter_entities"])
+        assert expected["ph_low"] == entity_id
+        parameters = dict(tank.runtime_data.parameters)
+        options = dict(tank.options)
+    
+        if unusable is None:
+            hass.states.async_remove(entity_id)
+        else:
+            hass.states.async_set(entity_id, unusable, dict(original.attributes))
+        await hass.async_block_till_done()
+>       assert hass.states.get(entities["status"]).attributes["parameter_entities"] == {
+            key: target for key, target in expected.items() if key != "ph_low"
+        }
+E       AssertionError: assert {'level_low':...ph_high', ...} == {'level_low':..._ec_low', ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'ph_low': 'number.tank_ph_low'}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_identity.py:90: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unavailable]
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unknown]
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[NaN]
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[Infinity]
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[-Infinity]
+FAILED tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[not-a-number]
+=================== 6 failed, 5 passed, 5 warnings in 5.93s ===================

@@ -1,0 +1,134 @@
+{
+  "uninus-nutriculture": {
+    "files": 489,
+    "gate2_different": [
+      "README.md"
+    ],
+    "gate2_snapshot_mismatch": [],
+    "changed_during_review": [
+      "README.md"
+    ],
+    "index_work_non_lf_equal": [],
+    "python_ast_checks": [
+      {
+        "path": "custom_components/uninus_nutriculture/__init__.py",
+        "equal": true
+      },
+      {
+        "path": "custom_components/uninus_nutriculture/const.py",
+        "equal": true
+      },
+      {
+        "path": "custom_components/uninus_nutriculture/manager.py",
+        "equal": true
+      },
+      {
+        "path": "custom_components/uninus_nutriculture/number.py",
+        "equal": true
+      },
+      {
+        "path": "custom_components/uninus_nutriculture/sensor.py",
+        "equal": true
+      },
+      {
+        "path": "tests/conftest.py",
+        "equal": true
+      },
+      {
+        "path": "tests/test_native.py",
+        "equal": true
+      },
+      {
+        "path": "tools/evidence.py",
+        "equal": true
+      }
+    ],
+    "untracked": [],
+    "cached_whitespace_exit": 0
+  },
+  "uninus-nutriculture-card": {
+    "files": 163,
+    "gate2_different": [
+      "README.md"
+    ],
+    "gate2_snapshot_mismatch": [],
+    "changed_during_review": [
+      "README.md"
+    ],
+    "index_work_non_lf_equal": [],
+    "python_ast_checks": [],
+    "untracked": [],
+    "cached_whitespace_exit": 0
+  },
+  "reused_card_gate": [
+    {
+      "name": "node-version",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "syntax",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--check",
+        "uninus-nutriculture-card.js"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "unit",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "tests/test_contract.cjs"
+      ],
+      "returncode": 0,
+      "expected_cases": 5,
+      "executed_cases": 5
+    },
+    {
+      "name": "browser",
+      "command": [
+        "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture-card\\.venv\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_browser.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "expected_cases": 16,
+      "executed_cases": 16
+    }
+  ],
+  "reused_bridge_checks": {
+    "actual_step_blocks_5_55": true,
+    "native_success_and_status_readback": true,
+    "native_pair_rejection_preserves_draft_options": true,
+    "all_ten_real_service_writes": true,
+    "quality_recomputed_both_directions": true,
+    "registry_rename_real_target": true,
+    "unavailable_number_omitted": true,
+    "card_blocks_unavailable_number": true,
+    "no_output_services_shadow_only": true
+  },
+  "native_probe": {
+    "checks": {
+      "stale_options_form_preserves_later_number_write": true,
+      "cancelled_queued_write_has_no_effect_and_lock_recovers": true,
+      "options_abort_is_nonmutating": true,
+      "no_foreign_service_dispatch": true
+    },
+    "service_events": [
+      "number.set_value",
+      "number.set_value"
+    ]
+  },
+  "scan_matches": 3,
+  "manifest_final_sha256": "15cb7ffb7e42705ec7617017df767e59f6df22b4a070d2daa71ea26b45dbc5cf"
+}
