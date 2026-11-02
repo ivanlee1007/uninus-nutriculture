@@ -1,2 +1,3 @@
 * text=auto eol=lf
 docs/evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/reviews/approved-candidate-manifest.json -text whitespace=cr-at-eol
