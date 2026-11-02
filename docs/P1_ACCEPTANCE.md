@@ -27,5 +27,5 @@ P1 為可安裝的影子監測 integration 與配套 Card：原生感測器綁�
 - 未部署至原農場 HA、未修改既有自動化、未操作硬體。
 - 未驗證實際 HA Dashboard 宿主的新增卡片流程及 HACS 安裝。
 - 未驗證突然斷電的 crash durability；參數採 HA 原生排程儲存。
-- 未執行正式 tag/release；兩個 repository 保持私人。
+- 未執行正式 tag/release；兩個 repository 已於 P1 交付後依使用者要求公開，公開不等於 HACS 安裝已驗收。
 - P2–P5 依 [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md) 與 GitHub milestones/issues 繼續開發，不因 P1 完成而取消。

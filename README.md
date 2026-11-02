@@ -14,7 +14,7 @@ Home Assistant 自訂整合，網域 `uninus_nutriculture`。**0.1.0 alpha 僅�
 4. 每個槽建立一個 config entry。身分以 HA 的穩定 `entry_id` 為準，名稱相同仍是不同槽，互不共用參數。
 5. 到整合的「設定／選項」可更換三個來源與時效；更換來源會重新載入該 entry，保留參數與原生 registry 身分。
 
-提供 `hacs.json` 作為自訂庫中繼資料；這是私人 repository，**未執行公開 HACS 驗證，未宣稱已在 HACS 商店上架**。目前以手動安裝為準。沒有 release 或部署工作流程。
+提供 `hacs.json` 作為自訂庫中繼資料；兩個 repository 已依使用者要求改為 Public，但**尚未執行實際 HACS 安裝驗收，未宣稱已在 HACS 預設清單上架**。目前文件提供手動安裝程序。沒有 release 或部署工作流程。
 
 ## 原生可編輯參數
 
@@ -78,6 +78,11 @@ reasons: []
 | P5 | 完整 Card、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
 
 本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供 P1 自訂 Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。這不代表整合 P1 已通過全部獨立審查或線上驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
+
+## 本次設計補充（尚未實作）
+
+- [總開關、四階段子開關、鏈結與流程組合](docs/CONTROL_SWITCHES.md)：P2 建立骨架、P3 完整接入；不改變 P1 的影子模式。
+- [原系統與新規範功能差異盤點](docs/FUNCTIONAL_PARITY_REVIEW.md)：區分已實作、保留用途、刻意改善與待決策，作為後續驗收基準。
 
 ## 測試
 
