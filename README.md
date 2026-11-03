@@ -67,21 +67,22 @@ reasons: []
 
 `reasons` 最多三項，順序固定 pH → EC → level。每個來源只取一個穩定碼，優先序為 `{key}_missing`、`{key}_unit`、`{key}_invalid`、`{key}_stale`、`{key}_out_of_range`。不包含任意例外文字或來源機密。
 
-## 完整產品範圍（未縮減）
+## 完整產品範圍（依最新邊界修訂，後續尚未實作）
 
 | 階段 | 範圍 | 目前狀態 |
 |---|---|---|
 | P1 | 影子監測、原生來源選擇／選項、十個原生 Number、固定 status 契約 | 本 alpha 已實作與離線原生 Core 測試 |
-| P2 | 補水與安全保護 | 待實作；沒有任何輸出控制 |
-| P3 | 營養液／酸液／混合／跟隨仲裁，原子群組參數 | 待實作；P1 僅逐項原生 Number 交易 |
-| P4 | 排程與既有灌溉遷移 | 待實作；未匯入既有農場設定 |
-| P5 | 完整 Card、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
+| P2 | 總/四子開關、統一gate、外部整輪服務契約、補水安全骨架 | 待實作；沒有任何輸出控制；鏈結取代提案待R01 |
+| P3 | 四階段可配置順序/重疊/相對延遲與條件、每階段七日複選、最小階段列UI/預覽、加藥/混合/仲裁、原子群組參數 | 待實作；R02/R03等政策待確認，P1仍僅逐項Number |
+| P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | 待實作；不建排程器、不匯入排程、不管理外部腳本/旁支 |
+| P5 | 進階視覺化編輯器、手機/鍵盤、診斷/歷史、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
 
 本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供 P1 自訂 Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。這不代表整合 P1 已通過全部獨立審查或線上驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
 
 ## 本次設計補充（尚未實作）
 
-- [總開關、四階段子開關、鏈結與流程組合](docs/CONTROL_SWITCHES.md)：P2 建立骨架、P3 完整接入；不改變 P1 的影子模式。
+- [總開關、四階段子開關與可配置流程](docs/CONTROL_SWITCHES.md)：P2 建立骨架、P3 完整接入；不改變 P1 的影子模式。
+- [流程編排/UI、每階段星期與外部啟動研究](docs/FLOW_DESIGN_RESEARCH.md)：建議階段列＋開始條件/延遲＋並行組＋預覽；取消獨立 `stage_link` 待R01，R01–R04不是已批准細則。何時啟動整輪由外部排程/HA automation決定；星期僅為允許gate，混合/脈衝/安全期限仍由後端管理。
 - [原系統與新規範功能差異盤點](docs/FUNCTIONAL_PARITY_REVIEW.md)：區分已實作、保留用途、刻意改善與待決策，作為後續驗收基準。
 
 ## 測試
