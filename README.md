@@ -99,4 +99,6 @@ Linux 改用 `.venv/bin/python`。`tools/evidence.py` 會建立新的不可覆�
 
 ## 共同開發規範
 
-[DEVELOPMENT_SPEC.md](docs/DEVELOPMENT_SPEC.md)統整已確認結論、前後端責任、開關/流程/星期/外部排程邊界與12項未決策；已定案不代表已實作，P1仍為影子監測。
+[DEVELOPMENT_SPEC.md](docs/DEVELOPMENT_SPEC.md)統整已確認結論、前後端責任、開關/流程/星期/外部排程邊界與11項未決策；已定案不代表已實作，P1仍為影子監測。
+
+控制目標與前台可調安全參數已補入[CONTROL_PARAMETERS.md](docs/CONTROL_PARAMETERS.md)：平均目標停止投藥、危險門檻預設採原HA且可調；D01已定，不阻擋繼續開發。

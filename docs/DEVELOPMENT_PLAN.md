@@ -70,4 +70,6 @@ Card config：`{type: "custom:uninus-nutriculture-card", entity: "sensor.<status
 
 ## 未決策與待開發的區分
 
-已確認結論與尚未定案的12項決策以[共同開發規範](DEVELOPMENT_SPEC.md)第7節及兩庫Issue #6為準。R01取消鏈結、D03/R03星期時點與原生整輪Switch入口已定案，不重新列為未決。P2–P5開放Issue代表未完成的開發/驗收，不代表所有需求仍待選擇。
+已確認結論與尚未定案的11項決策以[共同開發規範](DEVELOPMENT_SPEC.md)第7節及兩庫Issue #6為準。R01取消鏈結、D03/R03星期時點與原生整輪Switch入口已定案，不重新列為未決。P2–P5開放Issue代表未完成的開發/驗收，不代表所有需求仍待選擇。
+
+控制目標與前台可調安全參數已補入[CONTROL_PARAMETERS.md](CONTROL_PARAMETERS.md)：平均目標停止投藥、危險門檻預設採原HA且可調；D01已定，不阻擋繼續開發。
