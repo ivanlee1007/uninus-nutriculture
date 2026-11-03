@@ -1,8 +1,8 @@
 # 總開關、階段子開關與流程組合契約
 
-> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；尚未實作，P1不變。
+> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；P2補水控制骨架已實作，P1監測wire保留。
 
-> 狀態：已納入產品設計，安排 P2 建立控制骨架、P3 完整接入各階段；**尚未實作**。P1 仍為影子監測，沒有這些 Switch 或任何設備控制。本文件不授權部署或操作原農場。流程/UI依據見 [FLOW_DESIGN_RESEARCH.md](FLOW_DESIGN_RESEARCH.md)；R01與R03評估時點已確認；R02/R04等細節仍待確認，Switch執行契約見已確認決策文件。
+> P2補水候選已通過隔離測試及獨立SPEC／品質安全審查；舊P1監測介面保留。P3加養/加酸/混合及進階流程編輯仍待實作；未部署原HA、未做物理設備或HACS安裝驗收。詳見[P2_ACCEPTANCE.md](P2_ACCEPTANCE.md)。 本文件不授權部署或操作原農場；P2只補水，其餘階段原生Switch unavailable，並非已開放加藥。
 
 ## 1. 目的與原系統對應
 

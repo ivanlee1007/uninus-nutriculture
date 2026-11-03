@@ -1,0 +1,16 @@
+{
+  "name": "uninus-nutriculture-card",
+  "version": "0.2.0-alpha.1",
+  "private": true,
+  "description": "UNiNUS Nutriculture / 養液控制 — P1 shadow and P2 mapped native controls",
+  "main": "uninus-nutriculture-card.js",
+  "files": ["uninus-nutriculture-card.js", "hacs.json", "README.md"],
+  "scripts": {
+    "test": "python tests/check.py",
+    "test:unit": "node tests/test_contract.cjs",
+    "test:browser": "python -m unittest discover -s tests -p test_browser.py -v",
+    "check": "node --check uninus-nutriculture-card.js",
+    "demo": "python -m http.server 8765 --bind 127.0.0.1"
+  },
+  "engines": {"node": ">=18.6"}
+}

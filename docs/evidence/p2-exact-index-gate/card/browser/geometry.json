@@ -1,0 +1,20 @@
+[
+  {
+    "viewport": 320,
+    "card": 304,
+    "maxOverflow": 0,
+    "outside": 0
+  },
+  {
+    "viewport": 768,
+    "card": 752,
+    "maxOverflow": 0,
+    "outside": 0
+  },
+  {
+    "viewport": 1200,
+    "card": 1184,
+    "maxOverflow": 0,
+    "outside": 0
+  }
+]

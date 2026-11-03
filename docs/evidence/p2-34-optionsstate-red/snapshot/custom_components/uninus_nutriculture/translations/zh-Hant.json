@@ -1,0 +1,54 @@
+{
+  "title": "UNiNUS Nutriculture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "新增營養液槽",
+        "description": "新槽預設僅監測；補水必須在選項中明選輸出、確認風險及設備保護後另行啟動。保存/取消不致動。EC僅接受mS/cm、液位僅接受m。",
+        "data": {
+          "name": "水槽名稱",
+          "ph": "pH 來源感測器",
+          "ec": "EC 來源感測器 (mS/cm)",
+          "level": "液位來源感測器 (m)",
+          "max_age_seconds": "讀值最長有效時間（秒）"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "請輸入 1–100 個字元的名稱。",
+      "invalid_max_age": "請輸入 10–86400 的整數秒數。",
+      "invalid_source": "請選擇現有的 sensor 實體。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "來源與時效設定",
+        "description": "新槽預設僅監測；補水必須在選項中明選輸出、確認風險及設備保護後另行啟動。保存/取消不致動。EC僅接受mS/cm、液位僅接受m。",
+        "data": {
+          "ph": "pH 來源感測器",
+          "ec": "EC 來源感測器 (mS/cm)",
+          "level": "液位來源感測器 (m)",
+          "max_age_seconds": "讀值最長有效時間（秒）",
+          "refill_output": "補水實體輸出 switch",
+          "commissioned": "已核對輸出身份、風險、OFF回饋與設備失聯保護",
+          "feedback_timeout": "回饋期限（秒；初始10為工程預設、非原HA值）",
+          "refill_weekdays": "補水允許星期（空集合禁止）",
+          "nutrient_weekdays": "加養（未支援）允許星期（空集合禁止）",
+          "acid_weekdays": "加酸（未支援）允許星期（空集合禁止）",
+          "mix_weekdays": "混合（未支援）允許星期（空集合禁止）"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "請輸入 1–100 個字元的名稱。",
+      "invalid_max_age": "請輸入 10–86400 的整數秒數。",
+      "invalid_source": "請選擇現有的 sensor 實體。",
+      "output_identity_invalid": "輸出註冊身份已失效或停用，請重新核對。",
+      "output_already_owned": "輸出已由另一槽擁有。",
+      "output_unbound": "請明選已註冊輸出。",
+      "control_busy": "總OFF且本輪已確認停止後才能更換綁定/確認。",
+      "output_not_off": "新舊輸出都必須已知OFF；保存不代為關閉。"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+F.                                                                       [100%]
+================================== FAILURES ===================================
+______ test_timeout_tightening_while_starting_is_not_lost_on_relaxation _______
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_timeout_tightening_while_starting_is_not_lost_on_relaxation(control_hass):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        for value in (1, 190):
+            await hass.services.async_call("number", "set_value", {"entity_id": target(hass, tank, "number", "refill_timeout"), "value": value}, blocking=True)
+        tank.runtime_data.control.started -= 61
+        hardware.on_release.set()
+        await asyncio.gather(start, return_exceptions=True)
+        await hass.async_block_till_done()
+>       assert hass.states.get(hardware.entity_id).state == "off"
+E       AssertionError: assert 'on' == 'off'
+E         
+E         - off
+E         + on
+
+tests\test_p2_start_bounds.py:22: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation
+1 failed, 1 passed, 5 warnings in 2.48s

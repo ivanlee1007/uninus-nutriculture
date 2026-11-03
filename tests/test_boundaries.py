@@ -53,7 +53,7 @@ def test_metadata_and_translations():
     component = root / "custom_components" / "uninus_nutriculture"
     manifest = json.loads((component / "manifest.json").read_text())
     assert manifest["domain"] == "uninus_nutriculture"
-    assert manifest["version"] == "0.1.0"
+    assert manifest["version"] == "0.2.0"
     assert manifest["config_flow"] is True
     assert manifest["requirements"] == []
     for file in ["strings.json", "translations/en.json", "translations/zh-Hant.json"]:
@@ -70,6 +70,13 @@ def test_metadata_and_translations():
             "ec",
             "level",
             "max_age_seconds",
+            "refill_output",
+            "commissioned",
+            "feedback_timeout",
+            "refill_weekdays",
+            "nutrient_weekdays",
+            "acid_weekdays",
+            "mix_weekdays",
         }
         assert set(content["config"]["error"]) == {
             "invalid_name",

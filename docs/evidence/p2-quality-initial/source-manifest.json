@@ -1,0 +1,294 @@
+{
+  "uninus-nutriculture": {
+    "files": {
+      "custom_components/uninus_nutriculture/__init__.py": {
+        "worktree_sha256": "47da99d1d5720e00026b2070cc448309bc7d99077e255fa483edebc0fbafdf34",
+        "index_sha256": "3b25a40b529189200ccfc9f313c645c4bfc7aefbf6ccc027f7eb51ce311a1f90"
+      },
+      "custom_components/uninus_nutriculture/button.py": {
+        "worktree_sha256": "b80cdd34a755b1a2b989f61329d5870cff2b7f1629c93de16663c4a2645b40c8",
+        "index_sha256": "b80cdd34a755b1a2b989f61329d5870cff2b7f1629c93de16663c4a2645b40c8"
+      },
+      "custom_components/uninus_nutriculture/config_flow.py": {
+        "worktree_sha256": "6c84d2fb92261cd1c541f0ad17e5d74e7c0040a0afbdee8ae4e0ba7d71b2fe99",
+        "index_sha256": "6c84d2fb92261cd1c541f0ad17e5d74e7c0040a0afbdee8ae4e0ba7d71b2fe99"
+      },
+      "custom_components/uninus_nutriculture/const.py": {
+        "worktree_sha256": "8a8cdcaa9c3953ef82807a287f6f42e6d729b04e8cda89431467144ae7bdaf1a",
+        "index_sha256": "1589b0574e5c9059ada8d635574f67c66056bcf3094a7b0f4265e9298ffe5e0c"
+      },
+      "custom_components/uninus_nutriculture/control.py": {
+        "worktree_sha256": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5",
+        "index_sha256": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5"
+      },
+      "custom_components/uninus_nutriculture/control_auth.py": {
+        "worktree_sha256": "5ea382f4827835c99580df166f9fe825a9062aeacb8da2c34193594fe91833e5",
+        "index_sha256": "5ea382f4827835c99580df166f9fe825a9062aeacb8da2c34193594fe91833e5"
+      },
+      "custom_components/uninus_nutriculture/control_entity.py": {
+        "worktree_sha256": "2965a1c39ff8abacbecccc84d70836e959b57aed9ea9a9a77cfc5717b6aeb4bf",
+        "index_sha256": "2965a1c39ff8abacbecccc84d70836e959b57aed9ea9a9a77cfc5717b6aeb4bf"
+      },
+      "custom_components/uninus_nutriculture/control_settings.py": {
+        "worktree_sha256": "e5a209cdc378186f81ca83f6d90a112ce6ec738391ddd60676b53ba71c0bcf5e",
+        "index_sha256": "e5a209cdc378186f81ca83f6d90a112ce6ec738391ddd60676b53ba71c0bcf5e"
+      },
+      "custom_components/uninus_nutriculture/manager.py": {
+        "worktree_sha256": "3dc48ecec534b7a9e9091933cf713156a7de6376e78ab634b7571fdb4b57b3e1",
+        "index_sha256": "b931636e47ffddad3f971565526915a65ca31fd043929245111609662b4d3888"
+      },
+      "custom_components/uninus_nutriculture/manifest.json": {
+        "worktree_sha256": "78d00c0234839058189d31aad2d728d2f4918217abb90d028adaeeb30253c869",
+        "index_sha256": "d48ad5a883440b7122bcce8988bfa5d3f7f28c3a489d66071c43818b7ccfd20d"
+      },
+      "custom_components/uninus_nutriculture/number.py": {
+        "worktree_sha256": "03e885ea85f615f1a93d3850d9f417a0445d92e470a4e324fd7760e072cc81d8",
+        "index_sha256": "d6c0e2b7375afa9d118e4a43461f2454405e9f8e4e82658ad4e03868f12112b7"
+      },
+      "custom_components/uninus_nutriculture/sensor.py": {
+        "worktree_sha256": "79aecc545fe6ca90c99f951b1539ce4048499711a42878393409069e5f4679dc",
+        "index_sha256": "b51a1935dd199cfb8ca18a726a3fe3c854ac6ac01dd127c0f409677d50bd1a73"
+      },
+      "custom_components/uninus_nutriculture/services.py": {
+        "worktree_sha256": "5c9f03e5030609d7a607df97db50c772c1f0394933f2a78c12f6c396661fdd65",
+        "index_sha256": "5c9f03e5030609d7a607df97db50c772c1f0394933f2a78c12f6c396661fdd65"
+      },
+      "custom_components/uninus_nutriculture/services.yaml": {
+        "worktree_sha256": "8e4ece46f2cad4846c6d5cb9d2a239346ae8c3b16f633adee46f13c3902381f6",
+        "index_sha256": "8e4ece46f2cad4846c6d5cb9d2a239346ae8c3b16f633adee46f13c3902381f6"
+      },
+      "custom_components/uninus_nutriculture/strings.json": {
+        "worktree_sha256": "573dd12243103a1f64027b48b7514fff62169a61cba500d43aecca2bea9f5ec1",
+        "index_sha256": "573dd12243103a1f64027b48b7514fff62169a61cba500d43aecca2bea9f5ec1"
+      },
+      "custom_components/uninus_nutriculture/switch.py": {
+        "worktree_sha256": "32ad05e22db6918fbfab2d1e56e50e6f752e1ebaecfd0f3c92d08e9147cae396",
+        "index_sha256": "32ad05e22db6918fbfab2d1e56e50e6f752e1ebaecfd0f3c92d08e9147cae396"
+      },
+      "custom_components/uninus_nutriculture/translations/en.json": {
+        "worktree_sha256": "573dd12243103a1f64027b48b7514fff62169a61cba500d43aecca2bea9f5ec1",
+        "index_sha256": "573dd12243103a1f64027b48b7514fff62169a61cba500d43aecca2bea9f5ec1"
+      },
+      "custom_components/uninus_nutriculture/translations/zh-Hant.json": {
+        "worktree_sha256": "da4233a0c03158a6e016b0aef3af9420eadc0a794dc48e02828daefa373bd646",
+        "index_sha256": "da4233a0c03158a6e016b0aef3af9420eadc0a794dc48e02828daefa373bd646"
+      },
+      "pyproject.toml": {
+        "worktree_sha256": "a36d0db4af18fb821ea12d5ed3a9437009058720b7340ccc5071683a9a5eead6",
+        "index_sha256": "28ed2bb5a8b779bb9424da7599238d93909904a8c4fd4f6c53a136854c809c5d"
+      },
+      "tests/conftest.py": {
+        "worktree_sha256": "8885577401d47fcc3a22ec49641d320ffa977c79bfa4daa5a02380df9fd77568",
+        "index_sha256": "72f9fc5fa8fce681c32dd0fb7a1a851ecaba2af90f1ca3f18d32f5cee94690a1"
+      },
+      "tests/p2_fixtures.py": {
+        "worktree_sha256": "d6935a57b593abcbe3de7bc6d6aa570c5317f6c693de941ffc67c2df01f1e515",
+        "index_sha256": "d6935a57b593abcbe3de7bc6d6aa570c5317f6c693de941ffc67c2df01f1e515"
+      },
+      "tests/restart_worker.py": {
+        "worktree_sha256": "f5dd8068180ac95a469f798c64e7c3cfb0aa63ab1881d1de8818cd0300055821",
+        "index_sha256": "f5dd8068180ac95a469f798c64e7c3cfb0aa63ab1881d1de8818cd0300055821"
+      },
+      "tests/test_boundaries.py": {
+        "worktree_sha256": "499a9ff4cb1bdc46cf1f0526d2911440098348a7215134a6ab35e06b200ad3ac",
+        "index_sha256": "499a9ff4cb1bdc46cf1f0526d2911440098348a7215134a6ab35e06b200ad3ac"
+      },
+      "tests/test_flows.py": {
+        "worktree_sha256": "d71e028e4d7b58b4842084d500da1c4172d979836aa0f4e3f8c446f6acbded25",
+        "index_sha256": "d71e028e4d7b58b4842084d500da1c4172d979836aa0f4e3f8c446f6acbded25"
+      },
+      "tests/test_freshness.py": {
+        "worktree_sha256": "075f9f34f3e323ba8c2ebb8ebc4efe685dddb42aa3d6c1d321685575ee03c742",
+        "index_sha256": "075f9f34f3e323ba8c2ebb8ebc4efe685dddb42aa3d6c1d321685575ee03c742"
+      },
+      "tests/test_identity.py": {
+        "worktree_sha256": "a9807122cce1a78c941cc0d163fa7e17fdfbedf0c416ddffe660aafafe91d4ad",
+        "index_sha256": "a9807122cce1a78c941cc0d163fa7e17fdfbedf0c416ddffe660aafafe91d4ad"
+      },
+      "tests/test_lifecycle.py": {
+        "worktree_sha256": "a36fffd03db63f6e940cd07f611a4c2ca6f0190042a882c83f3399e2f4d8c7be",
+        "index_sha256": "a36fffd03db63f6e940cd07f611a4c2ca6f0190042a882c83f3399e2f4d8c7be"
+      },
+      "tests/test_native.py": {
+        "worktree_sha256": "40f9e4b71847178bdcf6b0227cd5564d7679a798508add1fb2e00a45a9f1827a",
+        "index_sha256": "37f6c14e27a556bcdf3e74507d69324994fff889445eb5e7b8953f848274d3e7"
+      },
+      "tests/test_p2_acceptance.py": {
+        "worktree_sha256": "9fde7c7ae799640739d58a29b34865f0d329809153957b07498783f2b5acedb0",
+        "index_sha256": "9fde7c7ae799640739d58a29b34865f0d329809153957b07498783f2b5acedb0"
+      },
+      "tests/test_p2_auth.py": {
+        "worktree_sha256": "d44eeaa6538a3f4264d4e74bd1a487f6d3cd00c1c75e4a73da7bee69dfb3e4e7",
+        "index_sha256": "d44eeaa6538a3f4264d4e74bd1a487f6d3cd00c1c75e4a73da7bee69dfb3e4e7"
+      },
+      "tests/test_p2_bounded_io.py": {
+        "worktree_sha256": "cf4d07d27ff336961fc76b65ec2eebdb8fde31e541f3e7398bec3143edd883cf",
+        "index_sha256": "cf4d07d27ff336961fc76b65ec2eebdb8fde31e541f3e7398bec3143edd883cf"
+      },
+      "tests/test_p2_bounds.py": {
+        "worktree_sha256": "5d5369e0b1e76a7fda9e6567421f707a476760b4fe96b1c76446aa37c8099657",
+        "index_sha256": "5d5369e0b1e76a7fda9e6567421f707a476760b4fe96b1c76446aa37c8099657"
+      },
+      "tests/test_p2_buttons.py": {
+        "worktree_sha256": "8f66ba322bbebf896c80c52a0c3d8b2a2687a3ade2172aca06e738ddcdb09c3d",
+        "index_sha256": "8f66ba322bbebf896c80c52a0c3d8b2a2687a3ade2172aca06e738ddcdb09c3d"
+      },
+      "tests/test_p2_context.py": {
+        "worktree_sha256": "7118baa0c62894a8c3a4ddb65aa39aa473781719b42d6d650890e83cfc806b68",
+        "index_sha256": "7118baa0c62894a8c3a4ddb65aa39aa473781719b42d6d650890e83cfc806b68"
+      },
+      "tests/test_p2_control.py": {
+        "worktree_sha256": "9e0cfb581683fb7a4f23ee2c0728fdde63c2d92a8665c1bb5d2a19ba22411555",
+        "index_sha256": "9e0cfb581683fb7a4f23ee2c0728fdde63c2d92a8665c1bb5d2a19ba22411555"
+      },
+      "tests/test_p2_enable.py": {
+        "worktree_sha256": "5df6bc3cbbec9c9eec12fadcc52728576486662fcda49a6e7e37c6e708f11b81",
+        "index_sha256": "5df6bc3cbbec9c9eec12fadcc52728576486662fcda49a6e7e37c6e708f11b81"
+      },
+      "tests/test_p2_fast_stop.py": {
+        "worktree_sha256": "7372df17790cafd97f8c99df0f3edcef4fc23766fd681c352c6823af261e7bb8",
+        "index_sha256": "7372df17790cafd97f8c99df0f3edcef4fc23766fd681c352c6823af261e7bb8"
+      },
+      "tests/test_p2_feedback.py": {
+        "worktree_sha256": "97b148856c24596aea91bb28dac7a1253ee75d77ac4dcf5457441621b602298e",
+        "index_sha256": "97b148856c24596aea91bb28dac7a1253ee75d77ac4dcf5457441621b602298e"
+      },
+      "tests/test_p2_lifecycle.py": {
+        "worktree_sha256": "8793935ae22d94087910bfd28fdd5101f3cbe4495ec68004fa594699b359c59f",
+        "index_sha256": "8793935ae22d94087910bfd28fdd5101f3cbe4495ec68004fa594699b359c59f"
+      },
+      "tests/test_p2_options.py": {
+        "worktree_sha256": "ffa331574615799dcf220ae5a2a6a568f5441c7ccab1a8b2743719369a201e09",
+        "index_sha256": "ffa331574615799dcf220ae5a2a6a568f5441c7ccab1a8b2743719369a201e09"
+      },
+      "tests/test_p2_races.py": {
+        "worktree_sha256": "d6909b28063d607d62f101085f13b46dc80701e0610fed26cea635c277ce3dff",
+        "index_sha256": "d6909b28063d607d62f101085f13b46dc80701e0610fed26cea635c277ce3dff"
+      },
+      "tests/test_p2_receipts.py": {
+        "worktree_sha256": "14cafe9bb64e4308c28f8ace52b5797ed28596ad3f71c580e4f1068a1fc4b081",
+        "index_sha256": "14cafe9bb64e4308c28f8ace52b5797ed28596ad3f71c580e4f1068a1fc4b081"
+      },
+      "tests/test_p2_registry.py": {
+        "worktree_sha256": "37753ed367b0d4a8f5825f51bbd989be9efb53dc701a6bf028e63fd97adffaff",
+        "index_sha256": "37753ed367b0d4a8f5825f51bbd989be9efb53dc701a6bf028e63fd97adffaff"
+      },
+      "tests/test_p2_restart.py": {
+        "worktree_sha256": "20b3233179cc81c7bbbe52b07f0092b285e1ecab6cfc8f313b4ff9cbf44c4f5d",
+        "index_sha256": "20b3233179cc81c7bbbe52b07f0092b285e1ecab6cfc8f313b4ff9cbf44c4f5d"
+      },
+      "tests/test_p2_services.py": {
+        "worktree_sha256": "e3b55c14b65eb649a1a50288c2822f1554e7dd741b582e3e20fe5c414c3f96b8",
+        "index_sha256": "e3b55c14b65eb649a1a50288c2822f1554e7dd741b582e3e20fe5c414c3f96b8"
+      },
+      "tests/test_p2_start_bounds.py": {
+        "worktree_sha256": "aca5ade3a473c918bd074730a92d51a42ba48d694ec7f01688aeba93fcd9b110",
+        "index_sha256": "aca5ade3a473c918bd074730a92d51a42ba48d694ec7f01688aeba93fcd9b110"
+      },
+      "tests/test_p2_wire.py": {
+        "worktree_sha256": "80d0b896a61a1c25c64399f4b7b17ab4cdc2ee1ff9041acde1efabb29d7ab9b9",
+        "index_sha256": "80d0b896a61a1c25c64399f4b7b17ab4cdc2ee1ff9041acde1efabb29d7ab9b9"
+      },
+      "tests/test_restart.py": {
+        "worktree_sha256": "1ff67a592e5edc2044ac50482af9f8511676ba6e44f5aa70a67a2d9e2e220fad",
+        "index_sha256": "1ff67a592e5edc2044ac50482af9f8511676ba6e44f5aa70a67a2d9e2e220fad"
+      },
+      "tests/test_safety.py": {
+        "worktree_sha256": "5630b012f1976b7e3b8e8816240f36143be6ebbde4475ab124c23163f0719970",
+        "index_sha256": "5630b012f1976b7e3b8e8816240f36143be6ebbde4475ab124c23163f0719970"
+      },
+      "tests/test_sources.py": {
+        "worktree_sha256": "ab17ac0349e8b3165683a31104a2803bdac6db04749082bd2f6271a12579ff98",
+        "index_sha256": "ab17ac0349e8b3165683a31104a2803bdac6db04749082bd2f6271a12579ff98"
+      },
+      "tests/test_validation.py": {
+        "worktree_sha256": "4d511069a8a64fb54df551ead0396fa143a01fa6efa14dea3e56304f437056f6",
+        "index_sha256": "4d511069a8a64fb54df551ead0396fa143a01fa6efa14dea3e56304f437056f6"
+      },
+      "tests/test_writes.py": {
+        "worktree_sha256": "34b2b735d0a8d0d567fb85dd44dcf45fb4580cf9884edb8853b07a28380ff61f",
+        "index_sha256": "34b2b735d0a8d0d567fb85dd44dcf45fb4580cf9884edb8853b07a28380ff61f"
+      }
+    },
+    "unstaged": [
+      "docs/P2_ACCEPTANCE.md"
+    ],
+    "untracked": [
+      "docs/evidence/p2-spec-recheck-independent/probe.py",
+      "docs/evidence/p2-spec-recheck-independent/receipt.json",
+      "docs/evidence/p2-spec-recheck-independent/run0.log",
+      "docs/evidence/p2-spec-recheck-independent/run1.log",
+      "docs/reviews/p2-spec-recheck-final.md"
+    ]
+  },
+  "uninus-nutriculture-card": {
+    "files": {
+      "package.json": {
+        "worktree_sha256": "71c223920d0172e3a67684db5fa18e7245b83809417b18377810b4c2ec7745d3",
+        "index_sha256": "71c223920d0172e3a67684db5fa18e7245b83809417b18377810b4c2ec7745d3"
+      },
+      "tests/check.py": {
+        "worktree_sha256": "9430c9454e3744f06c8a2bdfb5eda37dfe6dfd9d68e41a6c4e4d6ad736450271",
+        "index_sha256": "9430c9454e3744f06c8a2bdfb5eda37dfe6dfd9d68e41a6c4e4d6ad736450271"
+      },
+      "tests/record_run.py": {
+        "worktree_sha256": "c08397861b33907477ebb7cb66e224073524691a8bc4615ebd42a4eb14e3eb8d",
+        "index_sha256": "c08397861b33907477ebb7cb66e224073524691a8bc4615ebd42a4eb14e3eb8d"
+      },
+      "tests/test_browser.py": {
+        "worktree_sha256": "c3bb52ecd7c2a444efd08ddee6a7b033af49278259b0cee247a5a509328ecc72",
+        "index_sha256": "c3bb52ecd7c2a444efd08ddee6a7b033af49278259b0cee247a5a509328ecc72"
+      },
+      "tests/test_contract.cjs": {
+        "worktree_sha256": "8fdd940a318e87f558a91c53aac105df067d9bf30a0a082bb86abb4f132dbd93",
+        "index_sha256": "8fdd940a318e87f558a91c53aac105df067d9bf30a0a082bb86abb4f132dbd93"
+      },
+      "uninus-nutriculture-card.js": {
+        "worktree_sha256": "04304bc0f62c5a26bbaa4a28018543a0ab46728e5148c44f1f2e221bb4a8d25f",
+        "index_sha256": "04304bc0f62c5a26bbaa4a28018543a0ab46728e5148c44f1f2e221bb4a8d25f"
+      }
+    },
+    "unstaged": [
+      "docs/P2_ACCEPTANCE.md"
+    ],
+    "untracked": []
+  },
+  "native_record_worktree_mismatches": [
+    "custom_components\\uninus_nutriculture\\const.py",
+    "custom_components\\uninus_nutriculture\\manager.py",
+    "custom_components\\uninus_nutriculture\\manifest.json",
+    "custom_components\\uninus_nutriculture\\number.py",
+    "custom_components\\uninus_nutriculture\\sensor.py",
+    "custom_components\\uninus_nutriculture\\__init__.py",
+    "tests\\conftest.py",
+    "tests\\test_native.py",
+    "pyproject.toml",
+    "tools/evidence.py"
+  ],
+  "probe_controller_copies": [
+    {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-quality-independent\\native-temp\\test_invalid_source_during_app1\\control-ha\\custom_components\\uninus_nutriculture\\control.py",
+      "sha256": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5",
+      "equals_reviewed": true
+    },
+    {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-quality-independent\\native-temp\\test_invalid_source_during_app0\\control-ha\\custom_components\\uninus_nutriculture\\control.py",
+      "sha256": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5",
+      "equals_reviewed": true
+    }
+  ],
+  "production_scan": {
+    "uninus-nutriculture": {
+      "shell_injection": [],
+      "eval_exec": [],
+      "pickle": [],
+      "literal_secret": []
+    },
+    "uninus-nutriculture-card": {
+      "shell_injection": [],
+      "eval_exec": [],
+      "pickle": [],
+      "literal_secret": []
+    }
+  }
+}

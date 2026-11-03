@@ -1,0 +1,28 @@
+{
+  "baseline": "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\docs\\evidence\\p2-47-start-source-red\\snapshot",
+  "snapshot": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p2-exact-index-41cab5e6c8\\uninus-nutriculture",
+  "compared_python_files": 47,
+  "different": [
+    "tests/conftest.py",
+    "tests/test_native.py",
+    "custom_components/uninus_nutriculture/const.py",
+    "custom_components/uninus_nutriculture/control.py",
+    "custom_components/uninus_nutriculture/manager.py",
+    "custom_components/uninus_nutriculture/number.py",
+    "custom_components/uninus_nutriculture/sensor.py",
+    "custom_components/uninus_nutriculture/__init__.py"
+  ],
+  "delta": "--- \n+++ \n@@ -122,6 +122,13 @@\n             self.hass.async_create_task(self.evaluate())\n \n     async def evaluate(self):\n+        if self.running and self.flow_state == \"starting\":\n+            # Revoke observed source loss even if it recovers before ON returns.\n+            # Output OFF is still legitimate while acknowledgement is pending.\n+            if self.tank.snapshot()[0] == \"invalid\":\n+                self.fault = \"source_invalid\"\n+                await self.stop(\"fault\")\n+            return\n         if not self.running or self.flow_state != \"refilling\":\n             return\n         try:\n",
+  "crlf_only": [
+    "tests/conftest.py",
+    "tests/test_native.py",
+    "custom_components/uninus_nutriculture/const.py",
+    "custom_components/uninus_nutriculture/manager.py",
+    "custom_components/uninus_nutriculture/number.py",
+    "custom_components/uninus_nutriculture/sensor.py",
+    "custom_components/uninus_nutriculture/__init__.py"
+  ],
+  "semantic_differences": [
+    "custom_components/uninus_nutriculture/control.py"
+  ]
+}

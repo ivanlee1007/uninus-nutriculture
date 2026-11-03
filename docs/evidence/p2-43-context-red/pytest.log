@@ -1,0 +1,200 @@
+FFFFF                                                                    [100%]
+================================== FAILURES ===================================
+________ test_human_stop_reaches_output_with_causal_context[flow_run] _________
+
+control_hass = <HomeAssistant NOT_RUNNING>, key = 'flow_run'
+
+    @pytest.mark.parametrize("key", ["flow_run", "automation_enabled", "refill_enabled", "emergency_stop"])
+    async def test_human_stop_reaches_output_with_causal_context(control_hass, key):
+        hass = control_hass
+        tank = await ready(hass)
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        owner = await hass.auth.async_create_user("owner")
+        start_context = Context(user_id=owner.id)
+        await hass.services.async_call(
+            "switch", "turn_on", {"entity_id": target(hass, tank, "switch", "flow_run")},
+            blocking=True, context=start_context,
+        )
+        stop_context = Context(user_id=owner.id)
+        domain = "button" if key == "emergency_stop" else "switch"
+        await hass.services.async_call(
+            domain, "press" if domain == "button" else "turn_off",
+            {"entity_id": target(hass, tank, domain, key)}, blocking=True, context=stop_context,
+        )
+        calls = hass.data["p2_fixture"]["calls"]
+        assert calls[-1][0] == "turn_off"
+>       assert calls[-1][2].id == stop_context.id or calls[-1][2].parent_id == stop_context.id
+E       AssertionError: assert ('01M6FPZ0965NJDYJJ1169AB0J4' == '01M6FPZ096W24N34KX1T5A5VC6'
+E         
+E         - 01M6FPZ096W24N34KX1T5A5VC6
+E         + 01M6FPZ0965NJDYJJ1169AB0J4 or None == '01M6FPZ096W24N34KX1T5A5VC6')
+E        +  where None = <homeassistant.core.Context object at 0x000001B843B3F600>.parent_id
+E        +  and   '01M6FPZ096W24N34KX1T5A5VC6' = <homeassistant.core.Context object at 0x000001B843B3F4C0>.id
+
+tests\test_p2_context.py:32: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___ test_human_stop_reaches_output_with_causal_context[automation_enabled] ____
+
+control_hass = <HomeAssistant NOT_RUNNING>, key = 'automation_enabled'
+
+    @pytest.mark.parametrize("key", ["flow_run", "automation_enabled", "refill_enabled", "emergency_stop"])
+    async def test_human_stop_reaches_output_with_causal_context(control_hass, key):
+        hass = control_hass
+        tank = await ready(hass)
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        owner = await hass.auth.async_create_user("owner")
+        start_context = Context(user_id=owner.id)
+        await hass.services.async_call(
+            "switch", "turn_on", {"entity_id": target(hass, tank, "switch", "flow_run")},
+            blocking=True, context=start_context,
+        )
+        stop_context = Context(user_id=owner.id)
+        domain = "button" if key == "emergency_stop" else "switch"
+        await hass.services.async_call(
+            domain, "press" if domain == "button" else "turn_off",
+            {"entity_id": target(hass, tank, domain, key)}, blocking=True, context=stop_context,
+        )
+        calls = hass.data["p2_fixture"]["calls"]
+        assert calls[-1][0] == "turn_off"
+>       assert calls[-1][2].id == stop_context.id or calls[-1][2].parent_id == stop_context.id
+E       AssertionError: assert ('01M6FPZ0NHB5DCKFK55YCM5ZG1' == '01M6FPZ0NG2DPQSH77CR4P91GD'
+E         
+E         - 01M6FPZ0NG2DPQSH77CR4P91GD
+E         + 01M6FPZ0NHB5DCKFK55YCM5ZG1 or None == '01M6FPZ0NG2DPQSH77CR4P91GD')
+E        +  where None = <homeassistant.core.Context object at 0x000001B843C6A480>.parent_id
+E        +  and   '01M6FPZ0NG2DPQSH77CR4P91GD' = <homeassistant.core.Context object at 0x000001B843C6A250>.id
+
+tests\test_p2_context.py:32: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____ test_human_stop_reaches_output_with_causal_context[refill_enabled] ______
+
+control_hass = <HomeAssistant NOT_RUNNING>, key = 'refill_enabled'
+
+    @pytest.mark.parametrize("key", ["flow_run", "automation_enabled", "refill_enabled", "emergency_stop"])
+    async def test_human_stop_reaches_output_with_causal_context(control_hass, key):
+        hass = control_hass
+        tank = await ready(hass)
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        owner = await hass.auth.async_create_user("owner")
+        start_context = Context(user_id=owner.id)
+        await hass.services.async_call(
+            "switch", "turn_on", {"entity_id": target(hass, tank, "switch", "flow_run")},
+            blocking=True, context=start_context,
+        )
+        stop_context = Context(user_id=owner.id)
+        domain = "button" if key == "emergency_stop" else "switch"
+        await hass.services.async_call(
+            domain, "press" if domain == "button" else "turn_off",
+            {"entity_id": target(hass, tank, domain, key)}, blocking=True, context=stop_context,
+        )
+        calls = hass.data["p2_fixture"]["calls"]
+        assert calls[-1][0] == "turn_off"
+>       assert calls[-1][2].id == stop_context.id or calls[-1][2].parent_id == stop_context.id
+E       AssertionError: assert ('01M6FPZ0RF7V2SM9RH1Y07RTQ2' == '01M6FPZ0RFJW48SKCMA6RKB1BD'
+E         
+E         - 01M6FPZ0RFJW48SKCMA6RKB1BD
+E         + 01M6FPZ0RF7V2SM9RH1Y07RTQ2 or None == '01M6FPZ0RFJW48SKCMA6RKB1BD')
+E        +  where None = <homeassistant.core.Context object at 0x000001B843CCDE40>.parent_id
+E        +  and   '01M6FPZ0RFJW48SKCMA6RKB1BD' = <homeassistant.core.Context object at 0x000001B843CCDC10>.id
+
+tests\test_p2_context.py:32: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____ test_human_stop_reaches_output_with_causal_context[emergency_stop] ______
+
+control_hass = <HomeAssistant NOT_RUNNING>, key = 'emergency_stop'
+
+    @pytest.mark.parametrize("key", ["flow_run", "automation_enabled", "refill_enabled", "emergency_stop"])
+    async def test_human_stop_reaches_output_with_causal_context(control_hass, key):
+        hass = control_hass
+        tank = await ready(hass)
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        owner = await hass.auth.async_create_user("owner")
+        start_context = Context(user_id=owner.id)
+        await hass.services.async_call(
+            "switch", "turn_on", {"entity_id": target(hass, tank, "switch", "flow_run")},
+            blocking=True, context=start_context,
+        )
+        stop_context = Context(user_id=owner.id)
+        domain = "button" if key == "emergency_stop" else "switch"
+        await hass.services.async_call(
+            domain, "press" if domain == "button" else "turn_off",
+            {"entity_id": target(hass, tank, domain, key)}, blocking=True, context=stop_context,
+        )
+        calls = hass.data["p2_fixture"]["calls"]
+        assert calls[-1][0] == "turn_off"
+>       assert calls[-1][2].id == stop_context.id or calls[-1][2].parent_id == stop_context.id
+E       AssertionError: assert ('01M6FPZ0VQKE0015DSHEDZVPBZ' == '01M6FPZ0VPXRFXZFWZK9ZMJX7C'
+E         
+E         - 01M6FPZ0VPXRFXZFWZK9ZMJX7C
+E         + 01M6FPZ0VQKE0015DSHEDZVPBZ or None == '01M6FPZ0VPXRFXZFWZK9ZMJX7C')
+E        +  where None = <homeassistant.core.Context object at 0x000001B843D49990>.parent_id
+E        +  and   '01M6FPZ0VPXRFXZFWZK9ZMJX7C' = <homeassistant.core.Context object at 0x000001B843D49490>.id
+
+tests\test_p2_context.py:32: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+________ test_user_removed_during_on_does_not_block_traced_safety_off _________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_user_removed_during_on_does_not_block_traced_safety_off(control_hass):
+        hass = control_hass
+        tank = await ready(hass)
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        await hass.auth.async_create_user("owner")
+        admin = await hass.auth.async_create_user("admin", group_ids=["system-admin"])
+        origin = Context(user_id=admin.id)
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        request = asyncio.create_task(hass.services.async_call(
+            "uninus_nutriculture", "start_flow", {"config_entry_id": tank.entry_id},
+            blocking=True, context=origin,
+        ))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        await hass.auth.async_remove_user(admin)
+        hardware.on_release.set()
+        result = await asyncio.wait_for(asyncio.gather(request, return_exceptions=True), 3)
+        assert isinstance(result[0], HomeAssistantError)
+        assert hass.states.get(hardware.entity_id).state == "off"
+        off = hass.data["p2_fixture"]["calls"][-1]
+        assert off[0] == "turn_off"
+>       assert off[2].parent_id == origin.id
+E       AssertionError: assert None == '01M6FPZ0YRZYESMR80ESPP11M2'
+E        +  where None = <homeassistant.core.Context object at 0x000001B843DAC400>.parent_id
+E        +  and   '01M6FPZ0YRZYESMR80ESPP11M2' = <homeassistant.core.Context object at 0x000001B843D8FEC0>.id
+
+tests\test_p2_context.py:57: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]
+FAILED tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[automation_enabled]
+FAILED tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[refill_enabled]
+FAILED tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[emergency_stop]
+FAILED tests/test_p2_context.py::test_user_removed_during_on_does_not_block_traced_safety_off
+5 failed, 5 warnings in 2.77s

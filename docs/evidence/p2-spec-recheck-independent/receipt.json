@@ -1,0 +1,45 @@
+{
+  "artifact_dir": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-spec-recheck-independent-zr7xir6a",
+  "results": [
+    {
+      "command": [
+        "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-spec-recheck-independent-zr7xir6a\\probe.py"
+      ],
+      "returncode": 0,
+      "seconds": 9.715732199998456,
+      "stdout": "INDEPENDENT_RESULT={\"non_admin_start_denied\": true, \"deleted_user_high_water_off\": true, \"new_run_origin\": \"01M6G5F0JY52QJA88HBBF5XYDK\", \"previous_stop_origin\": \"01M6G5F0JWH96DAE1J06AZMNEN\", \"off_parent\": \"01M6G5F0JY52QJA88HBBF5XYDK\", \"stale_context_not_reused\": true}\n",
+      "stderr": "We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant\n"
+    },
+    {
+      "command": [
+        "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-spec-recheck-independent-zr7xir6a\\pytest-temp",
+        "tests/test_p2_context.py"
+      ],
+      "returncode": 0,
+      "seconds": 5.407441800001834,
+      "stdout": ".....                                                                    [100%]\n============================== warnings summary ===============================\ntests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]\n  D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Lib\\site-packages\\homeassistant\\components\\http\\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged\n    class HomeAssistantApplication(web.Application):\n\ntests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]\n  D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Lib\\site-packages\\backoff\\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead\n    if asyncio.iscoroutinefunction(target):\n\ntests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]\n  D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Lib\\site-packages\\backoff\\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead\n    if asyncio.iscoroutinefunction(coro_or_func):\n\ntests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]\n  D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Lib\\site-packages\\backoff\\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead\n    assert not asyncio.iscoroutinefunction(max_tries)\n\ntests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run]\n  D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\.venv\\Lib\\site-packages\\backoff\\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead\n    assert not asyncio.iscoroutinefunction(jitter)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n5 passed, 5 warnings in 2.86s\n",
+      "stderr": ""
+    }
+  ],
+  "sha256": {
+    "custom_components/uninus_nutriculture/control.py": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5",
+    "tests/test_p2_context.py": "7118baa0c62894a8c3a4ddb65aa39aa473781719b42d6d650890e83cfc806b68",
+    "tests/p2_fixtures.py": "d6935a57b593abcbe3de7bc6d6aa570c5317f6c693de941ffc67c2df01f1e515",
+    "docs/reviews/p2-recovery/p2_spec_context_harnessfixed.py": "c45764f57935a340679560a72c470937281418f8c86e15a5ae3facc8ed5caf90",
+    "custom_components/uninus_nutriculture/control_auth.py": "5ea382f4827835c99580df166f9fe825a9062aeacb8da2c34193594fe91833e5",
+    "custom_components/uninus_nutriculture/services.py": "5c9f03e5030609d7a607df97db50c772c1f0394933f2a78c12f6c396661fdd65"
+  },
+  "card_sha256": "04304bc0f62c5a26bbaa4a28018543a0ab46728e5148c44f1f2e221bb4a8d25f",
+  "unstaged_before": "",
+  "unstaged_after": "",
+  "index_unchanged": true,
+  "source_unchanged": true,
+  "control_index_sha256": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5"
+}

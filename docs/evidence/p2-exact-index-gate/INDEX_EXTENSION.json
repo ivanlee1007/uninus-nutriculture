@@ -1,0 +1,11 @@
+{
+  "reason": "Initial Card materialization omitted the workflow captured by its canonical runner; no product defect or test change. Original failed attempt retained.",
+  "added_consumed_input": {
+    "path": ".github/workflows/validate.yml",
+    "mode": "100644",
+    "blob": "a7e6a0cd35e89b76f21aa4bd6f9ed8efcf60bdcc",
+    "sha256": "e820a79239de7d3cc6283b0988468cfbf5a89f45652d9bcb759d2ab340ce78b7"
+  },
+  "unchanged_executable_inputs": true,
+  "rerun_output": "card-index-gate-complete"
+}

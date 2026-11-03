@@ -1,0 +1,86 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_________________ test_lifecycle_closes_owned_output[unload] __________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, kind = 'unload'
+
+    @pytest.mark.parametrize("kind", ["unload", "stop"])
+    async def test_lifecycle_closes_owned_output(control_hass, kind):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        controller = tank.runtime_data.control
+        if kind == "unload":
+            assert await hass.config_entries.async_unload(tank.entry_id)
+        else:
+            await hass.async_start()
+            await hass.async_stop(force=True)
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_lifecycle.py:21: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__________________ test_lifecycle_closes_owned_output[stop] ___________________
+
+control_hass = <HomeAssistant STOPPED>, kind = 'stop'
+
+    @pytest.mark.parametrize("kind", ["unload", "stop"])
+    async def test_lifecycle_closes_owned_output(control_hass, kind):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        controller = tank.runtime_data.control
+        if kind == "unload":
+            assert await hass.config_entries.async_unload(tank.entry_id)
+        else:
+            await hass.async_start()
+            await hass.async_stop(force=True)
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_lifecycle.py:21: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload]
+FAILED tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[stop]
+2 failed, 5 warnings in 2.76s

@@ -1,11 +1,27 @@
 """Native config and source-binding options flows."""
 
+import math
+
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow, OptionsFlow
 from homeassistant.core import callback
+from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import selector
 
 from .const import DOMAIN, SOURCE_KEYS
+from .control_settings import DAYS, STAGES, resolve, settings_candidate
+
+
+class FeedbackSelector(selector.NumberSelector):
+    """Keep native selector rendering while rejecting unsafe coercions."""
+
+    def __call__(self, value):
+        if isinstance(value, bool):
+            raise vol.Invalid("invalid_feedback_timeout")
+        result = super().__call__(value)
+        if not math.isfinite(result) or result != int(result):
+            raise vol.Invalid("invalid_feedback_timeout")
+        return result
 
 
 def schema(values, *, include_name=False):
@@ -27,6 +43,33 @@ def schema(values, *, include_name=False):
             )
         )
     )
+    if not include_name:
+        fields[
+            vol.Optional(
+                "refill_output", description={"suggested_value": values.get("refill_output")}
+            )
+        ] = selector.EntitySelector(selector.EntitySelectorConfig(domain="switch"))
+        fields[
+            vol.Optional(
+                "commissioned", description={"suggested_value": values.get("commissioned")}
+            )
+        ] = selector.BooleanSelector()
+        fields[
+            vol.Optional(
+                "feedback_timeout", description={"suggested_value": values.get("feedback_timeout")}
+            )
+        ] = FeedbackSelector(
+            selector.NumberSelectorConfig(min=1, max=60, step=1, unit_of_measurement="s")
+        )
+        for stage in STAGES:
+            fields[
+                vol.Optional(
+                    stage + "_weekdays",
+                    description={"suggested_value": values.get(stage + "_weekdays", list(DAYS))},
+                )
+            ] = selector.SelectSelector(
+                selector.SelectSelectorConfig(options=list(DAYS), multiple=True)
+            )
     return vol.Schema(fields)
 
 
@@ -93,6 +136,32 @@ class NutricultureOptionsFlow(OptionsFlow):
                     **{key: user_input[key] for key in SOURCE_KEYS},
                     "max_age_seconds": int(user_input.get("max_age_seconds", 300)),
                 }
-                return self.async_create_entry(title="", data=options)
-        values = {**self.config_entry.data, **self.config_entry.options, **(user_input or {})}
+                try:
+                    options["control"] = settings_candidate(
+                        self.hass, self.config_entry, user_input
+                    )
+                except ServiceValidationError as err:
+                    errors["base"] = str(err)
+                else:
+                    return self.async_create_entry(title="", data=options)
+        control = self.config_entry.options.get("control", {})
+        suggested = {
+            "commissioned": control.get("commissioned", False),
+            "feedback_timeout": control.get("feedback_timeout", 10),
+        }
+        for stage in STAGES:
+            suggested[stage + "_weekdays"] = control.get("allowed_weekdays", {}).get(
+                stage, list(DAYS)
+            )
+        if control.get("binding"):
+            try:
+                suggested["refill_output"] = resolve(self.hass, control["binding"])
+            except ServiceValidationError:
+                pass  # Invalid identities are not suggested as usable targets.
+        values = {
+            **self.config_entry.data,
+            **self.config_entry.options,
+            **suggested,
+            **(user_input or {}),
+        }
         return self.async_show_form(step_id="init", data_schema=schema(values), errors=errors)

@@ -1,0 +1,119 @@
+......................F.......F..F....................F................. [ 92%]
+......                                                                   [100%]
+================================== FAILURES ===================================
+________ test_native_metadata_all_ten_exact_and_missing_target_omitted ________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_native_metadata_all_ten_exact_and_missing_target_omitted(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        for key, entity_id in entities.items():
+            if key == "status":
+                continue
+            state = hass.states.get(entity_id)
+            group = key.split("_")[0]
+            minimum, maximum, step, unit = (
+                {
+                    "level": (0, 10, 0.01, "m"),
+                    "ph": (0, 14, 0.1, None),
+                    "ec": (0, 20, 0.01, "mS/cm"),
+                }.get(group, (1, 1440, 1, "min"))
+                if not key.endswith("timeout")
+                else (1, 1440, 1, "min")
+            )
+>           assert state.attributes["min"] == minimum
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'min'
+
+tests\test_identity.py:60: KeyError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__________________ test_unloaded_and_queued_writes_rejected ___________________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_unloaded_and_queued_writes_rejected(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        entities = ids(hass, tank)
+        manager = tank.runtime_data
+        entity = hass.data["number"].get_entity(entities["ph_low"])
+        before = dict(tank.options)
+        await manager.lock.acquire()
+        queued = asyncio.create_task(entity.async_set_native_value(5.5))
+        await asyncio.sleep(0)
+        assert not queued.done()
+        assert await hass.config_entries.async_unload(tank.entry_id)
+        manager.lock.release()
+        with pytest.raises(HomeAssistantError):
+            await queued
+        with pytest.raises(HomeAssistantError):
+            await entity.async_set_native_value(5.5)
+        assert tank.options == before
+>       assert not manager.listeners
+E       assert not {<bound method Entity.async_write_ha_state of <entity switch.tank_nutrient_enabled=off>>, <bound method Entity.async_w...tity switch.tank_flow_run=off>>, <bound method Entity.async_write_ha_state of <entity switch.tank_refill_enabled=off>>}
+E        +  where {<bound method Entity.async_write_ha_state of <entity switch.tank_nutrient_enabled=off>>, <bound method Entity.async_w...tity switch.tank_flow_run=off>>, <bound method Entity.async_write_ha_state of <entity switch.tank_refill_enabled=off>>} = <custom_components.uninus_nutriculture.manager.Tank object at 0x0000024EC63DD880>.listeners
+
+tests\test_lifecycle.py:31: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+____________________ test_native_owned_numbers_and_status _____________________
+
+hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_native_owned_numbers_and_status(hass):
+        tank = entry()
+        await hass.config_entries.async_add(tank)
+        await hass.async_block_till_done()
+        rows = er.async_entries_for_config_entry(er.async_get(hass), tank.entry_id)
+        numbers = [r for r in rows if r.domain == "number"]
+        assert len(numbers) == 10
+>       assert len([r for r in rows if r.domain == "sensor"]) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([RegistryEntry(entity_id='sensor.tank_status', unique_id='01M6FJPY7JNHE1348628WZJVVW:status', platform='uninus_nutricu...atures=0, translation_key=None, unit_of_measurement=None, compat_aliases=[], original_name_unprefixed=None, _cache={})])
+
+tests\test_native.py:12: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__________ test_no_output_mapping_dispatch_client_or_button_platform __________
+
+    def test_no_output_mapping_dispatch_client_or_button_platform():
+        folder = Path(__file__).resolve().parents[1] / "custom_components" / "uninus_nutriculture"
+>       assert not (folder / "button.py").exists()
+E       AssertionError: assert not True
+E        +  where True = exists()
+E        +    where exists = (WindowsPath('D:/UNiNUS Projects/AI project/uninus-nutriculture/custom_components/uninus_nutriculture') / 'button.py').exists
+
+tests\test_safety.py:9: AssertionError
+============================== warnings summary ===============================
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_identity.py::test_native_metadata_all_ten_exact_and_missing_target_omitted
+FAILED tests/test_lifecycle.py::test_unloaded_and_queued_writes_rejected - as...
+FAILED tests/test_native.py::test_native_owned_numbers_and_status - Assertion...
+FAILED tests/test_safety.py::test_no_output_mapping_dispatch_client_or_button_platform
+4 failed, 74 passed, 5 warnings in 28.47s

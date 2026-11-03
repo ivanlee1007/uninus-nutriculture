@@ -1,0 +1,2 @@
+INDEPENDENT_RESULT={"non_admin_start_denied": true, "deleted_user_high_water_off": true, "new_run_origin": "01M6G5F0JY52QJA88HBBF5XYDK", "previous_stop_origin": "01M6G5F0JWH96DAE1J06AZMNEN", "off_parent": "01M6G5F0JY52QJA88HBBF5XYDK", "stale_context_not_reused": true}
+We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant

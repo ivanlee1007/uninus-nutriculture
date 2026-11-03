@@ -1,0 +1,208 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____ test_native_options_commission_saves_registry_identity_without_output ____
+
+self = <homeassistant.config_entries.OptionsFlowManager object at 0x000002A624D5B770>
+flow_id = '3f4f0491ef2fe3ff7965df65f45ca5cd'
+user_input = {'ph': 'sensor.ph', 'ec': 'sensor.ec', 'level': 'sensor.level', 'max_age_seconds': 300, ...}
+
+    async def _async_configure(
+        self, flow_id: str, user_input: dict | None = None
+    ) -> _FlowResultT:
+        """Continue a data entry flow."""
+        if (flow := self._progress.get(flow_id)) is None:
+            raise UnknownFlow
+    
+        cur_step = flow.cur_step
+        assert cur_step is not None
+    
+        if (
+            data_schema := cur_step.get("data_schema")
+        ) is not None and user_input is not None:
+            data_schema = cast(probatio.Schema, data_schema)
+            try:
+>               user_input = data_schema(user_input)
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\probatio\schema.py:342: in __call__
+    return self._compiled(data)
+           ^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\probatio\schema.py:466: in _bootstrap
+    return self._compiled(data)
+           ^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\probatio\schema.py:493: in validate
+    return interpreted(data)
+           ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <probatio._engine._MappingValidator object at 0x000002A62A7582C0>
+data = {'ph': 'sensor.ph', 'ec': 'sensor.ec', 'level': 'sensor.level', 'max_age_seconds': 300, ...}
+
+    def __call__(self, data: Any) -> dict[Any, Any]:  # noqa: PLR0912
+        """Validate the mapping, gathering every error into one MultipleInvalid."""
+        # A plain dict is the common, hot case, so it short-circuits first.
+        # Anything else implementing the Mapping protocol (a MappingProxyType, a
+        # multidict, a custom mapping) is validated too, returning a plain dict;
+        # voluptuous accepts only dict, so this is a documented superset
+        # (carry-forward of voluptuous issue #299). A non-Mapping is rejected.
+        if not isinstance(data, dict) and not isinstance(data, Mapping):
+            raise DictInvalid(translation_key="expected_mapping")
+    
+        # Preserve real dict subclasses, matching voluptuous. Other Mapping
+        # implementations validate too, but rebuild as a plain dict.
+        data_type = type(data)
+    
+        if self._alias_lookup:
+            data = self._resolve_aliases(data)
+    
+        out: dict[Any, Any] = (
+            {} if data_type is dict or not issubclass(data_type, dict) else data_type()
+        )
+        errors: list[Invalid] = []
+    
+        # Track matches by candidate position. A bytearray is cheaper than a set
+        # here and lets the finalizer distinguish invalid keys from absent ones.
+        seen: bytearray | None = (
+            bytearray(len(self._candidates)) if self._track_seen else None
+        )
+    
+        # Inline the literal-key fast path. More complex keys fall back to helpers.
+        fast_get = self._literal_fast.get
+        literal_get = self._literal.get
+        for key, value in data.items():
+            entry = fast_get(key)
+            if entry is not None:
+                index, value_type, check_value = entry
+                if seen is not None:
+                    seen[index] = 1
+                if value_type is not None:
+                    # Inlined ``{"k": <type>}``: isinstance, no validator call.
+                    if isinstance(value, value_type):
+                        out[key] = value
+                    else:
+                        errors.append(
+                            _type_error(value_type.__name__, [key], self._invalid_msg),
+                        )
+                    continue
+                try:
+                    out[key] = check_value(value)
+                except Invalid as exc:
+                    self._collect(key, exc, errors)
+                continue
+            match = literal_get(key)
+            if match is None:
+                self._match_validator(key, value, out, errors, seen)
+                continue
+            # Only Forbidden and Remove literal keys reach here; plain literal
+            # keys took the fast path above. ``_apply`` raises the forbidden
+            # error or validates the Remove value, and a Remove whose value fails
+            # has not consumed the key, so the type/callable candidates get a
+            # turn (a ``str: str`` may take it) and ``_match_validator`` applies
+            # the extra-key policy if none match.
+            index, candidate = match
+            if not self._apply(key, value, index, candidate, out, errors, seen):
+                self._match_validator(key, value, out, errors, seen)
+    
+        if seen is not None:
+            self._finalize(out, errors, seen)
+        if self._has_groups and seen is not None:
+            self._check_groups(out, errors, seen)
+    
+        if errors:
+            if self._secret_keys:
+                self._redact_secrets(errors)
+>           raise MultipleInvalid(errors)
+E           probatio.error.MultipleInvalid: not a valid option at 'refill_output'
+
+.venv\Lib\site-packages\probatio\_engine.py:286: MultipleInvalid
+
+The above exception was the direct cause of the following exception:
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_native_options_commission_saves_registry_identity_without_output(control_hass):
+        hass = control_hass
+        tank = await add_tank(hass)
+>       result = await configure(hass, tank)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_p2_control.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_p2_control.py:50: in configure
+    result = await hass.config_entries.options.async_configure(
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:339: in async_configure
+    result = await self._async_configure(flow_id, user_input)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <homeassistant.config_entries.OptionsFlowManager object at 0x000002A624D5B770>
+flow_id = '3f4f0491ef2fe3ff7965df65f45ca5cd'
+user_input = {'ph': 'sensor.ph', 'ec': 'sensor.ec', 'level': 'sensor.level', 'max_age_seconds': 300, ...}
+
+    async def _async_configure(
+        self, flow_id: str, user_input: dict | None = None
+    ) -> _FlowResultT:
+        """Continue a data entry flow."""
+        if (flow := self._progress.get(flow_id)) is None:
+            raise UnknownFlow
+    
+        cur_step = flow.cur_step
+        assert cur_step is not None
+    
+        if (
+            data_schema := cur_step.get("data_schema")
+        ) is not None and user_input is not None:
+            data_schema = cast(probatio.Schema, data_schema)
+            try:
+                user_input = data_schema(user_input)
+            except probatio.Invalid as ex:
+                raised_errors = [ex]
+                if isinstance(ex, probatio.MultipleInvalid):
+                    raised_errors = ex.errors
+    
+                schema_errors: dict[str, Any] = {}
+                for error in raised_errors:
+                    try:
+                        _map_error_to_schema_errors(schema_errors, error, data_schema)
+                    except ValueError:
+                        # If we get here, the path in the exception
+                        # does not exist in the schema.
+                        schema_errors.setdefault("base", []).append(str(error))
+>               raise InvalidData(
+                    "Schema validation failed",
+                    path=ex.path,
+                    error_message=ex.error_message,
+                    schema_errors=schema_errors,
+                ) from ex
+E               homeassistant.data_entry_flow.InvalidData: Schema validation failed at 'refill_output'
+
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:374: InvalidData
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+1 failed, 5 warnings in 2.79s

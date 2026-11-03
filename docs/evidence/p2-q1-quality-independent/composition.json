@@ -1,0 +1,128 @@
+{
+  "manifest_comparison": {
+    "uninus-nutriculture": {
+      "raw_index_same": [
+        "custom_components/uninus_nutriculture/__init__.py",
+        "custom_components/uninus_nutriculture/button.py",
+        "custom_components/uninus_nutriculture/config_flow.py",
+        "custom_components/uninus_nutriculture/const.py",
+        "custom_components/uninus_nutriculture/control_auth.py",
+        "custom_components/uninus_nutriculture/control_entity.py",
+        "custom_components/uninus_nutriculture/control_settings.py",
+        "custom_components/uninus_nutriculture/manager.py",
+        "custom_components/uninus_nutriculture/manifest.json",
+        "custom_components/uninus_nutriculture/number.py",
+        "custom_components/uninus_nutriculture/sensor.py",
+        "custom_components/uninus_nutriculture/services.py",
+        "custom_components/uninus_nutriculture/services.yaml",
+        "custom_components/uninus_nutriculture/strings.json",
+        "custom_components/uninus_nutriculture/switch.py",
+        "custom_components/uninus_nutriculture/translations/en.json",
+        "custom_components/uninus_nutriculture/translations/zh-Hant.json",
+        "pyproject.toml",
+        "tests/conftest.py",
+        "tests/p2_fixtures.py",
+        "tests/restart_worker.py",
+        "tests/test_boundaries.py",
+        "tests/test_flows.py",
+        "tests/test_freshness.py",
+        "tests/test_identity.py",
+        "tests/test_lifecycle.py",
+        "tests/test_native.py",
+        "tests/test_p2_acceptance.py",
+        "tests/test_p2_auth.py",
+        "tests/test_p2_bounded_io.py",
+        "tests/test_p2_bounds.py",
+        "tests/test_p2_buttons.py",
+        "tests/test_p2_context.py",
+        "tests/test_p2_control.py",
+        "tests/test_p2_enable.py",
+        "tests/test_p2_fast_stop.py",
+        "tests/test_p2_feedback.py",
+        "tests/test_p2_lifecycle.py",
+        "tests/test_p2_options.py",
+        "tests/test_p2_races.py",
+        "tests/test_p2_receipts.py",
+        "tests/test_p2_registry.py",
+        "tests/test_p2_restart.py",
+        "tests/test_p2_services.py",
+        "tests/test_p2_start_bounds.py",
+        "tests/test_p2_wire.py",
+        "tests/test_restart.py",
+        "tests/test_safety.py",
+        "tests/test_sources.py",
+        "tests/test_validation.py",
+        "tests/test_writes.py"
+      ],
+      "different": [
+        {
+          "path": "custom_components/uninus_nutriculture/control.py",
+          "old": "944a26cfb67b53d63fee390aa3bb54e41ed886d58177458641b03c739d21b2d5",
+          "new": "2038ec1b06b8c3966981e17988b2b87986731fd70708b6a74ec30f8bead58990"
+        }
+      ]
+    },
+    "uninus-nutriculture-card": {
+      "raw_index_same": [
+        "package.json",
+        "tests/check.py",
+        "tests/record_run.py",
+        "tests/test_browser.py",
+        "tests/test_contract.cjs",
+        "uninus-nutriculture-card.js"
+      ],
+      "different": []
+    }
+  },
+  "red_snapshot_differences": [
+    {
+      "path": "pyproject.toml",
+      "newline_only": true
+    },
+    {
+      "path": "tests\\conftest.py",
+      "newline_only": true
+    },
+    {
+      "path": "tests\\test_native.py",
+      "newline_only": true
+    },
+    {
+      "path": "tools\\evidence.py",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\const.py",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\control.py",
+      "newline_only": false
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\manager.py",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\manifest.json",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\number.py",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\sensor.py",
+      "newline_only": true
+    },
+    {
+      "path": "custom_components\\uninus_nutriculture\\__init__.py",
+      "newline_only": true
+    }
+  ],
+  "consumed_controller": {
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-q1-quality-ce0a9ba6bf\\native-temp\\test_same_transient_source_inv0\\control-ha\\custom_components\\uninus_nutriculture\\control.py": "2038ec1b06b8c3966981e17988b2b87986731fd70708b6a74ec30f8bead58990",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-q1-quality-ce0a9ba6bf\\native-temp\\test_invalid_source_during_app1\\control-ha\\custom_components\\uninus_nutriculture\\control.py": "2038ec1b06b8c3966981e17988b2b87986731fd70708b6a74ec30f8bead58990",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-q1-quality-ce0a9ba6bf\\native-temp\\test_invalid_source_during_app0\\control-ha\\custom_components\\uninus_nutriculture\\control.py": "2038ec1b06b8c3966981e17988b2b87986731fd70708b6a74ec30f8bead58990"
+  }
+}

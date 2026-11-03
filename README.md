@@ -1,10 +1,22 @@
 # UNiNUS Nutriculture
 
-> 最新控制定案（尚未實作）：取消獨立鏈結、各階段實際開始前查星期、新增原生整輪運行Switch並保留start_flow；見[CONTROL_DECISIONS.md](docs/CONTROL_DECISIONS.md)。P1仍僅影子監測。
+## P2候選：隔離測試入口與限制
 
-Home Assistant 自訂整合，網域 `uninus_nutriculture`。**0.1.0 alpha 僅實作 P1 影子監測與原生參數，絕不致動。**
+**P2補水候選已通過獨立SPEC與品質／安全審查；未部署原HA，不應直接接管實機。**完整結果與交付界線見[P2_ACCEPTANCE.md](docs/P2_ACCEPTANCE.md)。
 
-沒有輸出對應、MQTT 用戶端、控制按鈕、幫浦或閥服務呼叫；不需要、也不匯入既有農場帳密或位址。即使所有數據合格，`ready_for_irrigation` 仍固定為 `false`。不得把 P1 當作自動灌溉安全控制器。
+- 後端原生Options明選已註冊補水輸出、commissioning確認、回饋期限及星期；保存/取消不致動。
+- 先允許總開關與補水子開關，再用原生整輪Switch或`uninus_nutriculture.start_flow`請求一次補水；ON不會自行打開其他Enable。
+- 新版Card選擇後端實際的**schema2控制狀態Sensor**，即可看見總/補水/整輪、急停/復歸；舊schema1監測Sensor仍無控制按鈕。不要使用來源pH/EC/液位Sensor作入口或猜測Entity ID。
+- 高水位、正常停止、過期/無效來源、逾時及急停交由後端處理；未確認OFF不顯示假成功。運行中重複ON不重啟，重啟HA不續藥。
+- 人類操作預設僅管理員；原生automation可使用內部Context。P2只有補水，養/酸/獨立混合不可啟動，也沒有流程編排UI或內建排程。
+- Commissioning勾選不是韌體/斷線保護的軟體證明；HA當機/通訊失效時，一般Switch不保證會自停。只能識別已知Registry/平台uniqueId綁定，不能推測所有實體別名；部署前需另行確認設備端保護。
+- 本機已驗證：backend151項、Card Node9項/真Chromium23項及shipped UI→真隔離HA handler→SwitchEntity假硬體。這不是原HA前台宿主、HACS安裝或物理驗收；最新CI只以對應commit的Actions為準。
+
+
+
+Home Assistant自訂整合，網域`uninus_nutriculture`。**0.2.0為P2補水候選：已實作需明確commission的受控補水，並保留P1監測與10個原生Number。獨立審查已通過，實機及HACS安裝尚未驗收。**
+
+舊schema1 Sensor僅監測；另有schema2控制Sensor、總/階段/整輪Switch與急停/復歸。初始無綁定、總OFF，不會自動啟動；沒有MQTT客戶端或原站帳密。P1及P2的ready_for_irrigation都固定false。監測Sensor的shadow表示此介面不控制，不代表同槽控制器一定閒置。
 
 ## 安裝與設定
 
@@ -35,7 +47,7 @@ Home Assistant 自訂整合，網域 `uninus_nutriculture`。**0.1.0 alpha 僅�
 | `ph_timeout` | 190 | 1–1440 | 1 | min |
 | `mix_duration` | 10 | 1–1440 | 1 | min |
 
-四個時間參數**只儲存供未來控制階段使用**，不啟動任何計時控制或設備。所有寫入均檢查有限數、界限、精確十進位步進及三組 `low < high`；不合格則整組參數與 options 保持不變。每槽共用鎖序列化寫入，並在取得鎖後重新確認 Number 的生命週期及 registry 擁有權。卸載後與排隊中的舊實體寫入會拒絕。
+P1監測介面不啟動設備；P2補水控制會使用refill_timeout，其他加藥/混合時間仍待P3。所有寫入均檢查有限數、界限、精確十進位步進及三組 `low < high`；不合格則整組參數與 options 保持不變。每槽共用鎖序列化寫入，並在取得鎖後重新確認 Number 的生命週期及 registry 擁有權。卸載後與排隊中的舊實體寫入會拒絕。
 
 原生 HA 的服務 schema 可能先將布林轉成數字；本整合不覆寫全域服務 schema。自動化請傳數值而非布林。對整合內部保留型別的寫入邊界，布林會拒絕。
 
@@ -69,21 +81,21 @@ reasons: []
 
 `reasons` 最多三項，順序固定 pH → EC → level。每個來源只取一個穩定碼，優先序為 `{key}_missing`、`{key}_unit`、`{key}_invalid`、`{key}_stale`、`{key}_out_of_range`。不包含任意例外文字或來源機密。
 
-## 完整產品範圍（依最新邊界修訂，後續尚未實作）
+## 完整產品範圍（P2補水候選已接通，其餘分期保留）
 
 | 階段 | 範圍 | 目前狀態 |
 |---|---|---|
 | P1 | 影子監測、原生來源選擇／選項、十個原生 Number、固定 status 契約 | 本 alpha 已實作與離線原生 Core 測試 |
-| P2 | 總/四子開關、統一gate、外部整輪服務契約、補水安全骨架 | 待實作；沒有任何輸出控制；已確認取消鏈結，新增整輪運行Switch |
+| P2 | 總/四子開關、統一gate、外部整輪服務契約、補水安全骨架 | 補水候選已實作；native/瀏覽器/跨層測試通過，獨立審查已通過；發布/CI以對應commit為準，實機尚未驗收 |
 | P3 | 四階段可配置順序/重疊/相對延遲與條件、每階段七日複選、最小階段列UI/預覽、加藥/混合/仲裁、原子群組參數 | 待實作；R03評估時點已確認，其他R02等細節待確認，P1仍僅逐項Number |
 | P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | 待實作；不建排程器、不匯入排程、不管理外部腳本/旁支 |
 | P5 | 進階視覺化編輯器、手機/鍵盤、診斷/歷史、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
 
-本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供 P1 自訂 Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。這不代表整合 P1 已通過全部獨立審查或線上驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
+本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供 P1相容／P2操作 Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。P2已完成獨立審查，不代表HACS安裝或實機驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
 
-## 本次設計補充（尚未實作）
+## 控制規範與後續設計
 
-- [總開關、四階段子開關與可配置流程](docs/CONTROL_SWITCHES.md)：P2 建立骨架、P3 完整接入；不改變 P1 的影子模式。
+- [總開關、四階段子開關與可配置流程](docs/CONTROL_SWITCHES.md)：P2骨架已實作，P3完整階段待接入；舊schema1監測介面保留。
 - [流程編排/UI、每階段星期與外部啟動研究](docs/FLOW_DESIGN_RESEARCH.md)：建議階段列＋開始條件/延遲＋並行組＋預覽；R01取消鏈結及R03實際開始前查星期已確認；新增整輪運行Switch，R02/R04等細節待確認。何時啟動整輪由外部排程/HA automation決定；星期僅為允許gate，混合/脈衝/安全期限仍由後端管理。
 - [原系統與新規範功能差異盤點](docs/FUNCTIONAL_PARITY_REVIEW.md)：區分已實作、保留用途、刻意改善與待決策，作為後續驗收基準。
 

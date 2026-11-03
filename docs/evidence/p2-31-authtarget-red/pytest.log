@@ -1,0 +1,69 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_________________ test_domain_authorizes_before_target_lookup _________________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_domain_authorizes_before_target_lookup(control_hass):
+        from homeassistant.auth import auth_manager_from_config
+        hass = control_hass
+        from homeassistant.setup import async_setup_component
+        assert await async_setup_component(hass, DOMAIN, {})
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        with pytest.raises(Unauthorized):
+>           await hass.services.async_call(DOMAIN, "start_flow", {"config_entry_id": "absent"}, blocking=True, context=Context(user_id="absent"))
+
+tests\test_p2_auth.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\homeassistant\core.py:2963: in async_call
+    response_data = await coro
+                    ^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\core.py:3006: in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+call = <ServiceCall uninus_nutriculture.start_flow (c:01M6FMVW8VYFB2YKFW69SZ87HM): config_entry_id=absent>
+
+    async def start(call):
+        entry = hass.config_entries.async_get_entry(call.data["config_entry_id"])
+        if (
+            entry is None
+            or entry.domain != DOMAIN
+            or entry.state is not ConfigEntryState.LOADED
+            or not getattr(entry, "runtime_data", None)
+            or not entry.runtime_data.active
+        ):
+            from homeassistant.exceptions import ServiceValidationError
+    
+>           raise ServiceValidationError("entry_not_loaded")
+E           homeassistant.exceptions.ServiceValidationError: entry_not_loaded
+
+custom_components\uninus_nutriculture\services.py:22: ServiceValidationError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup - h...
+1 failed, 3 deselected, 5 warnings in 2.31s

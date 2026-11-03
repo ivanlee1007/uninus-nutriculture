@@ -1,0 +1,199 @@
+"""Entry-owned refill execution; no scheduling or dosing."""
+import asyncio
+import uuid
+import time
+from datetime import timedelta
+
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.const import EVENT_HOMEASSISTANT_STOP, EVENT_STATE_CHANGED
+from homeassistant.core import callback
+
+from .control_auth import authorize
+from .control_settings import resolve
+
+
+class Controller:
+    def __init__(self, tank):
+        self.tank = tank
+        self.hass = tank.hass
+        self.master = False
+        self.refill = False
+        self.running = False
+        self.flow_state = "uncommissioned"
+        self.fault = None
+        self.run_id = None
+        self.lock = asyncio.Lock()
+        self.target = None
+        self.started = 0
+        self.generation = 0
+        self.receipts = {}
+        self.unsub = self.hass.bus.async_listen(EVENT_STATE_CHANGED, self.changed)
+        self.timer = async_track_time_interval(self.hass, self.tick, timedelta(seconds=1))
+        self.registry_unsub = self.hass.bus.async_listen(er.EVENT_ENTITY_REGISTRY_UPDATED, self.registry_changed)
+        self.shutdown_listener = self.hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, self.shutdown)
+
+    @callback
+    def registry_changed(self, event):
+        self.tank.publish()
+        if self.running:
+            self.hass.async_create_task(self.evaluate())
+
+    async def shutdown(self, event=None):
+        self.tank.active = False
+        self.master = False
+        await self.stop()
+        self.unsub()
+        self.registry_unsub()
+        self.timer()
+        if event is None:
+            self.shutdown_listener()
+        return not self.running
+
+    @callback
+    def tick(self, now):
+        if self.running:
+            self.hass.async_create_task(self.evaluate())
+
+    @callback
+    def changed(self, event):
+        if self.running and event.data.get("entity_id") in (*self.tank.sources.values(), self.target):
+            self.hass.async_create_task(self.evaluate())
+
+    async def evaluate(self):
+        if not self.running or self.flow_state != "refilling":
+            return
+        try:
+            self.target = resolve(self.hass, self.tank.entry.options.get("control", {}).get("binding"))
+        except Exception:
+            self.fault = "output_identity_invalid"
+        state = self.hass.states.get(self.target)
+        if self.tank.snapshot()[0] == "invalid":
+            self.fault = "source_invalid"
+        elif state is None or state.state != "on":
+            self.fault = "output_unexpected"
+        elif time.monotonic() - self.started >= self.tank.parameters["refill_timeout"] * 60:
+            self.fault = "refill_timeout"
+        if self.fault:
+            await self.stop("fault")
+        elif float(self.hass.states.get(self.tank.sources["level"]).state) >= self.tank.parameters["level_high"]:
+            await self.stop("completed")
+
+    async def action(self, key, enabled, context):
+        await authorize(self.hass, context)
+        from homeassistant.exceptions import ServiceValidationError
+        if not self.tank.active or key not in ("automation_enabled", "refill_enabled", "flow_run"):
+            raise ServiceValidationError("inactive_control")
+        if enabled and key != "flow_run":
+            if self.fault:
+                raise ServiceValidationError("fault_latched")
+            config = self.tank.entry.options.get("control", {})
+            if not config.get("commissioned"):
+                raise ServiceValidationError("uncommissioned")
+            resolve(self.hass, config.get("binding"))
+        if key == "automation_enabled":
+            self.master = enabled
+        elif key == "refill_enabled":
+            self.refill = enabled
+        elif key == "flow_run":
+            if enabled:
+                return await self.start(context)
+            await self.stop()
+        if key in ("automation_enabled", "refill_enabled") and not enabled:
+            await self.stop()
+        self.tank.publish()
+
+    async def press(self, key, context):
+        from homeassistant.exceptions import ServiceValidationError
+        await authorize(self.hass, context)
+        if key == "emergency_stop":
+            self.fault = "emergency_stop"
+            self.master = False
+            await self.stop("fault")
+            self.flow_state = "fault"
+        elif key == "reset_fault":
+            target = resolve(self.hass, self.tank.entry.options.get("control", {}).get("binding"))
+            state = self.hass.states.get(target)
+            if self.running or state is None or state.state != "off" or self.tank.snapshot()[0] == "invalid":
+                raise ServiceValidationError("reset_unsafe")
+            self.fault = None
+            self.master = False
+            self.flow_state = "disabled"
+        self.tank.publish()
+
+    async def start(self, context, *, request_id=None, service=False):
+        from homeassistant.exceptions import ServiceValidationError
+        generation = self.generation
+        await authorize(self.hass, context)
+        async with self.lock:
+            await authorize(self.hass, context)
+            if generation != self.generation or not self.tank.active:
+                raise ServiceValidationError("revoked")
+            self.receipts = {key: value for key, value in self.receipts.items() if time.monotonic() - value[0] < 86400}
+            if request_id in self.receipts:
+                return dict(self.receipts[request_id][1])
+            if not self.master or not self.refill:
+                raise ServiceValidationError("disabled")
+            if self.running:
+                if service or self.flow_state != "refilling":
+                    raise ServiceValidationError("busy")
+                return {"accepted": True, "run_id": self.run_id}
+            from homeassistant.util import dt as dt_util
+            from .control_settings import DAYS
+            config = self.tank.entry.options.get("control", {})
+            if not config.get("commissioned"):
+                raise ServiceValidationError("uncommissioned")
+            self.target = resolve(self.hass, config.get("binding"))
+            if self.tank.snapshot()[0] == "invalid":
+                raise ServiceValidationError("source_invalid")
+            if float(self.hass.states.get(self.tank.sources["level"]).state) >= self.tank.parameters["level_low"]:
+                raise ServiceValidationError("level_not_low")
+            output = self.hass.states.get(self.target)
+            if output is None or output.state != "off":
+                raise ServiceValidationError("output_not_off")
+            if DAYS[dt_util.now().weekday()] not in config.get("allowed_weekdays", {}).get("refill", DAYS):
+                raise ServiceValidationError("weekday")
+            self.started = time.monotonic()
+            self.run_id = uuid.uuid4().hex
+            self.running = True
+            self.flow_state = "starting"
+            try:
+                async with asyncio.timeout(config.get("feedback_timeout", 10)):
+                    await self.hass.services.async_call("switch", "turn_on", {"entity_id": self.target}, blocking=True, context=context)
+                    while (output := self.hass.states.get(self.target)) is None or output.state != "on":
+                        await asyncio.sleep(0.02)
+            except Exception as err:
+                self.fault = "start_unconfirmed"
+                await self._stop_locked("fault")
+                raise ServiceValidationError("start_unconfirmed") from err
+            self.flow_state = "refilling"
+            receipt = {"accepted": True, "run_id": self.run_id}
+            if request_id is not None:
+                self.receipts[request_id] = (time.monotonic(), receipt)
+                while len(self.receipts) > 64:
+                    self.receipts.pop(next(iter(self.receipts)))
+            self.tank.publish()
+            return dict(receipt)
+
+    async def stop(self, state="aborted"):
+        self.generation += 1
+        async with self.lock:
+            await self._stop_locked(state)
+
+    async def _stop_locked(self, state):
+            if self.running:
+                self.flow_state = "stopping"
+                timeout = self.tank.entry.options.get("control", {}).get("feedback_timeout", 10)
+                try:
+                    async with asyncio.timeout(timeout):
+                        self.target = resolve(self.hass, self.tank.entry.options.get("control", {}).get("binding"))
+                        await self.hass.services.async_call("switch", "turn_off", {"entity_id": self.target}, blocking=True)
+                        while (output := self.hass.states.get(self.target)) is None or output.state != "off":
+                            await asyncio.sleep(0.02)
+                except (TimeoutError, Exception):
+                    self.fault = "stop_unconfirmed"
+                    self.flow_state = "fault"
+                else:
+                    self.running = False
+                    self.flow_state = "fault" if self.fault else state
+                self.tank.publish()

@@ -1,0 +1,146 @@
+.FFF                                                                     [100%]
+================================== FAILURES ===================================
+____________ test_inflight_on_cannot_escape_safety_cleanup[source] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'source'
+
+    @pytest.mark.parametrize("cause", ["source", "off", "cancel"])
+    async def test_inflight_on_cannot_escape_safety_cleanup(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        stop = None
+        if cause == "source":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif cause == "off":
+            stop = asyncio.create_task(toggle(hass, tank, "flow_run", False))
+            await asyncio.sleep(0.02)
+        else:
+            start.cancel()
+            await asyncio.sleep(0.02)
+        hardware.on_release.set()
+        result = await asyncio.gather(start, return_exceptions=True)
+        if stop:
+            await stop
+        await hass.async_block_till_done()
+        assert hass.states.get(hardware.entity_id).state == "off"
+        assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+>       assert isinstance(result[0], (ServiceValidationError, asyncio.CancelledError))
+E       AssertionError: assert False
+E        +  where False = isinstance(None, (<class 'homeassistant.exceptions.ServiceValidationError'>, <class 'asyncio.exceptions.CancelledError'>))
+
+tests\test_p2_races.py:54: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____________ test_inflight_on_cannot_escape_safety_cleanup[off] ______________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'off'
+
+    @pytest.mark.parametrize("cause", ["source", "off", "cancel"])
+    async def test_inflight_on_cannot_escape_safety_cleanup(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        stop = None
+        if cause == "source":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif cause == "off":
+            stop = asyncio.create_task(toggle(hass, tank, "flow_run", False))
+            await asyncio.sleep(0.02)
+        else:
+            start.cancel()
+            await asyncio.sleep(0.02)
+        hardware.on_release.set()
+        result = await asyncio.gather(start, return_exceptions=True)
+        if stop:
+            await stop
+        await hass.async_block_till_done()
+        assert hass.states.get(hardware.entity_id).state == "off"
+        assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+>       assert isinstance(result[0], (ServiceValidationError, asyncio.CancelledError))
+E       AssertionError: assert False
+E        +  where False = isinstance(None, (<class 'homeassistant.exceptions.ServiceValidationError'>, <class 'asyncio.exceptions.CancelledError'>))
+
+tests\test_p2_races.py:54: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+____________ test_inflight_on_cannot_escape_safety_cleanup[cancel] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'cancel'
+
+    @pytest.mark.parametrize("cause", ["source", "off", "cancel"])
+    async def test_inflight_on_cannot_escape_safety_cleanup(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        stop = None
+        if cause == "source":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif cause == "off":
+            stop = asyncio.create_task(toggle(hass, tank, "flow_run", False))
+            await asyncio.sleep(0.02)
+        else:
+            start.cancel()
+            await asyncio.sleep(0.02)
+        hardware.on_release.set()
+        result = await asyncio.gather(start, return_exceptions=True)
+        if stop:
+            await stop
+        await hass.async_block_till_done()
+        assert hass.states.get(hardware.entity_id).state == "off"
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_races.py:53: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[source]
+FAILED tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[off]
+FAILED tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[cancel]
+3 failed, 1 passed, 5 warnings in 2.92s

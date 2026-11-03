@@ -1,0 +1,11 @@
+{
+  "native_passed": 151,
+  "ruff": "pass; 49 files formatted",
+  "bridge_ui_actions": 10,
+  "fake_on_off_cycles": 4,
+  "consumed_input_snapshot": true,
+  "full_tree_claim": false,
+  "unchanged_card_evidence": "p2-exact-index-gate/card (Node9/Chromium23), source blob identity must remain unchanged",
+  "review_pending": true,
+  "physical_device_test": false
+}

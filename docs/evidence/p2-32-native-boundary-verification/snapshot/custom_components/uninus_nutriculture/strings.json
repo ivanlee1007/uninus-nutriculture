@@ -1,0 +1,54 @@
+{
+  "title": "UNiNUS Nutriculture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add nutrient tank",
+        "description": "New tanks monitor only. Refill requires explicit output selection, commissioning and a separate start request. Save/Cancel never actuates. EC must use mS/cm and level must use m.",
+        "data": {
+          "name": "Tank name",
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Sources and freshness",
+        "description": "New tanks monitor only. Refill requires explicit output selection, commissioning and a separate start request. Save/Cancel never actuates. EC must use mS/cm and level must use m.",
+        "data": {
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)",
+          "refill_output": "Physical refill output switch",
+          "commissioned": "Verified physical identity, risks, OFF feedback and independent fail-safe",
+          "feedback_timeout": "Feedback deadline (seconds; 10 is an engineering default, not an original-HA value)",
+          "refill_weekdays": "Refill weekdays (empty forbids; P3 remains unavailable)",
+          "nutrient_weekdays": "Nutrient weekdays (empty forbids; P3 remains unavailable)",
+          "acid_weekdays": "Acid weekdays (empty forbids; P3 remains unavailable)",
+          "mix_weekdays": "Mix weekdays (empty forbids; P3 remains unavailable)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity.",
+      "output_identity_invalid": "Output registry identity is invalid or disabled. Re-verify it.",
+      "output_already_owned": "Another tank owns this identifiable output.",
+      "output_unbound": "Select a registered output explicitly.",
+      "control_busy": "Disable master and confirm the run is stopped before rebinding/commissioning.",
+      "output_not_off": "Old and new outputs must be known OFF; saving never closes them."
+    }
+  }
+}

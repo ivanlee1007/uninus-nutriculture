@@ -1,0 +1,122 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+______________ test_start_service_requires_active_admin[unknown] ______________
+
+control_hass = <HomeAssistant NOT_RUNNING>, kind = 'unknown'
+
+    @pytest.mark.parametrize("kind", ["unknown", "nonadmin", "inactive"])
+    async def test_start_service_requires_active_admin(control_hass, kind):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        from homeassistant.auth import auth_manager_from_config
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        await hass.auth.async_create_user("owner")
+        user = await hass.auth.async_create_user("test")
+        if kind == "inactive":
+            await hass.auth.async_update_user(user, is_active=False)
+        with pytest.raises(Unauthorized):
+            await hass.services.async_call(DOMAIN, "start_flow", {"config_entry_id": tank.entry_id},
+                blocking=True, context=Context(user_id="absent" if kind == "unknown" else user.id))
+        assert not hass.data["p2_fixture"]["calls"]
+>       assert tank.runtime_data.control.running is False, "Denied principal must not mutate admission"
+E       AssertionError: Denied principal must not mutate admission
+E       assert True is False
+E        +  where True = <custom_components.uninus_nutriculture.control.Controller object at 0x0000022025F52510>.running
+E        +    where <custom_components.uninus_nutriculture.control.Controller object at 0x0000022025F52510> = <custom_components.uninus_nutriculture.manager.Tank object at 0x0000022025F52A50>.control
+E        +      where <custom_components.uninus_nutriculture.manager.Tank object at 0x0000022025F52A50> = <ConfigEntry entry_id=01M6FJGVQ2MC16JY9EQ3FWBN0C version=1 domain=uninus_nutriculture title=Tank state=ConfigEntryState.LOADED unique_id=None>.runtime_data
+
+tests\test_p2_auth.py:26: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____________ test_start_service_requires_active_admin[nonadmin] ______________
+
+control_hass = <HomeAssistant NOT_RUNNING>, kind = 'nonadmin'
+
+    @pytest.mark.parametrize("kind", ["unknown", "nonadmin", "inactive"])
+    async def test_start_service_requires_active_admin(control_hass, kind):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        from homeassistant.auth import auth_manager_from_config
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        await hass.auth.async_create_user("owner")
+        user = await hass.auth.async_create_user("test")
+        if kind == "inactive":
+            await hass.auth.async_update_user(user, is_active=False)
+        with pytest.raises(Unauthorized):
+            await hass.services.async_call(DOMAIN, "start_flow", {"config_entry_id": tank.entry_id},
+                blocking=True, context=Context(user_id="absent" if kind == "unknown" else user.id))
+        assert not hass.data["p2_fixture"]["calls"]
+>       assert tank.runtime_data.control.running is False, "Denied principal must not mutate admission"
+E       AssertionError: Denied principal must not mutate admission
+E       assert True is False
+E        +  where True = <custom_components.uninus_nutriculture.control.Controller object at 0x00000220260A96D0>.running
+E        +    where <custom_components.uninus_nutriculture.control.Controller object at 0x00000220260A96D0> = <custom_components.uninus_nutriculture.manager.Tank object at 0x00000220260A9590>.control
+E        +      where <custom_components.uninus_nutriculture.manager.Tank object at 0x00000220260A9590> = <ConfigEntry entry_id=01M6FJGW4MAG2GWSP4PRB5V5C6 version=1 domain=uninus_nutriculture title=Tank state=ConfigEntryState.LOADED unique_id=None>.runtime_data
+
+tests\test_p2_auth.py:26: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_____________ test_start_service_requires_active_admin[inactive] ______________
+
+control_hass = <HomeAssistant NOT_RUNNING>, kind = 'inactive'
+
+    @pytest.mark.parametrize("kind", ["unknown", "nonadmin", "inactive"])
+    async def test_start_service_requires_active_admin(control_hass, kind):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        from homeassistant.auth import auth_manager_from_config
+        hass.auth = await auth_manager_from_config(hass, [], [])
+        await hass.auth.async_create_user("owner")
+        user = await hass.auth.async_create_user("test")
+        if kind == "inactive":
+            await hass.auth.async_update_user(user, is_active=False)
+        with pytest.raises(Unauthorized):
+            await hass.services.async_call(DOMAIN, "start_flow", {"config_entry_id": tank.entry_id},
+                blocking=True, context=Context(user_id="absent" if kind == "unknown" else user.id))
+        assert not hass.data["p2_fixture"]["calls"]
+>       assert tank.runtime_data.control.running is False, "Denied principal must not mutate admission"
+E       AssertionError: Denied principal must not mutate admission
+E       assert True is False
+E        +  where True = <custom_components.uninus_nutriculture.control.Controller object at 0x0000022026101F90>.running
+E        +    where <custom_components.uninus_nutriculture.control.Controller object at 0x0000022026101F90> = <custom_components.uninus_nutriculture.manager.Tank object at 0x0000022026101E50>.control
+E        +      where <custom_components.uninus_nutriculture.manager.Tank object at 0x0000022026101E50> = <ConfigEntry entry_id=01M6FJGW7NARP3TRFTJYKR1W3Z version=1 domain=uninus_nutriculture title=Tank state=ConfigEntryState.LOADED unique_id=None>.runtime_data
+
+tests\test_p2_auth.py:26: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown]
+FAILED tests/test_p2_auth.py::test_start_service_requires_active_admin[nonadmin]
+FAILED tests/test_p2_auth.py::test_start_service_requires_active_admin[inactive]
+3 failed, 5 warnings in 2.91s

@@ -1,0 +1,42 @@
+{
+  "title": "UNiNUS Nutriculture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add nutrient tank",
+        "description": "Shadow monitoring only: never controls pumps, valves or outputs. EC must use mS/cm and level must use m; no automatic unit conversion.",
+        "data": {
+          "name": "Tank name",
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Sources and freshness",
+        "description": "Shadow monitoring only: never controls pumps, valves or outputs. EC must use mS/cm and level must use m; no automatic unit conversion.",
+        "data": {
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity."
+    }
+  }
+}

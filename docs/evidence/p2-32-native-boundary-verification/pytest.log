@@ -1,0 +1,59 @@
+...F.................                                                    [100%]
+================================== FAILURES ===================================
+_____________________ test_wrong_domain_entry_is_rejected _____________________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_wrong_domain_entry_is_rejected(control_hass):
+        hass = control_hass
+        assert await async_setup_component(hass, DOMAIN, {})
+        foreign = entry()
+        # Use a real ConfigEntry in the real registry, without setting up a foreign integration.
+>       foreign.domain = "foreign_fixture"
+        ^^^^^^^^^^^^^^
+
+tests\test_p2_acceptance.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <ConfigEntry entry_id=01M6FN5JB5XS5SYYTKKWAR120K version=1 domain=uninus_nutriculture title=Tank state=ConfigEntryState.NOT_LOADED unique_id=None>
+key = 'domain', value = 'foreign_fixture'
+
+    @override
+    def __setattr__(self, key: str, value: Any) -> None:
+        """Set an attribute."""
+        if key in UPDATE_ENTRY_CONFIG_ENTRY_ATTRS:
+            raise AttributeError(
+                f"{key} cannot be changed directly, use async_update_entry instead"
+            )
+        if key in FROZEN_CONFIG_ENTRY_ATTRS:
+>           raise AttributeError(f"{key} cannot be changed")
+E           AttributeError: domain cannot be changed
+
+.venv\Lib\site-packages\homeassistant\config_entries.py:603: AttributeError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_acceptance.py::test_wrong_domain_entry_is_rejected - Att...
+1 failed, 20 passed, 5 warnings in 5.66s

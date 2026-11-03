@@ -1,0 +1,42 @@
+{
+  "title": "UNiNUS Nutriculture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "新增營養液槽",
+        "description": "僅影子監測；不會控制幫浦、閥或任何輸出。EC 僅接受 mS/cm，液位僅接受 m；不自動換算單位。",
+        "data": {
+          "name": "水槽名稱",
+          "ph": "pH 來源感測器",
+          "ec": "EC 來源感測器 (mS/cm)",
+          "level": "液位來源感測器 (m)",
+          "max_age_seconds": "讀值最長有效時間（秒）"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "請輸入 1–100 個字元的名稱。",
+      "invalid_max_age": "請輸入 10–86400 的整數秒數。",
+      "invalid_source": "請選擇現有的 sensor 實體。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "來源與時效設定",
+        "description": "僅影子監測；不會控制幫浦、閥或任何輸出。EC 僅接受 mS/cm，液位僅接受 m；不自動換算單位。",
+        "data": {
+          "ph": "pH 來源感測器",
+          "ec": "EC 來源感測器 (mS/cm)",
+          "level": "液位來源感測器 (m)",
+          "max_age_seconds": "讀值最長有效時間（秒）"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "請輸入 1–100 個字元的名稱。",
+      "invalid_max_age": "請輸入 10–86400 的整數秒數。",
+      "invalid_source": "請選擇現有的 sensor 實體。"
+    }
+  }
+}

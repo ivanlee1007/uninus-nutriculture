@@ -1,0 +1,27 @@
+OBSERVATION={"recover": false, "during_invalid": {"state": "starting", "fault": "source_invalid", "output": "on", "calls": ["turn_on"]}, "after_return": {"result": "ServiceValidationError", "state": "fault", "fault": "source_invalid", "output": "off", "calls": ["turn_on", "turn_off"]}}
+.OBSERVATION={"recover": true, "during_invalid": {"state": "starting", "fault": "source_invalid", "output": "on", "calls": ["turn_on"]}, "after_return": {"result": "ServiceValidationError", "state": "fault", "fault": "source_invalid", "output": "off", "calls": ["turn_on", "turn_off"]}}
+.ADJACENT fault source_invalid off
+.
+============================== warnings summary ===============================
+::test_invalid_source_during_applied_on_cannot_be_forgotten[False]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+::test_invalid_source_during_applied_on_cannot_be_forgotten[False]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+::test_invalid_source_during_applied_on_cannot_be_forgotten[False]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+::test_invalid_source_during_applied_on_cannot_be_forgotten[False]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+::test_invalid_source_during_applied_on_cannot_be_forgotten[False]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 5 warnings in 4.94s

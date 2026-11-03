@@ -1,0 +1,30 @@
+BROWSER_VERSION=156.0.8078.4
+test_01_shadow_readings_and_untrusted_title (test_browser.BrowserTests.test_01_shadow_readings_and_untrusted_title) ... ok
+test_02_explicit_single_item_save_uses_actual_metadata (test_browser.BrowserTests.test_02_explicit_single_item_save_uses_actual_metadata) ... ok
+test_03_draft_cannot_follow_a_new_tank (test_browser.BrowserTests.test_03_draft_cannot_follow_a_new_tank) ... ok
+test_04_old_completion_cannot_touch_reconfigured_draft (test_browser.BrowserTests.test_04_old_completion_cannot_touch_reconfigured_draft) ... ok
+test_05_mapping_drift_cannot_retarget_a_typed_draft (test_browser.BrowserTests.test_05_mapping_drift_cannot_retarget_a_typed_draft) ... ok
+test_06_picker_editor_preserves_config_and_toggles_parameters (test_browser.BrowserTests.test_06_picker_editor_preserves_config_and_toggles_parameters) ... ok
+test_07_unresolved_target_stays_locked_across_same_config (test_browser.BrowserTests.test_07_unresolved_target_stays_locked_across_same_config) ... ok
+test_08_missing_incompatible_and_invalid_targets_fail_closed (test_browser.BrowserTests.test_08_missing_incompatible_and_invalid_targets_fail_closed) ... ok
+test_09_numeric_range_step_finite_and_rejection_preserves_draft (test_browser.BrowserTests.test_09_numeric_range_step_finite_and_rejection_preserves_draft) ... ok
+test_10_live_updates_preserve_node_focus_caret_and_disclosure (test_browser.BrowserTests.test_10_live_updates_preserve_node_focus_caret_and_disclosure) ... ok
+test_11_disconnected_success_and_failure_cannot_clear_draft (test_browser.BrowserTests.test_11_disconnected_success_and_failure_cannot_clear_draft) ... ok
+test_12_responsive_geometry_and_screenshots (test_browser.BrowserTests.test_12_responsive_geometry_and_screenshots) ... GEOMETRY=[{"viewport": 320, "card": 304, "maxOverflow": 0, "outside": 0}, {"viewport": 768, "card": 752, "maxOverflow": 0, "outside": 0}, {"viewport": 1200, "card": 1184, "maxOverflow": 0, "outside": 0}]
+ok
+test_13_initialization_orders_and_editor_entity_events (test_browser.BrowserTests.test_13_initialization_orders_and_editor_entity_events) ... ok
+test_14_collapsed_card_surfaces_unwritable_parameters (test_browser.BrowserTests.test_14_collapsed_card_surfaces_unwritable_parameters) ... ok
+test_15_offline_demo_writes_only_simulated_memory (test_browser.BrowserTests.test_15_offline_demo_writes_only_simulated_memory) ... ok
+test_16_all_ten_parameters_target_their_own_number (test_browser.BrowserTests.test_16_all_ten_parameters_target_their_own_number) ... ok
+test_17_v2_displays_real_states_and_keeps_ten_number_editors (test_browser.BrowserTests.test_17_v2_displays_real_states_and_keeps_ten_number_editors) ... ok
+test_18_native_mapped_actions_rejection_and_authoritative_readback (test_browser.BrowserTests.test_18_native_mapped_actions_rejection_and_authoritative_readback) ... ok
+test_19_v2_latest_event_validation_and_fail_closed_targets (test_browser.BrowserTests.test_19_v2_latest_event_validation_and_fail_closed_targets) ... ok
+test_20_v2_pending_lifecycle_and_new_scope_notices (test_browser.BrowserTests.test_20_v2_pending_lifecycle_and_new_scope_notices) ... ok
+test_21_v2_pending_slot_switch_and_detached_events (test_browser.BrowserTests.test_21_v2_pending_slot_switch_and_detached_events) ... ok
+test_22_v2_geometry_dark_light_and_node_continuity (test_browser.BrowserTests.test_22_v2_geometry_dark_light_and_node_continuity) ... ok
+test_23_v2_demo_memory_only_actions_and_failures (test_browser.BrowserTests.test_23_v2_demo_memory_only_actions_and_failures) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 14.738s
+
+OK

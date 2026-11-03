@@ -1,0 +1,97 @@
+{
+  "shipped_card_sha256": "04304bc0f62c5a26bbaa4a28018543a0ab46728e5148c44f1f2e221bb4a8d25f",
+  "browser": {
+    "browser": "156.0.8078.4",
+    "mapped_ui_actions": 10,
+    "page_errors": [],
+    "high_water": true,
+    "normal_stop": true,
+    "emergency_reset": true,
+    "external_service_readback": true
+  },
+  "native_mapped_calls": [
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_automation_enabled"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_refill_enabled"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_flow_run"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_flow_run"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_off",
+      "data": {
+        "entity_id": "switch.tank_flow_run"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_flow_run"
+      }
+    },
+    {
+      "domain": "button",
+      "service": "press",
+      "data": {
+        "entity_id": "button.tank_emergency_stop"
+      }
+    },
+    {
+      "domain": "button",
+      "service": "press",
+      "data": {
+        "entity_id": "button.tank_reset_fault"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_on",
+      "data": {
+        "entity_id": "switch.tank_automation_enabled"
+      }
+    },
+    {
+      "domain": "switch",
+      "service": "turn_off",
+      "data": {
+        "entity_id": "switch.tank_flow_run"
+      }
+    }
+  ],
+  "actual_hardware_actions": [
+    "turn_on",
+    "turn_off",
+    "turn_on",
+    "turn_off",
+    "turn_on",
+    "turn_off",
+    "turn_on",
+    "turn_off"
+  ],
+  "active_run": false,
+  "physical_device_test": false,
+  "external_ha_access": false
+}

@@ -1,0 +1,201 @@
+........FFFFF                                                            [100%]
+================================== FAILURES ===================================
+______________________ test_running_safety_stop[source] _______________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'source'
+
+    @pytest.mark.parametrize("cause", ["source", "master", "refill", "external_off", "timeout"])
+    async def test_running_safety_stop(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        if cause == "source":
+            hass.states.async_set("sensor.ec", "unavailable")
+        elif cause in ("master", "refill"):
+            await toggle(hass, tank, "automation_enabled" if cause == "master" else "refill_enabled", False)
+        elif cause == "external_off":
+            hass.data["p2_fixture"]["hardware"]._attr_is_on = False
+            hass.data["p2_fixture"]["hardware"].async_write_ha_state()
+        else:
+            tank.runtime_data.control.started -= 190 * 60 + 1
+            await tank.runtime_data.control.evaluate()
+        await hass.async_block_till_done()
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_control.py:162: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+______________________ test_running_safety_stop[master] _______________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'master'
+
+    @pytest.mark.parametrize("cause", ["source", "master", "refill", "external_off", "timeout"])
+    async def test_running_safety_stop(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        if cause == "source":
+            hass.states.async_set("sensor.ec", "unavailable")
+        elif cause in ("master", "refill"):
+            await toggle(hass, tank, "automation_enabled" if cause == "master" else "refill_enabled", False)
+        elif cause == "external_off":
+            hass.data["p2_fixture"]["hardware"]._attr_is_on = False
+            hass.data["p2_fixture"]["hardware"].async_write_ha_state()
+        else:
+            tank.runtime_data.control.started -= 190 * 60 + 1
+            await tank.runtime_data.control.evaluate()
+        await hass.async_block_till_done()
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_control.py:162: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+______________________ test_running_safety_stop[refill] _______________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'refill'
+
+    @pytest.mark.parametrize("cause", ["source", "master", "refill", "external_off", "timeout"])
+    async def test_running_safety_stop(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        if cause == "source":
+            hass.states.async_set("sensor.ec", "unavailable")
+        elif cause in ("master", "refill"):
+            await toggle(hass, tank, "automation_enabled" if cause == "master" else "refill_enabled", False)
+        elif cause == "external_off":
+            hass.data["p2_fixture"]["hardware"]._attr_is_on = False
+            hass.data["p2_fixture"]["hardware"].async_write_ha_state()
+        else:
+            tank.runtime_data.control.started -= 190 * 60 + 1
+            await tank.runtime_data.control.evaluate()
+        await hass.async_block_till_done()
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_control.py:162: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___________________ test_running_safety_stop[external_off] ____________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'external_off'
+
+    @pytest.mark.parametrize("cause", ["source", "master", "refill", "external_off", "timeout"])
+    async def test_running_safety_stop(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        if cause == "source":
+            hass.states.async_set("sensor.ec", "unavailable")
+        elif cause in ("master", "refill"):
+            await toggle(hass, tank, "automation_enabled" if cause == "master" else "refill_enabled", False)
+        elif cause == "external_off":
+            hass.data["p2_fixture"]["hardware"]._attr_is_on = False
+            hass.data["p2_fixture"]["hardware"].async_write_ha_state()
+        else:
+            tank.runtime_data.control.started -= 190 * 60 + 1
+            await tank.runtime_data.control.evaluate()
+        await hass.async_block_till_done()
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_control.py:162: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+______________________ test_running_safety_stop[timeout] ______________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, cause = 'timeout'
+
+    @pytest.mark.parametrize("cause", ["source", "master", "refill", "external_off", "timeout"])
+    async def test_running_safety_stop(control_hass, cause):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        if cause == "source":
+            hass.states.async_set("sensor.ec", "unavailable")
+        elif cause in ("master", "refill"):
+            await toggle(hass, tank, "automation_enabled" if cause == "master" else "refill_enabled", False)
+        elif cause == "external_off":
+            hass.data["p2_fixture"]["hardware"]._attr_is_on = False
+            hass.data["p2_fixture"]["hardware"].async_write_ha_state()
+        else:
+            tank.runtime_data.control.started -= 190 * 60 + 1
+            await tank.runtime_data.control.evaluate()
+        await hass.async_block_till_done()
+>       assert hass.data["p2_fixture"]["calls"][-1][0] == "turn_off"
+E       AssertionError: assert 'turn_on' == 'turn_off'
+E         
+E         - turn_off
+E         ?       ^^
+E         + turn_on
+E         ?       ^
+
+tests\test_p2_control.py:162: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_control.py::test_running_safety_stop[source] - Assertion...
+FAILED tests/test_p2_control.py::test_running_safety_stop[master] - Assertion...
+FAILED tests/test_p2_control.py::test_running_safety_stop[refill] - Assertion...
+FAILED tests/test_p2_control.py::test_running_safety_stop[external_off] - Ass...
+FAILED tests/test_p2_control.py::test_running_safety_stop[timeout] - Assertio...
+5 failed, 8 passed, 5 warnings in 4.13s

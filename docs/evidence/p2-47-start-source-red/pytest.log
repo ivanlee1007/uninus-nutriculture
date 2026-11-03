@@ -1,0 +1,308 @@
+FFFFFF..                                                                 [100%]
+================================== FAILURES ===================================
+_ test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH] __
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = False, source = 'ph'
+value = 5.6, unit = 'pH'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+            assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+            assert hass.states.get(hardware.entity_id).state == "off"
+            control = tank.runtime_data.control
+>           assert control.fault == "source_invalid"
+E           AssertionError: assert 'start_unconfirmed' == 'source_invalid'
+E             
+E             - source_invalid
+E             + start_unconfirmed
+
+tests\test_p2_start_source.py:44: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_invalid_source_during_applied_on_cannot_be_forgotten[False-ec-0.85-mS/cm] _
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = False, source = 'ec'
+value = 0.85, unit = 'mS/cm'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+            assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+            assert hass.states.get(hardware.entity_id).state == "off"
+            control = tank.runtime_data.control
+>           assert control.fault == "source_invalid"
+E           AssertionError: assert 'start_unconfirmed' == 'source_invalid'
+E             
+E             - source_invalid
+E             + start_unconfirmed
+
+tests\test_p2_start_source.py:44: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_invalid_source_during_applied_on_cannot_be_forgotten[False-level-2-m] __
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = False, source = 'level'
+value = 2, unit = 'm'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+            assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+            assert hass.states.get(hardware.entity_id).state == "off"
+            control = tank.runtime_data.control
+>           assert control.fault == "source_invalid"
+E           AssertionError: assert 'start_unconfirmed' == 'source_invalid'
+E             
+E             - source_invalid
+E             + start_unconfirmed
+
+tests\test_p2_start_source.py:44: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__ test_invalid_source_during_applied_on_cannot_be_forgotten[True-ph-5.6-pH] __
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = True, source = 'ph'
+value = 5.6, unit = 'pH'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+>           assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+E           AssertionError: Observed source invalidation must revoke admitted ON despite recovery
+E           assert False
+E            +  where False = isinstance(None, ServiceValidationError)
+
+tests\test_p2_start_source.py:39: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_invalid_source_during_applied_on_cannot_be_forgotten[True-ec-0.85-mS/cm] _
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = True, source = 'ec'
+value = 0.85, unit = 'mS/cm'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+>           assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+E           AssertionError: Observed source invalidation must revoke admitted ON despite recovery
+E           assert False
+E            +  where False = isinstance(None, ServiceValidationError)
+
+tests\test_p2_start_source.py:39: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+__ test_invalid_source_during_applied_on_cannot_be_forgotten[True-level-2-m] __
+
+control_hass = <HomeAssistant NOT_RUNNING>, recover = True, source = 'level'
+value = 2, unit = 'm'
+
+    @pytest.mark.parametrize(
+        "source,value,unit", [("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")]
+    )
+    @pytest.mark.parametrize("recover", [False, True])
+    async def test_invalid_source_during_applied_on_cannot_be_forgotten(
+        control_hass, recover, source, value, unit
+    ):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=2)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.on_entered, hardware.on_release = asyncio.Event(), asyncio.Event()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.wait_for(hardware.on_entered.wait(), 2)
+        # Applied physical ON precedes the provider's API return, as in the review.
+        hardware._attr_is_on = True
+        hardware.async_write_ha_state()
+        await asyncio.sleep(0.05)
+        hass.states.async_set("sensor." + source, "unavailable")
+        await asyncio.sleep(0.10)  # Drain event/evaluate work without awaiting blocked ON.
+        if recover:
+            hass.states.async_set("sensor." + source, value, {"unit_of_measurement": unit})
+            await asyncio.sleep(0.05)
+        hardware.on_release.set()
+        result = (await asyncio.gather(start, return_exceptions=True))[0]
+        await hass.async_block_till_done()
+        try:
+>           assert isinstance(result, ServiceValidationError), (
+                "Observed source invalidation must revoke admitted ON despite recovery"
+            )
+E           AssertionError: Observed source invalidation must revoke admitted ON despite recovery
+E           assert False
+E            +  where False = isinstance(None, ServiceValidationError)
+
+tests\test_p2_start_source.py:39: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH]
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ec-0.85-mS/cm]
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-level-2-m]
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-ph-5.6-pH]
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-ec-0.85-mS/cm]
+FAILED tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-level-2-m]
+6 failed, 2 passed, 5 warnings in 4.63s

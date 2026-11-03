@@ -1,0 +1,53 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_____________ test_removed_native_flow_switch_waiter_cannot_start _____________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_removed_native_flow_switch_waiter_cannot_start(control_hass):
+        from homeassistant.helpers import entity_registry as er
+        from test_p2_control import target
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        control = tank.runtime_data.control
+        await control.lock.acquire()
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.sleep(0.02)
+        er.async_get(hass).async_remove(target(hass, tank, "switch", "flow_run"))
+        await asyncio.sleep(0.02)
+        control.lock.release()
+        result = await asyncio.gather(start, return_exceptions=True)
+>       assert not hass.data["p2_fixture"]["calls"]
+E       AssertionError: assert not [('turn_on', {'entity_id': 'switch.fixture_refill'}, <homeassistant.core.Context object at 0x000002112C58D990>)]
+
+tests\test_p2_races.py:73: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start
+1 failed, 4 deselected, 5 warnings in 2.63s

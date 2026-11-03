@@ -1,18 +1,18 @@
 # UNiNUS Nutriculture — 分階段開發與驗收契約
 
-> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；尚未實作，P1不變。
+> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；P2補水候選已實作，P1監測wire保留，P3–P5仍待開發。
 
 ## 核准產品方向與授權界線
 
-產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。本次只修訂兩庫設計文件及對應GitHub Issues/Milestones，不實作控制程式、不操作HA、不部署，也不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
+產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。本輪依使用者授權繼續開發P2，包含控制程式、Card與測試；不操作外部HA、不部署、不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
 
 完整產品目標不因先交付最小功能而縮減：既有 MQTT Entity 重用、多槽、integration-owned 可調參數、總開關＋四階段子開關、使用者可配置順序／重疊／相對時序與每階段星期的流程組合、補水/加養/加酸/混合流程、補水與加養跟隨重疊、安全互鎖/急停/復歸、資料有效性、重啟復原、外部整輪啟動入口、下游灌溉許可、通知與響應式 Card。不得將配置成功或綠色測試當作實機驗收。
 
 ## 目前狀態與規格優先序
 
-- P1 程式已交付與通過原生隔離、瀏覽器、跨層對接及對應 commit 的 CI；仍未部署原站、未做實體設備接管。P2–P5 未實作，文件中的控制能力都是後續要求。
+- P1 程式已交付與通過原生隔離、瀏覽器、跨層對接及對應 commit 的 CI；仍未部署原站、未做實體設備接管。P2補水候選已接通並有隔離/跨層驗證；P3–P5尚未實作，不將候選誇稱全產品或實機完成。
 - [DEVELOPMENT_SPEC.md](DEVELOPMENT_SPEC.md)為跨倉庫共同產品規範；本計畫為分期/驗收契約；[CONTROL_SWITCHES.md](CONTROL_SWITCHES.md) 定義啟用與組合語意；[FUNCTIONAL_PARITY_REVIEW.md](FUNCTIONAL_PARITY_REVIEW.md) 保留原始行為、既有規格缺口與待決策，不能將待定項當成已核准演算法。[FLOW_DESIGN_RESEARCH.md](FLOW_DESIGN_RESEARCH.md) 為本次流程/UI研究依據；R01已確認取消獨立stage_link，R03已確認階段實際開始前檢查星期；新增整輪運行Switch入口。R02/R04及未核准細節仍待確認。
-- 這次同步設計Markdown與GitHub規劃追蹤，不更動P1 Python、JS、schema v1、參數上下限或runtime。歷史 P1 驗收證據與凍結來源不改寫。
+- 本輪新增版本化P2控制，保留P1 schema v1、Number參數上下限與舊監測安全語意。歷史 P1 驗收證據與凍結來源不改寫。
 
 ## 分階段路線圖
 
@@ -45,7 +45,7 @@ Card 可讀取來源即時值；以 status sensor 作為單一配置入口。缺
 
 Card config：`{type: "custom:uninus-nutriculture-card", entity: "sensor.<status>", title?: "...", show_parameters?: true}`。卡片顯示繁體中文、影子模式/不控制設備提示、三個來源值/單位、品質原因、10 個可編輯參數及每項明確保存。不得在重繪/遙測更新時抹掉正在輸入的草稿；保存錯誤保留草稿；換槽/移除/重新設定不可把舊草稿送往新 Entity；loading/重複點擊有保護。使用 textContent 等安全顯示，無 token/localStorage。卡片 picker、基本 editor、無依賴單一 JS 發布檔、320px/寬版可用，不提供未實作的操作按鈕。Demo 必須明示模擬，不使用原站資訊。
 
-## 總/子開關必要要求（尚未實作）
+## 總/子開關要求（P2骨架已實作，P3階段待接入）
 
 - 持久總開關＋四子開關；取消獨立鏈結，新增整輪運行Switch（ON啟動、OFF正常停止、完成自動OFF），與start_flow共用後端，不等同總開關。Enable、單階段啟動、整輪、停止本輪、急停、復歸分離。
 - 總 OFF 阻擋所有本整合控制入口，撤銷舊任務並確認擁有的輸出安全停止；監測與調參保留。子設定、流程/星期與配方不清除；外部排程不由本整合管理；再 ON 不續跑或補跑。
@@ -73,3 +73,7 @@ Card config：`{type: "custom:uninus-nutriculture-card", entity: "sensor.<status
 已確認結論與尚未定案的11項決策以[共同開發規範](DEVELOPMENT_SPEC.md)第7節及兩庫Issue #6為準。R01取消鏈結、D03/R03星期時點與原生整輪Switch入口已定案，不重新列為未決。P2–P5開放Issue代表未完成的開發/驗收，不代表所有需求仍待選擇。
 
 控制目標與前台可調安全參數已補入[CONTROL_PARAMETERS.md](CONTROL_PARAMETERS.md)：平均目標停止投藥、危險門檻預設採原HA且可調；D01已定，不阻擋繼續開發。
+
+## P2候選驗證
+
+P2補水候選已通過隔離測試及獨立SPEC／品質安全審查；舊P1監測介面保留。P3加養/加酸/混合及進階流程編輯仍待實作；未部署原HA、未做物理設備或HACS安裝驗收。詳見[P2_ACCEPTANCE.md](P2_ACCEPTANCE.md)。

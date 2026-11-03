@@ -1,0 +1,69 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____ test_native_options_commission_saves_registry_identity_without_output ____
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_native_options_commission_saves_registry_identity_without_output(control_hass):
+        hass = control_hass
+        tank = await add_tank(hass)
+>       result = await configure(hass, tank)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_p2_control.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_p2_control.py:50: in configure
+    result = await hass.config_entries.options.async_configure(
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:339: in async_configure
+    result = await self._async_configure(flow_id, user_input)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:387: in _async_configure
+    result = await self._async_handle_step(
+.venv\Lib\site-packages\homeassistant\data_entry_flow.py:504: in _async_handle_step
+    result: _FlowResultT = await getattr(flow, method)(user_input)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+custom_components\uninus_nutriculture\config_flow.py:112: in async_step_init
+    options["control"] = settings_candidate(self.hass, self.config_entry, user_input)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+custom_components\uninus_nutriculture\control_settings.py:63: in settings_candidate
+    resolve(hass, candidate.get("binding"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hass = <HomeAssistant NOT_RUNNING>
+binding = {'registry_id': '6bc061b173c9d2f281a30267c5f8a69e', 'platform': 'p2_fixture', 'unique_id': 'refill-output', 'config_entry_id': None}
+
+    def resolve(hass, binding):
+        if not binding:
+            raise ServiceValidationError("output_unbound")
+>       row = er.async_get(hass).async_get_entry(binding.get("registry_id"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'EntityRegistry' object has no attribute 'async_get_entry'. Did you mean: 'async_get_entity_id'?
+
+custom_components\uninus_nutriculture\control_settings.py:24: AttributeError
+------------------------------ Captured log call ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+1 failed, 5 warnings in 5.44s

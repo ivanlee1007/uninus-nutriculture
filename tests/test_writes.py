@@ -8,6 +8,7 @@ def ids(hass, tank):
     return {
         r.unique_id.split(":")[-1]: r.entity_id
         for r in er.async_entries_for_config_entry(er.async_get(hass), tank.entry_id)
+        if r.domain == "number" or r.unique_id == f"{tank.entry_id}:status"
     }
 
 

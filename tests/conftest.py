@@ -6,6 +6,8 @@ from homeassistant import loader
 from homeassistant.config_entries import ConfigEntries, ConfigEntry
 from homeassistant.core import HomeAssistant
 
+pytest_plugins = ["p2_fixtures"]
+
 DOMAIN = "uninus_nutriculture"
 
 

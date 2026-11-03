@@ -1,0 +1,176 @@
+[
+  {
+    "theme": "light",
+    "viewport": 320,
+    "card_width": 304,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "viewport": 768,
+    "card_width": 752,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "viewport": 1200,
+    "card_width": 1184,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "viewport": 320,
+    "card_width": 304,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "viewport": 768,
+    "card_width": 752,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "viewport": 1200,
+    "card_width": 1184,
+    "maxOverflow": 0,
+    "outside": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      },
+      {
+        "width": 64,
+        "height": 40
+      }
+    ]
+  }
+]

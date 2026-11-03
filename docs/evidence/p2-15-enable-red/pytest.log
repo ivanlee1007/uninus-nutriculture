@@ -1,0 +1,95 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+______________________ test_enable_gate[uncommissioned] _______________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, condition = 'uncommissioned'
+
+    @pytest.mark.parametrize("condition", ["uncommissioned", "fault", "unsupported"])
+    async def test_enable_gate(control_hass, condition):
+        hass = control_hass
+        tank = await add_tank(hass)
+        if condition != "uncommissioned":
+            await configure(hass, tank)
+        if condition == "fault":
+            await press(hass, tank, "emergency_stop")
+        if condition == "unsupported":
+            assert hass.states.get(target(hass, tank, "switch", "nutrient_enabled")).state == "unavailable"
+        else:
+>           with pytest.raises(ServiceValidationError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_enable.py:19: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___________________________ test_enable_gate[fault] ___________________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, condition = 'fault'
+
+    @pytest.mark.parametrize("condition", ["uncommissioned", "fault", "unsupported"])
+    async def test_enable_gate(control_hass, condition):
+        hass = control_hass
+        tank = await add_tank(hass)
+        if condition != "uncommissioned":
+            await configure(hass, tank)
+        if condition == "fault":
+            await press(hass, tank, "emergency_stop")
+        if condition == "unsupported":
+            assert hass.states.get(target(hass, tank, "switch", "nutrient_enabled")).state == "unavailable"
+        else:
+>           with pytest.raises(ServiceValidationError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_enable.py:19: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+________________________ test_enable_gate[unsupported] ________________________
+
+control_hass = <HomeAssistant NOT_RUNNING>, condition = 'unsupported'
+
+    @pytest.mark.parametrize("condition", ["uncommissioned", "fault", "unsupported"])
+    async def test_enable_gate(control_hass, condition):
+        hass = control_hass
+        tank = await add_tank(hass)
+        if condition != "uncommissioned":
+            await configure(hass, tank)
+        if condition == "fault":
+            await press(hass, tank, "emergency_stop")
+        if condition == "unsupported":
+>           assert hass.states.get(target(hass, tank, "switch", "nutrient_enabled")).state == "unavailable"
+E           AssertionError: assert 'off' == 'unavailable'
+E             
+E             - unavailable
+E             + off
+
+tests\test_p2_enable.py:17: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_enable.py::test_enable_gate[uncommissioned]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_enable.py::test_enable_gate[uncommissioned]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_enable.py::test_enable_gate[uncommissioned]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_enable.py::test_enable_gate[uncommissioned]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_enable.py::test_enable_gate[uncommissioned]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_enable.py::test_enable_gate[uncommissioned] - Failed: DI...
+FAILED tests/test_p2_enable.py::test_enable_gate[fault] - Failed: DID NOT RAI...
+FAILED tests/test_p2_enable.py::test_enable_gate[unsupported] - AssertionErro...
+3 failed, 5 warnings in 2.74s

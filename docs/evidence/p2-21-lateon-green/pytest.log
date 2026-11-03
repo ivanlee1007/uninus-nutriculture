@@ -1,0 +1,51 @@
+F......                                                                  [100%]
+================================== FAILURES ===================================
+_____________ test_stop_without_feedback_keeps_flow_on_and_fault ______________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_stop_without_feedback_keeps_flow_on_and_fault(control_hass):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        hass.data["p2_fixture"]["hardware"].acknowledge_off = False
+        await toggle(hass, tank, "flow_run", False)
+        assert hass.states.get(target(hass, tank, "switch", "flow_run")).state == "on"
+        assert tank.runtime_data.control.fault == "stop_unconfirmed"
+>       assert tank.runtime_data.control.flow_state == "fault"
+E       AssertionError: assert 'stopping' == 'fault'
+E         
+E         - fault
+E         + stopping
+
+tests\test_p2_feedback.py:16: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault
+1 failed, 6 passed, 5 warnings in 8.11s

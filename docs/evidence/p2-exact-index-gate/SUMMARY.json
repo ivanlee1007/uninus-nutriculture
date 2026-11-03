@@ -1,0 +1,15 @@
+{
+  "source": "exact staged Git blobs, not Windows checkout-filtered worktree",
+  "native_passed": 143,
+  "node_passed": 9,
+  "chromium_passed": 23,
+  "bridge_ui_actions": 10,
+  "bridge_fake_output_cycles": 4,
+  "index_consumed_inputs_still_identical": true,
+  "python_crlf_transform": "CRLF-to-LF only; complete AST checked",
+  "first_card_attempt": "materializer omitted captured workflow; retained as harness failure, fixed by adding exact staged workflow blob without test/product edits",
+  "review_approval": false,
+  "committed": false,
+  "pushed": false,
+  "external_ha_access": false
+}

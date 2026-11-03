@@ -1,0 +1,21 @@
+{
+  "command": [
+    "D:/UNiNUS Projects/AI project/uninus-nutriculture/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "conftest",
+    "-c",
+    "D:/UNiNUS Projects/AI project/uninus-nutriculture/pyproject.toml",
+    "-q",
+    "-s",
+    "--basetemp",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-quality-independent\\native-temp-adjacent",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-quality-independent\\test_quality_adjacent.py",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p2-quality-independent\\test_quality_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True]"
+  ],
+  "returncode": 1
+}

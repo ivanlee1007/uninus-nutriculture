@@ -1,0 +1,181 @@
+...FFFFF                                                                 [100%]
+================================== FAILURES ===================================
+___________ test_start_gate_rejects_without_output[source_invalid] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, reason = 'source_invalid'
+
+    @pytest.mark.parametrize("reason", ["source_invalid", "level_not_low", "output_not_off", "weekday", "uncommissioned"])
+    async def test_start_gate_rejects_without_output(control_hass, reason):
+        from homeassistant.exceptions import ServiceValidationError
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        if reason == "source_invalid":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif reason == "level_not_low":
+            hass.states.async_set("sensor.level", 2.3, {"unit_of_measurement": "m"})
+        elif reason == "output_not_off":
+            hass.states.async_set(hass.data["p2_fixture"]["row"].entity_id, "unavailable")
+        elif reason == "weekday":
+            await configure(hass, tank, refill_weekdays=[])
+        else:
+            hass.config_entries.async_update_entry(tank, options={**tank.options,
+                "control": {**tank.options["control"], "commissioned": False}})
+>       with pytest.raises(ServiceValidationError, match=reason):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_control.py:138: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+____________ test_start_gate_rejects_without_output[level_not_low] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, reason = 'level_not_low'
+
+    @pytest.mark.parametrize("reason", ["source_invalid", "level_not_low", "output_not_off", "weekday", "uncommissioned"])
+    async def test_start_gate_rejects_without_output(control_hass, reason):
+        from homeassistant.exceptions import ServiceValidationError
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        if reason == "source_invalid":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif reason == "level_not_low":
+            hass.states.async_set("sensor.level", 2.3, {"unit_of_measurement": "m"})
+        elif reason == "output_not_off":
+            hass.states.async_set(hass.data["p2_fixture"]["row"].entity_id, "unavailable")
+        elif reason == "weekday":
+            await configure(hass, tank, refill_weekdays=[])
+        else:
+            hass.config_entries.async_update_entry(tank, options={**tank.options,
+                "control": {**tank.options["control"], "commissioned": False}})
+>       with pytest.raises(ServiceValidationError, match=reason):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_control.py:138: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___________ test_start_gate_rejects_without_output[output_not_off] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, reason = 'output_not_off'
+
+    @pytest.mark.parametrize("reason", ["source_invalid", "level_not_low", "output_not_off", "weekday", "uncommissioned"])
+    async def test_start_gate_rejects_without_output(control_hass, reason):
+        from homeassistant.exceptions import ServiceValidationError
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        if reason == "source_invalid":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif reason == "level_not_low":
+            hass.states.async_set("sensor.level", 2.3, {"unit_of_measurement": "m"})
+        elif reason == "output_not_off":
+            hass.states.async_set(hass.data["p2_fixture"]["row"].entity_id, "unavailable")
+        elif reason == "weekday":
+            await configure(hass, tank, refill_weekdays=[])
+        else:
+            hass.config_entries.async_update_entry(tank, options={**tank.options,
+                "control": {**tank.options["control"], "commissioned": False}})
+>       with pytest.raises(ServiceValidationError, match=reason):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_control.py:138: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_______________ test_start_gate_rejects_without_output[weekday] _______________
+
+control_hass = <HomeAssistant NOT_RUNNING>, reason = 'weekday'
+
+    @pytest.mark.parametrize("reason", ["source_invalid", "level_not_low", "output_not_off", "weekday", "uncommissioned"])
+    async def test_start_gate_rejects_without_output(control_hass, reason):
+        from homeassistant.exceptions import ServiceValidationError
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        if reason == "source_invalid":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif reason == "level_not_low":
+            hass.states.async_set("sensor.level", 2.3, {"unit_of_measurement": "m"})
+        elif reason == "output_not_off":
+            hass.states.async_set(hass.data["p2_fixture"]["row"].entity_id, "unavailable")
+        elif reason == "weekday":
+            await configure(hass, tank, refill_weekdays=[])
+        else:
+            hass.config_entries.async_update_entry(tank, options={**tank.options,
+                "control": {**tank.options["control"], "commissioned": False}})
+>       with pytest.raises(ServiceValidationError, match=reason):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_control.py:138: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+___________ test_start_gate_rejects_without_output[uncommissioned] ____________
+
+control_hass = <HomeAssistant NOT_RUNNING>, reason = 'uncommissioned'
+
+    @pytest.mark.parametrize("reason", ["source_invalid", "level_not_low", "output_not_off", "weekday", "uncommissioned"])
+    async def test_start_gate_rejects_without_output(control_hass, reason):
+        from homeassistant.exceptions import ServiceValidationError
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        if reason == "source_invalid":
+            hass.states.async_set("sensor.ph", "unavailable")
+        elif reason == "level_not_low":
+            hass.states.async_set("sensor.level", 2.3, {"unit_of_measurement": "m"})
+        elif reason == "output_not_off":
+            hass.states.async_set(hass.data["p2_fixture"]["row"].entity_id, "unavailable")
+        elif reason == "weekday":
+            await configure(hass, tank, refill_weekdays=[])
+        else:
+            hass.config_entries.async_update_entry(tank, options={**tank.options,
+                "control": {**tank.options["control"], "commissioned": False}})
+>       with pytest.raises(ServiceValidationError, match=reason):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ServiceValidationError
+
+tests\test_p2_control.py:138: Failed
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_control.py::test_start_gate_rejects_without_output[source_invalid]
+FAILED tests/test_p2_control.py::test_start_gate_rejects_without_output[level_not_low]
+FAILED tests/test_p2_control.py::test_start_gate_rejects_without_output[output_not_off]
+FAILED tests/test_p2_control.py::test_start_gate_rejects_without_output[weekday]
+FAILED tests/test_p2_control.py::test_start_gate_rejects_without_output[uncommissioned]
+5 failed, 3 passed, 5 warnings in 3.45s

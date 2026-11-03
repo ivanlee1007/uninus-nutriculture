@@ -1,0 +1,15 @@
+start_flow:
+  name: Start refill flow
+  description: Request one refill run through safety and weekday gates. Does not enable the tank. Active administrators and internal automations only.
+  fields:
+    config_entry_id:
+      name: Tank configuration entry ID
+      required: true
+      selector:
+        text:
+    request_id:
+      name: Optional request identity
+      description: Nonempty, at most 128 characters. Memory-only receipts, bounded to 64 entries and 24 hours per loaded tank.
+      required: false
+      selector:
+        text:

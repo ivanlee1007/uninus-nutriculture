@@ -1,0 +1,61 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________________ test_fast_off_on_does_not_queue_restart ___________________
+
+control_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_fast_off_on_does_not_queue_restart(control_hass):
+        hass = control_hass
+        tank = await add_tank(hass)
+        await configure(hass, tank, feedback_timeout=1)
+        await toggle(hass, tank, "automation_enabled")
+        await toggle(hass, tank, "refill_enabled")
+        await toggle(hass, tank, "flow_run")
+        hardware = hass.data["p2_fixture"]["hardware"]
+        hardware.acknowledge_off = False
+        stop = asyncio.create_task(toggle(hass, tank, "flow_run", False))
+        for _ in range(100):
+            if tank.runtime_data.control.flow_state == "stopping":
+                break
+            await asyncio.sleep(0.002)
+        assert tank.runtime_data.control.flow_state == "stopping"
+        start = asyncio.create_task(toggle(hass, tank, "flow_run"))
+        await asyncio.sleep(0.02)
+        hardware.acknowledge_off = True
+        hardware._attr_is_on = False
+        hardware.async_write_ha_state()
+        result = await asyncio.gather(start, stop, return_exceptions=True)
+>       assert [c[0] for c in hass.data["p2_fixture"]["calls"]] == ["turn_on", "turn_off"]
+E       AssertionError: assert ['turn_on', '...f', 'turn_on'] == ['turn_on', 'turn_off']
+E         
+E         Left contains one more item: 'turn_on'
+E         Use -v to get more diff
+
+tests\test_p2_fast_stop.py:29: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart - ...
+1 failed, 5 warnings in 2.35s
