@@ -63,7 +63,7 @@ P2 必須定義全部階段的資料模型與操作語意；尚未實作的 P3 �
 - 流程/星期修改建議下一輪生效、每輪綁定 revision；總/子開關關閉、急停及收緊安全上限仍即時阻擋新物理開啟。保存/版本衝突契約待 R04，未保存草稿不影響運行。
 - 外部排程/HA automation 決定何時呼叫**整輪**入口。本整合不提供時刻/cron/日曆排程、排程匯入、外部腳本建立或旁支管理；混合等待/脈衝/重試/安全期限仍由後端負責。
 - 原生服務須有明確且已載入的本整合 config entry 目標、權限與版本校驗，schema 先拒絕缺值/null，避免 helper 在 None 時自動選唯一槽；不默認第一槽/全部槽、不自動開 Enable；停用/急停/忙碌/重複請求及無工作結果需明示。受理不等於實際開始、完成或可灌溉，結果以 run ID/原生狀態觀察。
-- 研究 `start_flow` 僅提案名，不是現有 API；正式名稱、schema、忙碌/無工作/去重期限與回應待 R04、P2 前凍結。entry 屬於 domain 不等於 caller 授權：管理員專用或受控 Entity 權限政策需明確，傳遞 call.context，合法無 user_id 的內部 automation 不一概拒絕；研究建議 SupportsResponse.OPTIONAL，僅請求回應時回 JSON 受理/run ID，否則 None，不要求外部排程讀 response。服務需原生註冊、翻譯與 selector，Card 非唯一入口。
+- `uninus_nutriculture.start_flow`名稱與原生整輪Switch入口已確認，但不是P1現有API；schema、忙碌/無工作/去重期限與回應待R04於P2前凍結。entry 屬於 domain 不等於 caller 授權：管理員專用或受控 Entity 權限政策需明確，傳遞 call.context，合法無 user_id 的內部 automation 不一概拒絕；研究建議 SupportsResponse.OPTIONAL，僅請求回應時回 JSON 受理/run ID，否則 None，不要求外部排程讀 response。服務需原生註冊、翻譯與 selector，Card 非唯一入口。
 
 ## 6. 安全限制與備妥判定
 
@@ -102,3 +102,7 @@ P2 必須定義全部階段的資料模型與操作語意；尚未實作的 P3 �
 | C14 | 外部控制或原自動化仍能干預時明確揭露；沒有將新總開關誇稱原站全域急停 |
 
 C01–C04、C06、C11–C14 先由 P2 奠定與補水驗證；涉及加養／加酸／混合的 C05–C10 在 P3 完整驗收；外部 action/結果、配方、通知與品質/許可互通在 P4 驗收，不以排程遷移或旁支管理作門檻。新增控制不得改動原農場，除非另外取得明確部署／接管授權。
+
+## 共同規範與未決策
+
+本契約與[DEVELOPMENT_SPEC.md](DEVELOPMENT_SPEC.md)共同適用；後者彙整完整已確認範圍及未決策。舊研究中R01/R03與服務名稱待定的描述不覆蓋最新定案。

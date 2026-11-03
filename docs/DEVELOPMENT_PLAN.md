@@ -11,7 +11,7 @@
 ## 目前狀態與規格優先序
 
 - P1 程式已交付與通過原生隔離、瀏覽器、跨層對接及對應 commit 的 CI；仍未部署原站、未做實體設備接管。P2–P5 未實作，文件中的控制能力都是後續要求。
-- 本計畫為跨倉庫主契約；[CONTROL_SWITCHES.md](CONTROL_SWITCHES.md) 定義啟用與組合語意；[FUNCTIONAL_PARITY_REVIEW.md](FUNCTIONAL_PARITY_REVIEW.md) 保留原始行為、既有規格缺口與待決策，不能將待定項當成已核准演算法。[FLOW_DESIGN_RESEARCH.md](FLOW_DESIGN_RESEARCH.md) 為本次流程/UI研究依據；R01已確認取消獨立stage_link，R03已確認階段實際開始前檢查星期；新增整輪運行Switch入口。R02/R04及未核准細節仍待確認。
+- [DEVELOPMENT_SPEC.md](DEVELOPMENT_SPEC.md)為跨倉庫共同產品規範；本計畫為分期/驗收契約；[CONTROL_SWITCHES.md](CONTROL_SWITCHES.md) 定義啟用與組合語意；[FUNCTIONAL_PARITY_REVIEW.md](FUNCTIONAL_PARITY_REVIEW.md) 保留原始行為、既有規格缺口與待決策，不能將待定項當成已核准演算法。[FLOW_DESIGN_RESEARCH.md](FLOW_DESIGN_RESEARCH.md) 為本次流程/UI研究依據；R01已確認取消獨立stage_link，R03已確認階段實際開始前檢查星期；新增整輪運行Switch入口。R02/R04及未核准細節仍待確認。
 - 這次同步設計Markdown與GitHub規劃追蹤，不更動P1 Python、JS、schema v1、參數上下限或runtime。歷史 P1 驗收證據與凍結來源不改寫。
 
 ## 分階段路線圖
@@ -67,3 +67,7 @@ Card config：`{type: "custom:uninus-nutriculture-card", entity: "sensor.<status
 - 整合後先獨立 SPEC 審查，再獨立品質/安全審查；最多兩次具體修正循環，仍有阻擋則保留成果並明示。
 - 至少執行原生 HA 隔離測試與 shipped Card 瀏覽器測試。mock、原生隔離、跨層 bridge、GitHub CI、正式站驗收分別記錄，不互相替代。
 - 本階段不發布 tag/release，不部署 HA。後續階段保留 GitHub issue 與明確驗收標準，不能因 P1 完成就標示全產品完成。
+
+## 未決策與待開發的區分
+
+已確認結論與尚未定案的12項決策以[共同開發規範](DEVELOPMENT_SPEC.md)第7節及兩庫Issue #6為準。R01取消鏈結、D03/R03星期時點與原生整輪Switch入口已定案，不重新列為未決。P2–P5開放Issue代表未完成的開發/驗收，不代表所有需求仍待選擇。

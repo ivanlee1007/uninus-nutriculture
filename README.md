@@ -96,3 +96,7 @@ uv pip install --python .venv/Scripts/python.exe -r requirements-test.txt
 ```
 
 Linux 改用 `.venv/bin/python`。`tools/evidence.py` 會建立新的不可覆蓋 evidence 標籤目錄、複製當時完整 source/tests、記錄 SHA-256、實際命令與退出碼。詳見 `docs/TESTING.md` 與 `docs/P1_HANDOFF.md`。CI 設定為 Ubuntu／Python 3.14；遠端驗證結果以本儲存庫 Actions 的對應 commit 為準，本機測試不等於遠端 CI 或正式站驗收。
+
+## 共同開發規範
+
+[DEVELOPMENT_SPEC.md](docs/DEVELOPMENT_SPEC.md)統整已確認結論、前後端責任、開關/流程/星期/外部排程邊界與12項未決策；已定案不代表已實作，P1仍為影子監測。
