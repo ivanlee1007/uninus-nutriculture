@@ -1,0 +1,20 @@
+{
+  "quality": "狀態缺失或不相容：僅支援 schema 1 / shadow 或 schema 2 / 3 control；禁止儲存。\nec_out_of_range\nlevel_out_of_range",
+  "controls_attached": false,
+  "master_disabled": true,
+  "emergency_disabled": true,
+  "settings_disabled": true,
+  "nutrient_stage": "disabled",
+  "flow_state": "disabled",
+  "master_state": "off",
+  "calls": [],
+  "browser_version": "156.0.8078.4",
+  "page_errors": [],
+  "shipped_sha256": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f",
+  "native_capture_sha256": "6253ee3cea9c749bd53301b3429cb9a77f579d9438949b5d91ac4bb99b7cb18b"
+}
+Traceback (most recent call last):
+  File "C:\Users\ivanl\.hermes\cache\scratch\p3a-q1-repair-20261103\check_native_capture_ui.py", line 18, in <module>
+    assert result['controls_attached'], 'Actual native post-run master OFF makes shipped Card reject entire schema3: master ON/reset/emergency/settings inaccessible'
+           ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Actual native post-run master OFF makes shipped Card reject entire schema3: master ON/reset/emergency/settings inaccessible

@@ -23,8 +23,8 @@
   "options": {
     "step": {
       "init": {
-        "title": "來源與時效設定",
-        "description": "新槽預設僅監測；補水必須在選項中明選輸出、確認風險及設備保護後另行啟動。保存/取消不致動。EC僅接受mS/cm、液位僅接受m。",
+        "title": "來源、輸出與加養安全設定",
+        "description": "保存／取消不會啟動或關閉設備。加養安全值與設備保護／採樣契約由操作人員核實，軟體不會驗證物理保護。尚未接通執行引擎時加養 Switch 仍不可用；設定完成不等於已可運轉。EC 使用 mS/cm，液位使用 m。",
         "data": {
           "ph": "pH 來源感測器",
           "ec": "EC 來源感測器 (mS/cm)",
@@ -36,7 +36,29 @@
           "refill_weekdays": "補水允許星期（空集合禁止）",
           "nutrient_weekdays": "加養（未支援）允許星期（空集合禁止）",
           "acid_weekdays": "加酸（未支援）允許星期（空集合禁止）",
-          "mix_weekdays": "混合（未支援）允許星期（空集合禁止）"
+          "mix_weekdays": "混合（未支援）允許星期（空集合禁止）",
+          "nutrient_output": "加養泵實體 Switch",
+          "circulation_output": "必要循環馬達 Switch",
+          "nutrient_commissioned": "我已確認加養實體綁定及操作界限",
+          "nutrient_protection_confirmed": "我已確認設備有獨立的最大開啟保護",
+          "device_max_on_seconds": "已確認的設備獨立最大開啟時間（秒）",
+          "alias_notes": "已核實的實體與直接／定時別名（軟體不會推斷）",
+          "sample_mode": "EC 採樣契約：reported 每次量測／sequence 遞增序號／timestamp 時區時間",
+          "sample_attribute": "明選的採樣序號／時間屬性（不是模板）",
+          "report_contract_confirmed": "我已確認每次 HA 回報均代表一次新量測",
+          "safe_min_level_m": "本槽最低安全加養水位（m，須按實際設備填寫）",
+          "pulse_seconds": "單次最大加養窗口（秒）",
+          "max_total_on_seconds": "每輪保守累積開啟額度（秒，不是 mL）",
+          "max_pulses": "每輪最多脈衝次數",
+          "post_mix_seconds": "每次加養後必要循環時間（秒）",
+          "sample_wait_timeout_seconds": "等待新量測期限（秒）",
+          "stable_samples": "合格新量測連續次數",
+          "stable_interval_seconds": "穩定樣本最小間隔（秒）",
+          "flow_timeout_seconds": "整輪最長期限（秒）",
+          "ph_danger_low": "危險低 pH 門檻",
+          "ec_danger_high": "危險高 EC 門檻（mS/cm）",
+          "ph_high_alarm": "高 pH 告警門檻（不是全域急停）",
+          "ph_high_alarm_seconds": "高 pH 持續告警時間（秒）"
         }
       }
     },
@@ -48,7 +70,16 @@
       "output_already_owned": "輸出已由另一槽擁有。",
       "output_unbound": "請明選已註冊輸出。",
       "control_busy": "總OFF且本輪已確認停止後才能更換綁定/確認。",
-      "output_not_off": "新舊輸出都必須已知OFF；保存不代為關閉。"
+      "output_not_off": "新舊輸出都必須已知OFF；保存不代為關閉。",
+      "invalid_commissioning": "確認欄位必須是布林值。",
+      "invalid_dosing_parameters": "請提供完整十三項加養安全設定。",
+      "invalid_dosing_parameter": "請輸入範圍內、符合間距的有限數字，不接受布林值。",
+      "nutrient_protection_unconfirmed": "啟用加養前，請核實設備獨立保護、最大開啟時間與實體對應。",
+      "sample_contract_unconfirmed": "請先確認每次回報都代表一次新的實體量測。",
+      "invalid_sample_contract": "請明選 reported／sequence／timestamp 與設備確實提供的採樣屬性。",
+      "invalid_dosing_relationship": "脈衝、累積額度、期限或正常／危險門檻的組合不合法。",
+      "settings_conflict": "開啟表單後設定已改變；本次未儲存。請重開並核對最新值。",
+      "entry_not_loaded": "此養液槽目前未載入。"
     }
   }
 }

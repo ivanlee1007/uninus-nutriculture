@@ -1,0 +1,24 @@
+{
+  "verdict": "REQUEST_CHANGES",
+  "blocking_finding": "F1",
+  "source_root": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-review-20261103",
+  "files": {
+    "docs\\reviews\\p3a-spec-1\\REPORT.md": "ef7d00ebe2827d920f7391b30f240da44a64c2acfcf4351088221278d2ac5a72",
+    "docs\\reviews\\p3a-spec-1\\test_review_probe.py": "3839c83f3573f7525ffa0ed2f6b46dca887b78c02e8fc7392c3324da93a4c7ad",
+    "docs\\reviews\\p3a-spec-1\\run_review.py": "997c6b367b3c77956a06ca6a0bb28b3bdf8ec24562b429bb346fb20ebb94e9bc",
+    "docs\\evidence\\p3a-spec-1-independent\\dosing-bridge-receipt.json": "da83331ffcd9fee325aaee667ecd267c86229adba125ae190e01fcbad3d81d9c",
+    "docs\\evidence\\p3a-spec-1-independent\\dosing-bridge-retry-receipt.json": "02b6e655eb62aa24ac309472725180167a049d0889d12ac90b4b7aa783f61c5e",
+    "docs\\evidence\\p3a-spec-1-independent\\dosing-bridge-retry.log": "c4c6888735bc10ff3bfe3221d7660dcbe550799455b8f03e3b7faa5ae2a3dd17",
+    "docs\\evidence\\p3a-spec-1-independent\\dosing-bridge.log": "820c75c95806fca0b887c0661a6ebb24e526f16a914f27804e35ddcd10bbe5ee",
+    "docs\\evidence\\p3a-spec-1-independent\\native-receipt.json": "28399d41485e0e6089da5638d9e3deaf876f7f1f906c1afdd6980396a16d7442",
+    "docs\\evidence\\p3a-spec-1-independent\\native.log": "c7e6abf0ad839827d704a1496b89fb5a5ceecf3a1107f3f732202e1dda8d3306",
+    "docs\\evidence\\p3a-spec-1-independent\\node-receipt.json": "cb4f5ed9ce3ac0091fe1ae3f34e0687feac714a92f591b84e271539e253507a0",
+    "docs\\evidence\\p3a-spec-1-independent\\node.log": "3069208bb15233ee1976924f8c7df4f229b4bf7d2b781bfb27a31336ec259c70",
+    "docs\\evidence\\p3a-spec-1-independent\\post-consumed.json": "f560f1f30f4b1f64fb17a24db935ea986095d5f719c58ff3267c78515643e046",
+    "docs\\evidence\\p3a-spec-1-independent\\pre-consumed.json": "390ad0900eea8a1306608a2b6fbc9d6b17af263e2434d396a54ad1219b2207d3",
+    "docs\\evidence\\p3a-spec-1-independent\\probe-receipt.json": "1831b92f9663fa5db74e1f1bc096e387d7acd65fc806b6210457eeb3f6d5623f",
+    "docs\\evidence\\p3a-spec-1-independent\\probe.log": "e036b5ec23fdfd0d89f1e7cc98299dc03997f318e95fe63d8d101489b528720a",
+    "docs\\evidence\\p3a-spec-1-independent\\provider-counterexample.json": "0ec352db61bbdbb23257411dd74b2e26fe034f389598f3c62d500629975d28b2"
+  },
+  "no_storage_or_temp_dirs_copied": true
+}

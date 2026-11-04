@@ -39,4 +39,58 @@ async def async_setup(hass, config):
         ),
         supports_response=SupportsResponse.OPTIONAL,
     )
+
+    async def apply_settings(call):
+        from homeassistant.exceptions import ServiceValidationError
+
+        from .control_settings import resolve
+
+        await authorize(hass, call.context)  # Deny before protected target lookup.
+        entry = hass.config_entries.async_get_entry(call.data["config_entry_id"])
+        if entry is None or entry.domain != DOMAIN or entry.state is not ConfigEntryState.LOADED:
+            raise ServiceValidationError("entry_not_loaded")
+        tank = getattr(entry, "runtime_data", None)
+        if tank is None or not tank.active:
+            raise ServiceValidationError("entry_not_loaded")
+        async with tank.lock:
+            await authorize(hass, call.context)
+            if (
+                not tank.active
+                or entry.state is not ConfigEntryState.LOADED
+                or entry.runtime_data is not tank
+            ):
+                raise ServiceValidationError("entry_not_loaded")
+            config = dict(entry.options.get("control", {}))
+            for key in ("binding", "nutrient_binding", "circulation_binding"):
+                if config.get(key):
+                    resolve(hass, config[key])
+            config["allowed_weekdays"] = call.data["allowed_weekdays"]
+            revision = tank.write_settings(
+                parameters=call.data["parameters"],
+                dosing_parameters=call.data["dosing_parameters"],
+                control=config,
+                expected_revision=call.data["expected_revision"],
+            )
+        return {"applied": True, "settings_revision": revision} if call.return_response else None
+
+    def revision(value):
+        if type(value) is not int or value < 0:
+            raise vol.Invalid("invalid_revision")
+        return value
+
+    hass.services.async_register(
+        DOMAIN,
+        "apply_control_settings",
+        apply_settings,
+        schema=vol.Schema(
+            {
+                vol.Required("config_entry_id"): vol.All(str, vol.Length(min=1)),
+                vol.Required("expected_revision"): revision,
+                vol.Required("parameters"): dict,
+                vol.Required("dosing_parameters"): dict,
+                vol.Required("allowed_weekdays"): dict,
+            }
+        ),
+        supports_response=SupportsResponse.OPTIONAL,
+    )
     return True

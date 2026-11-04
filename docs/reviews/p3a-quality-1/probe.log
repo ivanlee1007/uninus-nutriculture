@@ -1,0 +1,67 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-f1-successor\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 2 items
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable post-run-master-off {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "59392748ab333c8ac6f89303a5b8ea46", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "b49c7c048baa607fedff129f86200c18", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "reported", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true}, "flow_state": "disabled", "running": false, "owns_io": false, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+FAILED
+::test_timestamp_invalid_recovery_during_normal_off_pending_latches timestamp-cleanup-pending {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "607174cc586319faa0cb9163c93f32ed", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "1241fa776846ec29464393abe94f160d", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "timestamp", "sample_attribute": "sample", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true, "fault": "sample_invalid"}, "flow_state": "stopping", "running": true, "owns_io": true, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+timestamp-cleanup-settled {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "607174cc586319faa0cb9163c93f32ed", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "1241fa776846ec29464393abe94f160d", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "timestamp", "sample_attribute": "sample", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true, "fault": "sample_invalid"}, "flow_state": "fault", "running": false, "owns_io": false, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+PASSED
+
+================================== FAILURES ===================================
+__________ test_post_run_master_off_keeps_shipped_schema3_reoperable __________
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_post_run_master_off_keeps_shipped_schema3_reoperable(dosing_hass):
+     hass=dosing_hass;entry=await prepared(hass,pulse_seconds=2);control=entry.runtime_data.control
+     source_bound(control)
+     pump,circ=hass.data['p3_fixture']['outputs']
+     try:
+      await start_native(hass,entry)
+      await asyncio.wait_for(pump.entered_on.wait(),2)
+      await toggle(hass,entry,'flow_run',False)
+      assert control.flow_state=='aborted'
+      await toggle(hass,entry,'automation_enabled',False)
+      await hass.async_block_till_done()
+      status=capture(hass,entry,'post-run-master-off')
+      assert entry.options['control']['automation_enabled'] is False
+      assert not control.running and not pump.is_on and not circ.is_on
+      legal={'unsupported','idle','starting','waiting_resource','running','stopping','completed','aborted','fault','skipped_disabled','skipped_weekday','blocked_dependency'}
+>     assert status['attributes']['stage_states']['nutrient'] in legal, 'Real native post-run schema3 is rejected by shipped validV3; Card cannot re-enable master'
+E     AssertionError: Real native post-run schema3 is rejected by shipped validV3; Card cannot re-enable master
+E     assert 'disabled' in {'aborted', 'blocked_dependency', 'completed', 'fault', 'idle', 'running', ...}
+
+..\..\p3a-quality-review-20261103\test_quality_adjacent.py:44: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED ::test_post_run_master_off_keeps_shipped_schema3_reoperable - Assertio...
+=================== 1 failed, 1 passed, 5 warnings in 4.01s ===================

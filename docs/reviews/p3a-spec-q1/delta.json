@@ -1,0 +1,22 @@
+{
+  "changed": {
+    "uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py": [
+      "ef58a801a48bcfe8241e45e42e34fa3ea3ee49bc4348c8599eb1dc5ecde75428",
+      "7e119412b4beeeebbedad677fc5c6352367c73c14993027cb197bb397fc7285e"
+    ],
+    "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py": [
+      "d2dca234b3e27d1b33d155a791c7156bb509b1d94476f6c34334407b16bc7ae8",
+      "776356bb5bca551326277da24da9c3ae62cde87068e1e333a4c0286fdf13d97d"
+    ],
+    "uninus-nutriculture/docs/P3A_LOCAL_CHECKPOINT.json": [
+      "97675c9eea868073c03b00fcf6d3c0d268c6d02424bc20883395a2f1f6f2c9c8",
+      "76ec58a4c330ad173968f5122e4970ebde34c2a536e7e6cace73138a1136fac1"
+    ]
+  },
+  "added": [
+    "uninus-nutriculture/tools/p3a_postrun_check.py",
+    "uninus-nutriculture/docs/P3A_Q1_HANDOFF.md",
+    "uninus-nutriculture/tests/test_p3_stage_projection.py"
+  ],
+  "removed": []
+}

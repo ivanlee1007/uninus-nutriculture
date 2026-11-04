@@ -1,0 +1,85 @@
+{
+  "title": "UNiNUS Nutriculture",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add nutrient tank",
+        "description": "New tanks monitor only. Refill requires explicit output selection, commissioning and a separate start request. Save/Cancel never actuates. EC must use mS/cm and level must use m.",
+        "data": {
+          "name": "Tank name",
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Sources, outputs and nutrient safety settings",
+        "description": "Save/Cancel never actuates. The operator verifies device protection, physical limits and sampling contracts; software does not certify them. The nutrient Switch remains unavailable until its engine is supported. Configured does not mean operational. EC uses mS/cm; level uses m.",
+        "data": {
+          "ph": "pH source sensor",
+          "ec": "EC source sensor (mS/cm)",
+          "level": "Level source sensor (m)",
+          "max_age_seconds": "Maximum reading age (seconds)",
+          "refill_output": "Physical refill output switch",
+          "commissioned": "Verified physical identity, risks, OFF feedback and independent fail-safe",
+          "feedback_timeout": "Feedback deadline (seconds; 10 is an engineering default, not an original-HA value)",
+          "refill_weekdays": "Refill weekdays (empty forbids; P3 remains unavailable)",
+          "nutrient_weekdays": "Nutrient weekdays (empty forbids; P3 remains unavailable)",
+          "acid_weekdays": "Acid weekdays (empty forbids; P3 remains unavailable)",
+          "mix_weekdays": "Mix weekdays (empty forbids; P3 remains unavailable)",
+          "nutrient_output": "Physical nutrient pump switch",
+          "circulation_output": "Required circulation switch",
+          "nutrient_commissioned": "I have verified the nutrient binding and its operating limits",
+          "nutrient_protection_confirmed": "I have confirmed independent device maximum-ON protection",
+          "device_max_on_seconds": "Confirmed independent maximum ON (seconds)",
+          "alias_notes": "Verified physical identities and direct/timed aliases (not inferred by software)",
+          "sample_mode": "EC sampling contract: reported, monotonic sequence, or ISO timestamp",
+          "sample_attribute": "Explicit sample sequence/timestamp attribute (not a template)",
+          "report_contract_confirmed": "Each HA report represents a genuinely new measurement",
+          "safe_min_level_m": "Minimum safe dosing level (m; must be measured for this tank)",
+          "pulse_seconds": "Maximum pulse window (seconds)",
+          "max_total_on_seconds": "Conservative total ON budget per run (seconds, not mL)",
+          "max_pulses": "Maximum pulses per run",
+          "post_mix_seconds": "Required post-pulse circulation (seconds)",
+          "sample_wait_timeout_seconds": "New-sample waiting deadline (seconds)",
+          "stable_samples": "Required stable new samples",
+          "stable_interval_seconds": "Minimum stable-sample interval (seconds)",
+          "flow_timeout_seconds": "Whole-run deadline (seconds)",
+          "ph_danger_low": "Dangerously low pH threshold",
+          "ec_danger_high": "Dangerously high EC threshold (mS/cm)",
+          "ph_high_alarm": "High-pH alarm threshold (not global emergency stop)",
+          "ph_high_alarm_seconds": "High-pH alarm duration (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_name": "Enter a name of 1–100 characters.",
+      "invalid_max_age": "Enter an integer from 10 to 86400 seconds.",
+      "invalid_source": "Choose an existing sensor entity.",
+      "output_identity_invalid": "Output registry identity is invalid or disabled. Re-verify it.",
+      "output_already_owned": "Another tank owns this identifiable output.",
+      "output_unbound": "Select a registered output explicitly.",
+      "control_busy": "Disable master and confirm the run is stopped before rebinding/commissioning.",
+      "output_not_off": "Old and new outputs must be known OFF; saving never closes them.",
+      "invalid_commissioning": "Commissioning confirmations must be Boolean.",
+      "invalid_dosing_parameters": "Provide the complete thirteen-key dosing settings.",
+      "invalid_dosing_parameter": "Use a finite numeric value within the stated range and step, not Boolean.",
+      "nutrient_protection_unconfirmed": "Confirm device protection, maximum ON and verified physical identities before commissioning.",
+      "sample_contract_unconfirmed": "Confirm that each report is a new physical measurement.",
+      "invalid_sample_contract": "Choose reported, sequence or timestamp with an explicit supported attribute.",
+      "invalid_dosing_relationship": "Pulse/budget/deadline or target/danger limits are inconsistent.",
+      "settings_conflict": "Settings changed since this form opened. Reopen and reconcile; nothing was saved.",
+      "entry_not_loaded": "This tank is not currently loaded."
+    }
+  }
+}

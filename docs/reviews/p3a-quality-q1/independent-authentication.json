@@ -1,0 +1,33 @@
+{
+  "changed": [
+    "uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py",
+    "uninus-nutriculture/docs/P3A_LOCAL_CHECKPOINT.json"
+  ],
+  "added": [
+    "uninus-nutriculture/docs/P3A_Q1_HANDOFF.md",
+    "uninus-nutriculture/tests/test_p3_stage_projection.py",
+    "uninus-nutriculture/tools/p3a_postrun_check.py"
+  ],
+  "removed": [],
+  "spec_prepost_equal": true,
+  "spec_receipts_authenticated": {
+    "postrun": {
+      "child_exit": 0,
+      "raw_sha256": "45aa96a2634317061e91dee5d13a804918702daaa98ef68b3b6ee31104b9e262"
+    },
+    "probe": {
+      "child_exit": 0,
+      "raw_sha256": "d8dc3aadef755aec7f47eba6e99273bd46d2c61d60c3315d3277db23b28c6d0c"
+    },
+    "capture": {
+      "child_exit": 0,
+      "raw_sha256": "7a154cfb4ef51450e497bbccc72ff0db07b0ba521797a40c7c39ad7f57973f26"
+    }
+  },
+  "own_receipts_authenticated": 3,
+  "overlays_path_only": true,
+  "prior_manifest_sha256": "1562fbc72421466659e22fd34059e9331ecf1484de267619bb54eca84cae02ff",
+  "successor_manifest_sha256": "9dd070aa362481bcbda54c8e20a392bbe3875fa4d4ecbe7bb743fe8b3a17d6f0",
+  "source_diff_sha256": "6e00cba0ed7d445ca110c94a381e36bc622de7f0508588dff33261e24ee98fb8"
+}

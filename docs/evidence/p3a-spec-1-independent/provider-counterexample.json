@@ -1,0 +1,9 @@
+{
+  "accepted": true,
+  "fault_length": 4186,
+  "persisted_equals_provider": true,
+  "sensor_equals_provider": true,
+  "all_outputs_off": true,
+  "running": false,
+  "flow_state": "fault"
+}

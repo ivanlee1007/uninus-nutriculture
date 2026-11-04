@@ -1,0 +1,197 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 4 items
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted] FAILED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[fault] FAILED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[completed] FAILED
+tests/test_p3_stage_projection.py::test_pending_off_and_preentry_are_not_terminal_success PASSED
+
+================================== FAILURES ===================================
+________ test_native_terminal_history_and_shipped_reoperation[aborted] ________
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+tmp_path = WindowsPath('C:/Users/ivanl/.hermes/cache/scratch/nutriculture-p3a-q1-red/test_native_terminal_history_a0')
+outcome = 'aborted'
+
+    @pytest.mark.parametrize("outcome", ["aborted", "fault", "completed"])
+    async def test_native_terminal_history_and_shipped_reoperation(dosing_hass, tmp_path, outcome):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        control = entry.runtime_data.control
+        pump, circ = hass.data["p3_fixture"]["outputs"]
+        try:
+            await start_native(hass, entry)
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            if outcome == "aborted":
+                await toggle(hass, entry, "flow_run", False)
+            elif outcome == "fault":
+                hass.states.async_set("sensor.ec", "unavailable", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: not control.running)
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await hass.async_block_till_done()
+                await hass.services.async_call(
+                    "button", "press",
+                    {"entity_id": target(hass, entry, "button", "reset_fault")}, blocking=True,
+                )
+            else:
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "waiting_sample")
+                hass.states.async_set("sensor.ec", "0.86", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "completed")
+            assert not control.running and not control.nutrient_stage.owns_io
+            assert not pump.is_on and not circ.is_on
+            before_calls = list(hass.data["p3_fixture"]["calls"])
+            data = payload(entry)
+            data["parameters"]["ph_low"] = 5.4
+            await apply(hass, data)
+            await toggle(hass, entry, "automation_enabled", False)
+            await hass.async_block_till_done()
+            capture = snapshot(hass, entry)
+            status = capture["states"][capture["status_id"]]
+            assert status["state"] == "disabled"
+>           assert status["attributes"]["stage_states"]["nutrient"] == outcome
+E           AssertionError: assert 'disabled' == 'aborted'
+E             
+E             - aborted
+E             + disabled
+
+tests\test_p3_stage_projection.py:63: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_________ test_native_terminal_history_and_shipped_reoperation[fault] _________
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+tmp_path = WindowsPath('C:/Users/ivanl/.hermes/cache/scratch/nutriculture-p3a-q1-red/test_native_terminal_history_a1')
+outcome = 'fault'
+
+    @pytest.mark.parametrize("outcome", ["aborted", "fault", "completed"])
+    async def test_native_terminal_history_and_shipped_reoperation(dosing_hass, tmp_path, outcome):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        control = entry.runtime_data.control
+        pump, circ = hass.data["p3_fixture"]["outputs"]
+        try:
+            await start_native(hass, entry)
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            if outcome == "aborted":
+                await toggle(hass, entry, "flow_run", False)
+            elif outcome == "fault":
+                hass.states.async_set("sensor.ec", "unavailable", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: not control.running)
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await hass.async_block_till_done()
+                await hass.services.async_call(
+                    "button", "press",
+                    {"entity_id": target(hass, entry, "button", "reset_fault")}, blocking=True,
+                )
+            else:
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "waiting_sample")
+                hass.states.async_set("sensor.ec", "0.86", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "completed")
+            assert not control.running and not control.nutrient_stage.owns_io
+            assert not pump.is_on and not circ.is_on
+            before_calls = list(hass.data["p3_fixture"]["calls"])
+            data = payload(entry)
+            data["parameters"]["ph_low"] = 5.4
+            await apply(hass, data)
+            await toggle(hass, entry, "automation_enabled", False)
+            await hass.async_block_till_done()
+            capture = snapshot(hass, entry)
+            status = capture["states"][capture["status_id"]]
+            assert status["state"] == "disabled"
+>           assert status["attributes"]["stage_states"]["nutrient"] == outcome
+E           AssertionError: assert 'disabled' == 'fault'
+E             
+E             - fault
+E             + disabled
+
+tests\test_p3_stage_projection.py:63: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_______ test_native_terminal_history_and_shipped_reoperation[completed] _______
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+tmp_path = WindowsPath('C:/Users/ivanl/.hermes/cache/scratch/nutriculture-p3a-q1-red/test_native_terminal_history_a2')
+outcome = 'completed'
+
+    @pytest.mark.parametrize("outcome", ["aborted", "fault", "completed"])
+    async def test_native_terminal_history_and_shipped_reoperation(dosing_hass, tmp_path, outcome):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        control = entry.runtime_data.control
+        pump, circ = hass.data["p3_fixture"]["outputs"]
+        try:
+            await start_native(hass, entry)
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            if outcome == "aborted":
+                await toggle(hass, entry, "flow_run", False)
+            elif outcome == "fault":
+                hass.states.async_set("sensor.ec", "unavailable", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: not control.running)
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await hass.async_block_till_done()
+                await hass.services.async_call(
+                    "button", "press",
+                    {"entity_id": target(hass, entry, "button", "reset_fault")}, blocking=True,
+                )
+            else:
+                hass.states.async_set("sensor.ec", "0.85", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "waiting_sample")
+                hass.states.async_set("sensor.ec", "0.86", {"unit_of_measurement": "mS/cm"})
+                await until(lambda: control.flow_state == "completed")
+            assert not control.running and not control.nutrient_stage.owns_io
+            assert not pump.is_on and not circ.is_on
+            before_calls = list(hass.data["p3_fixture"]["calls"])
+            data = payload(entry)
+            data["parameters"]["ph_low"] = 5.4
+            await apply(hass, data)
+            await toggle(hass, entry, "automation_enabled", False)
+            await hass.async_block_till_done()
+            capture = snapshot(hass, entry)
+            status = capture["states"][capture["status_id"]]
+            assert status["state"] == "disabled"
+>           assert status["attributes"]["stage_states"]["nutrient"] == outcome
+E           AssertionError: assert 'disabled' == 'completed'
+E             
+E             - completed
+E             + disabled
+
+tests\test_p3_stage_projection.py:63: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+FAILED tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[fault]
+FAILED tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[completed]
+=================== 3 failed, 1 passed, 5 warnings in 7.15s ===================

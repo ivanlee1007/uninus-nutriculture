@@ -1,3 +1,7 @@
 * text=auto eol=lf
 docs/evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 docs/reviews/approved-candidate-manifest.json -text whitespace=cr-at-eol
+# Preserve immutable P3a review receipts/logs exactly, not production whitespace.
+docs/reviews/p3a-*/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+# Historical handoff bytes retained; do not relax executable whitespace.
+docs/P3A_BACKEND_A1_HANDOFF.md -text whitespace=-blank-at-eof,cr-at-eol

@@ -1,0 +1,30 @@
+{
+  "quality": "控制狀態以原生 Entity 讀回為準\nec_out_of_range\nlevel_out_of_range",
+  "controls_attached": true,
+  "master_disabled": false,
+  "emergency_disabled": false,
+  "settings_disabled": true,
+  "nutrient_stage": "aborted",
+  "flow_state": "disabled",
+  "master_state": "off",
+  "calls": [
+    [
+      "switch",
+      "turn_on",
+      {
+        "entity_id": "switch.tank_automation_enabled"
+      }
+    ],
+    [
+      "button",
+      "press",
+      {
+        "entity_id": "button.tank_emergency_stop"
+      }
+    ]
+  ],
+  "browser_version": "156.0.8078.4",
+  "page_errors": [],
+  "shipped_sha256": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f",
+  "native_capture_sha256": "13358d055781673e3d2561c827153df66072477a99522e379386e3ee10c229d2"
+}

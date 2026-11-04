@@ -4,12 +4,24 @@ import math
 
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow, OptionsFlow
-from homeassistant.core import callback
+from homeassistant.core import Context, callback
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import selector
 
 from .const import DOMAIN, SOURCE_KEYS
 from .control_settings import DAYS, STAGES, resolve, settings_candidate
+
+
+class DosingSelector(selector.NumberSelector):
+    """Do not let native float coercion turn a Boolean into a dose limit."""
+
+    def __call__(self, value):
+        if isinstance(value, bool):
+            raise vol.Invalid("invalid_dosing_parameter")
+        result = super().__call__(value)
+        if not math.isfinite(result):
+            raise vol.Invalid("invalid_dosing_parameter")
+        return result
 
 
 class FeedbackSelector(selector.NumberSelector):
@@ -61,6 +73,38 @@ def schema(values, *, include_name=False):
         ] = FeedbackSelector(
             selector.NumberSelectorConfig(min=1, max=60, step=1, unit_of_measurement="s")
         )
+        from .dosing_settings import CONTROL_FIELDS, RANGES
+
+        for key in ("nutrient_output", "circulation_output"):
+            fields[vol.Optional(key, description={"suggested_value": values.get(key)})] = (
+                selector.EntitySelector(selector.EntitySelectorConfig(domain="switch"))
+            )
+        for key in CONTROL_FIELDS:
+            marker = vol.Optional(key, description={"suggested_value": values.get(key)})
+            if key in (
+                "nutrient_commissioned",
+                "nutrient_protection_confirmed",
+                "report_contract_confirmed",
+            ):
+                fields[marker] = selector.BooleanSelector()
+            elif key == "device_max_on_seconds":
+                fields[marker] = FeedbackSelector(
+                    selector.NumberSelectorConfig(min=1, max=86400, step=1)
+                )
+            elif key == "sample_mode":
+                fields[marker] = selector.SelectSelector(
+                    selector.SelectSelectorConfig(options=["reported", "sequence", "timestamp"])
+                )
+            else:
+                fields[marker] = str
+        for key, (minimum, maximum, step) in RANGES.items():
+            fields[vol.Optional(key, description={"suggested_value": values.get(key)})] = (
+                DosingSelector(
+                    selector.NumberSelectorConfig(
+                        min=minimum, max=maximum, step=step, mode=selector.NumberSelectorMode.BOX
+                    )
+                )
+            )
         for stage in STAGES:
             fields[
                 vol.Optional(
@@ -126,26 +170,51 @@ class NutricultureConfigFlow(ConfigFlow, domain=DOMAIN):
 
 class NutricultureOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input=None):
+        from .control_auth import authorize
+        from .dosing_settings import CONTROL_FIELDS, DEFAULTS, RANGES
+
         errors = {}
+        if not hasattr(self, "_revision"):
+            self._revision = self.config_entry.options.get("settings_revision", 0)
         if user_input is not None:
             errors = errors_for(self.hass, user_input)
             if not errors:
-                # Read latest options at submission, preserving intervening Number writes.
-                options = {
-                    **self.config_entry.options,
-                    **{key: user_input[key] for key in SOURCE_KEYS},
-                    "max_age_seconds": int(user_input.get("max_age_seconds", 300)),
-                }
                 try:
-                    options["control"] = settings_candidate(
-                        self.hass, self.config_entry, user_input
-                    )
+                    await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                    tank = self.config_entry.runtime_data
+                    async with tank.lock:
+                        await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                        config = settings_candidate(self.hass, self.config_entry, user_input)
+                        edited_dosing = any(key in user_input for key in RANGES)
+                        dosing = None
+                        if edited_dosing:
+                            dosing = {
+                                **DEFAULTS,
+                                **self.config_entry.options.get("dosing_parameters", {}),
+                                **{key: user_input[key] for key in RANGES if key in user_input},
+                            }
+                        nutrient_edit = edited_dosing or any(
+                            key in user_input
+                            for key in (*CONTROL_FIELDS, "nutrient_output", "circulation_output")
+                        )
+                        tank.write_settings(
+                            control=config,
+                            dosing_parameters=dosing,
+                            sources={
+                                **{key: user_input[key] for key in SOURCE_KEYS},
+                                "max_age_seconds": int(user_input.get("max_age_seconds", 300)),
+                            },
+                            expected_revision=self._revision if nutrient_edit else None,
+                        )
                 except ServiceValidationError as err:
                     errors["base"] = str(err)
                 else:
-                    return self.async_create_entry(title="", data=options)
+                    return self.async_create_entry(title="", data=dict(self.config_entry.options))
         control = self.config_entry.options.get("control", {})
         suggested = {
+            **DEFAULTS,
+            **self.config_entry.options.get("dosing_parameters", {}),
+            **{key: control[key] for key in CONTROL_FIELDS if key in control},
             "commissioned": control.get("commissioned", False),
             "feedback_timeout": control.get("feedback_timeout", 10),
         }
@@ -153,11 +222,16 @@ class NutricultureOptionsFlow(OptionsFlow):
             suggested[stage + "_weekdays"] = control.get("allowed_weekdays", {}).get(
                 stage, list(DAYS)
             )
-        if control.get("binding"):
-            try:
-                suggested["refill_output"] = resolve(self.hass, control["binding"])
-            except ServiceValidationError:
-                pass  # Invalid identities are not suggested as usable targets.
+        for field, binding_key in (
+            ("refill_output", "binding"),
+            ("nutrient_output", "nutrient_binding"),
+            ("circulation_output", "circulation_binding"),
+        ):
+            if control.get(binding_key):
+                try:
+                    suggested[field] = resolve(self.hass, control[binding_key])
+                except ServiceValidationError:
+                    pass  # Invalid identities are not suggested as usable targets.
         values = {
             **self.config_entry.data,
             **self.config_entry.options,

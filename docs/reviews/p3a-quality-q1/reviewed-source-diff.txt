@@ -1,0 +1,109 @@
+--- prior/uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py
++++ successor/uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py
+@@ -20,6 +20,9 @@
+         self.wake = asyncio.Event()
+         self.samples = 0
+         self.phase = None
++        # Last accepted run outcome, independent of the global enable state.
++        # None means no settled outcome, including an accepted task not yet entered.
++        self.result = None
+         self.progress = {"pulse_count": 0, "reserved_on_seconds": 0, "stable_count": 0}
+         self.targets = {}
+         self.operations = {}
+@@ -236,6 +239,7 @@
+         self.revoked = None
+         self.operations = {}
+         self.owns_io = True
++        self.result = None
+         self.last_token = self.sample_token(self.hass.states.get(self.tank.sources["ec"]))
+         self.on_since = None
+         self.charged_on = 0
+@@ -445,6 +449,10 @@
+             self.control.flow_state = (
+                 "fault" if self.control.fault or self.control.running else result
+             )
++            # Cleanup is the only outcome authority. Unsettled I/O must not
++            # acquire a successful/aborted terminal result.
++            if not self.owns_io:
++                self.result = self.control.flow_state
+             self.cleaning = False
+             self.phase = None
+             self.tank.publish()
+--- prior/uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py
++++ successor/uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py
+@@ -181,7 +181,10 @@
+                 else control.flow_state,
+                 "nutrient": (
+                     (
+-                        "running"
++                        control.nutrient_stage.result
++                        if not control.nutrient_stage.owns_io
++                        and control.nutrient_stage.result is not None
++                        else "running"
+                         if control.flow_state
+                         in ("dosing", "mixing", "waiting_sample", "stabilizing")
+                         else control.flow_state
+--- prior/uninus-nutriculture/docs/P3A_LOCAL_CHECKPOINT.json
++++ successor/uninus-nutriculture/docs/P3A_LOCAL_CHECKPOINT.json
+@@ -1,5 +1,5 @@
+ {
+-  "status": "LOCAL_P3A_F1_RECHECK_CANDIDATE_NOT_APPROVED",
++  "status": "LOCAL_P3A_Q1_RECHECK_CANDIDATE_NOT_APPROVED",
+   "implementation": {
+     "native_options_and_atomic_settings": "implemented and exercised",
+     "schema3_group_ui": "implemented and exercised",
+@@ -24,9 +24,9 @@
+     "physical_device_test": false
+   },
+   "remaining": [
+-    "Independent SPEC recheck of F1 exact successor, then quality review",
+-    "Exact-index/source and hosted exact-head CI before source publication; no physical deployment",
+-    "Acid/standalone mix and full configurable flow remain unimplemented"
++    "Affected SPEC then quality recheck of exact Q1 successor; repair budget exhausted2/2, no automatic third repair",
++    "Exact-index and hosted exact-head CI before publication; no deployment",
++    "Acid/standalone mix and configurable flow remain unimplemented"
+   ],
+   "safety": {
+     "committed_p3": false,
+@@ -60,15 +60,16 @@
+   "latest_handoff": "docs/P3A_FINISH_HANDOFF.md",
+   "acceptance_map": "docs/P3A_REVIEW_CANDIDATE.md",
+   "independent_spec": {
+-    "verdict": "REQUEST_CHANGES",
+-    "report": "docs/reviews/p3a-spec-1/REPORT.md",
+-    "finding": "F1: unbounded provider text persisted/published as fault code",
+-    "source_bound": true
++    "verdict": "PASS",
++    "report": "docs/reviews/p3a-spec-f1/REPORT.md",
++    "candidate_manifest_sha256": "1562fbc72421466659e22fd34059e9331ecf1484de267619bb54eca84cae02ff",
++    "initial_review_still_request_changes": true
+   },
+   "repair_budget": {
+-    "used": 1,
++    "used": 2,
+     "limit": 2,
+-    "scope": "entire P3a delivery slice"
++    "scope": "entire P3a delivery slice",
++    "on_further_blocker": "preserve evidence and escalate; no automatic third repair"
+   },
+   "f1_repair": {
+     "handoff": "docs/P3A_F1_HANDOFF.md",
+@@ -76,5 +77,18 @@
+     "independent_probe_copy_passed": 2,
+     "approved": false,
+     "repair_cycle": 1
++  },
++  "independent_quality": {
++    "verdict": "REQUEST_CHANGES",
++    "report": "docs/reviews/p3a-quality-1/REPORT.md",
++    "finding": "Q1 post-run master OFF makes stage_states.nutrient=disabled incompatible with shipped strict consumer",
++    "stop_truth": "outputs OFF; ownership resolved; not a physical stop failure"
++  },
++  "q1_repair": {
++    "handoff": "docs/P3A_Q1_HANDOFF.md",
++    "native_passed": 249,
++    "postrun_native_to_shipped_cases": 4,
++    "chromium_passed": 30,
++    "approved": false
+   }
+ }

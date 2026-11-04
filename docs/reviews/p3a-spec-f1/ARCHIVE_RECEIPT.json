@@ -1,0 +1,33 @@
+{
+  "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-f1-recheck",
+  "verdict": "PASS",
+  "files": {
+    "adjacent-RuntimeError.json": "e86312ce309a8de047b69ae63fa4925deb907f8d36a72e8b649a84e9bc772a52",
+    "adjacent-Unauthorized.json": "412566230c00631f1de45954147a30aa61089605d8a2e841e8e809b9dfd7778a",
+    "baseline.json": "9a49f5bb17cd8f0b0160290b792b86760f481312c32a3c52ddc2d5017bdece9b",
+    "CHECKPOINT.md": "3a375bf8d6a15cbb15d71f488e53be007316567287b7b7acd5d297e55a9e5297",
+    "delta.json": "b8a79e062a1ef86b7faa8023c793cd43bdd3e1feb59369c49f3863c4ee90a70e",
+    "final-verification.json": "9d536cfeab0fa3ecf58302bce1e8fa471f18c26eec4ec379aaa2e229aded00bd",
+    "focused-final-receipt.json": "cfdcfb42e7aa6d6ed41c3247db3024520b1233f52863d1467479c96ac6cd15d4",
+    "focused-final.log": "197ee3a3854ab11e7062193bda43cd3c89ededcfccf0d963c188666eea163bfc",
+    "focused-receipt.json": "c8527e9f132b8c495b041b778a50d2d35d7b114998d766bf32cf277029ddb934",
+    "focused-retry-receipt.json": "c220a3c7c4925e9f02d8e7b2c924a264fba3f12fb771948c0902fb797c1c666d",
+    "focused-retry.log": "eda17c70baecd9f2535a5f0d188bf07a47aba3218297eab9556e21439c21d843",
+    "focused.log": "804ee58eab5219ccb7bb308a29137247f31e6616c868f1fd0fb5005341a8a0ad",
+    "full-receipt.json": "dfc79a0649c58d4ba19b31b5bf5c8e561d767c71ca8f9bfb0bc3d47b64525a45",
+    "full.log": "1825ee04c7c5f9dfdbf5b523438d268ebba73d6bfc57ad0a0121a2654026e59a",
+    "node-receipt.json": "e2934c979ed1d186a51e1301af7c6e716695a7c9c364e82b10ec9f32a0624503",
+    "node.log": "075985ba702c94ec305559b0be1343fa35c27cd9d0ea1fbbef42233890ec8fad",
+    "provider-counterexample.json": "2668395327bfcba493c6c89571b88bd805f63bf4c25c55234c34856a4ca5b13b",
+    "REPORT.md": "5dc4eadf5482365675e6701caa2d0905d068372d74b9d1fa40f2faf12c707a3f",
+    "run_recheck.py": "535cf05c4a37042bfe5b250b5d297e2d6490b62deab3baae5df80ec6255c6d21",
+    "run_recheck_v1.py": "3035c6566c90fa8c723f716e98d19e837f693701c8da241449de104d21694ed3",
+    "run_recheck_v2.py": "173e7a77f44389d5bff9c1f6fd132637957d7e2b028f2722eb46ee9d3487cc13",
+    "test_adjacent.py": "5951726367d316bcfea0b965985430e34da4b48a45cb68ae910c9cd5f0f7d0c6",
+    "test_adjacent_v1.py": "481e12cb8c430d7cc92fb4add10f8f90ad6f8b6a8d579610fc23e2cbbf64f487",
+    "test_adjacent_v2.py": "ccb15ba53c262e8d85f1185851a2f368d6c2a861a8117eea64a624e268e3c8c4",
+    "test_review_probe.py": "3839c83f3573f7525ffa0ed2f6b46dca887b78c02e8fc7392c3324da93a4c7ad",
+    "verify_final.py": "859cebe454d309134508258346cf8e5dbd1b30f540845a0e0657935f4e48c386"
+  },
+  "storage_configs_and_dirs_excluded": true
+}

@@ -64,6 +64,26 @@ class ControlStatus(TankStatus):
         self._attr_unique_id = f"{tank.entry.entry_id}:control_status"
         self._attr_name = f"{tank.entry.title} control status"
 
+    @callback
+    def _number_changed(self, event):
+        super()._number_changed(event)
+        entity_id = event.data.get("entity_id", "")
+        config = self.tank.entry.options.get("control", {})
+        if not entity_id.startswith("switch.") or not config.get("nutrient_commissioned"):
+            return
+        from homeassistant.exceptions import ServiceValidationError
+
+        from .control_settings import resolve
+
+        for role in ("nutrient", "circulation"):
+            try:
+                target = resolve(self.hass, config.get(role + "_binding"))
+            except ServiceValidationError:
+                continue
+            if entity_id == target:
+                self.async_write_ha_state()
+                return
+
     @property
     def native_value(self):
         return self.tank.control.flow_state
@@ -74,16 +94,20 @@ class ControlStatus(TankStatus):
         from .control_settings import DAYS, STAGES
 
         control = self.tank.control
+        base = self.tank.snapshot()[1]
         config = self.tank.entry.options.get("control", {})
         registry = er.async_get(self.hass)
         targets = {}
         for key, domain in (
             ("automation_enabled", "switch"),
             ("refill_enabled", "switch"),
+            ("nutrient_enabled", "switch"),
             ("flow_run", "switch"),
             ("emergency_stop", "button"),
             ("reset_fault", "button"),
         ):
+            if key == "nutrient_enabled" and not control.supports_nutrient:
+                continue
             entity_id = registry.async_get_entity_id(
                 domain, DOMAIN, f"{self.tank.entry.entry_id}:{key}"
             )
@@ -96,22 +120,87 @@ class ControlStatus(TankStatus):
                 and self.tank.active
             ):
                 targets[key] = entity_id
+        nutrient_supported = bool(getattr(control, "supports_nutrient", False))
+        extra = {}
+        if config.get("nutrient_commissioned"):
+            from homeassistant.exceptions import ServiceValidationError
+
+            from .control_settings import resolve
+
+            outputs = {}
+            for stage in ("nutrient", "circulation"):
+                try:
+                    entity_id = resolve(self.hass, config.get(stage + "_binding"))
+                    state = self.hass.states.get(entity_id)
+                    outputs[stage] = (
+                        state.state if state and state.state in ("on", "off") else "unknown"
+                    )
+                except ServiceValidationError:
+                    outputs[stage] = "unknown"
+            extra = {
+                "schema_version": 3,
+                "reasons": [
+                    *base.get("reasons", []),
+                    *(["ph_high_alarm"] if control.ph_high_alarm_active else []),
+                ],
+                "settings_target": {
+                    "config_entry_id": self.tank.entry.entry_id,
+                    "service": "apply_control_settings",
+                },
+                "settings_revision": self.tank.entry.options.get("settings_revision", 0),
+                "dosing_parameters": dict(self.tank.entry.options.get("dosing_parameters", {})),
+                "nutrient_phase": getattr(control, "nutrient_phase", None),
+                "dose_progress": dict(
+                    getattr(
+                        control,
+                        "dose_progress",
+                        {"pulse_count": 0, "reserved_on_seconds": 0, "stable_count": 0},
+                    )
+                ),
+                "output_states": outputs,
+            }
         return {
-            **self.tank.snapshot()[1],
+            **base,
             "schema_version": 2,
             "mode": "control",
-            "capabilities": {stage: stage == "refill" for stage in STAGES},
+            "capabilities": {
+                stage: stage == "refill" or (stage == "nutrient" and nutrient_supported)
+                for stage in STAGES
+            },
             "control_entities": targets,
             "allowed_weekdays": config.get(
                 "allowed_weekdays", {stage: list(DAYS) for stage in STAGES}
             ),
             "stage_states": {
-                "refill": control.flow_state,
-                "nutrient": "unsupported",
+                "refill": "skipped_disabled"
+                if nutrient_supported
+                and (
+                    control.run_stage == "nutrient"
+                    or (control.run_stage is None and control.nutrient)
+                )
+                else control.flow_state,
+                "nutrient": (
+                    (
+                        control.nutrient_stage.result
+                        if not control.nutrient_stage.owns_io
+                        and control.nutrient_stage.result is not None
+                        else "running"
+                        if control.flow_state
+                        in ("dosing", "mixing", "waiting_sample", "stabilizing")
+                        else control.flow_state
+                    )
+                    if control.run_stage == "nutrient"
+                    else "skipped_disabled"
+                    if control.run_stage == "refill"
+                    else "idle"
+                )
+                if nutrient_supported
+                else "unsupported",
                 "acid": "unsupported",
                 "mix": "unsupported",
             },
             "flow_state": control.flow_state,
             "fault": control.fault,
             "run_id": control.run_id,
+            **extra,
         }

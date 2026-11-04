@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "D:/UNiNUS Projects/AI project/uninus-nutriculture/.venv/Scripts/python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-c",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-q1-successor\\uninus-nutriculture\\pyproject.toml",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\test_quality_adjacent_successor.py",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\test_adjacent.py",
+    "-v",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\pytest-probe"
+  ],
+  "cwd": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-q1-successor\\uninus-nutriculture",
+  "environment": {
+    "PYTHONPATH": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-q1-successor\\uninus-nutriculture\\tests;C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-q1-successor\\uninus-nutriculture",
+    "P3A_CARD_PYTHON": "D:/UNiNUS Projects/AI project/uninus-nutriculture-card/.venv/Scripts/python.exe",
+    "CHROMIUM_EXECUTABLE": "C:/Users/ivanl/AppData/Local/ms-playwright/chromium-1248/chrome-win64/chrome.exe",
+    "TMPDIR": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck"
+  },
+  "child_exit": 0,
+  "seconds": 7.460698843002319,
+  "source_unchanged": true,
+  "source_count": 138,
+  "log": "probe.log",
+  "raw_log_sha256": "d8dc3aadef755aec7f47eba6e99273bd46d2c61d60c3315d3277db23b28c6d0c",
+  "harness_inputs": {
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\check_native_capture_ui.py": "7f03e358d3c9c6f7952ef75ea92249ea676dc9ccd6cde0dfc7b8ef9756caa46c",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\check_native_capture_ui_successor.py": "c78a6d9868347830ade5d992a427bcd6c82a07a9c05607053ebdcc01efc75b86",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\run_recheck.py": "fa77ac6ef3ea5c3565f3734f7dd25f9b683eaf81a7e6f19259ec4d119e008510",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\test_adjacent.py": "779fb32067e7ba21c4003594a7c3c2b205a1220a5a01d33d6d7a5a0e81a1a109",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\test_quality_adjacent.py": "05aeca55309d666fc004637a5ba8045112da4bdd7a26a2e28751839780ef5c51",
+    "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-spec-q1-recheck\\test_quality_adjacent_successor.py": "8fc3ff0ebcfd078e51dd06bc6ef1fd7812d43f607438786b64bb5353ab6d8759"
+  }
+}

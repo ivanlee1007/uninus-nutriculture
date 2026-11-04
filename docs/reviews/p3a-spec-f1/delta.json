@@ -1,0 +1,17 @@
+{
+  "changed": {
+    "uninus-nutriculture/custom_components/uninus_nutriculture/control.py": {
+      "prior": "607abae6ce9ec58585fb0fbe9a2aca2091d047f8d93b12f344e2d55ba792f503",
+      "successor": "7b61e287eb458cf05a7f8d762b211297529f6c24a5a1d38c193e78e7ee41e259"
+    },
+    "uninus-nutriculture/docs/P3A_LOCAL_CHECKPOINT.json": {
+      "prior": "736548e78d2ec4c80c32258a9647067adacdfcd1f0b756e248088cec6c5b09be",
+      "successor": "97675c9eea868073c03b00fcf6d3c0d268c6d02424bc20883395a2f1f6f2c9c8"
+    }
+  },
+  "added": {
+    "uninus-nutriculture/tests/test_p3_fault_codes.py": "b73e4bbccf926f1043f84542d7818248637927a67893151d582d21210e6671f1",
+    "uninus-nutriculture/docs/P3A_F1_HANDOFF.md": "f0c8a03dfbb3ddce680479b3c243c44d59d8fa2c3fc20ab74788e39f99aa3932"
+  },
+  "removed": []
+}

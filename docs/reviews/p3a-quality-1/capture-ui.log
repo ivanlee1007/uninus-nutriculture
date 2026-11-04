@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\ivanl\.hermes\cache\scratch\p3a-quality-review-20261103\check_native_capture_ui.py", line 3, in <module>
+    from playwright.sync_api import sync_playwright
+ModuleNotFoundError: No module named 'playwright'

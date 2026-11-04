@@ -1,0 +1,30 @@
+{
+  "verdict": "REQUEST_CHANGES",
+  "finding": "Q1: global disabled incorrectly projected into stage enum; native-to-shipped Card refusal",
+  "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3a-quality-review-20261103",
+  "files": {
+    "browser-current-receipt.json": "69380fd15c86181c4d041b1697409aca196f3e2c4d778d37e05dc07b9a0e1e84",
+    "browser-current.log": "2d92d8565984a9650a7aa3283ae4e16e76700f354654892be5f87cab320b0dc3",
+    "browser-receipt.json": "486af9d17c34e953c59ce054e6b1252bbeec3938472f7651708fd8664f7c28b2",
+    "browser.log": "653888b7531b8b5353bdcd921bda5fd5db8e9e3ab88857bcb28a7e3f128f1ec1",
+    "capture-ui-current-receipt.json": "e0cabbeec453a63e4fda94a9092076ff2a152f6cc625454110c70eae3339baa8",
+    "capture-ui-current.log": "af1ca156db714ea1b358ec0bec7d66ad0e8860e6e6810f64493714ef5d5ab06a",
+    "capture-ui-receipt.json": "4c82a0d1ed4674442c0cc2f7ce6e39e0e71b1a579dc474dd892cc3f5cb662a59",
+    "capture-ui.log": "45bcad5101f8c7e1e124ae67d71a1318baf81dd4688be6b5368ca04d82840414",
+    "CHECKPOINT.md": "938b5581db8347d95bb2dab065eaead59434c3218dff08534798c894e54c0a13",
+    "check_native_capture_ui.py": "7f03e358d3c9c6f7952ef75ea92249ea676dc9ccd6cde0dfc7b8ef9756caa46c",
+    "final-verification.json": "0a511d279bfda76e98065048e3b2791412656aaca6fd7cb61df0f0528fa2e1de",
+    "post-run-master-off.json": "625fcd73d804f779b61759055bd991a0f8f2396bdbfe602912fbb85013d5776a",
+    "post-run-shipped-ui.json": "22ff78850992d4c7e45ac15d928d254b3090905cab0448515fa3db380a4b5fb8",
+    "probe-receipt.json": "106bf7690336bacb309274c5eee7aed0c6668670b85744f79c5697e8744b7c48",
+    "probe.log": "dc4267e6c68969e66a48fd4dac19b2887858dc4315bcf522e0999b0cd349570a",
+    "REPORT.md": "8cc5f5b571364f4ab8615906230151092e474af7be6bc81cfb3cc909ebf723f1",
+    "run_gate.py": "696fe9d95ddb3becea683ce6b4e39cac53e8eb7689f776a9375d425bd9e1f2ff",
+    "source-post.json": "430d68c7925badabeaf1e36f47e5abf7935dc08baeb25c07cc9e2db5b51df8f3",
+    "source-pre.json": "430d68c7925badabeaf1e36f47e5abf7935dc08baeb25c07cc9e2db5b51df8f3",
+    "test_quality_adjacent.py": "05aeca55309d666fc004637a5ba8045112da4bdd7a26a2e28751839780ef5c51",
+    "timestamp-cleanup-pending.json": "160edfdafe50fdbf2cfae283893e6ea189f18a9fe166685d6c10217f1d4de7ec",
+    "timestamp-cleanup-settled.json": "913d6e2c166577e924b3dd6fc71a65cb25b8fffb9001fb61297e97fd3d110555"
+  },
+  "no_runtime_dirs_or_storage_copied": true
+}

@@ -35,7 +35,10 @@ class ControlSwitch(SwitchEntity):
 
     @property
     def available(self):
-        return self.tank.active and self.key in ("automation_enabled", "refill_enabled", "flow_run")
+        return self.tank.active and (
+            self.key in ("automation_enabled", "refill_enabled", "flow_run")
+            or (self.key == "nutrient_enabled" and self.tank.control.supports_nutrient)
+        )
 
     @property
     def is_on(self):
@@ -43,6 +46,7 @@ class ControlSwitch(SwitchEntity):
         return {
             "automation_enabled": control.master,
             "refill_enabled": control.refill,
+            "nutrient_enabled": control.nutrient,
             "flow_run": control.running,
         }.get(self.key, False)
 

@@ -1,0 +1,184 @@
+FFFF...                                                                  [100%]
+================================== FAILURES ===================================
+_ test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0] _
+
+dosing_hass = <HomeAssistant NOT_RUNNING>, error_type = <class 'RuntimeError'>
+diagnostic = 'FICTITIOUS_TOKEN=not-a-real-secret; xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+    @pytest.mark.parametrize(
+        ("error_type", "diagnostic"),
+        [
+            (RuntimeError, "FICTITIOUS_TOKEN=not-a-real-secret; " + "x" * 4096),
+            (ServiceValidationError, "FICTITIOUS_TOKEN=not-a-real-secret"),
+            (ServiceValidationError, "source_invalid:FICTITIOUS_TOKEN=not-a-real-secret"),
+        ],
+    )
+    async def test_unknown_provider_fault_is_closed_and_still_locked(
+        dosing_hass, error_type, diagnostic
+    ):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        pump, circulation = hass.data["p3_fixture"]["outputs"]
+    
+        async def fail_provider(**kwargs):
+            pump.entered_on.set()
+            raise error_type(diagnostic)
+    
+        pump.async_turn_on = fail_provider
+        control = entry.runtime_data.control
+        try:
+            receipt = await start_native(hass, entry)
+            assert receipt["accepted"]
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            await until(lambda: control.nutrient_stage.task.done())
+            await hass.async_block_till_done()
+            status = hass.states.get(target(hass, entry, "sensor", "control_status"))
+>           assert control.fault == "operation_failed"
+E           AssertionError: assert 'FICTITIOUS_T...xxxxxxxxxxxxx' == 'operation_failed'
+E             
+E             - operation_failed
+E             + FICTITIOUS_TOKEN=not-a-real-secret; xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+E             
+E             ...Full output truncated, use '-vv' to show
+
+tests\test_p3_fault_codes.py:41: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-FICTITIOUS_TOKEN=not-a-real-secret] _
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+error_type = <class 'homeassistant.exceptions.ServiceValidationError'>
+diagnostic = 'FICTITIOUS_TOKEN=not-a-real-secret'
+
+    @pytest.mark.parametrize(
+        ("error_type", "diagnostic"),
+        [
+            (RuntimeError, "FICTITIOUS_TOKEN=not-a-real-secret; " + "x" * 4096),
+            (ServiceValidationError, "FICTITIOUS_TOKEN=not-a-real-secret"),
+            (ServiceValidationError, "source_invalid:FICTITIOUS_TOKEN=not-a-real-secret"),
+        ],
+    )
+    async def test_unknown_provider_fault_is_closed_and_still_locked(
+        dosing_hass, error_type, diagnostic
+    ):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        pump, circulation = hass.data["p3_fixture"]["outputs"]
+    
+        async def fail_provider(**kwargs):
+            pump.entered_on.set()
+            raise error_type(diagnostic)
+    
+        pump.async_turn_on = fail_provider
+        control = entry.runtime_data.control
+        try:
+            receipt = await start_native(hass, entry)
+            assert receipt["accepted"]
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            await until(lambda: control.nutrient_stage.task.done())
+            await hass.async_block_till_done()
+            status = hass.states.get(target(hass, entry, "sensor", "control_status"))
+>           assert control.fault == "operation_failed"
+E           AssertionError: assert 'FICTITIOUS_T...a-real-secret' == 'operation_failed'
+E             
+E             - operation_failed
+E             + FICTITIOUS_TOKEN=not-a-real-secret
+
+tests\test_p3_fault_codes.py:41: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_ test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-source_invalid:FICTITIOUS_TOKEN=not-a-real-secret] _
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+error_type = <class 'homeassistant.exceptions.ServiceValidationError'>
+diagnostic = 'source_invalid:FICTITIOUS_TOKEN=not-a-real-secret'
+
+    @pytest.mark.parametrize(
+        ("error_type", "diagnostic"),
+        [
+            (RuntimeError, "FICTITIOUS_TOKEN=not-a-real-secret; " + "x" * 4096),
+            (ServiceValidationError, "FICTITIOUS_TOKEN=not-a-real-secret"),
+            (ServiceValidationError, "source_invalid:FICTITIOUS_TOKEN=not-a-real-secret"),
+        ],
+    )
+    async def test_unknown_provider_fault_is_closed_and_still_locked(
+        dosing_hass, error_type, diagnostic
+    ):
+        hass = dosing_hass
+        entry = await prepared(hass, pulse_seconds=2)
+        pump, circulation = hass.data["p3_fixture"]["outputs"]
+    
+        async def fail_provider(**kwargs):
+            pump.entered_on.set()
+            raise error_type(diagnostic)
+    
+        pump.async_turn_on = fail_provider
+        control = entry.runtime_data.control
+        try:
+            receipt = await start_native(hass, entry)
+            assert receipt["accepted"]
+            await asyncio.wait_for(pump.entered_on.wait(), 2)
+            await until(lambda: control.nutrient_stage.task.done())
+            await hass.async_block_till_done()
+            status = hass.states.get(target(hass, entry, "sensor", "control_status"))
+>           assert control.fault == "operation_failed"
+E           AssertionError: assert 'source_inval...a-real-secret' == 'operation_failed'
+E             
+E             - operation_failed
+E             + source_invalid:FICTITIOUS_TOKEN=not-a-real-secret
+
+tests\test_p3_fault_codes.py:41: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+_________ test_legacy_persisted_diagnostic_is_closed_on_native_reload _________
+
+dosing_hass = <HomeAssistant NOT_RUNNING>
+
+    async def test_legacy_persisted_diagnostic_is_closed_on_native_reload(dosing_hass):
+        hass = dosing_hass
+        entry = await prepared(hass)
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        config = dict(entry.options["control"])
+        config.update(fault="FICTITIOUS_TOKEN=not-a-real-secret", automation_enabled=True)
+        hass.config_entries.async_update_entry(entry, options={**entry.options, "control": config})
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+        control = entry.runtime_data.control
+        status = hass.states.get(target(hass, entry, "sensor", "control_status"))
+>       assert control.fault == "operation_failed"
+E       AssertionError: assert 'FICTITIOUS_T...a-real-secret' == 'operation_failed'
+E         
+E         - operation_failed
+E         + FICTITIOUS_TOKEN=not-a-real-secret
+
+tests\test_p3_fault_codes.py:66: AssertionError
+----------------------------- Captured log setup ------------------------------
+WARNING  homeassistant.loader:loader.py:716 We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+============================== warnings summary ===============================
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+FAILED tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-FICTITIOUS_TOKEN=not-a-real-secret]
+FAILED tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-source_invalid:FICTITIOUS_TOKEN=not-a-real-secret]
+FAILED tests/test_p3_fault_codes.py::test_legacy_persisted_diagnostic_is_closed_on_native_reload
+4 failed, 3 passed, 5 warnings in 5.61s

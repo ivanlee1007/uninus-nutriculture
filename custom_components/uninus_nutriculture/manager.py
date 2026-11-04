@@ -64,14 +64,67 @@ class Tank:
                 or self.hass.data["number"].get_entity(entity_id) is not entity
             ):
                 raise ServiceValidationError("inactive_parameter_entity")
-            candidate = {**self.parameters, key: value}
-            validate(candidate)
-            # Native ConfigEntry storage schedules a save; not crash-durable fsync.
-            self.hass.config_entries.async_update_entry(
-                self.entry, options={**self.entry.options, "parameters": candidate}
+            self.write_settings(
+                parameters={**self.entry.options.get("parameters", self.parameters), key: value}
             )
-            self.parameters = candidate
+
+    def write_settings(
+        self,
+        *,
+        parameters=None,
+        dosing_parameters=None,
+        control=None,
+        sources=None,
+        expected_revision=None,
+    ):
+        """Synchronous commit under Tank.lock. No await between admission and effect."""
+        from .control_settings import DAYS, STAGES
+        from .dosing_settings import validate_dosing
+
+        if not self.active:
+            raise ServiceValidationError("entry_not_loaded")
+        options = dict(self.entry.options)
+        revision = options.get("settings_revision", 0)
+        if expected_revision is not None and (
+            type(expected_revision) is not int
+            or expected_revision < 0
+            or expected_revision != revision
+        ):
+            raise ServiceValidationError("settings_conflict")
+        candidate = dict(options)
+        params = dict(
+            parameters if parameters is not None else options.get("parameters", self.parameters)
+        )
+        validate(params)
+        config = dict(control if control is not None else options.get("control", {}))
+        days = config.get("allowed_weekdays", {key: list(DAYS) for key in STAGES})
+        if set(days) != set(STAGES) or any(
+            not isinstance(value, list)
+            or any(day not in DAYS for day in value)
+            or len(value) != len(set(value))
+            for value in days.values()
+        ):
+            raise ServiceValidationError("invalid_weekdays")
+        dosing = (
+            dosing_parameters if dosing_parameters is not None else options.get("dosing_parameters")
+        )
+        if dosing is not None:
+            validate_dosing(params, dosing, config)
+            candidate["dosing_parameters"] = dict(dosing)
+        elif config.get("nutrient_commissioned"):
+            raise ServiceValidationError("invalid_dosing_parameters")
+        if parameters is not None or "parameters" in options:
+            candidate["parameters"] = params
+        if control is not None:
+            candidate["control"] = config
+        if sources:
+            candidate.update(sources)
+        if candidate != options:
+            candidate["settings_revision"] = revision + 1
+            self.hass.config_entries.async_update_entry(self.entry, options=candidate)
+            self.parameters = params
             self.publish()
+        return self.entry.options.get("settings_revision", 0)
 
     @property
     def sources(self):

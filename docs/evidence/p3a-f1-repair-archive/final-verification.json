@@ -1,0 +1,50 @@
+{
+  "frozen_files_verified": 133,
+  "consumed_inputs_verified": 76,
+  "original_evidence_unchanged": true,
+  "all_green_snapshots_match_current_bytes": true,
+  "gates": {
+    "native": {
+      "exit": 0,
+      "receipt_sha256": "e096393e28dab378ea4a7a64bda035cba3e30f43a54d268df6c1298716e70fae",
+      "log_sha256": "dd4f1806222abb5606b107c719e466f600a6be6358b3a8ed82c54dc00d68197d"
+    },
+    "probe": {
+      "exit": 0,
+      "receipt_sha256": "e8112cb1e57ec50d0a3583c2eb848e61402c433d39a756ad0353be59c2790143",
+      "log_sha256": "676afecea6e1a06dcd257e4af512810a06bd9fa5927b2f034eec38d33ef2869a"
+    },
+    "node": {
+      "exit": 0,
+      "receipt_sha256": "bfed42c0610e77726cabf37c3bf693e54c7aa014aa5d47e7ac2402387f2290d4",
+      "log_sha256": "1f08cf14a741e4b55c69ec82593c5aca1bbf09c5466280ed49b338e32ce0a01e"
+    },
+    "quality": {
+      "exit": 0,
+      "receipt_sha256": "81e4e79fa645c6269afd021b6db8e23fb911bc85550fab143500aec3c9f3acc0",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "format": {
+      "exit": 0,
+      "receipt_sha256": "44210386c25f8998fc75acb8a002cd5650a9c12ae5f0742f6e5d1990e0f0200b",
+      "log_sha256": "43476fb9601a542841f6cba73a03155ef5792f5324f2380538c7f276a7b8ed2f"
+    },
+    "bridge": {
+      "exit": 0,
+      "receipt_sha256": "8a87065ee934d769f2ed2ea8b73001671f86619cc144afd5da53c3958873bdcf",
+      "log_sha256": "b593b8428e66a0219aa4b9170c3e7f4d8470eb94f8e2af9dbb1924b355209a67"
+    },
+    "settings-bridge": {
+      "exit": 0,
+      "receipt_sha256": "6bdb4813575a52d5e85d4ba086a1309680cec86563e72dc1e896975fd4ed3a19",
+      "log_sha256": "8bb66c5eaa7095307c0790bc615ec7ab23c7414ce9943538e540e5b0040bf5f1"
+    }
+  },
+  "control_sha256": "7b61e287eb458cf05a7f8d762b211297529f6c24a5a1d38c193e78e7ee41e259",
+  "new_test_sha256": "b73e4bbccf926f1043f84542d7818248637927a67893151d582d21210e6671f1",
+  "original_probe_sha256": "3839c83f3573f7525ffa0ed2f6b46dca887b78c02e8fc7392c3324da93a4c7ad",
+  "copied_probe_sha256": "3839c83f3573f7525ffa0ed2f6b46dca887b78c02e8fc7392c3324da93a4c7ad",
+  "new_test_cases": 7,
+  "full_native_cases": 245,
+  "staged_files": []
+}

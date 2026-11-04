@@ -1,0 +1,37 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 2 items
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable post-run-master-off {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "f109474c1ddd052e93cdb0646cda6b7f", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "4801047ca27cff5ce2aa496ee068fa3e", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "reported", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true}, "flow_state": "disabled", "running": false, "owns_io": false, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+PASSED
+::test_timestamp_invalid_recovery_during_normal_off_pending_latches timestamp-cleanup-pending {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "a8d86ca0e3b83bff5bcf26323d1d880a", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "af91797e9a0266490146b3dd8e494e61", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "timestamp", "sample_attribute": "sample", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true, "fault": "sample_invalid"}, "flow_state": "stopping", "running": true, "owns_io": true, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+timestamp-cleanup-settled {"status_id": "sensor.tank_control_status", "persisted_control": {"commissioned": false, "feedback_timeout": 3.0, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}, "nutrient_binding": {"registry_id": "a8d86ca0e3b83bff5bcf26323d1d880a", "platform": "switch", "unique_id": "dosing-fixture-nutrient", "config_entry_id": null}, "circulation_binding": {"registry_id": "af91797e9a0266490146b3dd8e494e61", "platform": "switch", "unique_id": "dosing-fixture-circulation", "config_entry_id": null}, "nutrient_commissioned": true, "nutrient_protection_confirmed": true, "device_max_on_seconds": 3.0, "alias_notes": "Independent outputs, fixture protection only", "sample_mode": "timestamp", "sample_attribute": "sample", "report_contract_confirmed": true, "automation_enabled": false, "nutrient_enabled": true, "fault": "sample_invalid"}, "flow_state": "fault", "running": false, "owns_io": false, "outputs": {"nutrient": false, "circulation": false}, "calls": [["circulation", "on"], ["nutrient", "on"], ["nutrient", "off"], ["circulation", "off"]]}
+PASSED
+
+============================== warnings summary ===============================
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+::test_post_run_master_off_keeps_shipped_schema3_reoperable
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 2 passed, 5 warnings in 3.42s ========================

@@ -1,0 +1,468 @@
+{
+  "status_id": "sensor.tank_control_status",
+  "states": {
+    "sensor.ph": {
+      "state": "5.6",
+      "attributes": {
+        "unit_of_measurement": "pH"
+      }
+    },
+    "sensor.ec": {
+      "state": "0.7",
+      "attributes": {
+        "unit_of_measurement": "mS/cm"
+      }
+    },
+    "sensor.level": {
+      "state": "2",
+      "attributes": {
+        "unit_of_measurement": "m"
+      }
+    },
+    "switch.fixture_refill": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Fixture refill"
+      }
+    },
+    "switch.dosing_fixture_nutrient": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Dosing fixture nutrient"
+      }
+    },
+    "switch.dosing_fixture_circulation": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Dosing fixture circulation"
+      }
+    },
+    "number.tank_level_low": {
+      "state": "2.25",
+      "attributes": {
+        "min": 0,
+        "max": 10,
+        "step": 0.01,
+        "mode": "box",
+        "unit_of_measurement": "m",
+        "friendly_name": "Tank level low"
+      }
+    },
+    "number.tank_level_high": {
+      "state": "2.4",
+      "attributes": {
+        "min": 0,
+        "max": 10,
+        "step": 0.01,
+        "mode": "box",
+        "unit_of_measurement": "m",
+        "friendly_name": "Tank level high"
+      }
+    },
+    "number.tank_ph_low": {
+      "state": "5.4",
+      "attributes": {
+        "min": 0,
+        "max": 14,
+        "step": 0.1,
+        "mode": "box",
+        "friendly_name": "Tank ph low"
+      }
+    },
+    "number.tank_ph_high": {
+      "state": "5.8",
+      "attributes": {
+        "min": 0,
+        "max": 14,
+        "step": 0.1,
+        "mode": "box",
+        "friendly_name": "Tank ph high"
+      }
+    },
+    "number.tank_ec_low": {
+      "state": "0.8",
+      "attributes": {
+        "min": 0,
+        "max": 20,
+        "step": 0.01,
+        "mode": "box",
+        "unit_of_measurement": "mS/cm",
+        "friendly_name": "Tank ec low"
+      }
+    },
+    "number.tank_ec_high": {
+      "state": "0.9",
+      "attributes": {
+        "min": 0,
+        "max": 20,
+        "step": 0.01,
+        "mode": "box",
+        "unit_of_measurement": "mS/cm",
+        "friendly_name": "Tank ec high"
+      }
+    },
+    "number.tank_refill_timeout": {
+      "state": "190",
+      "attributes": {
+        "min": 1,
+        "max": 1440,
+        "step": 1,
+        "mode": "box",
+        "unit_of_measurement": "min",
+        "friendly_name": "Tank refill timeout"
+      }
+    },
+    "number.tank_ec_timeout": {
+      "state": "90",
+      "attributes": {
+        "min": 1,
+        "max": 1440,
+        "step": 1,
+        "mode": "box",
+        "unit_of_measurement": "min",
+        "friendly_name": "Tank ec timeout"
+      }
+    },
+    "number.tank_ph_timeout": {
+      "state": "190",
+      "attributes": {
+        "min": 1,
+        "max": 1440,
+        "step": 1,
+        "mode": "box",
+        "unit_of_measurement": "min",
+        "friendly_name": "Tank ph timeout"
+      }
+    },
+    "number.tank_mix_duration": {
+      "state": "10",
+      "attributes": {
+        "min": 1,
+        "max": 1440,
+        "step": 1,
+        "mode": "box",
+        "unit_of_measurement": "min",
+        "friendly_name": "Tank mix duration"
+      }
+    },
+    "switch.tank_automation_enabled": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Tank automation_enabled"
+      }
+    },
+    "switch.tank_refill_enabled": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Tank refill_enabled"
+      }
+    },
+    "switch.tank_nutrient_enabled": {
+      "state": "on",
+      "attributes": {
+        "friendly_name": "Tank nutrient_enabled"
+      }
+    },
+    "switch.tank_acid_enabled": {
+      "state": "unavailable",
+      "attributes": {
+        "friendly_name": "Tank acid_enabled"
+      }
+    },
+    "switch.tank_mix_enabled": {
+      "state": "unavailable",
+      "attributes": {
+        "friendly_name": "Tank mix_enabled"
+      }
+    },
+    "switch.tank_flow_run": {
+      "state": "off",
+      "attributes": {
+        "friendly_name": "Tank flow_run"
+      }
+    },
+    "button.tank_emergency_stop": {
+      "state": "2026-11-03T16:14:25.418421+00:00",
+      "attributes": {
+        "friendly_name": "Tank emergency_stop"
+      }
+    },
+    "button.tank_reset_fault": {
+      "state": "unknown",
+      "attributes": {
+        "friendly_name": "Tank reset_fault"
+      }
+    },
+    "sensor.tank_status": {
+      "state": "out_of_range",
+      "attributes": {
+        "schema_version": 1,
+        "mode": "shadow",
+        "ready_for_irrigation": false,
+        "source_entities": {
+          "ph": "sensor.ph",
+          "ec": "sensor.ec",
+          "level": "sensor.level"
+        },
+        "parameter_entities": {
+          "level_low": "number.tank_level_low",
+          "level_high": "number.tank_level_high",
+          "ph_low": "number.tank_ph_low",
+          "ph_high": "number.tank_ph_high",
+          "ec_low": "number.tank_ec_low",
+          "ec_high": "number.tank_ec_high",
+          "refill_timeout": "number.tank_refill_timeout",
+          "ec_timeout": "number.tank_ec_timeout",
+          "ph_timeout": "number.tank_ph_timeout",
+          "mix_duration": "number.tank_mix_duration"
+        },
+        "parameters": {
+          "level_low": 2.25,
+          "level_high": 2.4,
+          "ph_low": 5.4,
+          "ph_high": 5.8,
+          "ec_low": 0.8,
+          "ec_high": 0.9,
+          "refill_timeout": 190,
+          "ec_timeout": 90,
+          "ph_timeout": 190,
+          "mix_duration": 10
+        },
+        "reasons": [
+          "ec_out_of_range",
+          "level_out_of_range"
+        ],
+        "friendly_name": "Tank status"
+      }
+    },
+    "sensor.tank_control_status": {
+      "state": "fault",
+      "attributes": {
+        "schema_version": 3,
+        "mode": "control",
+        "ready_for_irrigation": false,
+        "source_entities": {
+          "ph": "sensor.ph",
+          "ec": "sensor.ec",
+          "level": "sensor.level"
+        },
+        "parameter_entities": {
+          "level_low": "number.tank_level_low",
+          "level_high": "number.tank_level_high",
+          "ph_low": "number.tank_ph_low",
+          "ph_high": "number.tank_ph_high",
+          "ec_low": "number.tank_ec_low",
+          "ec_high": "number.tank_ec_high",
+          "refill_timeout": "number.tank_refill_timeout",
+          "ec_timeout": "number.tank_ec_timeout",
+          "ph_timeout": "number.tank_ph_timeout",
+          "mix_duration": "number.tank_mix_duration"
+        },
+        "parameters": {
+          "level_low": 2.25,
+          "level_high": 2.4,
+          "ph_low": 5.4,
+          "ph_high": 5.8,
+          "ec_low": 0.8,
+          "ec_high": 0.9,
+          "refill_timeout": 190,
+          "ec_timeout": 90,
+          "ph_timeout": 190,
+          "mix_duration": 10
+        },
+        "reasons": [
+          "ec_out_of_range",
+          "level_out_of_range"
+        ],
+        "capabilities": {
+          "refill": true,
+          "nutrient": true,
+          "acid": false,
+          "mix": false
+        },
+        "control_entities": {
+          "automation_enabled": "switch.tank_automation_enabled",
+          "refill_enabled": "switch.tank_refill_enabled",
+          "nutrient_enabled": "switch.tank_nutrient_enabled",
+          "flow_run": "switch.tank_flow_run",
+          "emergency_stop": "button.tank_emergency_stop",
+          "reset_fault": "button.tank_reset_fault"
+        },
+        "allowed_weekdays": {
+          "refill": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ],
+          "nutrient": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ],
+          "acid": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ],
+          "mix": [
+            "mon",
+            "tue",
+            "wed",
+            "thu",
+            "fri",
+            "sat",
+            "sun"
+          ]
+        },
+        "stage_states": {
+          "refill": "skipped_disabled",
+          "nutrient": "fault",
+          "acid": "unsupported",
+          "mix": "unsupported"
+        },
+        "flow_state": "fault",
+        "fault": "emergency_stop",
+        "run_id": "8ed46c3ddfec4745ac491db0b4b7a9b0",
+        "settings_target": {
+          "config_entry_id": "01M6H31F10YD06ESAHBP8T28DK",
+          "service": "apply_control_settings"
+        },
+        "settings_revision": 1,
+        "dosing_parameters": {
+          "post_mix_seconds": 1.0,
+          "sample_wait_timeout_seconds": 3.0,
+          "stable_samples": 1.0,
+          "stable_interval_seconds": 1.0,
+          "flow_timeout_seconds": 15.0,
+          "ph_danger_low": 3.8,
+          "ec_danger_high": 1.3,
+          "ph_high_alarm": 6.8,
+          "ph_high_alarm_seconds": 600.0,
+          "safe_min_level_m": 0.5,
+          "pulse_seconds": 2.0,
+          "max_total_on_seconds": 20.0,
+          "max_pulses": 5.0
+        },
+        "nutrient_phase": null,
+        "dose_progress": {
+          "pulse_count": 1,
+          "reserved_on_seconds": 2.0,
+          "stable_count": 0
+        },
+        "output_states": {
+          "nutrient": "off",
+          "circulation": "off"
+        },
+        "friendly_name": "Tank control status"
+      }
+    }
+  },
+  "persisted_control": {
+    "commissioned": false,
+    "feedback_timeout": 3.0,
+    "allowed_weekdays": {
+      "refill": [
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat",
+        "sun"
+      ],
+      "nutrient": [
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat",
+        "sun"
+      ],
+      "acid": [
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat",
+        "sun"
+      ],
+      "mix": [
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat",
+        "sun"
+      ]
+    },
+    "nutrient_binding": {
+      "registry_id": "96e149f77de2361a62b13ec3ca021c30",
+      "platform": "switch",
+      "unique_id": "dosing-fixture-nutrient",
+      "config_entry_id": null
+    },
+    "circulation_binding": {
+      "registry_id": "74d55d8be50213d00238c348609b2fb6",
+      "platform": "switch",
+      "unique_id": "dosing-fixture-circulation",
+      "config_entry_id": null
+    },
+    "nutrient_commissioned": true,
+    "nutrient_protection_confirmed": true,
+    "device_max_on_seconds": 3.0,
+    "alias_notes": "Independent outputs, fixture protection only",
+    "sample_mode": "reported",
+    "report_contract_confirmed": true,
+    "automation_enabled": false,
+    "nutrient_enabled": true,
+    "fault": "emergency_stop"
+  },
+  "flow_state": "fault",
+  "running": false,
+  "owns_io": false,
+  "outputs": {
+    "nutrient": false,
+    "circulation": false
+  },
+  "calls": [
+    [
+      "circulation",
+      "on"
+    ],
+    [
+      "nutrient",
+      "on"
+    ],
+    [
+      "nutrient",
+      "off"
+    ],
+    [
+      "circulation",
+      "off"
+    ],
+    [
+      "nutrient",
+      "off"
+    ],
+    [
+      "circulation",
+      "off"
+    ]
+  ]
+}

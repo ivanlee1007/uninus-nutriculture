@@ -1,0 +1,42 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 4 items
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted] {"browser": "156.0.8078.4", "calls": [["switch", "turn_on", {"entity_id": "switch.tank_automation_enabled"}], ["uninus_nutriculture", "apply_control_settings", {"config_entry_id": "01M6H1KF6R7FWKNYEVNGRYBCMK", "expected_revision": 2, "parameters": {"level_low": 2.25, "level_high": 2.4, "ph_low": 5.3, "ph_high": 5.8, "ec_low": 0.8, "ec_high": 0.9, "refill_timeout": 190, "ec_timeout": 90, "ph_timeout": 190, "mix_duration": 10}, "dosing_parameters": {"safe_min_level_m": 0.5, "pulse_seconds": 2, "max_total_on_seconds": 20, "max_pulses": 5, "post_mix_seconds": 1, "sample_wait_timeout_seconds": 3, "stable_samples": 1, "stable_interval_seconds": 1, "flow_timeout_seconds": 15, "ph_danger_low": 3.8, "ec_danger_high": 1.3, "ph_high_alarm": 6.8, "ph_high_alarm_seconds": 600}, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}}]], "page_errors": [], "shipped_sha256": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f", "native_sha256": "6866bcc3ffb74d0db63a521f10cd5db770f8698db513143857c875b24493fb40"}
+ 
+PASSED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[fault] {"browser": "156.0.8078.4", "calls": [["switch", "turn_on", {"entity_id": "switch.tank_automation_enabled"}], ["uninus_nutriculture", "apply_control_settings", {"config_entry_id": "01M6H1KNFFST3FNWDQKCQRXZC7", "expected_revision": 2, "parameters": {"level_low": 2.25, "level_high": 2.4, "ph_low": 5.3, "ph_high": 5.8, "ec_low": 0.8, "ec_high": 0.9, "refill_timeout": 190, "ec_timeout": 90, "ph_timeout": 190, "mix_duration": 10}, "dosing_parameters": {"safe_min_level_m": 0.5, "pulse_seconds": 2, "max_total_on_seconds": 20, "max_pulses": 5, "post_mix_seconds": 1, "sample_wait_timeout_seconds": 3, "stable_samples": 1, "stable_interval_seconds": 1, "flow_timeout_seconds": 15, "ph_danger_low": 3.8, "ec_danger_high": 1.3, "ph_high_alarm": 6.8, "ph_high_alarm_seconds": 600}, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}}]], "page_errors": [], "shipped_sha256": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f", "native_sha256": "e34280e948970ccabd41d435d8ca902c925dd77120b10ed5d2309f1b1cb16638"}
+ 
+PASSED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[completed] {"browser": "156.0.8078.4", "calls": [["switch", "turn_on", {"entity_id": "switch.tank_automation_enabled"}], ["uninus_nutriculture", "apply_control_settings", {"config_entry_id": "01M6H1KRTTNDEANSS7P2P8NYXR", "expected_revision": 2, "parameters": {"level_low": 2.25, "level_high": 2.4, "ph_low": 5.3, "ph_high": 5.8, "ec_low": 0.8, "ec_high": 0.9, "refill_timeout": 190, "ec_timeout": 90, "ph_timeout": 190, "mix_duration": 10}, "dosing_parameters": {"safe_min_level_m": 0.5, "pulse_seconds": 2, "max_total_on_seconds": 20, "max_pulses": 5, "post_mix_seconds": 1, "sample_wait_timeout_seconds": 3, "stable_samples": 1, "stable_interval_seconds": 1, "flow_timeout_seconds": 15, "ph_danger_low": 3.8, "ec_danger_high": 1.3, "ph_high_alarm": 6.8, "ph_high_alarm_seconds": 600}, "allowed_weekdays": {"refill": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "nutrient": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "acid": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "mix": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}}]], "page_errors": [], "shipped_sha256": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f", "native_sha256": "724851a9eab9d80c7e045d6a371b2c94acdbeac22953ab2a8fc994d2dcc6fdee"}
+ 
+PASSED
+tests/test_p3_stage_projection.py::test_pending_off_and_preentry_are_not_terminal_success PASSED
+
+============================== warnings summary ===============================
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 4 passed, 5 warnings in 15.80s ========================

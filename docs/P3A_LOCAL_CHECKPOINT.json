@@ -1,0 +1,94 @@
+{
+  "status": "LOCAL_P3A_REVIEWED_PENDING_EXACT_INDEX_AND_CI",
+  "implementation": {
+    "native_options_and_atomic_settings": "implemented and exercised",
+    "schema3_group_ui": "implemented and exercised",
+    "nutrient_execution_engine": "finite finish candidate connected and exercised; early cancellation/stage owner/token latch/rejected run identity/normal-vs-acute stop/output event projection repaired; independent verdict pending",
+    "full_p3_issue3": "open; acid/mix/full editable flow still required"
+  },
+  "verification": {
+    "backend_full_passed": 238,
+    "backend_full_evidence": "docs/evidence/p3a-finish-17-review-candidate",
+    "backend_full_scope": "Historical frozen candidate before F1 repair: independent238/Node10/bridge checked; repair source in progress is NOT verified by those historical counts",
+    "a1_native_focused_passed": 8,
+    "focused_overlaps_full": true,
+    "a1_native_focused_evidence": "docs/evidence/p3a-a1-15-final-native-fields",
+    "card_node_passed": 10,
+    "card_chromium_passed": 30,
+    "card_evidence": "../uninus-nutriculture-card/docs/evidence/p3a-card-09-demo-green",
+    "actual_shipped_ui_native_group_bridge": "docs/evidence/p3a-settings-bridge-08-final-source",
+    "settings_bridge_hardware_calls": 0,
+    "actual_shipped_ui_native_dosing_bridge": "docs/evidence/p3a-dosing-bridge-08-final-source",
+    "dosing_midpoint_off_seconds": 0.001195,
+    "dosing_bridge_uses_fake_hardware": true,
+    "physical_device_test": false
+  },
+  "remaining": [
+    "Explicit source/index inventory, canonical-byte equivalence and exact-index gates",
+    "Exact remote-head CI before claiming source publication complete; no deployment",
+    "Acid/standalone mix isolated development and configurable flow remain unfinished"
+  ],
+  "safety": {
+    "committed_p3": false,
+    "pushed_p3": false,
+    "deployed": false,
+    "external_ha_access": false
+  },
+  "heads": {
+    "uninus-nutriculture": "bc3915af2bd42870620d11c396bd53e62f072324",
+    "uninus-nutriculture-card": "c3d4fd8fbde34823ed0cbe581b1e3007f76f0e2c"
+  },
+  "last_completed_a2_source_manifest": "docs/evidence/p3a-finish-17-review-candidate/run.json",
+  "a1_historical_source_sha256": {
+    "uninus-nutriculture/custom_components/uninus_nutriculture/config_flow.py": "b2d506475fed6f4284dfe86f7a4f893f1033258faeb3e3133b6474b0ec61c6c2",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/control_settings.py": "62d475aafddd724f6d962f2b2db129146c15d9f024b305d4e44569d331c6e77b",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/manager.py": "7bd34b64e6dab71cac454f0ad38e160587cf47d15e98fdb1f4c21df0ad5cc553",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py": "171b7db87e794a63b7ba7b4bd8fde9679ba7d2e763a8947d1b23428b1e864b0e",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/services.py": "2b3a5eb97595a11c613a0767fe1c0d125c6a4352778c0df73c074105a8df6159",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/services.yaml": "03ca50d1bbd46a18dc7aa6f97d065b4549e22cf4b7700b403e5a8e7befb15650",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/strings.json": "4e57b581e04acd7720f443fda531891ec87108ff79cc8e7c9541788901daefa6",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/translations/en.json": "4e57b581e04acd7720f443fda531891ec87108ff79cc8e7c9541788901daefa6",
+    "uninus-nutriculture/custom_components/uninus_nutriculture/translations/zh-Hant.json": "a9c830e4238ff712fe42c79c4a3916cc96047a73880217ca0064fd6b0d58d07e",
+    "uninus-nutriculture/tests/test_boundaries.py": "e8bf91b2af4e4e3827737df7ab9c5de4d0a408e8d111097ceb7b6f8a3e9ceb5b",
+    "uninus-nutriculture-card/demo/index.html": "ea4f63d41d285ccac667090b9ebb7f9af0ce5da8e8cd92426839c14588ec5cb7",
+    "uninus-nutriculture-card/tests/test_browser.py": "2feb0176a2780630f2d43047f262ba8ca0426c2e1070150de838f90761a7c804",
+    "uninus-nutriculture-card/tests/test_contract.cjs": "08103e74239628474a7531d5536d10494629b1c84110d4b6f4644a2795a0e7d5",
+    "uninus-nutriculture-card/uninus-nutriculture-card.js": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\dosing_settings.py": "15f0a04e87268474a67231e78613517e907d2fc76b7d101467f9c35ee37977fa"
+  },
+  "goal_alignment": "docs/GOAL_ALIGNMENT.md",
+  "latest_handoff": "docs/P3A_FINISH_HANDOFF.md",
+  "acceptance_map": "docs/P3A_REVIEW_CANDIDATE.md",
+  "independent_spec": {
+    "verdict": "PASS",
+    "report": "docs/reviews/p3a-spec-q1/REPORT.md",
+    "candidate_manifest_sha256": "9dd070aa362481bcbda54c8e20a392bbe3875fa4d4ecbe7bb743fe8b3a17d6f0",
+    "initial_request_changes_history_preserved": true
+  },
+  "repair_budget": {
+    "used": 2,
+    "limit": 2,
+    "scope": "entire P3a delivery slice",
+    "on_further_blocker": "preserve evidence and escalate; no automatic third repair"
+  },
+  "f1_repair": {
+    "handoff": "docs/P3A_F1_HANDOFF.md",
+    "native_passed": 245,
+    "independent_probe_copy_passed": 2,
+    "approved": false,
+    "repair_cycle": 1
+  },
+  "independent_quality": {
+    "verdict": "APPROVED",
+    "report": "docs/reviews/p3a-quality-q1/REPORT.md",
+    "candidate_manifest_sha256": "9dd070aa362481bcbda54c8e20a392bbe3875fa4d4ecbe7bb743fe8b3a17d6f0",
+    "initial_request_changes_history_preserved": true
+  },
+  "q1_repair": {
+    "handoff": "docs/P3A_Q1_HANDOFF.md",
+    "native_passed": 249,
+    "postrun_native_to_shipped_cases": 4,
+    "chromium_passed": 30,
+    "approved": false
+  }
+}

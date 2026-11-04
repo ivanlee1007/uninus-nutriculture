@@ -83,4 +83,81 @@ def settings_candidate(hass, entry, values):
                 state = hass.states.get(target)
                 if state is None or state.state != "off":
                     raise ServiceValidationError("output_not_off")
+    from .dosing_settings import CONTROL_FIELDS
+
+    for field, key in (
+        ("nutrient_output", "nutrient_binding"),
+        ("circulation_output", "circulation_binding"),
+    ):
+        if field in values:
+            row = er.async_get(hass).async_get(values[field])
+            if row is None:
+                raise ServiceValidationError("output_identity_invalid")
+            candidate[key] = identity(row)
+            resolve(hass, candidate[key])
+    for key in CONTROL_FIELDS:
+        if key in values:
+            candidate[key] = values[key]
+    bindings = [
+        candidate.get(key) for key in ("binding", "nutrient_binding", "circulation_binding")
+    ]
+    owned = set()
+    for binding in bindings:
+        if not binding:
+            continue
+        target = resolve(hass, binding)
+        resource = (binding["platform"], binding["unique_id"])
+        if resource in owned:
+            raise ServiceValidationError("output_already_owned")
+        owned.add(resource)
+        for other in hass.config_entries.async_entries(DOMAIN):
+            if other.entry_id == entry.entry_id:
+                continue
+            other_control = other.options.get("control", {})
+            for key in ("binding", "nutrient_binding", "circulation_binding"):
+                other_binding = other_control.get(key)
+                if other_binding and (
+                    other_binding.get("registry_id") == binding["registry_id"]
+                    or (other_binding.get("platform"), other_binding.get("unique_id")) == resource
+                ):
+                    raise ServiceValidationError("output_already_owned")
+    if candidate.get("nutrient_commissioned"):
+        resolve(hass, candidate.get("nutrient_binding"))
+        resolve(hass, candidate.get("circulation_binding"))
+    protected = (
+        "binding",
+        "commissioned",
+        "nutrient_binding",
+        "circulation_binding",
+        *CONTROL_FIELDS,
+    )
+    source_change = any(
+        key in values and values[key] != entry.options.get(key, entry.data.get(key))
+        for key in ("ph", "ec", "level", "max_age_seconds")
+    )
+    if source_change or any(candidate.get(key) != old.get(key) for key in protected):
+        ensure_stopped(hass, entry, old, candidate)
     return candidate
+
+
+def ensure_stopped(hass, entry, old, candidate):
+    """No hidden OFF: old and new outputs must already be known OFF."""
+    controller = getattr(getattr(entry, "runtime_data", None), "control", None)
+    if controller and (
+        controller.master
+        or controller.running
+        or any(
+            task is not None and not task.done()
+            for task in (
+                getattr(controller, "on_task", None),
+                getattr(controller, "off_task", None),
+            )
+        )
+    ):
+        raise ServiceValidationError("control_busy")
+    for config in (old, candidate):
+        for key in ("binding", "nutrient_binding", "circulation_binding"):
+            if config.get(key):
+                state = hass.states.get(resolve(hass, config[key]))
+                if state is None or state.state != "off":
+                    raise ServiceValidationError("output_not_off")

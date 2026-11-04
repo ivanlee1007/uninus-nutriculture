@@ -13,3 +13,41 @@ start_flow:
       required: false
       selector:
         text:
+
+apply_control_settings:
+  name: Apply control settings atomically
+  description: Save the complete normal, dosing and weekday settings with a revision check. Does not start or commission equipment. Active administrators and internal automations only.
+  fields:
+    config_entry_id:
+      name: Tank
+      required: true
+      selector:
+        config_entry:
+          integration: uninus_nutriculture
+    expected_revision:
+      name: Expected settings revision
+      description: Must match the current control status. A conflict changes nothing.
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    parameters:
+      name: Complete normal parameters
+      description: All ten original parameter keys; values retain their original units.
+      required: true
+      selector:
+        object:
+    dosing_parameters:
+      name: Complete nutrient safety parameters
+      description: All thirteen dosing parameter keys. Engineering limits are not physical-device certification.
+      required: true
+      selector:
+        object:
+    allowed_weekdays:
+      name: Complete stage weekdays
+      description: Refill, nutrient, acid and mix lists using mon through sun. Empty means no allowed days, not every day.
+      required: true
+      selector:
+        object:

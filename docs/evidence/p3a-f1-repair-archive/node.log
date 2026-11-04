@@ -1,0 +1,61 @@
+(node:15484) ExperimentalWarning: The test runner is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# Subtest: target uses exact mapped Number and native metadata
+ok 1 - target uses exact mapped Number and native metadata
+  ---
+  duration_ms: 0.0028896
+  ...
+# Subtest: schema/mode unavailable never yield a writable target
+ok 2 - schema/mode unavailable never yield a writable target
+  ---
+  duration_ms: 0.0002782
+  ...
+# Subtest: invalid mappings and unavailable Number fail closed
+ok 3 - invalid mappings and unavailable Number fail closed
+  ---
+  duration_ms: 0.000254
+  ...
+# Subtest: finite range and step validation includes exact boundary
+ok 4 - finite range and step validation includes exact boundary
+  ---
+  duration_ms: 0.0001877
+  ...
+# Subtest: v2 stub selects actual control sensor, never an arbitrary or unknown contract
+ok 5 - v2 stub selects actual control sensor, never an arbitrary or unknown contract
+  ---
+  duration_ms: 0.0004036
+  ...
+# Subtest: v2 Number target accepts control only, preserving v1 shadow validation
+ok 6 - v2 Number target accepts control only, preserving v1 shadow validation
+  ---
+  duration_ms: 0.0001124
+  ...
+# Subtest: native control resolves exact domains, fresh service and capability
+ok 7 - native control resolves exact domains, fresh service and capability
+  ---
+  duration_ms: 0.0004769
+  ...
+# Subtest: native Button unknown is usable but unavailable and wrong domain are not
+ok 8 - native Button unknown is usable but unavailable and wrong domain are not
+  ---
+  duration_ms: 0.0001888
+  ...
+# Subtest: schema3 supports nutrient-only native run and rejects inconsistent contracts
+ok 9 - schema3 supports nutrient-only native run and rejects inconsistent contracts
+  ---
+  duration_ms: 0.0484172
+  ...
+# Subtest: registration is idempotent with a second resource evaluation
+ok 10 - registration is idempotent with a second resource evaluation
+  ---
+  duration_ms: 0.00474
+  ...
+1..10
+# tests 10
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 0.1126767

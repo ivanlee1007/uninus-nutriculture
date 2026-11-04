@@ -1,0 +1,166 @@
+{
+  "source_unchanged": true,
+  "source_count": 138,
+  "manifest_sha256": "9dd070aa362481bcbda54c8e20a392bbe3875fa4d4ecbe7bb743fe8b3a17d6f0",
+  "historical_gates": {
+    "bridge-postrun-final": {
+      "child_exit": 0,
+      "raw_log_sha256": "0850338ff9bb31f0735e1563a358d461c199630f402299e5ce5bc67d2112f146",
+      "inventory_count": 83,
+      "broad_inventory_deltas": []
+    },
+    "bridge-postrun": {
+      "child_exit": 0,
+      "raw_log_sha256": "f114d8428ac2a27de127f05dd5d6fe57afbd7633df20f97837614d01288e5ef5",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "browser": {
+      "child_exit": 0,
+      "raw_log_sha256": "5f8306522c600a7d0a2beedc5d508f29d787ca6846f8fc3fa6749469e129f677",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "capture-green": {
+      "child_exit": 0,
+      "raw_log_sha256": "f269d4c4bdff12219946755ef1e083e0eb0267598a721d623f1d3b2e9c813460",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "capture-red": {
+      "child_exit": 1,
+      "raw_log_sha256": "4ad48dac41d4fe9605ab7e089c8d45c3687b1c93a6a5cdf953682bf2e955367e",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py",
+        "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py",
+        "uninus-nutriculture/tests/test_p3_stage_projection.py",
+        "uninus-nutriculture/tools/p3a_postrun_check.py"
+      ]
+    },
+    "dosing": {
+      "child_exit": 0,
+      "raw_log_sha256": "12562f158a7646c36fb8260400b7eb0be3c5cceec5f22e897958999331fa4b77",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "format-final": {
+      "child_exit": 0,
+      "raw_log_sha256": "60b1abe1dfdcd741df7a1fc710e64e44c702e4ab4e4529c9c4a0ff7a0063f067",
+      "inventory_count": 83,
+      "broad_inventory_deltas": []
+    },
+    "format": {
+      "child_exit": 0,
+      "raw_log_sha256": "60b1abe1dfdcd741df7a1fc710e64e44c702e4ab4e4529c9c4a0ff7a0063f067",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "full-final": {
+      "child_exit": 0,
+      "raw_log_sha256": "16392da1ff9348d1930ca131a2a1f07d49c3676f1c6759105eb4250414a8b06d",
+      "inventory_count": 83,
+      "broad_inventory_deltas": []
+    },
+    "full": {
+      "child_exit": 0,
+      "raw_log_sha256": "06a3eb6e96d5bca5d9da482b7098fe0b38c39e441563fbe904822a7f28866afc",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "green": {
+      "child_exit": 0,
+      "raw_log_sha256": "19d05b1c6fae2cd3212c633c2b3f5ccf47e8f131e0fd6e6683b3164bcfa088f8",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "node": {
+      "child_exit": 0,
+      "raw_log_sha256": "2a5dd9d1ece08168d3aeff5960f299bc2f7d2a4108c4b44230af431c4c39d787",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "probe-green": {
+      "child_exit": 0,
+      "raw_log_sha256": "82cbd6ecc58cf2d1feb8c7835fc646d7749d0cc401c685d8910a4f3473816a83",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "probe-red": {
+      "child_exit": 1,
+      "raw_log_sha256": "eaf31eb7c4bd7aa52030d676be609a3b3197b47a24b0f20f7aadaa08fb1bfe11",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py",
+        "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py",
+        "uninus-nutriculture/tests/test_p3_stage_projection.py",
+        "uninus-nutriculture/tools/p3a_postrun_check.py"
+      ]
+    },
+    "red": {
+      "child_exit": 1,
+      "raw_log_sha256": "bf71b0611545f9f2dbb6d8c5feba6408c243b337b9380b2c4a6cebe3a510dfcf",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/custom_components/uninus_nutriculture/nutrient.py",
+        "uninus-nutriculture/custom_components/uninus_nutriculture/sensor.py",
+        "uninus-nutriculture/tests/test_p3_stage_projection.py",
+        "uninus-nutriculture/tools/p3a_postrun_check.py"
+      ]
+    },
+    "ruff-final": {
+      "child_exit": 0,
+      "raw_log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "inventory_count": 83,
+      "broad_inventory_deltas": []
+    },
+    "ruff": {
+      "child_exit": 0,
+      "raw_log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    },
+    "settings": {
+      "child_exit": 0,
+      "raw_log_sha256": "f6feec588b9d816e4b4dbfada9dde7e6a495d2cf474efb1a01185790c820887c",
+      "inventory_count": 83,
+      "broad_inventory_deltas": [
+        "uninus-nutriculture/tests/test_p3_stage_projection.py"
+      ]
+    }
+  },
+  "reviewer_gates": {
+    "capture-receipt.json": {
+      "child_exit": 0,
+      "raw_log_sha256": "7a154cfb4ef51450e497bbccc72ff0db07b0ba521797a40c7c39ad7f57973f26"
+    },
+    "postrun-receipt.json": {
+      "child_exit": 0,
+      "raw_log_sha256": "45aa96a2634317061e91dee5d13a804918702daaa98ef68b3b6ee31104b9e262"
+    },
+    "probe-receipt.json": {
+      "child_exit": 0,
+      "raw_log_sha256": "d8dc3aadef755aec7f47eba6e99273bd46d2c61d60c3315d3277db23b28c6d0c"
+    }
+  }
+}

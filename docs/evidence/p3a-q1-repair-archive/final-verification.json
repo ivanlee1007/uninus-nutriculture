@@ -1,0 +1,118 @@
+{
+  "baseline_count": 294,
+  "changed_existing": {
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\nutrient.py": {
+      "before": "ef58a801a48bcfe8241e45e42e34fa3ea3ee49bc4348c8599eb1dc5ecde75428",
+      "after": "7e119412b4beeeebbedad677fc5c6352367c73c14993027cb197bb397fc7285e"
+    },
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\sensor.py": {
+      "before": "d2dca234b3e27d1b33d155a791c7156bb509b1d94476f6c34334407b16bc7ae8",
+      "after": "776356bb5bca551326277da24da9c3ae62cde87068e1e333a4c0286fdf13d97d"
+    }
+  },
+  "all_other_baseline_unchanged": true,
+  "receipts": {
+    "bridge-postrun-final": {
+      "exit": 0,
+      "log_sha256": "0850338ff9bb31f0735e1563a358d461c199630f402299e5ce5bc67d2112f146",
+      "inputs": 83
+    },
+    "bridge-postrun": {
+      "exit": 0,
+      "log_sha256": "f114d8428ac2a27de127f05dd5d6fe57afbd7633df20f97837614d01288e5ef5",
+      "inputs": 83
+    },
+    "browser": {
+      "exit": 0,
+      "log_sha256": "5f8306522c600a7d0a2beedc5d508f29d787ca6846f8fc3fa6749469e129f677",
+      "inputs": 83
+    },
+    "capture-green": {
+      "exit": 0,
+      "log_sha256": "f269d4c4bdff12219946755ef1e083e0eb0267598a721d623f1d3b2e9c813460",
+      "inputs": 83
+    },
+    "capture-red": {
+      "exit": 1,
+      "log_sha256": "4ad48dac41d4fe9605ab7e089c8d45c3687b1c93a6a5cdf953682bf2e955367e",
+      "inputs": 83
+    },
+    "dosing": {
+      "exit": 0,
+      "log_sha256": "12562f158a7646c36fb8260400b7eb0be3c5cceec5f22e897958999331fa4b77",
+      "inputs": 83
+    },
+    "format-final": {
+      "exit": 0,
+      "log_sha256": "60b1abe1dfdcd741df7a1fc710e64e44c702e4ab4e4529c9c4a0ff7a0063f067",
+      "inputs": 83
+    },
+    "format": {
+      "exit": 0,
+      "log_sha256": "60b1abe1dfdcd741df7a1fc710e64e44c702e4ab4e4529c9c4a0ff7a0063f067",
+      "inputs": 83
+    },
+    "full-final": {
+      "exit": 0,
+      "log_sha256": "16392da1ff9348d1930ca131a2a1f07d49c3676f1c6759105eb4250414a8b06d",
+      "inputs": 83
+    },
+    "full": {
+      "exit": 0,
+      "log_sha256": "06a3eb6e96d5bca5d9da482b7098fe0b38c39e441563fbe904822a7f28866afc",
+      "inputs": 83
+    },
+    "green": {
+      "exit": 0,
+      "log_sha256": "19d05b1c6fae2cd3212c633c2b3f5ccf47e8f131e0fd6e6683b3164bcfa088f8",
+      "inputs": 83
+    },
+    "node": {
+      "exit": 0,
+      "log_sha256": "2a5dd9d1ece08168d3aeff5960f299bc2f7d2a4108c4b44230af431c4c39d787",
+      "inputs": 83
+    },
+    "probe-green": {
+      "exit": 0,
+      "log_sha256": "82cbd6ecc58cf2d1feb8c7835fc646d7749d0cc401c685d8910a4f3473816a83",
+      "inputs": 83
+    },
+    "probe-red": {
+      "exit": 1,
+      "log_sha256": "eaf31eb7c4bd7aa52030d676be609a3b3197b47a24b0f20f7aadaa08fb1bfe11",
+      "inputs": 83
+    },
+    "red": {
+      "exit": 1,
+      "log_sha256": "bf71b0611545f9f2dbb6d8c5feba6408c243b337b9380b2c4a6cebe3a510dfcf",
+      "inputs": 83
+    },
+    "ruff-final": {
+      "exit": 0,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "inputs": 83
+    },
+    "ruff": {
+      "exit": 0,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "inputs": 83
+    },
+    "settings": {
+      "exit": 0,
+      "log_sha256": "f6feec588b9d816e4b4dbfada9dde7e6a495d2cf474efb1a01185790c820887c",
+      "inputs": 83
+    }
+  },
+  "final_files": {
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\control.py": "7b61e287eb458cf05a7f8d762b211297529f6c24a5a1d38c193e78e7ee41e259",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\nutrient.py": "7e119412b4beeeebbedad677fc5c6352367c73c14993027cb197bb397fc7285e",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\sensor.py": "776356bb5bca551326277da24da9c3ae62cde87068e1e333a4c0286fdf13d97d",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\tests\\test_p3_stage_projection.py": "1c352fdbe335a8882e95d8f5ab09207e8f53c38d8d14fee013d9bc7c9552ae8d",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture\\tools\\p3a_postrun_check.py": "483e0244edbe22a0cbf4d546a131e44ac84ab83b3eb835408a7f5664b4d0de99",
+    "D:\\UNiNUS Projects\\AI project\\uninus-nutriculture-card\\uninus-nutriculture-card.js": "8cc5d7e3bbe1898f163b0057b703c1e348d0a623ae8c1511c20bfcff73ad3d9f"
+  },
+  "frozen_manifest_sha256": "1562fbc72421466659e22fd34059e9331ecf1484de267619bb54eca84cae02ff",
+  "original_probes_identical": true,
+  "snapshot_maps_verified": true,
+  "staged_empty": true
+}

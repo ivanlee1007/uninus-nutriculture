@@ -1,0 +1,282 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: D:\UNiNUS Projects\AI project\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 249 items
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.8-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.3-out_of_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ec-0.8-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ec-0.9-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ec-0.79-out_of_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[level-2.25-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[level-2.4-within_range] PASSED
+tests/test_boundaries.py::test_all_three_inclusive_ranges[level-2.41-out_of_range] PASSED
+tests/test_boundaries.py::test_missing_source_on_native_setup_is_invalid PASSED
+tests/test_boundaries.py::test_metadata_and_translations PASSED
+tests/test_flows.py::test_config_flow_selects_existing_sensors_and_options_rebind PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides0] PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides1] PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides2] PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides3] PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides4] PASSED
+tests/test_flows.py::test_config_flow_rejects_invalid_binding_or_freshness[overrides5] PASSED
+tests/test_freshness.py::test_periodic_expiry_and_equal_value_report_recovery PASSED
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[rename] PASSED
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[disable] PASSED
+tests/test_identity.py::test_queued_old_number_identity_cannot_write_after_registry_change[delete] PASSED
+tests/test_identity.py::test_native_metadata_all_ten_exact_and_missing_target_omitted PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unavailable] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[unknown] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[NaN] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[Infinity] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[-Infinity] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[not-a-number] PASSED
+tests/test_identity.py::test_unusable_number_omitted_from_status_until_native_recovery[None] PASSED
+tests/test_lifecycle.py::test_unloaded_and_queued_writes_rejected PASSED
+tests/test_lifecycle.py::test_registry_targets_follow_rename_disable_delete PASSED
+tests/test_lifecycle.py::test_two_same_name_tanks_are_isolated_and_reload_stable PASSED
+tests/test_native.py::test_native_owned_numbers_and_status PASSED
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload0] PASSED
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload1] PASSED
+tests/test_p2_acceptance.py::test_service_requires_explicit_loaded_target_without_entries[payload2] PASSED
+tests/test_p2_acceptance.py::test_wrong_domain_entry_is_rejected PASSED
+tests/test_p2_acceptance.py::test_necessary_source_validity_not_quality_gates_start[past] PASSED
+tests/test_p2_acceptance.py::test_necessary_source_validity_not_quality_gates_start[future] PASSED
+tests/test_p2_acceptance.py::test_necessary_source_validity_not_quality_gates_start[missing] PASSED
+tests/test_p2_acceptance.py::test_necessary_source_validity_not_quality_gates_start[unit] PASSED
+tests/test_p2_acceptance.py::test_necessary_source_validity_not_quality_gates_start[nan] PASSED
+tests/test_p2_acceptance.py::test_quality_out_of_range_still_allows_refill_and_optional_response_is_none PASSED
+tests/test_p2_acceptance.py::test_equal_value_report_expiry_is_seen_by_backend_timer PASSED
+tests/test_p2_acceptance.py::test_registry_binding_tracks_only_stable_identity[rename] PASSED
+tests/test_p2_acceptance.py::test_registry_binding_tracks_only_stable_identity[disable] PASSED
+tests/test_p2_acceptance.py::test_registry_binding_tracks_only_stable_identity[remove] PASSED
+tests/test_p2_acceptance.py::test_registry_binding_tracks_only_stable_identity[replace] PASSED
+tests/test_p2_acceptance.py::test_busy_commissioning_change_is_rejected_without_dispatch PASSED
+tests/test_p2_acceptance.py::test_reset_requires_necessary_sources_and_known_off PASSED
+tests/test_p2_acceptance.py::test_revoked_admin_after_lock_wait_cannot_start PASSED
+tests/test_p2_acceptance.py::test_native_human_controls_share_admin_policy[switch-automation_enabled] PASSED
+tests/test_p2_acceptance.py::test_native_human_controls_share_admin_policy[button-emergency_stop] PASSED
+tests/test_p2_acceptance.py::test_admin_context_reaches_native_output PASSED
+tests/test_p2_auth.py::test_start_service_requires_active_admin[unknown] PASSED
+tests/test_p2_auth.py::test_start_service_requires_active_admin[nonadmin] PASSED
+tests/test_p2_auth.py::test_start_service_requires_active_admin[inactive] PASSED
+tests/test_p2_auth.py::test_domain_authorizes_before_target_lookup PASSED
+tests/test_p2_bounded_io.py::test_cancellation_resistant_off_provider_does_not_extend_deadline PASSED
+tests/test_p2_bounds.py::test_native_number_does_not_expand_run_bounds[relax_high] PASSED
+tests/test_p2_bounds.py::test_native_number_does_not_expand_run_bounds[tighten_timeout] PASSED
+tests/test_p2_buttons.py::test_emergency_latches_until_reset_without_reenable PASSED
+tests/test_p2_buttons.py::test_emergency_latch_survives_reload_and_reset_persists_disabled PASSED
+tests/test_p2_buttons.py::test_emergency_explicitly_closes_commissioned_output_even_without_a_run PASSED
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[flow_run] PASSED
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[automation_enabled] PASSED
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[refill_enabled] PASSED
+tests/test_p2_context.py::test_human_stop_reaches_output_with_causal_context[emergency_stop] PASSED
+tests/test_p2_context.py::test_user_removed_during_on_does_not_block_traced_safety_off PASSED
+tests/test_p2_control.py::test_native_options_commission_saves_registry_identity_without_output PASSED
+tests/test_p2_control.py::test_native_refill_switch_high_level_stops PASSED
+tests/test_p2_control.py::test_disabled_start_has_no_output PASSED
+tests/test_p2_control.py::test_start_gate_rejects_without_output[source_invalid] PASSED
+tests/test_p2_control.py::test_start_gate_rejects_without_output[level_not_low] PASSED
+tests/test_p2_control.py::test_start_gate_rejects_without_output[output_not_off] PASSED
+tests/test_p2_control.py::test_start_gate_rejects_without_output[weekday] PASSED
+tests/test_p2_control.py::test_start_gate_rejects_without_output[uncommissioned] PASSED
+tests/test_p2_control.py::test_running_safety_stop[source] PASSED
+tests/test_p2_control.py::test_running_safety_stop[master] PASSED
+tests/test_p2_control.py::test_running_safety_stop[refill] PASSED
+tests/test_p2_control.py::test_running_safety_stop[external_off] PASSED
+tests/test_p2_control.py::test_running_safety_stop[timeout] PASSED
+tests/test_p2_enable.py::test_enable_gate[uncommissioned] PASSED
+tests/test_p2_enable.py::test_enable_gate[fault] PASSED
+tests/test_p2_enable.py::test_enable_gate[unsupported] PASSED
+tests/test_p2_fast_stop.py::test_fast_off_on_does_not_queue_restart PASSED
+tests/test_p2_feedback.py::test_stop_without_feedback_keeps_flow_on_and_fault PASSED
+tests/test_p2_feedback.py::test_on_without_feedback_fails_and_follows_off PASSED
+tests/test_p2_feedback.py::test_late_on_after_feedback_timeout_is_followed_by_off PASSED
+tests/test_p2_feedback.py::test_cancelled_stop_still_finishes_confirmation PASSED
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[unload] PASSED
+tests/test_p2_lifecycle.py::test_lifecycle_closes_owned_output[stop] PASSED
+tests/test_p2_options.py::test_invalid_feedback_setting_rejected_without_partial_save[0] PASSED
+tests/test_p2_options.py::test_invalid_feedback_setting_rejected_without_partial_save[61] PASSED
+tests/test_p2_options.py::test_invalid_feedback_setting_rejected_without_partial_save[nan] PASSED
+tests/test_p2_options.py::test_invalid_feedback_setting_rejected_without_partial_save[True] PASSED
+tests/test_p2_options.py::test_open_options_preserves_intervening_number_and_switch_changes PASSED
+tests/test_p2_options.py::test_reopened_options_show_saved_control_values PASSED
+tests/test_p2_races.py::test_off_revokes_start_waiting_on_controller_lock PASSED
+tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[source] PASSED
+tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[off] PASSED
+tests/test_p2_races.py::test_inflight_on_cannot_escape_safety_cleanup[cancel] PASSED
+tests/test_p2_races.py::test_removed_native_flow_switch_waiter_cannot_start PASSED
+tests/test_p2_receipts.py::test_busy_service_and_idempotent_receipt PASSED
+tests/test_p2_registry.py::test_running_registry_identity_change_faults PASSED
+tests/test_p2_registry.py::test_other_tank_cannot_commission_shared_output PASSED
+tests/test_p2_restart.py::test_reload_with_bound_output_on_faults_without_commands PASSED
+tests/test_p2_restart.py::test_enable_choices_persist_without_restarting_run PASSED
+tests/test_p2_services.py::test_service_start_returns_receipt_and_drives_same_native_switch PASSED
+tests/test_p2_services.py::test_invalid_request_identity_is_rejected[] PASSED
+tests/test_p2_services.py::test_invalid_request_identity_is_rejected[request_id1] PASSED
+tests/test_p2_services.py::test_invalid_request_identity_is_rejected[None] PASSED
+tests/test_p2_services.py::test_unloaded_entry_rejects_even_if_stale_runtime_is_reintroduced PASSED
+tests/test_p2_start_bounds.py::test_timeout_tightening_while_starting_is_not_lost_on_relaxation PASSED
+tests/test_p2_start_bounds.py::test_high_water_during_on_ack_stops_before_start_receipt PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ph-5.6-pH] PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-ec-0.85-mS/cm] PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[False-level-2-m] PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-ph-5.6-pH] PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-ec-0.85-mS/cm] PASSED
+tests/test_p2_start_source.py::test_invalid_source_during_applied_on_cannot_be_forgotten[True-level-2-m] PASSED
+tests/test_p2_start_source.py::test_same_transient_source_invalid_after_start_is_latched PASSED
+tests/test_p2_start_source.py::test_ordinary_start_waits_for_on_without_output_fault PASSED
+tests/test_p2_wire.py::test_control_sensor_wire_is_separate_from_shadow PASSED
+tests/test_p2_wire.py::test_control_target_map_follows_native_switch_rename_immediately PASSED
+tests/test_p3_dosing.py::test_pulse_deadline_starts_at_send_not_ack PASSED
+tests/test_p3_dosing.py::test_pending_on_invalid_event_latches_even_after_recovery PASSED
+tests/test_p3_dosing.py::test_pending_on_safety_event_latches_after_recovery[level-0.1-1.0-m-level_unsafe] PASSED
+tests/test_p3_dosing.py::test_pending_on_safety_event_latches_after_recovery[ec-1.4-0.7-mS/cm-ec_danger] PASSED
+tests/test_p3_dosing.py::test_pending_on_safety_event_latches_after_recovery[ph-3.7-6.0-pH-ph_danger] PASSED
+tests/test_p3_dosing.py::test_max_pulses_blocks_second_dose_after_fresh_low_sample[max_pulses] PASSED
+tests/test_p3_dosing.py::test_max_pulses_blocks_second_dose_after_fresh_low_sample[max_total_on_seconds] PASSED
+tests/test_p3_dosing.py::test_reported_same_value_is_new_sample_after_barrier PASSED
+tests/test_p3_dosing.py::test_sample_token_not_attribute_repaint[sequence] PASSED
+tests/test_p3_dosing.py::test_sample_token_not_attribute_repaint[timestamp] PASSED
+tests/test_p3_dosing.py::test_nutrient_only_emergency_reset_without_refill_binding PASSED
+tests/test_p3_dosing.py::test_flow_deadline_includes_waiting_for_new_sample PASSED
+tests/test_p3_dosing.py::test_restart_checks_nutrient_and_circulation_without_refill[0] PASSED
+tests/test_p3_dosing.py::test_restart_checks_nutrient_and_circulation_without_refill[1] PASSED
+tests/test_p3_dosing.py::test_native_nutrient_only_midpoint_stops_pump_before_pulse_then_mixes PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_does_not_authorize_later_pump[delete] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_does_not_authorize_later_pump[demote] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_does_not_authorize_later_pump[inactive] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_does_not_authorize_later_pump[generation] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_does_not_authorize_later_pump[entry] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_rechecks_authority_without_any_pump[delete] PASSED
+tests/test_p3_dosing_admission.py::test_circulation_ack_rechecks_authority_without_any_pump[demote] PASSED
+tests/test_p3_dosing_admission.py::test_weekday_only_at_final_stage_first_opening[False] PASSED
+tests/test_p3_dosing_admission.py::test_weekday_only_at_final_stage_first_opening[True] PASSED
+tests/test_p3_dosing_admission.py::test_registry_rename_resolved_before_pump_opening PASSED
+tests/test_p3_dosing_alarm.py::test_high_ph_delay_reason_is_native_visible_and_does_not_abort PASSED
+tests/test_p3_dosing_bounds.py::test_actual_send_to_confirmed_off_blocks_next_full_reservation PASSED
+tests/test_p3_dosing_bounds.py::test_ec_minutes_deadline_interrupts_held_native_on_ack[nutrient] PASSED
+tests/test_p3_dosing_bounds.py::test_ec_minutes_deadline_interrupts_held_native_on_ack[circulation] PASSED
+tests/test_p3_dosing_bounds.py::test_hot_bounds_are_monotone_through_native_writer[safe_min] PASSED
+tests/test_p3_dosing_bounds.py::test_hot_bounds_are_monotone_through_native_writer[pulse] PASSED
+tests/test_p3_dosing_bounds.py::test_hot_bounds_are_monotone_through_native_writer[midpoint_relax] PASSED
+tests/test_p3_dosing_bounds.py::test_hot_bounds_are_monotone_through_native_writer[midpoint_tighten] PASSED
+tests/test_p3_dosing_bounds.py::test_unknown_on_interval_over_budget_aborts_while_ack_is_held PASSED
+tests/test_p3_dosing_bounds.py::test_hot_mix_extension_is_committed_and_cannot_be_shortened PASSED
+tests/test_p3_dosing_finish.py::test_native_immediate_flow_off_releases_accepted_ownership PASSED
+tests/test_p3_dosing_finish.py::test_stage_disable_retains_aborted_owner_not_idle_or_refill_history PASSED
+tests/test_p3_dosing_finish.py::test_deleted_run_user_cannot_block_midpoint_off_or_causal_trace PASSED
+tests/test_p3_dosing_finish.py::test_invalid_token_event_revokes_even_when_current_frame_recovers[sequence] PASSED
+tests/test_p3_dosing_finish.py::test_invalid_token_event_revokes_even_when_current_frame_recovers[timestamp] PASSED
+tests/test_p3_dosing_finish.py::test_normal_stop_keeps_circulation_until_nutrient_off_is_confirmed PASSED
+tests/test_p3_dosing_finish.py::test_unsafe_during_normal_stop_stops_circulation_and_latches[state] PASSED
+tests/test_p3_dosing_finish.py::test_unsafe_during_normal_stop_stops_circulation_and_latches[settings] PASSED
+tests/test_p3_dosing_finish.py::test_control_sensor_updates_on_actual_output_events_not_periodic_tick PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[sequence-None] PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[sequence-True] PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[sequence--1] PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[timestamp-future] PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[timestamp-stale] PASSED
+tests/test_p3_dosing_initial.py::test_initial_invalid_measurement_token_refuses_before_any_output[timestamp-not-a-timestamp] PASSED
+tests/test_p3_dosing_initial.py::test_explicit_next_run_uses_relaxed_new_settings_not_old_run_bounds PASSED
+tests/test_p3_dosing_initial.py::test_native_nutrient_request_receipts_evict_after_64_actual_runs PASSED
+tests/test_p3_dosing_io.py::test_circulation_pending_latches_event[ec-0.7-0.7-wrong-source_invalid] PASSED
+tests/test_p3_dosing_io.py::test_circulation_pending_latches_event[level-0.1-1.0-m-level_unsafe] PASSED
+tests/test_p3_dosing_io.py::test_circulation_pending_latches_event[ec-1.4-0.7-mS/cm-ec_danger] PASSED
+tests/test_p3_dosing_io.py::test_circulation_pending_latches_event[ph-3.7-6.0-pH-ph_danger] PASSED
+tests/test_p3_dosing_io.py::test_midpoint_transient_is_not_erased PASSED
+tests/test_p3_dosing_io.py::test_circulation_loss_latches_even_when_recovered[off] PASSED
+tests/test_p3_dosing_io.py::test_circulation_loss_latches_even_when_recovered[unknown] PASSED
+tests/test_p3_dosing_io.py::test_failed_nutrient_off_still_closes_circulation PASSED
+tests/test_p3_dosing_io.py::test_late_physical_on_is_quarantined_and_closed[0] PASSED
+tests/test_p3_dosing_io.py::test_late_physical_on_is_quarantined_and_closed[1] PASSED
+tests/test_p3_dosing_io.py::test_late_on_during_other_role_off_ack_cannot_report_stopped PASSED
+tests/test_p3_dosing_io.py::test_removed_identity_never_sends_off_to_reused_foreign_name PASSED
+tests/test_p3_dosing_io.py::test_pending_circulation_invalid_recovered_revokes_immediately PASSED
+tests/test_p3_dosing_lifecycle.py::test_idle_emergency_closes_both_commissioned_external_on_outputs PASSED
+tests/test_p3_dosing_lifecycle.py::test_reset_rejects_valid_but_dangerous_nutrient_sources[level-0.5] PASSED
+tests/test_p3_dosing_lifecycle.py::test_reset_rejects_valid_but_dangerous_nutrient_sources[ph-3.7] PASSED
+tests/test_p3_dosing_lifecycle.py::test_reset_rejects_valid_but_dangerous_nutrient_sources[ec-1.4] PASSED
+tests/test_p3_dosing_lifecycle.py::test_actual_core_lifecycle_closes_nutrient_and_circulation[unload] PASSED
+tests/test_p3_dosing_lifecycle.py::test_actual_core_lifecycle_closes_nutrient_and_circulation[stop] PASSED
+tests/test_p3_dosing_lifecycle.py::test_nutrient_only_options_updates_keep_native_idle_projection PASSED
+tests/test_p3_dosing_lifecycle.py::test_mixed_commissioning_idle_emergency_closes_all_three_roles PASSED
+tests/test_p3_dosing_lifecycle.py::test_mixed_emergency_retains_running_until_each_native_off_ack[refill] PASSED
+tests/test_p3_dosing_lifecycle.py::test_mixed_emergency_retains_running_until_each_native_off_ack[nutrient] PASSED
+tests/test_p3_dosing_samples.py::test_stable_interval_cached_low_cannot_start_a_new_dose PASSED
+tests/test_p3_dosing_samples.py::test_old_token_burst_cannot_replace_the_consumed_sample_value[0.86] PASSED
+tests/test_p3_dosing_samples.py::test_old_token_burst_cannot_replace_the_consumed_sample_value[1.0] PASSED
+tests/test_p3_dosing_samples.py::test_invalid_report_revokes_without_escaping_native_event_callback PASSED
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0] PASSED
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-FICTITIOUS_TOKEN=not-a-real-secret] PASSED
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-source_invalid:FICTITIOUS_TOKEN=not-a-real-secret] PASSED
+tests/test_p3_fault_codes.py::test_legacy_persisted_diagnostic_is_closed_on_native_reload PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[ec_timeout] PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[source_invalid] PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[stop_unconfirmed] PASSED
+tests/test_p3_options.py::test_native_save_cancel_reopen PASSED
+tests/test_p3_options.py::test_native_numeric_selector_does_not_erase_boolean[pulse_seconds] PASSED
+tests/test_p3_options.py::test_native_numeric_selector_does_not_erase_boolean[safe_min_level_m] PASSED
+tests/test_p3_options.py::test_native_numeric_selector_does_not_erase_boolean[stable_samples] PASSED
+tests/test_p3_recovery.py::test_group_service_fields_are_visible_in_native_discovery PASSED
+tests/test_p3_recovery.py::test_removed_admin_queued_at_settings_lock_cannot_commit PASSED
+tests/test_p3_settings.py::test_registered_atomic_apply_cas_and_number_revision PASSED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[aborted] PASSED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[fault] PASSED
+tests/test_p3_stage_projection.py::test_native_terminal_history_and_shipped_reoperation[completed] PASSED
+tests/test_p3_stage_projection.py::test_pending_off_and_preentry_are_not_terminal_success PASSED
+tests/test_p3_wire.py::test_native_schema3_projects_commissioning_without_fake_capability PASSED
+tests/test_restart.py::test_fresh_process_native_config_entry_storage FRESH_PROCESS_STORAGE=[{"version": "2026.10.4", "entry_id": "01M6H1YQWBYRVD40YYEGG06JXE", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}, {"version": "2026.10.4", "entry_id": "01M6H1YQWBYRVD40YYEGG06JXE", "entities": {"level_low": "number.tank_level_low", "level_high": "number.tank_level_high", "ph_high": "number.tank_ph_high", "ec_low": "number.tank_ec_low", "ec_high": "number.tank_ec_high", "refill_timeout": "number.tank_refill_timeout", "ec_timeout": "number.tank_ec_timeout", "ph_timeout": "number.tank_ph_timeout", "mix_duration": "number.tank_mix_duration", "status": "sensor.tank_status", "ph_low": "number.persisted_ph_limit"}, "parameters": {"level_low": 2.2, "level_high": 2.5, "ph_low": 5.5, "ph_high": 5.9, "ec_low": 0.81, "ec_high": 0.95, "refill_timeout": 191.0, "ec_timeout": 91.0, "ph_timeout": 191.0, "mix_duration": 11.0}}]
+PASSED
+tests/test_safety.py::test_output_dispatch_is_controller_only_and_no_duplicate_mqtt_client PASSED
+tests/test_sources.py::test_source_changes_publish_quality[6.0-pH-out_of_range-ph_out_of_range] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[5.4-pH-within_range-None] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[5.8-pH-within_range-None] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[unknown-pH-invalid-ph_invalid] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[unavailable-pH-invalid-ph_invalid] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[bad-pH-invalid-ph_invalid] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[nan-pH-invalid-ph_invalid] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[inf-pH-invalid-ph_invalid] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[5.6-wrong-invalid-ph_unit] PASSED
+tests/test_sources.py::test_source_changes_publish_quality[5.6-None-within_range-None] PASSED
+tests/test_sources.py::test_ec_microsiemens_is_rejected_not_misinterpreted PASSED
+tests/test_sources.py::test_source_deletion_invalidates_status PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.8] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[ec_high-0.8] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[level_low-2.4] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_low-5.45] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[refill_timeout-1.5] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[mix_duration-0] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[ec_low-nan] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[level_low-inf] PASSED
+tests/test_validation.py::test_invalid_native_write_is_atomic[ph_high--1] PASSED
+tests/test_validation.py::test_concurrent_conflicting_writes_keep_valid_pair PASSED
+tests/test_writes.py::test_native_write_updates_status_siblings_and_options PASSED
+
+============================== warnings summary ===============================
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_boundaries.py::test_all_three_inclusive_ranges[ph-5.4-within_range]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 249 passed, 5 warnings in 93.34s (0:01:33) ==================

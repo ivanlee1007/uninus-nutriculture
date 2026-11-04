@@ -1,0 +1,22 @@
+{
+  "exception": "RuntimeError",
+  "message": "",
+  "pending": {
+    "fault": "operation_failed",
+    "master": false,
+    "running": true,
+    "owns_io": true,
+    "off_ack_pending": true,
+    "all_outputs_off": true,
+    "sensor_fault": "operation_failed"
+  },
+  "settled": {
+    "fault": "operation_failed",
+    "flow_state": "fault",
+    "running": false,
+    "master": false,
+    "all_outputs_off": true
+  },
+  "fixture_source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\tests\\test_p3_dosing.py",
+  "loaded_control": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\control.py"
+}

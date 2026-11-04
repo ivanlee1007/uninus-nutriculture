@@ -1,0 +1,58 @@
+We found a custom integration uninus_nutriculture which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+Traceback (most recent call last):
+  File "C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-20261103-224149\uninus-nutriculture\tools\p3a_dosing_bridge.py", line 309, in <module>
+    asyncio.run(native_probe(args.card, args.browser_python, args.output))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\ivanl\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-20261103-224149\uninus-nutriculture\tools\p3a_dosing_bridge.py", line 257, in native_probe
+    assert process.returncode == 0, stderr.decode(errors="replace")
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-20261103-224149\uninus-nutriculture\tools\p3a_dosing_bridge.py", line 307, in <module>
+    browser_probe(args.browser)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-20261103-224149\uninus-nutriculture\tools\p3a_dosing_bridge.py", line 28, in browser_probe
+    browser = p.chromium.launch(**opts)
+  File "D:\UNiNUS Projects\AI project\uninus-nutriculture-card\.venv\Lib\site-packages\playwright\sync_api\_generated.py", line 14532, in launch
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.launch(
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<17 lines>...
+        )
+        ^
+    )
+    ^
+  File "D:\UNiNUS Projects\AI project\uninus-nutriculture-card\.venv\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "D:\UNiNUS Projects\AI project\uninus-nutriculture-card\.venv\Lib\site-packages\playwright\_impl\_browser_type.py", line 98, in launch
+    await self._channel.send(
+        "launch", TimeoutSettings.launch_timeout, params
+    )
+  File "D:\UNiNUS Projects\AI project\uninus-nutriculture-card\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "D:\UNiNUS Projects\AI project\uninus-nutriculture-card\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at C:\Users\ivanl\AppData\Local\ms-playwright\chromium_headless_shell-1194\chrome-win\headless_shell.exe
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+

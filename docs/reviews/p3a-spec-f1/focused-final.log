@@ -1,0 +1,47 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Scripts\python.exe
+rootdir: C:\Users\ivanl\.hermes\cache\scratch\nutriculture-p3a-review-f1-successor\uninus-nutriculture
+configfile: pyproject.toml
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 11 items
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0] PASSED
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-FICTITIOUS_TOKEN=not-a-real-secret] PASSED
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[ServiceValidationError-source_invalid:FICTITIOUS_TOKEN=not-a-real-secret] PASSED
+tests/test_p3_fault_codes.py::test_legacy_persisted_diagnostic_is_closed_on_native_reload PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[ec_timeout] PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[source_invalid] PASSED
+tests/test_p3_fault_codes.py::test_existing_domain_fault_codes_remain_exact[stop_unconfirmed] PASSED
+::test_provider_exception_is_not_persisted_or_published_as_fault PROVIDER_COUNTEREXAMPLE {"accepted": true, "fault_length": 16, "persisted_equals_provider": false, "sensor_equals_provider": false, "all_outputs_off": true, "running": false, "flow_state": "fault"}
+PASSED
+::test_normal_stop_sequence_token_invalid_burst_escalates_all_off ADJACENT_STOP_TOKEN_BURST {"fault": "sample_invalid", "circulation_off_while_nutrient_ack_held": true, "running_while_ack_held": true}
+PASSED
+::test_message_less_provider_error_latches_while_native_off_ack_pending[RuntimeError] ADJACENT_EMPTY_FAULT {"exception": "RuntimeError", "message": "", "pending": {"fault": "operation_failed", "master": false, "running": true, "owns_io": true, "off_ack_pending": true, "all_outputs_off": true, "sensor_fault": "operation_failed"}, "settled": {"fault": "operation_failed", "flow_state": "fault", "running": false, "master": false, "all_outputs_off": true}, "fixture_source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\tests\\test_p3_dosing.py", "loaded_control": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\control.py"}
+PASSED
+::test_message_less_provider_error_latches_while_native_off_ack_pending[Unauthorized] ADJACENT_EMPTY_FAULT {"exception": "Unauthorized", "message": "Unauthorized", "pending": {"fault": "operation_failed", "master": false, "running": true, "owns_io": true, "off_ack_pending": true, "all_outputs_off": true, "sensor_fault": "operation_failed"}, "settled": {"fault": "operation_failed", "flow_state": "fault", "running": false, "master": false, "all_outputs_off": true}, "fixture_source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\tests\\test_p3_dosing.py", "loaded_control": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3a-review-f1-successor\\uninus-nutriculture\\custom_components\\uninus_nutriculture\\control.py"}
+PASSED
+
+============================== warnings summary ===============================
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\homeassistant\components\http\server.py:156: DeprecationWarning: Inheritance class HomeAssistantApplication from web.Application is discouraged
+    class HomeAssistantApplication(web.Application):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_decorator.py:201: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(target):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:11: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(coro_or_func):
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:127: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(max_tries)
+
+tests/test_p3_fault_codes.py::test_unknown_provider_fault_is_closed_and_still_locked[RuntimeError-diagnostic0]
+  D:\UNiNUS Projects\AI project\uninus-nutriculture\.venv\Lib\site-packages\backoff\_async.py:128: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    assert not asyncio.iscoroutinefunction(jitter)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 11 passed, 5 warnings in 4.08s ========================
