@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS",
+  "scope": "joint P3b SPEC; not quality or release approval",
+  "manifest_sha256": "a22f4988f6b26754a73a8185cd1e76bc1e6dacecb95f5e4a9f9fc458e1ded3c2",
+  "pre_post_files": 175,
+  "mismatches": 0,
+  "native_child_exit": 0,
+  "native_passed": 27,
+  "native_log_sha256": "001e9ac6e4c848c7665d4816c544b0c1accd4e52ebae61c9ecf307c668ebcde2",
+  "report_sha256": "ce6153ac94494ade16087dc4e50870a62a190c6d2424557eac3cb5d3df275140",
+  "audit_sha256": "c47fe452bbf13f9b0d8ddc5f723d7810e9edd5b259ffb312d731d7fba103f4f0",
+  "audit_child_exit": 0,
+  "reused_full_native_passed": 295,
+  "new_quality_review_required": true,
+  "repair_budget_used": 2,
+  "repair_budget_limit": 2
+}

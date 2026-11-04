@@ -1,6 +1,6 @@
 start_flow:
-  name: Start refill flow
-  description: Request one refill run through safety and weekday gates. Does not enable the tank. Active administrators and internal automations only.
+  name: 啟動單一養液階段
+  description: 依已選單一補水、加養、加酸或獨立攪拌階段執行安全及星期檢查。不自動 Enable；僅限有效管理員與內部自動化。
   fields:
     config_entry_id:
       name: Tank configuration entry ID
@@ -48,6 +48,46 @@ apply_control_settings:
     allowed_weekdays:
       name: Complete stage weekdays
       description: Refill, nutrient, acid and mix lists using mon through sun. Empty means no allowed days, not every day.
+      required: true
+      selector:
+        object:
+
+apply_control_settings_v4:
+  name: 套用 v4 養液控制整組設定
+  description: 同交易驗證 revision 與完整群組；不致動、不代為 commissioning。未 commissioning 的 stage 必須為 null 並保留草稿；全局 S 為唯一安全權威。液位 m、EC mS/cm、正常時間 min、Q/S 時間 s；宣告非設備保護認證。
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text:
+    expected_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    parameters:
+      required: true
+      selector:
+        object:
+    dosing_parameters:
+      required: true
+      selector:
+        object:
+    acid_parameters:
+      required: true
+      selector:
+        object:
+    mix_parameters:
+      required: true
+      selector:
+        object:
+    safety_parameters:
+      required: true
+      selector:
+        object:
+    allowed_weekdays:
       required: true
       selector:
         object:

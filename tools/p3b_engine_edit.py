@@ -1,0 +1,57 @@
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]/'custom_components/uninus_nutriculture'
+def edit(n,a,b):
+ p=ROOT/n;s=p.read_text();assert a in s,(n,a[:60]);p.write_text(s.replace(a,b),newline='\n')
+edit('nutrient.py','def __init__(self, controller):','def __init__(self, controller, role="nutrient"):\n        self.role = role\n        self.source = "ph" if role == "acid" else "ec"\n        self.direction = -1 if role == "acid" else 1')
+# All dose ownership keys use the policy role; circulation remains shared.
+edit('nutrient.py','"nutrient"','self.role')
+# Repair the literal default changed by the broad role-key substitution.
+edit('nutrient.py','role=self.role','role="nutrient"')
+edit('nutrient.py','key == "ec"\n                    and self.phase','key == self.source\n                    and self.phase')
+edit('nutrient.py','float(state.state) >= self.midpoint()','self.direction * float(state.state) >= self.midpoint()')
+edit('nutrient.py','self.tank.sources["ec"]','self.tank.sources[self.source]')
+edit('nutrient.py','self.sample_ec = float(state.state)','self.sample_ec = self.direction * float(state.state)')
+edit('nutrient.py','config = self.tank.entry.options["control"]','config = self.sample_config()')
+edit('nutrient.py','mode = self.tank.entry.options["control"].get("sample_mode")','mode = self.sample_config().get("sample_mode")')
+edit('nutrient.py','    def ec(self):\n        return float(self.hass.states.get(self.tank.sources[self.source]).state)','    def sample_config(self):\n        config = self.tank.entry.options["control"]\n        if self.role == "acid":\n            return {k:config.get("acid_"+k) for k in ("sample_mode", "sample_attribute", "report_contract_confirmed")}\n        return config\n\n    def live_settings(self):\n        options = self.tank.entry.options\n        return {**options["acid_parameters"], **options["safety_parameters"]} if self.role == "acid" else options["dosing_parameters"]\n\n    def ec(self):\n        return self.direction * float(self.hass.states.get(self.tank.sources[self.source]).state)')
+edit('nutrient.py','Decimal(str(self.tank.parameters["ec_low"]))','self.direction * Decimal(str(self.tank.parameters[self.source+"_low"]))')
+edit('nutrient.py','Decimal(str(self.tank.parameters["ec_high"]))','self.direction * Decimal(str(self.tank.parameters[self.source+"_high"]))')
+edit('nutrient.py','self.tank.entry.options["dosing_parameters"]','self.live_settings()')
+# Repair live_settings fallback to avoid recursion.
+edit('nutrient.py','else options["dosing_parameters"]','else options["dosing_parameters"]')
+edit('nutrient.py','self.tank.parameters["ec_timeout"]','self.tank.parameters[self.source+"_timeout"]')
+edit('nutrient.py','raise ServiceValidationError("ec_timeout")','raise ServiceValidationError(self.source+"_timeout")')
+edit('nutrient.py','value <= settings["safe_min_level_m"]','(value < settings["safe_min_level_m"] if self.role == "acid" else value <= settings["safe_min_level_m"])')
+edit('nutrient.py','self.sample_ec <= self.tank.parameters["ec_high"]','self.sample_ec <= (self.tank.parameters["ec_high"] if self.role == "nutrient" else -self.tank.parameters["ph_low"])')
+# Dispatch receives explicit owner; only Controller calls physical services.
+edit('nutrient.py','self.control.nutrient_dispatch(role, enabled)','self.control.nutrient_dispatch(role, enabled, stage=self)')
+edit('nutrient.py','await self.control.nutrient_revalidate()','await self.control.nutrient_revalidate(stage=self)')
+# Preserve an absolute shared circulation bound from first dispatch, never reset on ACK.
+edit('nutrient.py','            if role == self.role and enabled:','            if role == "circulation" and enabled and not hasattr(self, "circ_dispatch_at"):\n                self.circ_dispatch_at = self.clock()\n            if role == self.role and enabled:')
+edit('nutrient.py','        self.started = self.clock()','        if hasattr(self, "circ_dispatch_at"):\n            del self.circ_dispatch_at\n        self.started = self.clock()')
+edit('nutrient.py','        self.validate_sources()\n\n    def validate_sources','        config = self.tank.entry.options.get("control", {})\n        if config.get("circulation_protection_confirmed") and config.get("circulation_device_max_on_seconds") and hasattr(self, "circ_dispatch_at"):\n            if self.clock() >= self.circ_dispatch_at + config["circulation_device_max_on_seconds"] - config.get("feedback_timeout",10):\n                raise ServiceValidationError("flow_timeout")\n        self.validate_sources()\n\n    def validate_sources')
+edit('nutrient.py','                    self.progress["pulse_count"] += 1','                    if self.role == "acid":\n                        reserve = self.settings["pulse_seconds"] + self.settings["post_mix_seconds"] + 2*self.tank.entry.options["control"].get("feedback_timeout",10)\n                        end = min(self.deadline, self.stage_deadline, self.circ_dispatch_at+self.tank.entry.options["control"]["circulation_device_max_on_seconds"])\n                        if self.clock()+reserve > end:\n                            raise ServiceValidationError("dose_budget_exhausted")\n                    self.progress["pulse_count"] += 1')
+# Generalize controller references to selected stage, retaining both real instances.
+p=ROOT/'control.py';s=p.read_text().replace('self.nutrient_stage','self.execution_stage')
+s=s.replace('self.execution_stage = NutrientStage(self)','self.nutrient_stage = NutrientStage(self)\n        self.acid_stage = NutrientStage(self, "acid")\n        self.acid = config.get("acid_enabled", False)')
+s=s.replace('stage = getattr(self, "nutrient_stage", None)\n        return self._refill_running or bool(stage and stage.owns_io)','return self._refill_running or any(getattr(self, key, None) and getattr(self, key).owns_io for key in ("nutrient_stage", "acid_stage"))')
+s=s.replace('    @property\n    def supports_nutrient','    @property\n    def execution_stage(self):\n        return self.acid_stage if self.run_stage == "acid" else self.nutrient_stage\n\n    @property\n    def supports_acid(self):\n        return bool(self.tank.entry.options.get("control", {}).get("acid_commissioned"))\n\n    @property\n    def supports_nutrient')
+s=s.replace('async def nutrient_revalidate(self):','async def nutrient_revalidate(self, *, stage=None):').replace('async def nutrient_dispatch(self, role, enabled):','async def nutrient_dispatch(self, role, enabled, *, stage=None):')
+s=s.replace('stage = self.execution_stage','stage = stage or self.execution_stage',2)
+s=s.replace('or not self.nutrient\n','or not getattr(self, stage.role)\n')
+s=s.replace('await self.nutrient_revalidate()','await self.nutrient_revalidate(stage=stage)')
+s=s.replace('"nutrient", DAYS','stage.role, DAYS').replace('if role == "nutrient":','if role == stage.role:')
+s=s.replace('        "ec_timeout",','        "ec_timeout",\n        "ph_timeout",')
+s=s.replace('            "nutrient_enabled",\n            "flow_run",','            "nutrient_enabled",\n            "acid_enabled",\n            "flow_run",')
+s=s.replace('            if key == "nutrient_enabled" or (','            if key == "acid_enabled" or (key == "automation_enabled" and self.supports_acid):\n                if not self.supports_acid: raise ServiceValidationError("uncommissioned")\n                for role in ("acid", "circulation"):\n                    resolve(self.hass, config.get(role+"_binding"))\n            elif key == "nutrient_enabled" or (')
+s=s.replace('        elif key == "nutrient_enabled":','        elif key == "acid_enabled":\n            self.acid = enabled\n        elif key == "nutrient_enabled":')
+s=s.replace('("automation_enabled", "refill_enabled", "nutrient_enabled")','("automation_enabled", "refill_enabled", "nutrient_enabled", "acid_enabled")')
+s=s.replace('key == "nutrient_enabled"\n                    and','key == self.run_stage+"_enabled"\n                    and')
+s=s.replace('            if self.nutrient and self.supports_nutrient:\n                if self.refill:','            if self.tank.entry.options.get("control_contract_version") == 4 and sum(bool(x) for x in (self.refill, self.nutrient, self.acid)) != 1:\n                raise ServiceValidationError("flow_configuration_unsupported")\n            if (self.nutrient and self.supports_nutrient) or (self.acid and self.supports_acid):\n                if self.refill or (self.nutrient and self.acid):')
+s=s.replace('                await self.execution_stage.start(context, guard)','                self.run_stage = "acid" if self.acid else "nutrient"\n                await self.execution_stage.start(context, guard)').replace('                self.run_stage = "nutrient"\n','')
+# stage property may be requested during init, before run_stage exists
+s=s.replace('self.run_stage == "acid" else self.nutrient_stage','getattr(self, "run_stage", None) == "acid" else self.nutrient_stage')
+s=s.replace('key == self.run_stage+"_enabled"','key == (self.run_stage or "")+"_enabled"')
+p.write_text(s,newline='\n')
+edit('switch.py','or (self.key == "nutrient_enabled" and self.tank.control.supports_nutrient)','or (self.key == "nutrient_enabled" and self.tank.control.supports_nutrient)\n            or (self.key == "acid_enabled" and self.tank.control.supports_acid)')
+edit('switch.py','            "nutrient_enabled": control.nutrient,','            "nutrient_enabled": control.nutrient,\n            "acid_enabled": control.acid,')

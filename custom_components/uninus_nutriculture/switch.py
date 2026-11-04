@@ -38,6 +38,8 @@ class ControlSwitch(SwitchEntity):
         return self.tank.active and (
             self.key in ("automation_enabled", "refill_enabled", "flow_run")
             or (self.key == "nutrient_enabled" and self.tank.control.supports_nutrient)
+            or (self.key == "acid_enabled" and self.tank.control.supports_acid)
+            or (self.key == "mix_enabled" and self.tank.control.supports_mix)
         )
 
     @property
@@ -47,6 +49,8 @@ class ControlSwitch(SwitchEntity):
             "automation_enabled": control.master,
             "refill_enabled": control.refill,
             "nutrient_enabled": control.nutrient,
+            "acid_enabled": control.acid,
+            "mix_enabled": control.mix,
             "flow_run": control.running,
         }.get(self.key, False)
 

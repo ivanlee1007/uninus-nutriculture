@@ -73,25 +73,25 @@ def schema(values, *, include_name=False):
         ] = FeedbackSelector(
             selector.NumberSelectorConfig(min=1, max=60, step=1, unit_of_measurement="s")
         )
-        from .dosing_settings import CONTROL_FIELDS, RANGES
+        from .dosing_settings import CONTROL_FIELDS, P3B_CONTROL_FIELDS, Q_KEYS, RANGES
 
-        for key in ("nutrient_output", "circulation_output"):
+        for key in ("nutrient_output", "acid_output", "circulation_output"):
             fields[vol.Optional(key, description={"suggested_value": values.get(key)})] = (
                 selector.EntitySelector(selector.EntitySelectorConfig(domain="switch"))
             )
-        for key in CONTROL_FIELDS:
+        for key in (*CONTROL_FIELDS, *P3B_CONTROL_FIELDS):
             marker = vol.Optional(key, description={"suggested_value": values.get(key)})
-            if key in (
+            if key.endswith(("commissioned", "confirmed")) or key in (
                 "nutrient_commissioned",
                 "nutrient_protection_confirmed",
                 "report_contract_confirmed",
             ):
                 fields[marker] = selector.BooleanSelector()
-            elif key == "device_max_on_seconds":
+            elif key.endswith("device_max_on_seconds"):
                 fields[marker] = FeedbackSelector(
                     selector.NumberSelectorConfig(min=1, max=86400, step=1)
                 )
-            elif key == "sample_mode":
+            elif key.endswith("sample_mode"):
                 fields[marker] = selector.SelectSelector(
                     selector.SelectSelectorConfig(options=["reported", "sequence", "timestamp"])
                 )
@@ -105,6 +105,20 @@ def schema(values, *, include_name=False):
                     )
                 )
             )
+        for prefix, keys in (
+            ("acid_", Q_KEYS),
+            ("mix_", ("safe_min_level_m", "flow_timeout_seconds")),
+        ):
+            for key in keys:
+                lo, hi, step = RANGES[key]
+                name = prefix + key
+                fields[vol.Optional(name, description={"suggested_value": values.get(name)})] = (
+                    DosingSelector(
+                        selector.NumberSelectorConfig(
+                            min=lo, max=hi, step=step, mode=selector.NumberSelectorMode.BOX
+                        )
+                    )
+                )
         for stage in STAGES:
             fields[
                 vol.Optional(
@@ -171,7 +185,14 @@ class NutricultureConfigFlow(ConfigFlow, domain=DOMAIN):
 class NutricultureOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input=None):
         from .control_auth import authorize
-        from .dosing_settings import CONTROL_FIELDS, DEFAULTS, RANGES
+        from .dosing_settings import (
+            CONTROL_FIELDS,
+            DEFAULTS,
+            P3B_CONTROL_FIELDS,
+            Q_KEYS,
+            RANGES,
+            SAFETY_KEYS,
+        )
 
         errors = {}
         if not hasattr(self, "_revision"):
@@ -197,14 +218,81 @@ class NutricultureOptionsFlow(OptionsFlow):
                             key in user_input
                             for key in (*CONTROL_FIELDS, "nutrient_output", "circulation_output")
                         )
+                        acid = {
+                            **{k: v for k, v in DEFAULTS.items() if k in Q_KEYS},
+                            **self.config_entry.options.get("acid_parameters", {}),
+                            **{
+                                k: user_input["acid_" + k]
+                                for k in Q_KEYS
+                                if "acid_" + k in user_input
+                            },
+                        }
+                        mix = {
+                            **self.config_entry.options.get("mix_parameters", {}),
+                            **{
+                                k: user_input["mix_" + k]
+                                for k in ("safe_min_level_m", "flow_timeout_seconds")
+                                if "mix_" + k in user_input
+                            },
+                        }
+                        new_stage = (
+                            any(
+                                config.get(
+                                    k, False if k.endswith(("commissioned", "confirmed")) else None
+                                )
+                                != self.config_entry.options.get("control", {}).get(
+                                    k, False if k.endswith(("commissioned", "confirmed")) else None
+                                )
+                                for k in (*P3B_CONTROL_FIELDS, "acid_binding")
+                            )
+                            or any(
+                                "acid_" + k in user_input
+                                and acid.get(k)
+                                != {
+                                    **{k: v for k, v in DEFAULTS.items() if k in Q_KEYS},
+                                    **self.config_entry.options.get("acid_parameters", {}),
+                                }.get(k)
+                                for k in Q_KEYS
+                            )
+                            or mix != self.config_entry.options.get("mix_parameters", {})
+                        )
+                        from .manager import _UNSET
+
                         tank.write_settings(
                             control=config,
+                            acid_parameters=acid
+                            if new_stage
+                            or self.config_entry.options.get("control_contract_version") == 4
+                            else _UNSET,
+                            mix_parameters=mix
+                            if new_stage
+                            or self.config_entry.options.get("control_contract_version") == 4
+                            else _UNSET,
+                            safety_parameters={
+                                k: user_input.get(
+                                    k,
+                                    self.config_entry.options.get("safety_parameters", {}).get(
+                                        k,
+                                        self.config_entry.options.get("dosing_parameters", {}).get(
+                                            k, DEFAULTS[k]
+                                        ),
+                                    ),
+                                )
+                                for k in SAFETY_KEYS
+                            }
+                            if new_stage
+                            or self.config_entry.options.get("control_contract_version") == 4
+                            else _UNSET,
                             dosing_parameters=dosing,
                             sources={
                                 **{key: user_input[key] for key in SOURCE_KEYS},
                                 "max_age_seconds": int(user_input.get("max_age_seconds", 300)),
                             },
-                            expected_revision=self._revision if nutrient_edit else None,
+                            expected_revision=self._revision
+                            if nutrient_edit
+                            or new_stage
+                            or self.config_entry.options.get("control_contract_version") == 4
+                            else None,
                         )
                 except ServiceValidationError as err:
                     errors["base"] = str(err)
@@ -214,7 +302,22 @@ class NutricultureOptionsFlow(OptionsFlow):
         suggested = {
             **DEFAULTS,
             **self.config_entry.options.get("dosing_parameters", {}),
-            **{key: control[key] for key in CONTROL_FIELDS if key in control},
+            **{
+                key: control[key]
+                for key in (*CONTROL_FIELDS, *P3B_CONTROL_FIELDS)
+                if key in control
+            },
+            **{
+                "acid_" + k: v
+                for k, v in {
+                    **{k: v for k, v in DEFAULTS.items() if k in Q_KEYS},
+                    **self.config_entry.options.get("acid_parameters", {}),
+                }.items()
+            },
+            **{
+                "mix_" + k: v
+                for k, v in self.config_entry.options.get("mix_parameters", {}).items()
+            },
             "commissioned": control.get("commissioned", False),
             "feedback_timeout": control.get("feedback_timeout", 10),
         }
@@ -225,6 +328,7 @@ class NutricultureOptionsFlow(OptionsFlow):
         for field, binding_key in (
             ("refill_output", "binding"),
             ("nutrient_output", "nutrient_binding"),
+            ("acid_output", "acid_binding"),
             ("circulation_output", "circulation_binding"),
         ):
             if control.get(binding_key):

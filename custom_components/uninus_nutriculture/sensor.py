@@ -69,13 +69,17 @@ class ControlStatus(TankStatus):
         super()._number_changed(event)
         entity_id = event.data.get("entity_id", "")
         config = self.tank.entry.options.get("control", {})
-        if not entity_id.startswith("switch.") or not config.get("nutrient_commissioned"):
+        if not entity_id.startswith("switch.") or not (
+            config.get("nutrient_commissioned")
+            or config.get("acid_commissioned")
+            or config.get("mix_commissioned")
+        ):
             return
         from homeassistant.exceptions import ServiceValidationError
 
         from .control_settings import resolve
 
-        for role in ("nutrient", "circulation"):
+        for role in ("nutrient", "acid", "circulation"):
             try:
                 target = resolve(self.hass, config.get(role + "_binding"))
             except ServiceValidationError:
@@ -102,10 +106,22 @@ class ControlStatus(TankStatus):
             ("automation_enabled", "switch"),
             ("refill_enabled", "switch"),
             ("nutrient_enabled", "switch"),
+            ("acid_enabled", "switch"),
+            ("mix_enabled", "switch"),
             ("flow_run", "switch"),
             ("emergency_stop", "button"),
             ("reset_fault", "button"),
         ):
+            if (
+                key == "refill_enabled"
+                and self.tank.entry.options.get("control_contract_version") == 4
+                and not config.get("commissioned")
+            ):
+                continue
+            if key == "mix_enabled" and not control.supports_mix:
+                continue
+            if key == "acid_enabled" and not control.supports_acid:
+                continue
             if key == "nutrient_enabled" and not control.supports_nutrient:
                 continue
             entity_id = registry.async_get_entity_id(
@@ -159,6 +175,10 @@ class ControlStatus(TankStatus):
                 ),
                 "output_states": outputs,
             }
+        if self.tank.entry.options.get("control_contract_version") == 4:
+            from .p3b_projection import snapshot_v4
+
+            return snapshot_v4(self.tank, base, targets)
         return {
             **base,
             "schema_version": 2,

@@ -32,6 +32,22 @@ RANGES = {
     "ph_high_alarm": (0, 14, 0.1),
     "ph_high_alarm_seconds": (1, 86400, 1),
 }
+SAFETY_KEYS = tuple(DEFAULTS)[5:]
+Q_KEYS = tuple(key for key in RANGES if key not in SAFETY_KEYS)
+P3B_CONTROL_FIELDS = (
+    "acid_commissioned",
+    "acid_device_max_on_seconds",
+    "acid_protection_confirmed",
+    "acid_alias_notes",
+    "acid_sample_mode",
+    "acid_sample_attribute",
+    "acid_report_contract_confirmed",
+    "mix_commissioned",
+    "circulation_device_max_on_seconds",
+    "circulation_protection_confirmed",
+    "circulation_alias_notes",
+)
+
 CONTROL_FIELDS = (
     "nutrient_commissioned",
     "nutrient_protection_confirmed",

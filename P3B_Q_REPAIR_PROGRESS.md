@@ -1,0 +1,4 @@
+# P3b quality repair 2/2
+Original probes: true 3 FAIL / 3 PASS, child1. Permanent native tests: 5 behavioral FAIL, child1. QC1 GREEN: invalid acid/circulation closure + original R1 three held-ACK = 5 PASS child0; fault/unknown ownership retained. QC1 + QI1 GREEN: permanent five + R1 three = 8 PASS child0. S4 global safety observer supports acid/mix-only, preserves v3; native Sensor includes unique alarm reason, with no I/O/config effect. Formatter/lint then final full regression pending. No approval/release.
+
+Parent recovery completed: final native295 PASS, original quality3 PASS, focused21 PASS, Ruff/format PASS. Prior full294PASS/1FAIL retained; fault-priority regression repaired without changing assertions. Independent SPEC/quality still open; no publication. See docs/P3B_Q_REPAIR_HANDOFF.md.

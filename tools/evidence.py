@@ -54,6 +54,9 @@ r = subprocess.run(
             "command": cmd,
             "returncode": r.returncode,
             "sha256": hashes,
+            "source_after": {
+                rel: hashlib.sha256((root / rel).read_bytes()).hexdigest() for rel in hashes
+            },
         },
         indent=2,
     )

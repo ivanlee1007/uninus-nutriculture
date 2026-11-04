@@ -23,8 +23,8 @@
   "options": {
     "step": {
       "init": {
-        "title": "來源、輸出與加養安全設定",
-        "description": "保存／取消不會啟動或關閉設備。加養安全值與設備保護／採樣契約由操作人員核實，軟體不會驗證物理保護。尚未接通執行引擎時加養 Switch 仍不可用；設定完成不等於已可運轉。EC 使用 mS/cm，液位使用 m。",
+        "title": "來源、輸出與養液流程安全設定",
+        "description": "保存／取消及 Enable 不致動。加養、加酸及獨立攪拌必須明選實體輸出、最低安全液位、設備獨立保護與採樣契約；宣告不等於物理保護認證。共用循環截止期限不可由混合需求延長。EC 使用 mS/cm，液位使用 m。",
         "data": {
           "ph": "pH 來源感測器",
           "ec": "EC 來源感測器 (mS/cm)",
@@ -34,9 +34,9 @@
           "commissioned": "已核對輸出身份、風險、OFF回饋與設備失聯保護",
           "feedback_timeout": "回饋期限（秒；初始10為工程預設、非原HA值）",
           "refill_weekdays": "補水允許星期（空集合禁止）",
-          "nutrient_weekdays": "加養（未支援）允許星期（空集合禁止）",
-          "acid_weekdays": "加酸（未支援）允許星期（空集合禁止）",
-          "mix_weekdays": "混合（未支援）允許星期（空集合禁止）",
+          "nutrient_weekdays": "加養允許星期（空集合禁止）",
+          "acid_weekdays": "加酸允許星期（空集合禁止）",
+          "mix_weekdays": "獨立攪拌允許星期（空集合禁止）",
           "nutrient_output": "加養泵實體 Switch",
           "circulation_output": "必要循環馬達 Switch",
           "nutrient_commissioned": "我已確認加養實體綁定及操作界限",
@@ -58,7 +58,30 @@
           "ph_danger_low": "危險低 pH 門檻",
           "ec_danger_high": "危險高 EC 門檻（mS/cm）",
           "ph_high_alarm": "高 pH 告警門檻（不是全域急停）",
-          "ph_high_alarm_seconds": "高 pH 持續告警時間（秒）"
+          "ph_high_alarm_seconds": "高 pH 持續告警時間（秒）",
+          "acid_output": "加酸泵實體 Switch",
+          "acid_commissioned": "我已核對加酸輸出身份及操作界限",
+          "acid_device_max_on_seconds": "加酸設備獨立最大開啟時間（秒；須實際核實）",
+          "acid_protection_confirmed": "我已核實加酸設備獨立最大開啟保護",
+          "acid_alias_notes": "已核實的加酸實體與直接／定時別名",
+          "acid_sample_mode": "pH 採樣契約：reported／sequence／timestamp",
+          "acid_sample_attribute": "pH 新量測序號／時間屬性",
+          "acid_report_contract_confirmed": "我已確認每次 pH 回報代表新量測",
+          "mix_commissioned": "我已核對獨立攪拌輸出及操作界限",
+          "circulation_device_max_on_seconds": "循環設備獨立最大開啟時間（秒；須實際核實）",
+          "circulation_protection_confirmed": "我已核實循環設備獨立最大開啟保護",
+          "circulation_alias_notes": "已核實的循環實體與直接／定時別名",
+          "acid_safe_min_level_m": "加酸 · 本槽最低安全加酸水位（m，須按實際設備填寫）",
+          "acid_pulse_seconds": "加酸 · 單次最大加酸窗口（秒）",
+          "acid_max_total_on_seconds": "加酸 · 每輪保守累積開啟額度（秒，不是 mL）",
+          "acid_max_pulses": "加酸 · 每輪最多脈衝次數",
+          "acid_post_mix_seconds": "加酸 · 每次加酸後必要循環時間（秒）",
+          "acid_sample_wait_timeout_seconds": "加酸 · 等待新量測期限（秒）",
+          "acid_stable_samples": "加酸 · 合格新量測連續次數",
+          "acid_stable_interval_seconds": "加酸 · 穩定樣本最小間隔（秒）",
+          "acid_flow_timeout_seconds": "加酸 · 整輪最長期限（秒）",
+          "mix_safe_min_level_m": "獨立攪拌最低安全液位（m；按實際設備填寫）",
+          "mix_flow_timeout_seconds": "獨立攪拌整輪期限（秒）"
         }
       }
     },

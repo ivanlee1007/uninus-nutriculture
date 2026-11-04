@@ -60,16 +60,37 @@ async def async_setup(hass, config):
                 or entry.runtime_data is not tank
             ):
                 raise ServiceValidationError("entry_not_loaded")
+            is_v4 = entry.options.get("control_contract_version") == 4
+            if is_v4 != (call.service == "apply_control_settings_v4"):
+                raise ServiceValidationError("settings_schema_mismatch")
             config = dict(entry.options.get("control", {}))
-            for key in ("binding", "nutrient_binding", "circulation_binding"):
+            for key in ("binding", "nutrient_binding", "acid_binding", "circulation_binding"):
                 if config.get(key):
                     resolve(hass, config[key])
             config["allowed_weekdays"] = call.data["allowed_weekdays"]
+            extra = {}
+            if is_v4:
+                for name in ("dosing", "acid", "mix"):
+                    commissioned = config.get(
+                        ("nutrient" if name == "dosing" else name) + "_commissioned", False
+                    )
+                    incoming = call.data[name + "_parameters"]
+                    if commissioned != (incoming is not None):
+                        raise ServiceValidationError("invalid_commissioning")
+                safety = call.data["safety_parameters"]
+                incoming = call.data["dosing_parameters"]
+                if incoming is not None and any(incoming.get(k) != v for k, v in safety.items()):
+                    raise ServiceValidationError("invalid_dosing_parameters")
+                extra = {
+                    k: call.data[k]
+                    for k in ("acid_parameters", "mix_parameters", "safety_parameters")
+                }
             revision = tank.write_settings(
                 parameters=call.data["parameters"],
                 dosing_parameters=call.data["dosing_parameters"],
                 control=config,
                 expected_revision=call.data["expected_revision"],
+                **extra,
             )
         return {"applied": True, "settings_revision": revision} if call.return_response else None
 
@@ -88,6 +109,24 @@ async def async_setup(hass, config):
                 vol.Required("expected_revision"): revision,
                 vol.Required("parameters"): dict,
                 vol.Required("dosing_parameters"): dict,
+                vol.Required("allowed_weekdays"): dict,
+            }
+        ),
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "apply_control_settings_v4",
+        apply_settings,
+        schema=vol.Schema(
+            {
+                vol.Required("config_entry_id"): vol.All(str, vol.Length(min=1)),
+                vol.Required("expected_revision"): revision,
+                vol.Required("parameters"): dict,
+                vol.Required("dosing_parameters"): vol.Any(None, dict),
+                vol.Required("acid_parameters"): vol.Any(None, dict),
+                vol.Required("mix_parameters"): vol.Any(None, dict),
+                vol.Required("safety_parameters"): dict,
                 vol.Required("allowed_weekdays"): dict,
             }
         ),

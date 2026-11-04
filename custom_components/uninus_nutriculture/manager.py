@@ -30,6 +30,9 @@ def validate(parameters):
             raise ServiceValidationError("invalid_parameter_pair")
 
 
+_UNSET = object()
+
+
 class Tank:
     def __init__(self, hass, entry):
         self.hass = hass
@@ -65,16 +68,20 @@ class Tank:
             ):
                 raise ServiceValidationError("inactive_parameter_entity")
             self.write_settings(
-                parameters={**self.entry.options.get("parameters", self.parameters), key: value}
+                parameters={**self.entry.options.get("parameters", self.parameters), key: value},
+                expected_revision=self.entry.options.get("settings_revision", 0),
             )
 
     def write_settings(
         self,
         *,
-        parameters=None,
-        dosing_parameters=None,
-        control=None,
-        sources=None,
+        parameters=_UNSET,
+        dosing_parameters=_UNSET,
+        acid_parameters=_UNSET,
+        mix_parameters=_UNSET,
+        safety_parameters=_UNSET,
+        control=_UNSET,
+        sources=_UNSET,
         expected_revision=None,
     ):
         """Synchronous commit under Tank.lock. No await between admission and effect."""
@@ -84,6 +91,8 @@ class Tank:
         if not self.active:
             raise ServiceValidationError("entry_not_loaded")
         options = dict(self.entry.options)
+        if options.get("control_contract_version", 3) not in (3, 4):
+            raise ServiceValidationError("settings_schema_mismatch")
         revision = options.get("settings_revision", 0)
         if expected_revision is not None and (
             type(expected_revision) is not int
@@ -91,12 +100,29 @@ class Tank:
             or expected_revision != revision
         ):
             raise ServiceValidationError("settings_conflict")
+        # Null is a protocol value, never an alias for omitted arguments.
+        for name, value in (
+            ("parameters", parameters),
+            ("control", control),
+            ("sources", sources),
+            ("safety_parameters", safety_parameters),
+        ):
+            if value is None:
+                raise ServiceValidationError("invalid_parameters")
+        config_input = control if control is not _UNSET else options.get("control", {})
+        for name, value, role in (
+            ("dosing", dosing_parameters, "nutrient"),
+            ("acid", acid_parameters, "acid"),
+            ("mix", mix_parameters, "mix"),
+        ):
+            if value is None and config_input.get(role + "_commissioned"):
+                raise ServiceValidationError("invalid_commissioning")
         candidate = dict(options)
         params = dict(
-            parameters if parameters is not None else options.get("parameters", self.parameters)
+            parameters if parameters is not _UNSET else options.get("parameters", self.parameters)
         )
         validate(params)
-        config = dict(control if control is not None else options.get("control", {}))
+        config = dict(control if control is not _UNSET else options.get("control", {}))
         days = config.get("allowed_weekdays", {key: list(DAYS) for key in STAGES})
         if set(days) != set(STAGES) or any(
             not isinstance(value, list)
@@ -106,18 +132,40 @@ class Tank:
         ):
             raise ServiceValidationError("invalid_weekdays")
         dosing = (
-            dosing_parameters if dosing_parameters is not None else options.get("dosing_parameters")
+            dosing_parameters
+            if dosing_parameters is not _UNSET and dosing_parameters is not None
+            else options.get("dosing_parameters")
         )
         if dosing is not None:
-            validate_dosing(params, dosing, config)
+            if config.get("nutrient_commissioned") or (
+                acid_parameters is _UNSET
+                and mix_parameters is _UNSET
+                and options.get("control_contract_version") != 4
+            ):
+                validate_dosing(params, dosing, config)
             candidate["dosing_parameters"] = dict(dosing)
         elif config.get("nutrient_commissioned"):
             raise ServiceValidationError("invalid_dosing_parameters")
-        if parameters is not None or "parameters" in options:
+        if (
+            acid_parameters is not _UNSET
+            or mix_parameters is not _UNSET
+            or options.get("control_contract_version") == 4
+        ):
+            from .p3b_settings import validate_v4
+
+            validate_v4(
+                params,
+                candidate,
+                config,
+                None if acid_parameters is _UNSET else acid_parameters,
+                None if mix_parameters is _UNSET else mix_parameters,
+                None if safety_parameters is _UNSET else safety_parameters,
+            )
+        if parameters is not _UNSET or "parameters" in options:
             candidate["parameters"] = params
-        if control is not None:
+        if control is not _UNSET:
             candidate["control"] = config
-        if sources:
+        if sources is not _UNSET:
             candidate.update(sources)
         if candidate != options:
             candidate["settings_revision"] = revision + 1

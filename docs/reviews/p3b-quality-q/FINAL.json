@@ -1,0 +1,105 @@
+{
+  "verdict": "APPROVED",
+  "scope": "exact175 joint P3b quality/safety; no publication or deployment authorization",
+  "candidate_root": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3b-review-q-successor",
+  "manifest_sha256": "a22f4988f6b26754a73a8185cd1e76bc1e6dacecb95f5e4a9f9fc458e1ded3c2",
+  "pre_post_files": 175,
+  "mismatches": 0,
+  "critical": [],
+  "important": [],
+  "closed_findings": [
+    "Q-C1",
+    "Q-I1a",
+    "Q-I1b"
+  ],
+  "prior_quality_verdict_unchanged": "REQUEST_CHANGES",
+  "native_runs": [
+    {
+      "path": "native-run.json",
+      "passed": 27,
+      "child_exit": 0,
+      "log_sha256": "8025b7aa3579d7c5d3407bffacc3c0d7b2d3950bf0bbab0e92e3b368c02e6838"
+    },
+    {
+      "path": "mainline/native-run.json",
+      "passed": 16,
+      "child_exit": 0,
+      "log_sha256": "d381f2171fac2b0845878acf6f64057563916f88017acd29d02c460d3f82659d"
+    }
+  ],
+  "native_cases_disjoint_between_own_children": true,
+  "native_own_disjoint_cases": 43,
+  "new_adjacent_case": "high-pH fresh/stale/fresh and tank inactive/active recovery, full delay restart and native reason uniqueness; zero IO/options changes",
+  "browser_terminal_receipts": 6,
+  "reused_full_native_passed": 295,
+  "reused_full_native_rerun_here": false,
+  "node12_browser33_rerun_here": false,
+  "static_scan_matches": 0,
+  "ruff_check_exit": 0,
+  "ruff_format_exit": 1,
+  "ruff_format_classification": "unchanged tools/evidence.py:57 baseline, independently reproduced against R1; production/tests 77 formatted; CI not claimed all green",
+  "audit_child_exit": 0,
+  "repair_budget_used": 2,
+  "repair_budget_limit": 2,
+  "p3c_complete": false,
+  "issue3": "OPEN",
+  "release_deploy_performed": false,
+  "artifacts": {
+    "REPORT.md": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\REPORT.md",
+      "sha256": "8dbfa77b595a0a615feb85d85bd8fdcd67069586a0a524f72c4d3eeda364d33d"
+    },
+    "audit.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\audit.json",
+      "sha256": "9e14e08c9cb4f0b060c087d5b238a650cbd83f01d0cdd3715d0b0d7431d495c0"
+    },
+    "audit-run.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\audit-run.json",
+      "sha256": "9a88812b2d05e3aa1ec72a63769c7ae6f319ef478451dd3e31cf3fe5d11306b0"
+    },
+    "mainline-audit.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\mainline-audit.json",
+      "sha256": "11dce9645c5ce885a99d00087cdcb4e4d7f60e0e35d431b5b06068025b185549"
+    },
+    "pre.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\pre.json",
+      "sha256": "bf6a00242a2f477f8c38fae6d12efd6cfdb76c373b8a3c59c1297e23400cad22"
+    },
+    "post.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\post.json",
+      "sha256": "ba5e4b8fd4afcf6826e1732e2f26127c08aad80292e13f58edab6c06b8a0c693"
+    },
+    "native-run.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\native-run.json",
+      "sha256": "ab5dd3650a341af7074fba36abd439ff99df0fd37441dfaedb5213f1eb07b51f"
+    },
+    "mainline/native-run.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\mainline\\native-run.json",
+      "sha256": "9f46b4cb46b1c7a07aa82da2768a238889ab8b8d181cc2f5f119fdd61079266c"
+    },
+    "import-binding.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\import-binding.json",
+      "sha256": "2c0fd1931293fad8c29ea7e2c29beb61848fee8c0f2c831fb1fe759fda5ac868"
+    },
+    "mainline/import-binding.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\mainline\\import-binding.json",
+      "sha256": "f151135acd20a7872751e539aeba71eb14a348fdc23a384bc7a4a681bd61c134"
+    },
+    "browser-receipts.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\browser-receipts.json",
+      "sha256": "b96ad0cfec3c0fe136514cb31e749aea4ad58416e57966a981b3455da3ddce7f"
+    },
+    "alarm-lifecycle.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\alarm-lifecycle.json",
+      "sha256": "b8d1f14e26c0149cc4e8d2c41cab603bb2b2d05de5f0f564df122ad21cea788a"
+    },
+    "lint-runs.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\lint-runs.json",
+      "sha256": "c90c9a12c1c6b00fe97f537ffb5ccaeb8a3c88ccbdd6c405888955eff3c50622"
+    },
+    "format-baseline-run.json": {
+      "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p3b-quality-q-recheck\\format-baseline-run.json",
+      "sha256": "7f1b710b827616fd321e065bfb5bd3565ca6fef1328c3ade8357ddd9701b1537"
+    }
+  }
+}

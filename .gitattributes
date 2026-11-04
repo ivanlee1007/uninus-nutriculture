@@ -5,3 +5,9 @@ docs/reviews/approved-candidate-manifest.json -text whitespace=cr-at-eol
 docs/reviews/p3a-*/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 # Historical handoff bytes retained; do not relax executable whitespace.
 docs/P3A_BACKEND_A1_HANDOFF.md -text whitespace=-blank-at-eof,cr-at-eol
+
+# Immutable P3b source receipts and approvals retain their original bytes.
+P3B_Q_REPAIR_PROGRESS.md -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/P3B_FINISH_SOURCES.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/reviews/p3b-spec-q/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/reviews/p3b-quality-q/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -11,7 +11,10 @@ from .control_settings import resolve
 
 
 class NutrientStage:
-    def __init__(self, controller):
+    def __init__(self, controller, role="nutrient"):
+        self.role = role
+        self.source = "ph" if role == "acid" else "ec"
+        self.direction = -1 if role == "acid" else 1
         self.control = controller
         self.tank = controller.tank
         self.hass = controller.hass
@@ -41,7 +44,7 @@ class NutrientStage:
             return
         charge = max(self.settings["pulse_seconds"], self.clock() - self.on_since)
         self.progress["reserved_on_seconds"] = self.charged_on + charge
-        on = self.operations.get(("nutrient", True))
+        on = self.operations.get((self.role, True))
         if confirmed_off and (on is None or on.done()):
             self.charged_on += charge
             self.on_since = None
@@ -65,9 +68,9 @@ class NutrientStage:
                     raise ValueError
                 self.revoked = self.revoked or self.unsafe(key, float(state.state))
                 if (
-                    key == "ec"
+                    key == self.source
                     and self.phase == "pulsing"
-                    and float(state.state) >= self.midpoint()
+                    and self.direction * float(state.state) >= self.midpoint()
                 ):
                     self.pulse_satisfied = True
             except TypeError, ValueError:
@@ -79,14 +82,14 @@ class NutrientStage:
             and ((state := event.data.get("new_state")) is None or state.state != "on")
         ):
             self.revoked = self.revoked or "circulation_lost"
-        if event.data.get("entity_id") == self.tank.sources["ec"] and not self.revoked:
+        if event.data.get("entity_id") == self.tank.sources[self.source] and not self.revoked:
             state = event.data.get("new_state")
             token = self.sample_token(state)
             if token is None:
                 self.revoked = "sample_invalid"
             if token is not None and (self.last_token is None or token > self.last_token):
                 old = event.data.get("old_state")
-                mode = self.tank.entry.options["control"].get("sample_mode")
+                mode = self.sample_config().get("sample_mode")
                 if (
                     mode != "reported"
                     or old is None
@@ -95,7 +98,7 @@ class NutrientStage:
                 ):
                     self.samples += 1
                     self.last_token = token
-                    self.sample_ec = float(state.state)
+                    self.sample_ec = self.direction * float(state.state)
         self.wake.set()
 
     def sample_token(self, state):
@@ -103,7 +106,7 @@ class NutrientStage:
 
         if state is None:
             return None
-        config = self.tank.entry.options["control"]
+        config = self.sample_config()
         mode = config.get("sample_mode")
         if mode == "reported":
             return state.last_reported.timestamp()
@@ -123,8 +126,25 @@ class NutrientStage:
         self.control.flow_state = state
         self.tank.publish()
 
+    def sample_config(self):
+        config = self.tank.entry.options["control"]
+        if self.role == "acid":
+            return {
+                k: config.get("acid_" + k)
+                for k in ("sample_mode", "sample_attribute", "report_contract_confirmed")
+            }
+        return config
+
+    def live_settings(self):
+        options = self.tank.entry.options
+        return (
+            {**options["acid_parameters"], **options["safety_parameters"]}
+            if self.role == "acid"
+            else options["dosing_parameters"]
+        )
+
     def ec(self):
-        return float(self.hass.states.get(self.tank.sources["ec"]).state)
+        return self.direction * float(self.hass.states.get(self.tank.sources[self.source]).state)
 
     def midpoint(self):
         value = self.live_midpoint()
@@ -138,8 +158,8 @@ class NutrientStage:
 
         return float(
             (
-                Decimal(str(self.tank.parameters["ec_low"]))
-                + Decimal(str(self.tank.parameters["ec_high"]))
+                self.direction * Decimal(str(self.tank.parameters[self.source + "_low"]))
+                + self.direction * Decimal(str(self.tank.parameters[self.source + "_high"]))
             )
             / 2
         )
@@ -147,7 +167,7 @@ class NutrientStage:
     def tighten(self):
         if not self.owns_io or not hasattr(self, "settings"):
             return
-        live = self.tank.entry.options["dosing_parameters"]
+        live = self.live_settings()
         for key in (
             "pulse_seconds",
             "max_total_on_seconds",
@@ -168,14 +188,18 @@ class NutrientStage:
         self.midpoint()
         self.deadline = min(self.deadline, self.started + self.settings["flow_timeout_seconds"])
         self.stage_deadline = min(
-            self.stage_deadline, self.started + self.tank.parameters["ec_timeout"] * 60
+            self.stage_deadline, self.started + self.tank.parameters[self.source + "_timeout"] * 60
         )
         self.wake.set()
 
     def unsafe(self, key, value, *, settings=None):
         if settings is None:
-            settings = getattr(self, "settings", self.tank.entry.options["dosing_parameters"])
-        if key == "level" and value <= settings["safe_min_level_m"]:
+            settings = getattr(self, "settings", self.live_settings())
+        if key == "level" and (
+            value < settings["safe_min_level_m"]
+            if self.role == "acid"
+            else value <= settings["safe_min_level_m"]
+        ):
             return "level_unsafe"
         if key == "ec" and value > settings["ec_danger_high"]:
             return "ec_danger"
@@ -193,13 +217,23 @@ class NutrientStage:
             and hasattr(self, "stage_deadline")
             and self.clock() >= self.stage_deadline
         ):
-            raise ServiceValidationError("ec_timeout")
+            raise ServiceValidationError(self.source + "_timeout")
         if (
             self.owns_io
             and hasattr(self, "settings")
             and self.progress["reserved_on_seconds"] > self.settings["max_total_on_seconds"]
         ):
             raise ServiceValidationError("dose_budget_exhausted")
+        config = self.tank.entry.options.get("control", {})
+        if (
+            config.get("circulation_protection_confirmed")
+            and config.get("circulation_device_max_on_seconds")
+            and hasattr(self, "circ_dispatch_at")
+        ):
+            if self.clock() >= self.circ_dispatch_at + config[
+                "circulation_device_max_on_seconds"
+            ] - config.get("feedback_timeout", 10):
+                raise ServiceValidationError("flow_timeout")
         self.validate_sources()
 
     def validate_sources(self):
@@ -207,7 +241,7 @@ class NutrientStage:
             raise ServiceValidationError(self.revoked)
         if self.tank.snapshot()[0] == "invalid":
             raise ServiceValidationError("source_invalid")
-        if self.sample_token(self.hass.states.get(self.tank.sources["ec"])) is None:
+        if self.sample_token(self.hass.states.get(self.tank.sources[self.source])) is None:
             raise ServiceValidationError("sample_invalid")
         for key, entity_id in self.tank.sources.items():
             reason = self.unsafe(key, float(self.hass.states.get(entity_id).state))
@@ -218,11 +252,11 @@ class NutrientStage:
 
         config = self.tank.entry.options.get("control", {})
         # Only a newly requested run may adopt relaxed settings.
-        self.settings = dict(self.tank.entry.options["dosing_parameters"])
+        self.settings = dict(self.live_settings())
         self.validate()
         self.targets = {
             role: resolve(self.hass, config.get(role + "_binding"))
-            for role in ("nutrient", "circulation")
+            for role in (self.role, "circulation")
         }
         for target in self.targets.values():
             state = self.hass.states.get(target)
@@ -240,14 +274,16 @@ class NutrientStage:
         self.operations = {}
         self.owns_io = True
         self.result = None
-        self.last_token = self.sample_token(self.hass.states.get(self.tank.sources["ec"]))
+        self.last_token = self.sample_token(self.hass.states.get(self.tank.sources[self.source]))
         self.on_since = None
         self.charged_on = 0
-        self.settings = dict(self.tank.entry.options["dosing_parameters"])
+        self.settings = dict(self.live_settings())
         self.target_midpoint = self.live_midpoint()
+        if hasattr(self, "circ_dispatch_at"):
+            del self.circ_dispatch_at
         self.started = self.clock()
         self.deadline = self.started + self.settings["flow_timeout_seconds"]
-        self.stage_deadline = self.clock() + self.tank.parameters["ec_timeout"] * 60
+        self.stage_deadline = self.clock() + self.tank.parameters[self.source + "_timeout"] * 60
         self.control.run_context = context
         self.control.flow_state = "starting"
         self.progress = {"pulse_count": 0, "reserved_on_seconds": 0, "stable_count": 0}
@@ -281,11 +317,15 @@ class NutrientStage:
         task = self.operations.get((role, enabled))
         if task is None or task.done():
             task = self.hass.async_create_background_task(
-                self.control.nutrient_dispatch(role, enabled),
+                self.control.nutrient_dispatch(role, enabled, stage=self)
+                if self.role != "nutrient"
+                else self.control.nutrient_dispatch(role, enabled),
                 "nutrient output",
                 eager_start=False,
             )
-            if role == "nutrient" and enabled:
+            if role == "circulation" and enabled and not hasattr(self, "circ_dispatch_at"):
+                self.circ_dispatch_at = self.clock()
+            if role == self.role and enabled:
                 self.on_since = self.clock()
             self.operations[role, enabled] = task
             task.add_done_callback(self.settled)
@@ -316,10 +356,10 @@ class NutrientStage:
                 if not self.cleaning:
                     self.validate()
                 await asyncio.sleep(0.01)
-            if role == "nutrient" and not enabled:
+            if role == self.role and not enabled:
                 self.account_on(confirmed_off=True)
             if enabled:
-                await self.control.nutrient_revalidate()
+                await self.control.nutrient_revalidate(stage=self)
 
     async def run(self):
         result = "completed"
@@ -336,11 +376,27 @@ class NutrientStage:
                         > self.settings["max_total_on_seconds"]
                     ):
                         raise ServiceValidationError("dose_budget_exhausted")
+                    if self.role == "acid":
+                        reserve = (
+                            self.settings["pulse_seconds"]
+                            + self.settings["post_mix_seconds"]
+                            + 2 * self.tank.entry.options["control"].get("feedback_timeout", 10)
+                        )
+                        end = min(
+                            self.deadline,
+                            self.stage_deadline,
+                            self.circ_dispatch_at
+                            + self.tank.entry.options["control"][
+                                "circulation_device_max_on_seconds"
+                            ],
+                        )
+                        if self.clock() + reserve > end:
+                            raise ServiceValidationError("dose_budget_exhausted")
                     self.progress["pulse_count"] += 1
                     self.progress["reserved_on_seconds"] += self.settings["pulse_seconds"]
                     self.phase_changed("pulsing", "dosing")
                     self.pulse_satisfied = False
-                    on_task = self.send("nutrient", True)
+                    on_task = self.send(self.role, True)
                     try:
                         await self.wait(
                             min(
@@ -360,7 +416,7 @@ class NutrientStage:
                         if str(err) != "sample_timeout":
                             raise
                     self.phase_changed("confirming_off", "dosing")
-                    await self.output("nutrient", False)
+                    await self.output(self.role, False)
                     if not on_task.done():
                         async with asyncio.timeout(
                             self.tank.entry.options["control"].get("feedback_timeout", 10)
@@ -368,7 +424,7 @@ class NutrientStage:
                             while not on_task.done():
                                 self.validate()
                                 await asyncio.sleep(0.01)
-                        await self.output("nutrient", False)
+                        await self.output(self.role, False)
                     on_task.result()
                     self.phase_changed("mixing", "mixing")
                     await self.wait(self.settings["post_mix_seconds"], bound_key="post_mix_seconds")
@@ -379,9 +435,10 @@ class NutrientStage:
                         self.settings["sample_wait_timeout_seconds"], lambda: self.samples > barrier
                     )
                     self.last_consumed_token = self.last_token
-                    if (
-                        self.sample_ec >= self.midpoint()
-                        and self.sample_ec <= self.tank.parameters["ec_high"]
+                    if self.sample_ec >= self.midpoint() and self.sample_ec <= (
+                        self.tank.parameters["ec_high"]
+                        if self.role == "nutrient"
+                        else -self.tank.parameters["ph_low"]
                     ):
                         self.progress["stable_count"] += 1
                         if self.progress["stable_count"] >= self.settings["stable_samples"]:
@@ -419,7 +476,11 @@ class NutrientStage:
             self.control.flow_state = "stopping"
             while True:
                 self.cleanup_again = False
-                nutrient_off = asyncio.create_task(self.output("nutrient", False))
+                nutrient_off = asyncio.create_task(
+                    self.output(self.role, False)
+                    if self.role in self.bindings
+                    else asyncio.sleep(0)
+                )
                 if not self.control.fault and not self.revoked:
                     # Normal cancellation/completion retains circulation until
                     # dosing OFF confirms. Acute faults still stop both promptly.
@@ -444,7 +505,10 @@ class NutrientStage:
             failed = any(isinstance(outcome, BaseException) for outcome in outcomes)
             pending = any(not task.done() for task in self.operations.values())
             if failed:
-                self.control.fault = "stop_unconfirmed"
+                # Keep an explicit emergency latch, but preserve the existing
+                # stop-unconfirmed priority for ordinary run/identity failures.
+                if self.control.fault != "emergency_stop":
+                    self.control.fault = "stop_unconfirmed"
             self.owns_io = failed or pending
             self.control.flow_state = (
                 "fault" if self.control.fault or self.control.running else result

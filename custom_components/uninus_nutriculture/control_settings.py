@@ -83,10 +83,11 @@ def settings_candidate(hass, entry, values):
                 state = hass.states.get(target)
                 if state is None or state.state != "off":
                     raise ServiceValidationError("output_not_off")
-    from .dosing_settings import CONTROL_FIELDS
+    from .dosing_settings import CONTROL_FIELDS, P3B_CONTROL_FIELDS
 
     for field, key in (
         ("nutrient_output", "nutrient_binding"),
+        ("acid_output", "acid_binding"),
         ("circulation_output", "circulation_binding"),
     ):
         if field in values:
@@ -95,11 +96,12 @@ def settings_candidate(hass, entry, values):
                 raise ServiceValidationError("output_identity_invalid")
             candidate[key] = identity(row)
             resolve(hass, candidate[key])
-    for key in CONTROL_FIELDS:
+    for key in (*CONTROL_FIELDS, *P3B_CONTROL_FIELDS):
         if key in values:
             candidate[key] = values[key]
     bindings = [
-        candidate.get(key) for key in ("binding", "nutrient_binding", "circulation_binding")
+        candidate.get(key)
+        for key in ("binding", "nutrient_binding", "acid_binding", "circulation_binding")
     ]
     owned = set()
     for binding in bindings:
@@ -114,7 +116,7 @@ def settings_candidate(hass, entry, values):
             if other.entry_id == entry.entry_id:
                 continue
             other_control = other.options.get("control", {})
-            for key in ("binding", "nutrient_binding", "circulation_binding"):
+            for key in ("binding", "nutrient_binding", "acid_binding", "circulation_binding"):
                 other_binding = other_control.get(key)
                 if other_binding and (
                     other_binding.get("registry_id") == binding["registry_id"]
@@ -124,12 +126,19 @@ def settings_candidate(hass, entry, values):
     if candidate.get("nutrient_commissioned"):
         resolve(hass, candidate.get("nutrient_binding"))
         resolve(hass, candidate.get("circulation_binding"))
+    if candidate.get("acid_commissioned"):
+        resolve(hass, candidate.get("acid_binding"))
+        resolve(hass, candidate.get("circulation_binding"))
+    if candidate.get("mix_commissioned"):
+        resolve(hass, candidate.get("circulation_binding"))
     protected = (
         "binding",
         "commissioned",
         "nutrient_binding",
         "circulation_binding",
+        "acid_binding",
         *CONTROL_FIELDS,
+        *P3B_CONTROL_FIELDS,
     )
     source_change = any(
         key in values and values[key] != entry.options.get(key, entry.data.get(key))
@@ -156,7 +165,7 @@ def ensure_stopped(hass, entry, old, candidate):
     ):
         raise ServiceValidationError("control_busy")
     for config in (old, candidate):
-        for key in ("binding", "nutrient_binding", "circulation_binding"):
+        for key in ("binding", "nutrient_binding", "acid_binding", "circulation_binding"):
             if config.get(key):
                 state = hass.states.get(resolve(hass, config[key]))
                 if state is None or state.state != "off":

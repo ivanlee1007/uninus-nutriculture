@@ -21,6 +21,7 @@ _FAULT_CODES = frozenset(
         "dose_budget_exhausted",
         "ec_danger",
         "ec_timeout",
+        "ph_timeout",
         "emergency_stop",
         "flow_timeout",
         "level_unsafe",
@@ -92,7 +93,24 @@ class Controller:
             self.flow_state = "fault" if self.fault else "idle" if self.master else "disabled"
         from .nutrient import NutrientStage
 
+        if config.get("acid_commissioned"):
+            try:
+                for role in ("acid", "circulation"):
+                    output = self.hass.states.get(resolve(self.hass, config.get(role + "_binding")))
+                    if output is None or output.state != "off":
+                        self.fault = "restart_output_not_off"
+            except Exception:
+                self.fault = "output_identity_invalid"
+            self.master = False if self.fault else config.get("automation_enabled", False)
+            self.flow_state = "fault" if self.fault else "idle" if self.master else "disabled"
         self.nutrient_stage = NutrientStage(self)
+        self.acid_stage = NutrientStage(self, "acid")
+        self.acid = config.get("acid_enabled", False)
+        from .mix import MixStage
+
+        self.mix_stage = MixStage(self)
+        self.mix = config.get("mix_enabled", False)
+        self.leases = {}
         self.ph_high_since = None
         self.ph_high_alarm_active = False
         self.run_id = None
@@ -122,8 +140,10 @@ class Controller:
 
     @property
     def running(self):
-        stage = getattr(self, "nutrient_stage", None)
-        return self._refill_running or bool(stage and stage.owns_io)
+        return self._refill_running or any(
+            getattr(self, key, None) and getattr(self, key).owns_io
+            for key in ("nutrient_stage", "acid_stage", "mix_stage")
+        )
 
     @running.setter
     def running(self, value):
@@ -131,21 +151,50 @@ class Controller:
         self._refill_running = value
 
     @property
+    def execution_stage(self):
+        return getattr(
+            self, (getattr(self, "run_stage", None) or "nutrient") + "_stage", self.nutrient_stage
+        )
+
+    @property
+    def supports_mix(self):
+        return bool(self.tank.entry.options.get("control", {}).get("mix_commissioned"))
+
+    def acquire(self, identity, run_id, generation, owner):
+        from homeassistant.exceptions import ServiceValidationError
+
+        if generation != self.generation or (
+            self.leases and any(v[0] != identity for v in self.leases.values())
+        ):
+            raise ServiceValidationError("revoked")
+        token = uuid.uuid4().hex
+        self.leases[token] = (identity, run_id, generation, owner)
+        return token
+
+    def release(self, token):
+        self.leases.pop(token, None)
+        return not self.leases
+
+    @property
+    def supports_acid(self):
+        return bool(self.tank.entry.options.get("control", {}).get("acid_commissioned"))
+
+    @property
     def supports_nutrient(self):
         return bool(self.tank.entry.options.get("control", {}).get("nutrient_commissioned"))
 
     @property
     def nutrient_phase(self):
-        return self.nutrient_stage.phase
+        return self.execution_stage.phase
 
     @property
     def dose_progress(self):
-        return self.nutrient_stage.progress
+        return self.execution_stage.progress
 
-    async def nutrient_revalidate(self):
+    async def nutrient_revalidate(self, *, stage=None):
         from homeassistant.exceptions import ServiceValidationError
 
-        stage = self.nutrient_stage
+        stage = stage or self.execution_stage
         await authorize(self.hass, self.run_context)
         if stage.guard:
             stage.guard()
@@ -154,7 +203,7 @@ class Controller:
             or self.tank.entry.runtime_data is not self.tank
             or stage.generation != self.generation
             or not self.master
-            or not self.nutrient
+            or not getattr(self, stage.role)
             or self.fault
             or self.tank.sources != stage.sources
         ):
@@ -166,25 +215,39 @@ class Controller:
                 raise ServiceValidationError("output_identity_invalid")
             stage.targets[owned_role] = resolve(self.hass, binding)
 
-    async def nutrient_dispatch(self, role, enabled):
+    async def nutrient_dispatch(self, role, enabled, *, stage=None):
         from homeassistant.exceptions import ServiceValidationError
         from homeassistant.util import dt as dt_util
 
         from .control_settings import DAYS
 
-        stage = self.nutrient_stage
+        # NutrientStage's legacy no-stage dispatch is the nutrient owner,
+        # never the currently selected acid/mix execution stage.
+        stage = stage or self.nutrient_stage
         if enabled:
-            await self.nutrient_revalidate()
+            await self.nutrient_revalidate(stage=stage)
             config = self.tank.entry.options.get("control", {})
             if role == "circulation" and not stage.circulation_confirmed:
                 if DAYS[dt_util.now().weekday()] not in config.get("allowed_weekdays", {}).get(
-                    "nutrient", DAYS
+                    stage.role, DAYS
                 ):
                     raise ServiceValidationError("weekday")
-            if role == "nutrient":
+            if role == stage.role and role != "mix":
                 circ = self.hass.states.get(stage.targets["circulation"])
                 if not stage.circulation_confirmed or circ is None or circ.state != "on":
                     raise ServiceValidationError("circulation_lost")
+        if role == "circulation":
+            if enabled and not getattr(stage, "lease", None):
+                stage.lease = self.acquire(
+                    stage.bindings[role],
+                    self.run_id,
+                    stage.generation,
+                    "standalone_mix" if stage.role == "mix" else stage.role + "_required",
+                )
+            if not enabled and getattr(stage, "lease", None):
+                if not self.release(stage.lease):
+                    return
+                stage.lease = None
         target = resolve(self.hass, stage.bindings[role])
         stage.targets[role] = target
         origin = self.stop_context or self.run_context
@@ -197,7 +260,7 @@ class Controller:
             context=context,
         )
         if enabled:
-            await self.nutrient_revalidate()
+            await self.nutrient_revalidate(stage=stage)
 
     @property
     def fault(self):
@@ -225,11 +288,11 @@ class Controller:
     @callback
     def parameters_changed(self):
         self.update_ph_alarm()
-        if self.nutrient_stage.owns_io:
-            self.nutrient_stage.tighten()
+        if self.execution_stage.owns_io:
+            self.execution_stage.tighten()
         if (
             self.running
-            and not (self.nutrient_stage.task and not self.nutrient_stage.task.done())
+            and not (self.execution_stage.task and not self.execution_stage.task.done())
             and self.flow_state in ("starting", "refilling")
         ):
             self.high_bound = min(self.high_bound, self.tank.parameters["level_high"])
@@ -240,7 +303,7 @@ class Controller:
 
     @callback
     def registry_changed(self, event):
-        stage = self.nutrient_stage
+        stage = self.execution_stage
         if stage.owns_io:
             try:
                 config = self.tank.entry.options.get("control", {})
@@ -286,11 +349,17 @@ class Controller:
             if event is not None
             else self.hass.states.get(self.tank.sources["ph"])
         )
-        settings = self.tank.entry.options.get("dosing_parameters", {})
+        options = self.tank.entry.options
+        settings = options.get(
+            "safety_parameters"
+            if options.get("control_contract_version") == 4
+            else "dosing_parameters",
+            {},
+        )
         try:
             value = float(state.state)
             valid = (
-                self.supports_nutrient
+                (self.supports_nutrient or self.supports_acid or self.supports_mix)
                 and self.tank.active
                 and math.isfinite(value)
                 and state.attributes.get("unit_of_measurement") in (None, "", "pH")
@@ -304,7 +373,7 @@ class Controller:
             self.ph_high_since = None
             self.ph_high_alarm_active = False
         else:
-            now = self.nutrient_stage.clock()
+            now = self.execution_stage.clock()
             if self.ph_high_since is None:
                 self.ph_high_since = now
             self.ph_high_alarm_active = now - self.ph_high_since >= settings.get(
@@ -321,8 +390,8 @@ class Controller:
     def changed(self, event):
         if event.data.get("entity_id") == self.tank.sources["ph"]:
             self.update_ph_alarm(event)
-        if self.running and self.nutrient_stage.task and not self.nutrient_stage.task.done():
-            self.nutrient_stage.changed(event)
+        if self.running and self.execution_stage.task and not self.execution_stage.task.done():
+            self.execution_stage.changed(event)
             return
         if self.running and event.data.get("entity_id") in (
             *self.tank.sources.values(),
@@ -331,6 +400,9 @@ class Controller:
             self.hass.async_create_task(self.evaluate())
 
     async def evaluate(self):
+        if self.execution_stage.owns_io:
+            self.execution_stage.wake.set()
+            return
         if self.running and self.flow_state == "starting":
             # Revoke observed source loss even if it recovers before ON returns.
             # Output OFF is still legitimate while acknowledgement is pending.
@@ -364,19 +436,32 @@ class Controller:
             guard()
         from homeassistant.exceptions import ServiceValidationError
 
+        if self.tank.entry.options.get("control_contract_version", 3) not in (3, 4):
+            raise ServiceValidationError("settings_schema_mismatch")
         if not self.tank.active or key not in (
             "automation_enabled",
             "refill_enabled",
             "nutrient_enabled",
+            "acid_enabled",
+            "mix_enabled",
             "flow_run",
         ):
             raise ServiceValidationError("inactive_control")
-        owned_nutrient = self.nutrient_stage.owns_io
+        owned_nutrient = self.execution_stage.owns_io
         if enabled and key != "flow_run":
             if self.fault:
                 raise ServiceValidationError("fault_latched")
             config = self.tank.entry.options.get("control", {})
-            if key == "nutrient_enabled" or (
+            if key == "mix_enabled" or (key == "automation_enabled" and self.supports_mix):
+                if not self.supports_mix:
+                    raise ServiceValidationError("uncommissioned")
+                resolve(self.hass, config.get("circulation_binding"))
+            elif key == "acid_enabled" or (key == "automation_enabled" and self.supports_acid):
+                if not self.supports_acid:
+                    raise ServiceValidationError("uncommissioned")
+                for role in ("acid", "circulation"):
+                    resolve(self.hass, config.get(role + "_binding"))
+            elif key == "nutrient_enabled" or (
                 key == "automation_enabled" and self.supports_nutrient
             ):
                 if not self.supports_nutrient:
@@ -391,13 +476,23 @@ class Controller:
             self.master = enabled
         elif key == "refill_enabled":
             self.refill = enabled
+        elif key == "mix_enabled":
+            self.mix = enabled
+        elif key == "acid_enabled":
+            self.acid = enabled
         elif key == "nutrient_enabled":
             self.nutrient = enabled
         elif key == "flow_run":
             if enabled:
                 return await self.start(context, guard=guard)
             await self.stop(context=context)
-        if key in ("automation_enabled", "refill_enabled", "nutrient_enabled"):
+        if key in (
+            "automation_enabled",
+            "refill_enabled",
+            "nutrient_enabled",
+            "acid_enabled",
+            "mix_enabled",
+        ):
             options = self.tank.entry.options
             self.hass.config_entries.async_update_entry(
                 self.tank.entry,
@@ -406,9 +501,9 @@ class Controller:
             if not enabled and (
                 key == "automation_enabled"
                 or (
-                    key == "nutrient_enabled"
-                    and self.nutrient_stage.task
-                    and not self.nutrient_stage.task.done()
+                    key == (self.run_stage or "") + "_enabled"
+                    and self.execution_stage.task
+                    and not self.execution_stage.task.done()
                 )
                 or (key == "refill_enabled" and not self.nutrient)
             ):
@@ -427,9 +522,22 @@ class Controller:
             self.fault = "emergency_stop"
             self.master = False
             config = self.tank.entry.options.get("control", {})
+            for name in ("acid", "mix"):
+                stage = getattr(self, name + "_stage")
+                if getattr(self, "supports_" + name) and not stage.owns_io:
+                    roles = ("acid", "circulation") if name == "acid" else ("circulation",)
+                    stage.bindings = {role: dict(config[role + "_binding"]) for role in roles}
+                    # Capture responsibility before resolving any identity.
+                    # Each output resolves independently in the existing dispatcher;
+                    # an invalid role must not strand another commissioned owner.
+                    stage.targets = {}
+                    stage.operations = {}
+                    stage.owns_io = True
+                    # Arm every commissioned owner before awaiting any ACK.
+                    # stop() joins all owners concurrently, including refill.
             if self.supports_nutrient and not self.nutrient_stage.owns_io:
-                # Explicit emergency also closes commissioned externally ON
-                # roles, without transferring the separate P2 pending-I/O flag.
+                # Emergency owns the commissioned nutrient role independently
+                # of the active acid/mix stage and separate P2 pending-I/O flag.
                 stage = self.nutrient_stage
                 stage.bindings = {
                     role: dict(config[role + "_binding"]) for role in ("nutrient", "circulation")
@@ -452,16 +560,25 @@ class Controller:
                 bindings.extend(
                     config.get(role + "_binding") for role in ("nutrient", "circulation")
                 )
+            if self.supports_acid:
+                bindings.extend(config.get(role + "_binding") for role in ("acid", "circulation"))
+            if self.supports_mix:
+                bindings.append(config.get("circulation_binding"))
+            level_only = self.supports_mix and not (
+                self.supports_nutrient or self.supports_acid or config.get("commissioned")
+            )
+            if level_only:
+                self.mix_stage.validate_sources(reset=True)
             states = [self.hass.states.get(resolve(self.hass, binding)) for binding in bindings]
             if (
                 not states
                 or self.running
                 or any(state is None or state.state != "off" for state in states)
-                or self.tank.snapshot()[0] == "invalid"
+                or (not level_only and self.tank.snapshot()[0] == "invalid")
             ):
                 raise ServiceValidationError("reset_unsafe")
             if self.supports_nutrient and any(
-                self.nutrient_stage.unsafe(
+                self.execution_stage.unsafe(
                     key,
                     float(self.hass.states.get(entity_id).state),
                     settings=self.tank.entry.options["dosing_parameters"],
@@ -469,8 +586,18 @@ class Controller:
                 for key, entity_id in self.tank.sources.items()
             ):
                 raise ServiceValidationError("reset_unsafe")
+            if self.supports_acid:
+                for key, entity_id in self.tank.sources.items():
+                    if self.acid_stage.unsafe(
+                        key,
+                        float(self.hass.states.get(entity_id).state),
+                        settings=self.acid_stage.live_settings(),
+                    ):
+                        raise ServiceValidationError("reset_unsafe")
             self.fault = None
-            self.nutrient_stage.revoked = None
+            self.acid_stage.revoked = None
+            self.mix_stage.revoked = None
+            self.execution_stage.revoked = None
             self.master = False
             self.flow_state = "disabled"
         self.tank.publish()
@@ -478,6 +605,8 @@ class Controller:
     async def start(self, context, *, request_id=None, service=False, guard=None):
         from homeassistant.exceptions import ServiceValidationError
 
+        if self.tank.entry.options.get("control_contract_version", 3) not in (3, 4):
+            raise ServiceValidationError("settings_schema_mismatch")
         generation = self.generation
         stopping_at_request = self.flow_state in ("stopping", "fault") and self.running
         await authorize(self.hass, context)
@@ -497,15 +626,24 @@ class Controller:
                 if time.monotonic() - value[0] < 86400
             }
             if (
-                self.nutrient_stage.owns_io
+                self.execution_stage.owns_io
                 and self.running
-                and (not self.nutrient_stage.task or self.nutrient_stage.task.done())
+                and (not self.execution_stage.task or self.execution_stage.task.done())
             ):
                 raise ServiceValidationError("busy")
             if request_id in self.receipts:
                 return dict(self.receipts[request_id][1])
-            if self.nutrient and self.supports_nutrient:
-                if self.refill:
+            if (
+                self.tank.entry.options.get("control_contract_version") == 4
+                and sum(bool(x) for x in (self.refill, self.nutrient, self.acid, self.mix)) != 1
+            ):
+                raise ServiceValidationError("flow_configuration_unsupported")
+            if (
+                (self.nutrient and self.supports_nutrient)
+                or (self.acid and self.supports_acid)
+                or (self.mix and self.supports_mix)
+            ):
+                if self.refill or (self.nutrient and self.acid):
                     raise ServiceValidationError("flow_configuration_unsupported")
                 if not self.master or self.fault:
                     raise ServiceValidationError("disabled")
@@ -513,10 +651,10 @@ class Controller:
                     if service:
                         raise ServiceValidationError("busy")
                     return {"accepted": True, "run_id": self.run_id}
-                await self.nutrient_stage.start(context, guard)
+                self.run_stage = "mix" if self.mix else "acid" if self.acid else "nutrient"
+                await self.execution_stage.start(context, guard)
                 self.run_id = uuid.uuid4().hex
                 self.stop_context = None
-                self.run_stage = "nutrient"
                 receipt = {"accepted": True, "run_id": self.run_id}
                 if request_id is not None:
                     self.receipts[request_id] = (time.monotonic(), receipt)
@@ -646,13 +784,16 @@ class Controller:
         if context is not None:
             self.stop_context = context
         self.generation += 1
-        if self.nutrient_stage.owns_io:
-            if self._refill_running:
-                await asyncio.gather(
-                    self.nutrient_stage.stop(), self._stop_refill(state, context=context)
-                )
-            else:
-                await self.nutrient_stage.stop()
+        stages = [
+            stage
+            for stage in (self.nutrient_stage, self.acid_stage, self.mix_stage)
+            if stage.owns_io
+        ]
+        if stages:
+            await asyncio.gather(
+                *(stage.stop() for stage in stages),
+                *([self._stop_refill(state, context=context)] if self._refill_running else []),
+            )
             return
         await self._stop_refill(state, context=context)
 
