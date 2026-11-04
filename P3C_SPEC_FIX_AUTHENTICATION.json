@@ -1,0 +1,113 @@
+{
+  "round": 3,
+  "limit": 3,
+  "source_manifest_sha256": "8d2ecdd1d01d972514837e536700071a36900910d0a7136f311515fe4e69ead4",
+  "frozen192_unchanged": true,
+  "spec_artifacts_unchanged": true,
+  "original_probe_sha256": "9428720958c4ebb0095d1e3a638eb76baded3404c58c72ec753a7277d41b2004",
+  "original_probe_equal": true,
+  "red_source_bad": [],
+  "actual_imports_count": 70,
+  "actual_binding_bad": [],
+  "final_inputs_unchanged": true,
+  "final_exit": 0,
+  "final_summary": [
+    "================= 327 passed, 5 warnings in 156.69s (0:02:36) ================="
+  ],
+  "changed_existing": [
+    "tests/test_boundaries.py",
+    "custom_components/uninus_nutriculture/config_flow.py",
+    "custom_components/uninus_nutriculture/flow.py",
+    "custom_components/uninus_nutriculture/flow_settings.py",
+    "custom_components/uninus_nutriculture/manager.py",
+    "custom_components/uninus_nutriculture/strings.json",
+    "custom_components/uninus_nutriculture/translations/en.json",
+    "custom_components/uninus_nutriculture/translations/zh-Hant.json"
+  ],
+  "lint": [
+    {
+      "command": [
+        "D:/UNiNUS Projects/AI project/uninus-nutriculture/.venv/Scripts/python.exe",
+        "-m",
+        "ruff",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "ruff 0.17.3\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:/UNiNUS Projects/AI project/uninus-nutriculture/.venv/Scripts/python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "custom_components",
+        "tests",
+        "tools/p3c_fix_gate.py"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:/UNiNUS Projects/AI project/uninus-nutriculture/.venv/Scripts/python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "custom_components",
+        "tests",
+        "tools/p3c_fix_gate.py"
+      ],
+      "exit_code": 0,
+      "stdout": "84 files already formatted\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "round3-original-red": {
+      "exit_code": 1,
+      "raw_sha256": "28ab357de6c3780af896697bfc0c7d6728e089f1d8bfdf3a42eef1ee3796eb14",
+      "input_bytes_unchanged": true,
+      "summary": "======================== 4 failed, 5 warnings in 3.42s ========================"
+    },
+    "round3-native-ui-green": {
+      "exit_code": 0,
+      "raw_sha256": "24217c70b8e4e18af4bbd7ce558a53d462dd5f85cf9197af323926e52bbe8fa7",
+      "input_bytes_unchanged": true,
+      "summary": "================= 2 passed, 2 deselected, 5 warnings in 2.66s ================="
+    },
+    "round3-refill-green": {
+      "exit_code": 0,
+      "raw_sha256": "dd8d8a0355aebabb2833323b16e87a80fd259cd2b0a02f63b682ee0dbe31b40b",
+      "input_bytes_unchanged": true,
+      "summary": "================= 1 passed, 3 deselected, 5 warnings in 2.62s ================="
+    },
+    "round3-focused-green": {
+      "exit_code": 0,
+      "raw_sha256": "4741cb44ccec77c95be48a5f274c20ec29f37954b57797c2ec0564e99cd79edb",
+      "input_bytes_unchanged": true,
+      "summary": "======================= 32 passed, 5 warnings in 24.34s ======================="
+    },
+    "round3-final-full": {
+      "exit_code": 1,
+      "raw_sha256": "150e0192ca0b1a9a7c5dfc68354f782851b12acd10a6eb39453811346ce4bf37",
+      "input_bytes_unchanged": true,
+      "summary": "============ 1 failed, 326 passed, 5 warnings in 157.34s (0:02:37) ============"
+    },
+    "round3-final-full-verified": {
+      "exit_code": 0,
+      "raw_sha256": "8a39a2db478e55a8e9ad402adadec0b5826a49174daffb0d37598700f0254412",
+      "input_bytes_unchanged": true,
+      "summary": "================= 327 passed, 5 warnings in 156.69s (0:02:36) ================="
+    },
+    "round3-original-post": {
+      "exit_code": 1,
+      "raw_sha256": "e5161d7f1d4abc16f6960f8960dee7c922c0244aa22793383bfde392049ab572",
+      "input_bytes_unchanged": true,
+      "summary": "=================== 1 failed, 3 passed, 5 warnings in 3.40s ==================="
+    }
+  }
+}

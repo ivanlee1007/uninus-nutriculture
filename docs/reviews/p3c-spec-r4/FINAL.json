@@ -1,0 +1,197 @@
+{
+  "verdict": "PASS",
+  "review": "P3C_R4_EXACT202_AFFECTED_JOINT_SPEC",
+  "candidate": {
+    "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3c-review-r4-successor",
+    "count": 202,
+    "manifest_sha256": "23be9cac518af780c5c59434983b6353394afc93959051148c92a0ea2487e818",
+    "source202_prepost_verified": true,
+    "both_builds202_prepost_verified": true
+  },
+  "quality_approved": false,
+  "publication_authorized": false,
+  "issue3_closed": false,
+  "round_used": 4,
+  "round_limit": 4,
+  "fifth_round_started": false,
+  "production_edits": 0,
+  "blockers": [],
+  "findings": {
+    "Q1": "original unchanged native counterexample now PASS; null-condition positive preserved",
+    "Q2": "original unchanged native real C6/F1 expiry then fresh run PASS; no clock seam",
+    "I1": "CLOSED; affected native plan form rerun",
+    "I2": "CLOSED; namespace/revisions/CAS rerun",
+    "I3": "CLOSED; reachability and adjacent independent refill rerun",
+    "I4": "CLOSED; blocked/finished and skip anchors rerun"
+  },
+  "native": {
+    "original": {
+      "collected": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "child_exit": 0,
+      "receipt": "original-receipt.json",
+      "raw_sha256": "db05a3399f538bbebcb8a19be8464a9d44da6b220a73edd65a6abee4f5aeeb30",
+      "actual_imports": {
+        "count": 29,
+        "bad": [],
+        "all_actual_paths_owned": true
+      }
+    },
+    "affected": {
+      "collected": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "child_exit": 0,
+      "receipt": "affected-receipt.json",
+      "raw_sha256": "1259ec5a0d24e61f0209bf5badeb9a75f6957f071fb6e23e2b1dd3bc1dd40246",
+      "actual_imports": {
+        "count": 31,
+        "bad": [],
+        "all_actual_paths_owned": true
+      }
+    }
+  },
+  "new_independent_boundary": "True registered refill plan explicit ec condition; accepted required_sources frozenset; active physical ON then StateMachine ec unavailable -> source_invalid + physical OFF + owner fault",
+  "fresh_join": {
+    "parent_exit": 0,
+    "browser_exit": 0,
+    "requests": 13,
+    "preview_requests": 7,
+    "page_errors": [],
+    "four_completed_four_physical_off": true,
+    "browser_identical": true,
+    "native_handle_only_adaptation": true,
+    "actual_imports": {
+      "count": 28,
+      "bad": [],
+      "all_actual_paths_owned": true
+    },
+    "raw_sha256": "548d68d5fb1f613acbc88123ad88deaa4e0c8c8d055b66c9fbf1a4e4bf0d851c",
+    "terminal_capture_qualification": {
+      "p3c-terminal-service.json": {
+        "sha256": "14eb74df79f22e113b47a2a36008ef8c9b8522e674775b43bdb30e97edc8f492",
+        "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3c-isolated-development\\uninus-nutriculture\\quality-round4\\final-full\\build\\uninus-nutriculture\\p3c-terminal-service.json",
+        "provenance": "Existing full-build terminal output; producer test frozen and actual case passed in authenticated full raw. Capture bytes measured now/prepost, not included in original full snapshot receipt."
+      },
+      "p3c-terminal-switch.json": {
+        "sha256": "550b4573c2694635faab825fce951128f8ad1229358b9080f1ee5a477528616c",
+        "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3c-isolated-development\\uninus-nutriculture\\quality-round4\\final-full\\build\\uninus-nutriculture\\p3c-terminal-switch.json",
+        "provenance": "Existing full-build terminal output; producer test frozen and actual case passed in authenticated full raw. Capture bytes measured now/prepost, not included in original full snapshot receipt."
+      }
+    }
+  },
+  "composed": {
+    "spec": {
+      "final_sha256": "81c758b3e73873b990fbbd7eb5dc097c5c8dfb4324682c2d2b2876422608b8fe",
+      "count": 51,
+      "bad": [],
+      "rerun_here": false
+    },
+    "ui": {
+      "final_sha256": "904b288ddf6ffc5dd11fd7ce0bf3a38b7b23a508294a7ae1869f69e6211f56fc",
+      "count": 39,
+      "bad": [],
+      "rerun_here": false
+    },
+    "quality_original": {
+      "final_sha256": "8231016841f23b6ae9fd59cccd3c8415679b04fb4120dc583116ab3ede2dbc56",
+      "count": 20,
+      "bad": [],
+      "rerun_here": false
+    }
+  },
+  "full339": {
+    "rerun_here": false,
+    "raw_rehashed_here": true,
+    "passed": 339,
+    "permanent_published_tree_cases": 335,
+    "copied_original_probe_extra_cases": 4,
+    "not_additive_with_focused": true,
+    "all85imports_rechecked_here": false,
+    "qualification": "Parent verified full112source/114snapshot/85imports. This review verified own actual imports; no full-suite rerun or claim of clean-tree339."
+  },
+  "checks": {
+    "source202_prepost": true,
+    "exact202_set": true,
+    "native_build202_prepost": true,
+    "join_build202_prepost": true,
+    "original198_unchanged": true,
+    "four_production_only": true,
+    "test_quality_probe.py_original_bytes": true,
+    "test_repeat_probe.py_original_bytes": true,
+    "browser_identical": true,
+    "native_join_only_terminal_handle": true,
+    "original_imports": true,
+    "affected_imports": true,
+    "join_imports": true,
+    "spec_artifacts_unchanged": true,
+    "ui_artifacts_unchanged": true,
+    "quality_original_artifacts_unchanged": true,
+    "original_child_and_raw": true,
+    "original_cases": true,
+    "affected_child_and_raw": true,
+    "affected_cases": true,
+    "fresh_join": true,
+    "page_errors_empty": true,
+    "four_completed_four_off": true,
+    "full_raw": true,
+    "terminal_capture_full_producer_verified": true
+  },
+  "limitations": [
+    "Independent quality and publication still gated; P3c/I3 OPEN",
+    "No site HA/auth hardware/external cutoff/exhaustive race or midnight matrix",
+    "Node13/browser38 and UI320px geometry/typing compose only unchanged Card inputs, not rerun",
+    "Mix completion/state-age/stale-field seams explicitly scoped; original nutrient Q2 retains true sleep",
+    "Existing terminal capture bytes not hashed by original full snapshot receipt; measured pre/post here and producer verified; fresh actual Card flow_run four-stage independently rerun",
+    "No Ruff rerun; historical all-tools lint/format debt retained"
+  ],
+  "artifacts": {
+    "adjacent_probe.py": "a93230f46fbb2de55ed5e3a92b9a13dcf6e797ee4db0b683114b2adcd5fc83e4",
+    "affected-actual-imports.json": "2e8a68d24f15d39ca6a54ad40b197241348b8b0e00cea730d666964bd5c766c2",
+    "affected-receipt.json": "44bc2ec9d0711ff5d7bb3e776dfeb86de11ef58443462f1115cb2a6aa23f1523",
+    "affected.raw.log": "1259ec5a0d24e61f0209bf5badeb9a75f6957f071fb6e23e2b1dd3bc1dd40246",
+    "authentication.json": "562d06f36621e93c25ba057700acdb1f4886465122def07f5f8ad0e9396cfe60",
+    "bootstrap.py": "d44496f77e74564382c33acc974d6a49da8cb4c9b067b0927b09e32acab1ee5a",
+    "CHECKPOINT.md": "f264e362c8456500c958b77308f7269758ad337fc61aea31b15eb3e88848a7d0",
+    "harness-notes.json": "943512ffd2d7e2e31639dc48de55aafa3f557494683e6c07487905a0f6166a6f",
+    "join/browser_join.py": "c9ded767c2b82fd4446dc65d59c80e5a59510e00928d0c4b16451f61a019199b",
+    "join/final-browser.png": "ba6ac08c9d3715bef5e119e29f3adf11a2f78bca8d696bb9b3f3405c68755acb",
+    "join/fresh1/actual-imports.json": "b1daef30337e76b1566bc7ddd9c414b34c6cd6ff5b18060058bcca5b5b6511dd",
+    "join/fresh1/browser.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "join/fresh1/browser_join.py": "c9ded767c2b82fd4446dc65d59c80e5a59510e00928d0c4b16451f61a019199b",
+    "join/fresh1/command.json": "aed45e548cc0e1c9a1d875594a37f9af77709866d93472e1fe9e3c333a0e2884",
+    "join/fresh1/events.json": "f01f891c991eea67b9e73f1d992b89287b8e9b1a2f8815854096e9162b29b5e1",
+    "join/fresh1/ipc.raw.jsonl": "de01a1fa17427339150725f9ab8cb551763d91e4b06ff5a6ce4f485c4da7072a",
+    "join/fresh1/multistage.json": "9798818d2a6676109d8a2f583827aad42c91e27ff06f6fda512d6fde43fb55db",
+    "join/fresh1/native_join.py": "834ffa5a964833ccc3285124691b3c25d479a41dca939c5dccd918e1c6e27db3",
+    "join/fresh1/result.json": "d44666c43ebfffedbb498aa6011179fa2bda4fb4f03a258141b5326e143aa3fb",
+    "join/fresh1/store-readback.json": "239d01c76ad6216390979f1caf448c137d64e2a2cec9401ca458cff3277a6c3c",
+    "join/fresh1/wire.json": "2846797d8026174b4132b40a84228fb5620f1deee5ed6279e2c49da9da01e8c7",
+    "join/JOIN_PROGRESS.md": "36910eb888e7d1b56b1a35d997435e39253b994917b290374962311ef54fc376",
+    "join/native_join.py": "834ffa5a964833ccc3285124691b3c25d479a41dca939c5dccd918e1c6e27db3",
+    "join/original-browser_join.py": "c9ded767c2b82fd4446dc65d59c80e5a59510e00928d0c4b16451f61a019199b",
+    "join/original-native_join.py": "c25252dbed42bbf8e5c2e006ac1c9b121ccb3a8e4bce8ca3254fb8a63a7b95fb",
+    "join-receipt.json": "5b0bde484076f6c9df53bad05472329a0b70b2b5ae03e51f2e0a70883e9a9f1d",
+    "join.raw.log": "548d68d5fb1f613acbc88123ad88deaa4e0c8c8d055b66c9fbf1a4e4bf0d851c",
+    "native/build/uninus-nutriculture/condition-False.json": "c606f5c8b54185239fd0e265d2fd6f7fad7cb1d8778724451c193bd4e8696c39",
+    "native/build/uninus-nutriculture/condition-True.json": "bd6afd2998027f0541c9ea1c5730ed3f848a44cce8386ff222673ad7d8382d0a",
+    "native/build/uninus-nutriculture/quality_imports.py": "41e0d0fce70c6cffdf98d1c79f9bd15879fd71ff6c2eea1dd97696d9edd2f6a7",
+    "native/build/uninus-nutriculture/refill-explicit-ec-loss.json": "16045f1e411e923dc1ac8b4eeebb4b27ba63f776884423bc4adb0000a6fdde9f",
+    "native/build/uninus-nutriculture/refill-identity.json": "572c0396213d2d0cc9fd7db8555841a15e864dd6e3dbd055c6eddf379c7e9680",
+    "native/build/uninus-nutriculture/repeat-run.json": "72fc0c7f229735ee6a134ba6c5445bc191fc786becdf44510f4fa498a3fee129",
+    "native/build/uninus-nutriculture/tests/test_adjacent_probe.py": "a93230f46fbb2de55ed5e3a92b9a13dcf6e797ee4db0b683114b2adcd5fc83e4",
+    "native/build/uninus-nutriculture/tests/test_quality_probe.py": "98ef93eab2ab8ff3473adff549e3416428db1502aa42cfc2b4a04e054dd11640",
+    "native/build/uninus-nutriculture/tests/test_repeat_probe.py": "411f73296567514affe626b177ae5a17d6a0d1eca96ba1c905187dee6a36d830",
+    "original-actual-imports.json": "1f11cbf3968e0a9e7000f4f234f2406af23d8ce06ec23f836d5371d1c0849669",
+    "original-receipt.json": "5302dd99d08265a32b55c756ac8d2a267dbea7f85ecda02c250eaf996a3292e7",
+    "original.raw.log": "db05a3399f538bbebcb8a19be8464a9d44da6b220a73edd65a6abee4f5aeeb30",
+    "pre.json": "67c803ea03a35b3050f0a00b8be73ae7afa9e1d4d96cf27252eb76a98fba6b7b",
+    "REPORT.md": "a2440577495bece4fc0f990116e44426c939249e0e10f8a571bffa03821e26ba",
+    "run.py": "fb195dacfbddf0ffe490097671cc6a8ed7eb354e4a9877aa95104758a4aa95bb",
+    "seal.py": "516f7fbaa02ca7d579409b84975600323e19af5512308e472f4ea2d68baa0fb7",
+    "verify.py": "9f5c3c388b164ea3c8c602e7f922e3a40d79bd7f8b4944df52cd5fdc37f404bd"
+  }
+}

@@ -91,3 +91,112 @@ apply_control_settings_v4:
       required: true
       selector:
         object:
+
+
+apply_flow_plan_v5:
+  name: apply_flow_plan_v5
+  description: Explicit schema5 transaction; no commissioning or automatic start. CAS conflicts do not write.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: uninus_nutriculture
+    expected_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    expected_flow_plan_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    flow_plan:
+      required: true
+      selector:
+        object:
+    allowed_weekdays:
+      required: true
+      selector:
+        object:
+
+
+preview_flow_plan_v5:
+  name: preview_flow_plan_v5
+  description: Explicit schema5 transaction; no commissioning or automatic start. CAS conflicts do not write.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: uninus_nutriculture
+    expected_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    expected_flow_plan_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    flow_plan:
+      required: true
+      selector:
+        object:
+    allowed_weekdays:
+      required: true
+      selector:
+        object:
+    weekday:
+      required: true
+      selector:
+        select:
+          options: [mon, tue, wed, thu, fri, sat, sun]
+
+
+apply_control_settings_v5:
+  name: apply_control_settings_v5
+  description: Explicit schema5 transaction; no commissioning or automatic start. CAS conflicts do not write.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: uninus_nutriculture
+    expected_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    parameters:
+      required: true
+      selector:
+        object:
+    dosing_parameters:
+      required: true
+      selector:
+        object:
+    acid_parameters:
+      required: true
+      selector:
+        object:
+    mix_parameters:
+      required: true
+      selector:
+        object:
+    safety_parameters:
+      required: true
+      selector:
+        object:

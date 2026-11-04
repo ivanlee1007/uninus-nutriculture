@@ -1,0 +1,210 @@
+{
+  "version": "P3C-v1",
+  "schema_version": 5,
+  "root_keys": [
+    "schema_version",
+    "mode",
+    "ready_for_irrigation",
+    "source_entities",
+    "parameter_entities",
+    "parameters",
+    "reasons",
+    "capabilities",
+    "control_entities",
+    "allowed_weekdays",
+    "stage_states",
+    "flow_state",
+    "fault",
+    "run_id",
+    "settings_target",
+    "settings_revision",
+    "dosing_parameters",
+    "acid_parameters",
+    "mix_parameters",
+    "safety_parameters",
+    "nutrient_phase",
+    "acid_phase",
+    "dose_progress",
+    "acid_progress",
+    "output_states",
+    "flow_plan",
+    "flow_plan_revision",
+    "flow_plan_target",
+    "run_plan",
+    "step_runtime"
+  ],
+  "ha_metadata": [
+    "friendly_name",
+    "icon",
+    "device_class",
+    "options"
+  ],
+  "stages": [
+    "refill",
+    "nutrient",
+    "acid",
+    "mix"
+  ],
+  "days": [
+    "mon",
+    "tue",
+    "wed",
+    "thu",
+    "fri",
+    "sat",
+    "sun"
+  ],
+  "flow_plan_keys": [
+    "rows",
+    "run_timeout_seconds"
+  ],
+  "row_keys": [
+    "stage",
+    "start_rule",
+    "delay_seconds",
+    "condition",
+    "wait_timeout_seconds"
+  ],
+  "start_rules": [
+    "flow_start",
+    "after_previous_started",
+    "after_previous_finished"
+  ],
+  "condition_keys": [
+    "source",
+    "operator",
+    "value"
+  ],
+  "condition_sources": [
+    "level",
+    "ph",
+    "ec"
+  ],
+  "condition_operators": [
+    "gte",
+    "lte"
+  ],
+  "flow_plan_target_keys": [
+    "config_entry_id",
+    "service",
+    "preview_service"
+  ],
+  "plan_mutation_keys": [
+    "config_entry_id",
+    "expected_revision",
+    "expected_flow_plan_revision",
+    "flow_plan",
+    "allowed_weekdays"
+  ],
+  "plan_response_keys": [
+    "applied",
+    "settings_revision",
+    "flow_plan_revision",
+    "flow_plan",
+    "allowed_weekdays"
+  ],
+  "settings_mutation_keys": [
+    "config_entry_id",
+    "expected_revision",
+    "parameters",
+    "dosing_parameters",
+    "acid_parameters",
+    "mix_parameters",
+    "safety_parameters"
+  ],
+  "preview_mutation_keys": [
+    "config_entry_id",
+    "expected_revision",
+    "expected_flow_plan_revision",
+    "flow_plan",
+    "allowed_weekdays",
+    "weekday"
+  ],
+  "preview_response_keys": [
+    "settings_revision",
+    "flow_plan_revision",
+    "weekday",
+    "rows",
+    "warnings"
+  ],
+  "preview_row_keys": [
+    "stage",
+    "eligibility",
+    "earliest_offset_seconds",
+    "uncertainties"
+  ],
+  "preview_eligibility": [
+    "eligible",
+    "skipped_disabled",
+    "skipped_weekday",
+    "blocked_dependency",
+    "blocked_safety"
+  ],
+  "run_plan_keys": [
+    "run_id",
+    "settings_revision",
+    "flow_plan_revision",
+    "flow_plan",
+    "allowed_weekdays",
+    "enabled_stages"
+  ],
+  "step_runtime_keys": [
+    "phase",
+    "result",
+    "started_at",
+    "settled_at",
+    "waiting_reason"
+  ],
+  "phase": [
+    null,
+    "starting",
+    "starting_circulation",
+    "refilling",
+    "pulsing",
+    "confirming_off",
+    "mixing",
+    "waiting_sample",
+    "stabilizing",
+    "waiting_delay",
+    "waiting_condition",
+    "waiting_resource",
+    "stopping"
+  ],
+  "result": [
+    null,
+    "completed",
+    "aborted",
+    "fault",
+    "skipped_disabled",
+    "skipped_weekday",
+    "blocked_dependency"
+  ],
+  "waiting_reason": [
+    null,
+    "delay_pending",
+    "condition_not_met",
+    "level_unsafe",
+    "resource_chemical",
+    "resource_circulation",
+    "source_unavailable",
+    "source_stale",
+    "dependency_not_started",
+    "output_confirmation_pending"
+  ],
+  "output_states": [
+    "nutrient",
+    "acid",
+    "circulation",
+    "refill"
+  ],
+  "output_values": [
+    "on",
+    "off",
+    "unknown"
+  ],
+  "services": {
+    "settings": "apply_control_settings_v5",
+    "plan": "apply_flow_plan_v5",
+    "preview": "preview_flow_plan_v5"
+  }
+}

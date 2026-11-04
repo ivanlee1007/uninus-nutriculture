@@ -1,0 +1,113 @@
+{
+  "verdict": "APPROVED",
+  "review": "P3C_R4_EXACT202_INDEPENDENT_WHOLE_SLICE_QUALITY_RECOVERY",
+  "candidate": {
+    "path": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3c-review-r4-successor",
+    "count": 202,
+    "manifest_sha256": "23be9cac518af780c5c59434983b6353394afc93959051148c92a0ea2487e818"
+  },
+  "quality_approved": true,
+  "publication_authorized": false,
+  "issue3_closed": false,
+  "repair_rounds_used": 4,
+  "repair_rounds_limit": 4,
+  "fifth_round_started": false,
+  "production_edits": 0,
+  "blockers": [],
+  "findings": {
+    "Q1": "CLOSED: unchanged original native assert PASS",
+    "Q2": "CLOSED: unchanged original real expiry native assert PASS"
+  },
+  "native": {
+    "initial": {
+      "collected": 15,
+      "passed": 14,
+      "failed": 1,
+      "skipped": 0,
+      "child_exit": 1,
+      "raw_sha256": "b001309981b43807842d25944ccc1a347b6fa5914101ce9f8cc6e345ffd59340"
+    },
+    "adjacent_corrected_observer": {
+      "collected": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "child_exit": 0,
+      "raw_sha256": "a2c1f9323dedfb5b34319723a72eafd0e0ef29d587416e0fe7c782675220fad6"
+    },
+    "distinct_cases_covered": 15,
+    "observer_issue": "Initial new probe waited on stale previous-run circulation_confirmed; preserved original FAIL, corrected ONLY owned observer wait to require new physical session; assertions and product unchanged",
+    "original_probes_byte_identical": true,
+    "import_counts": {
+      "native": 31,
+      "adjacent": 28
+    }
+  },
+  "checks": {
+    "source202_prepost": true,
+    "build202_prepost": true,
+    "original_probe_bytes": true,
+    "raw_close_hashes": true
+  },
+  "original198_unchanged": true,
+  "composed": {
+    "spec": {
+      "final_sha256": "a721b97690dcd7dc95319a26859633cbda5fd9c40b757da9cf5001160bf715de",
+      "artifact_count": 44,
+      "bad": []
+    },
+    "quality_prior": {
+      "final_sha256": "8231016841f23b6ae9fd59cccd3c8415679b04fb4120dc583116ab3ede2dbc56",
+      "artifact_count": 20,
+      "bad": []
+    },
+    "ui": {
+      "final_sha256": "904b288ddf6ffc5dd11fd7ce0bf3a38b7b23a508294a7ae1869f69e6211f56fc",
+      "artifact_count": 39,
+      "bad": []
+    }
+  },
+  "whole_slice_composition": "Original complete coverage and all findings read; all unchanged bytes authenticated; full four-production delta reviewed; Q1/Q2 exact reproducers plus independent abort/full-closure adjacent case executed. REPORT records coverage cells.",
+  "full339": {
+    "rerun_here": false,
+    "permanent": 335,
+    "copied_original_probes": 4,
+    "raw_rehashed": true,
+    "all85imports_rechecked_here": false
+  },
+  "limitations": [
+    "No publication/siteHA/hardware/physical cutoff/exhaustive matrix",
+    "Fresh join, UI, full339 and scoped Ruff composed, not rerun",
+    "Historical tools formatting debt retained; no CI-all-green claim",
+    "Existing full terminal captures not originally output-hashed; qualification preserved",
+    "Initial observer-induced child1 retained, not relabeled green",
+    "Runtime .storage/token excluded from deliverable artifacts"
+  ],
+  "artifacts": {
+    "adjacent-actual-imports.json": "d104e8c1f5c9716403d324b1685d24d888ea1419a88494c5edfd60d51b3e8c0b",
+    "adjacent-receipt.json": "f056b534709288609060d552483ce497486acb8ca62837f17cd0cadb0692e8f7",
+    "adjacent.raw.log": "a2c1f9323dedfb5b34319723a72eafd0e0ef29d587416e0fe7c782675220fad6",
+    "adjacent_probe.py": "82838c218d674da0435716dc457845d1af37bfc36c5ed24427e3891e68cefd53",
+    "authentication.json": "6ae40d9725cc7e460373ea15df79acb158aec17996c5347a4e4f2c7c640037c6",
+    "CHECKPOINT.md": "6cf40612ef8683a249e70afe6aefbd19bad6e2f21cda09099f1d5b9ab9b20f58",
+    "composed.json": "ce6130ae21eecd5908fc13756d6bd3e5a98176aa9bcb24344739f89f8d763c41",
+    "initial-abort-fresh-run.json": "bd7ebebd65248a22580ffba822da4f02d9636dc726edf1e44ddb88d4eaec6d5c",
+    "initial-adjacent_probe.py": "47338f13bf88842f6f365aa386f44bd5c98d18188cd550613fa8713e1ecf6f62",
+    "native-actual-imports.json": "565c7934485269d854d503476981c4bdaaecc5cd3acb40dc0f2eb6bcbb62083c",
+    "native-receipt.json": "33fcd2d4aef879a6310ce2d98ecb0e77449e5760ffc1cf46bbc348db88edf0bf",
+    "native.raw.log": "b001309981b43807842d25944ccc1a347b6fa5914101ce9f8cc6e345ffd59340",
+    "pre.json": "3552783a497dd6ff376bdda1a7b90c49426da0dcf30dae1370061327f9f712bd",
+    "production.diff": "bee9dcf1add3a448f585d2833cdd0cd1d6f9f763641561d89968ff254b543a99",
+    "REPORT.md": "ff46bdf527125a46db88e808daf3ba8b97971055e5c1acfffb300c1f74cd5b16",
+    "run.py": "ca06f2a81c04ffe0fae7184b5cadc1e06edd24f3473adda7a18412f8ae197885",
+    "build/uninus-nutriculture/quality_imports.py": "41e0d0fce70c6cffdf98d1c79f9bd15879fd71ff6c2eea1dd97696d9edd2f6a7",
+    "build/uninus-nutriculture/abort-fresh-run.json": "93cc6dacc95ef1b131c96931d5a44acd33176a583043a653803ed343db447767",
+    "build/uninus-nutriculture/condition-False.json": "656a72f75316d31401caa8fe626b95d1f17301899d2932f90cc7edd47411a2cd",
+    "build/uninus-nutriculture/condition-True.json": "2023434d9b16ff72d6e8de049342f584b6a5736c2b0b2afc25b41b7760fb563c",
+    "build/uninus-nutriculture/repeat-run.json": "1929b453c534f51c56b9429f9acb86b79c97e1134070cc8f5bbb0421ef57f891",
+    "build/uninus-nutriculture/refill-identity.json": "572c0396213d2d0cc9fd7db8555841a15e864dd6e3dbd055c6eddf379c7e9680",
+    "build/uninus-nutriculture/tests/test_quality_probe.py": "98ef93eab2ab8ff3473adff549e3416428db1502aa42cfc2b4a04e054dd11640",
+    "build/uninus-nutriculture/tests/test_repeat_probe.py": "411f73296567514affe626b177ae5a17d6a0d1eca96ba1c905187dee6a36d830",
+    "build/uninus-nutriculture/tests/test_recovery_adjacent.py": "82838c218d674da0435716dc457845d1af37bfc36c5ed24427e3891e68cefd53"
+  }
+}

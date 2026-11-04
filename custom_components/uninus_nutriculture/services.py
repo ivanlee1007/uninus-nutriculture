@@ -60,14 +60,19 @@ async def async_setup(hass, config):
                 or entry.runtime_data is not tank
             ):
                 raise ServiceValidationError("entry_not_loaded")
-            is_v4 = entry.options.get("control_contract_version") == 4
-            if is_v4 != (call.service == "apply_control_settings_v4"):
+            version = entry.options.get("control_contract_version", 3)
+            is_v4 = version in (4, 5)
+            expected_service = {4: "apply_control_settings_v4", 5: "apply_control_settings_v5"}.get(
+                version, "apply_control_settings"
+            )
+            if call.service != expected_service:
                 raise ServiceValidationError("settings_schema_mismatch")
             config = dict(entry.options.get("control", {}))
             for key in ("binding", "nutrient_binding", "acid_binding", "circulation_binding"):
                 if config.get(key):
                     resolve(hass, config[key])
-            config["allowed_weekdays"] = call.data["allowed_weekdays"]
+            if version != 5:
+                config["allowed_weekdays"] = call.data["allowed_weekdays"]
             extra = {}
             if is_v4:
                 for name in ("dosing", "acid", "mix"):
@@ -132,4 +137,24 @@ async def async_setup(hass, config):
         ),
         supports_response=SupportsResponse.OPTIONAL,
     )
+    hass.services.async_register(
+        DOMAIN,
+        "apply_control_settings_v5",
+        apply_settings,
+        schema=vol.Schema(
+            {
+                vol.Required("config_entry_id"): vol.All(str, vol.Length(min=1)),
+                vol.Required("expected_revision"): revision,
+                vol.Required("parameters"): dict,
+                vol.Required("dosing_parameters"): vol.Any(None, dict),
+                vol.Required("acid_parameters"): vol.Any(None, dict),
+                vol.Required("mix_parameters"): vol.Any(None, dict),
+                vol.Required("safety_parameters"): dict,
+            }
+        ),
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+    from .flow_settings import register
+
+    register(hass)
     return True

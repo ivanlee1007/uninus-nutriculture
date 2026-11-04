@@ -81,7 +81,48 @@
           "acid_stable_interval_seconds": "加酸 · 穩定樣本最小間隔（秒）",
           "acid_flow_timeout_seconds": "加酸 · 整輪最長期限（秒）",
           "mix_safe_min_level_m": "獨立攪拌最低安全液位（m；按實際設備填寫）",
-          "mix_flow_timeout_seconds": "獨立攪拌整輪期限（秒）"
+          "mix_flow_timeout_seconds": "獨立攪拌整輪期限（秒）",
+          "flow_plan": "Open flow plan editor (no settings saved)"
+        }
+      },
+      "plan": {
+        "title": "Flow plan / 流程計畫",
+        "description": "Four rows in order. Independent flow_start permits overlap; runtime may wait for resources or safe level. Reordering preserves row rules; first row must use flow_start. Save affects next run, never starts equipment. Seven-day Preview (not a completion guarantee): {preview}",
+        "data": {
+          "run_timeout_seconds": "Global deadline (seconds)",
+          "action": "Save / seven-day Preview / Cancel / move row up or down",
+          "row_0_stage": "Row 1: stage",
+          "row_0_start_rule": "Row 1: start rule",
+          "row_0_delay_seconds": "Row 1: delay seconds",
+          "row_0_wait_timeout_seconds": "Row 1: wait timeout seconds",
+          "row_0_condition_source": "Row 1: condition source",
+          "row_0_condition_operator": "Row 1: condition operator",
+          "row_0_condition_value": "Row 1: condition value",
+          "row_0_weekdays": "Row 1: weekdays",
+          "row_1_stage": "Row 2: stage",
+          "row_1_start_rule": "Row 2: start rule",
+          "row_1_delay_seconds": "Row 2: delay seconds",
+          "row_1_wait_timeout_seconds": "Row 2: wait timeout seconds",
+          "row_1_condition_source": "Row 2: condition source",
+          "row_1_condition_operator": "Row 2: condition operator",
+          "row_1_condition_value": "Row 2: condition value",
+          "row_1_weekdays": "Row 2: weekdays",
+          "row_2_stage": "Row 3: stage",
+          "row_2_start_rule": "Row 3: start rule",
+          "row_2_delay_seconds": "Row 3: delay seconds",
+          "row_2_wait_timeout_seconds": "Row 3: wait timeout seconds",
+          "row_2_condition_source": "Row 3: condition source",
+          "row_2_condition_operator": "Row 3: condition operator",
+          "row_2_condition_value": "Row 3: condition value",
+          "row_2_weekdays": "Row 3: weekdays",
+          "row_3_stage": "Row 4: stage",
+          "row_3_start_rule": "Row 4: start rule",
+          "row_3_delay_seconds": "Row 4: delay seconds",
+          "row_3_wait_timeout_seconds": "Row 4: wait timeout seconds",
+          "row_3_condition_source": "Row 4: condition source",
+          "row_3_condition_operator": "Row 4: condition operator",
+          "row_3_condition_value": "Row 4: condition value",
+          "row_3_weekdays": "Row 4: weekdays"
         }
       }
     },
@@ -103,6 +144,9 @@
       "invalid_dosing_relationship": "脈衝、累積額度、期限或正常／危險門檻的組合不合法。",
       "settings_conflict": "開啟表單後設定已改變；本次未儲存。請重開並核對最新值。",
       "entry_not_loaded": "此養液槽目前未載入。"
+    },
+    "abort": {
+      "plan_cancelled": "Plan cancelled; nothing saved."
     }
   }
 }

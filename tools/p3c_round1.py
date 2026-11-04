@@ -1,0 +1,19 @@
+"""Concrete repair round1: registered v5 numeric CAS and nonblocking safety OFF."""
+from pathlib import Path
+R=Path(__file__).resolve().parents[1]/'custom_components/uninus_nutriculture'
+def edit(f,a,b,n=1):
+ p=R/f;s=p.read_text();assert s.count(a)==n,(f,s.count(a),a);p.write_text(s.replace(a,b))
+edit('services.py','            is_v4 = entry.options.get("control_contract_version") == 4\n            if is_v4 != (call.service == "apply_control_settings_v4"):', '            version = entry.options.get("control_contract_version", 3)\n            is_v4 = version in (4, 5)\n            expected_service = {4: "apply_control_settings_v4", 5: "apply_control_settings_v5"}.get(version, "apply_control_settings")\n            if call.service != expected_service:')
+edit('services.py','            config["allowed_weekdays"] = call.data["allowed_weekdays"]','            if version != 5:\n                config["allowed_weekdays"] = call.data["allowed_weekdays"]')
+edit('services.py','    from .flow_settings import register','    hass.services.async_register(\n        DOMAIN,\n        "apply_control_settings_v5",\n        apply_settings,\n        schema=vol.Schema({\n            vol.Required("config_entry_id"): vol.All(str, vol.Length(min=1)),\n            vol.Required("expected_revision"): revision,\n            vol.Required("parameters"): dict,\n            vol.Required("dosing_parameters"): vol.Any(None, dict),\n            vol.Required("acid_parameters"): vol.Any(None, dict),\n            vol.Required("mix_parameters"): vol.Any(None, dict),\n            vol.Required("safety_parameters"): dict,\n        }),\n        supports_response=SupportsResponse.OPTIONAL,\n    )\n    from .flow_settings import register')
+edit('manager.py','not in (3, 4):','not in (3, 4, 5):')
+edit('manager.py','and options.get("control_contract_version") != 4','and options.get("control_contract_version") not in (4, 5)')
+edit('manager.py','or options.get("control_contract_version") == 4','or options.get("control_contract_version") in (4, 5)')
+edit('manager.py','        if parameters is not _UNSET or "parameters" in options:', '        if options.get("control_contract_version") == 5:\n            candidate["control_contract_version"] = 5\n        if parameters is not _UNSET or "parameters" in options:')
+edit('config_flow.py','self.config_entry.options.get("control_contract_version") == 4','self.config_entry.options.get("control_contract_version") in (4, 5)',4)
+edit('flow_settings.py',"if o.get('control_contract_version') not in (2,3,4,5)","if o.get('control_contract_version',2) not in (2,3,4,5)")
+# Dedent only physical I/O out of the accounting lock; pending ON remains owned.
+p=R/'control.py';s=p.read_text();a=s.index('                origin = self.stop_context or self.run_context\n',s.index('        if self.flow.active and role == "circulation":'));b=s.index('        if role == "circulation":\n',a);chunk=s[a:b];s=s[:a]+''.join(line[4:] if line.startswith('    ') else line for line in chunk.splitlines(keepends=True))+s[b:];p.write_text(s)
+edit('flow.py',"        except Exception:\n            self.control.fault = self.revoked or 'operation_failed'", "        except Exception as err:\n            from .control import _fault_code\n            self.control.fault = self.revoked or _fault_code(str(err))")
+edit('flow.py',"if state is None or not math.isfinite(float(state.state)):","if state is None or not math.isfinite(float(state.state)) or state.attributes.get('unit_of_measurement') not in {'level':('m',),'ec':('mS/cm',),'ph':(None,'','pH')}[key]:")
+edit('control.py','            if any(__import__(__package__ + ".flow_settings", fromlist=["source"]).source(self.tank,k) is None for k in ("level","ph","ec")):', '            from .flow_settings import source\n            if any(source(self.tank,k) is None for k in ("level","ph","ec")):')

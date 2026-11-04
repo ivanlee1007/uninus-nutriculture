@@ -19,6 +19,8 @@ class MixStage(NutrientStage):
     def validate_sources(self, *, reset=False):
         if self.revoked and not reset:
             raise ServiceValidationError(self.revoked)
+        if self.control.flow.active and not reset:
+            self.control.flow.validate_sources("mix")
         state = self.hass.states.get(self.tank.sources["level"])
         try:
             value = float(state.state)
@@ -31,11 +33,21 @@ class MixStage(NutrientStage):
                 raise ValueError
         except AttributeError, TypeError, ValueError:
             raise ServiceValidationError("source_invalid") from None
-        if value < self.tank.entry.options["mix_parameters"]["safe_min_level_m"]:
+        settings = (
+            self.control.flow.settings("mix")
+            if self.control.flow.active
+            else self.tank.entry.options["mix_parameters"]
+        )
+        if value < settings["safe_min_level_m"]:
             raise ServiceValidationError("level_unsafe")
 
     def validate(self):
         self.validate_sources()
+        if self.control.flow.active and hasattr(self, "circ_physical_cutoff"):
+            import time
+
+            if time.monotonic() >= self.circ_physical_cutoff:
+                raise ServiceValidationError("flow_timeout")
         if self.clock() >= self.deadline:
             raise ServiceValidationError("flow_timeout")
 
@@ -61,7 +73,11 @@ class MixStage(NutrientStage):
                     raise ValueError
                 if (
                     float(state.state)
-                    < self.tank.entry.options["mix_parameters"]["safe_min_level_m"]
+                    < (
+                        self.control.flow.settings("mix")
+                        if self.control.flow.active
+                        else self.tank.entry.options["mix_parameters"]
+                    )["safe_min_level_m"]
                 ):
                     self.revoked = "level_unsafe"
             except ValueError, TypeError:
@@ -78,17 +94,24 @@ class MixStage(NutrientStage):
 
     async def start(self, context, guard):
         config = self.tank.entry.options["control"]
+        settings = (
+            self.control.flow.settings("mix")
+            if self.control.flow.active
+            else self.tank.entry.options["mix_parameters"]
+        )
+        params = self.control.flow.params if self.control.flow.active else self.tank.parameters
         self.started = self.clock()
         self.deadline = self.started + min(
-            self.tank.entry.options["mix_parameters"]["flow_timeout_seconds"],
+            settings["flow_timeout_seconds"],
             config["circulation_device_max_on_seconds"] - config.get("feedback_timeout", 10),
         )
-        self.end = self.started + self.tank.parameters["mix_duration"] * 60
+        self.end = self.started + params["mix_duration"] * 60
         self.validate()
         self.bindings = {"circulation": dict(config["circulation_binding"])}
         self.targets = {"circulation": resolve(self.hass, self.bindings["circulation"])}
         state = self.hass.states.get(self.targets["circulation"])
-        if state is None or state.state != "off":
+        shared = self.control.flow.active and self.control.leases and state and state.state == "on"
+        if not shared and (state is None or state.state != "off"):
             raise ServiceValidationError("output_not_off")
         await authorize(self.hass, context)
         if guard:
@@ -124,7 +147,7 @@ class MixStage(NutrientStage):
         except asyncio.CancelledError:
             result = "aborted"
         except Exception as err:
-            self.control.fault = str(err)
+            self.control.fault = self.control.fault or str(err)
             result = "fault"
         finally:
             cleanup = asyncio.create_task(self.cleanup(result))

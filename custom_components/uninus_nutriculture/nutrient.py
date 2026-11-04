@@ -136,6 +136,8 @@ class NutrientStage:
         return config
 
     def live_settings(self):
+        if self.control.flow.active:
+            return self.control.flow.settings(self.role)
         options = self.tank.entry.options
         return (
             {**options["acid_parameters"], **options["safety_parameters"]}
@@ -154,6 +156,8 @@ class NutrientStage:
         return value
 
     def live_midpoint(self):
+        if self.control.flow.active and self.role in self.control.flow.midpoints:
+            return self.control.flow.midpoints[self.role]
         from decimal import Decimal
 
         return float(
@@ -210,13 +214,9 @@ class NutrientStage:
     def validate(self):
         self.tighten()
         self.account_on()
-        if self.control.running and hasattr(self, "deadline") and self.clock() >= self.deadline:
+        if self.owns_io and hasattr(self, "deadline") and self.clock() >= self.deadline:
             raise ServiceValidationError("flow_timeout")
-        if (
-            self.control.running
-            and hasattr(self, "stage_deadline")
-            and self.clock() >= self.stage_deadline
-        ):
+        if self.owns_io and hasattr(self, "stage_deadline") and self.clock() >= self.stage_deadline:
             raise ServiceValidationError(self.source + "_timeout")
         if (
             self.owns_io
@@ -234,6 +234,12 @@ class NutrientStage:
                 "circulation_device_max_on_seconds"
             ] - config.get("feedback_timeout", 10):
                 raise ServiceValidationError("flow_timeout")
+        if (
+            self.control.flow.active
+            and hasattr(self, "circ_physical_cutoff")
+            and time.monotonic() >= self.circ_physical_cutoff
+        ):
+            raise ServiceValidationError("flow_timeout")
         self.validate_sources()
 
     def validate_sources(self):
@@ -258,9 +264,16 @@ class NutrientStage:
             role: resolve(self.hass, config.get(role + "_binding"))
             for role in (self.role, "circulation")
         }
-        for target in self.targets.values():
+        for role, target in self.targets.items():
             state = self.hass.states.get(target)
-            if state is None or state.state != "off":
+            shared = (
+                self.control.flow.active
+                and role == "circulation"
+                and self.control.leases
+                and state
+                and state.state == "on"
+            )
+            if not shared and (state is None or state.state != "off"):
                 raise ServiceValidationError("output_not_off")
         await authorize(self.hass, context)
         if guard:
@@ -283,7 +296,8 @@ class NutrientStage:
             del self.circ_dispatch_at
         self.started = self.clock()
         self.deadline = self.started + self.settings["flow_timeout_seconds"]
-        self.stage_deadline = self.clock() + self.tank.parameters[self.source + "_timeout"] * 60
+        params = self.control.flow.params if self.control.flow.active else self.tank.parameters
+        self.stage_deadline = self.clock() + params[self.source + "_timeout"] * 60
         self.control.run_context = context
         self.control.flow_state = "starting"
         self.progress = {"pulse_count": 0, "reserved_on_seconds": 0, "stable_count": 0}
@@ -350,6 +364,14 @@ class NutrientStage:
                     self.validate()
                 await asyncio.sleep(0.01)
             task.result()
+            if (
+                self.control.flow.active
+                and role == "circulation"
+                and not enabled
+                and self.control.leases
+                and not getattr(self, "lease", None)
+            ):
+                return
             while (state := self.hass.states.get(self.targets[role])) is None or state.state != (
                 "on" if enabled else "off"
             ):
@@ -459,7 +481,7 @@ class NutrientStage:
         except asyncio.CancelledError:
             result = "aborted"
         except Exception as err:
-            self.control.fault = str(err)
+            self.control.fault = self.control.fault or str(err)
             result = "fault"
         finally:
             cleanup = asyncio.create_task(self.cleanup(result))
@@ -510,13 +532,16 @@ class NutrientStage:
                 if self.control.fault != "emergency_stop":
                     self.control.fault = "stop_unconfirmed"
             self.owns_io = failed or pending
+            own_result = "fault" if self.control.fault or self.owns_io else result
             self.control.flow_state = (
-                "fault" if self.control.fault or self.control.running else result
+                own_result
+                if self.control.flow.active
+                else ("fault" if self.control.fault or self.control.running else result)
             )
             # Cleanup is the only outcome authority. Unsettled I/O must not
             # acquire a successful/aborted terminal result.
             if not self.owns_io:
-                self.result = self.control.flow_state
+                self.result = own_result if self.control.flow.active else self.control.flow_state
             self.cleaning = False
             self.phase = None
             self.tank.publish()

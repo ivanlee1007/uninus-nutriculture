@@ -77,6 +77,7 @@ def test_metadata_and_translations():
             "nutrient_weekdays",
             "acid_weekdays",
             "mix_weekdays",
+            "flow_plan",  # P3c native editor entry, preserving the legacy field set.
             # P3a native configuration extends, not removes, the P1/P2 fields.
             "nutrient_output",
             "circulation_output",
@@ -124,6 +125,24 @@ def test_metadata_and_translations():
             "acid_flow_timeout_seconds",
             "mix_safe_min_level_m",
             "mix_flow_timeout_seconds",
+        }
+        assert set(content["options"]["step"]["plan"]["data"]) == {
+            "action",
+            "run_timeout_seconds",
+            *(
+                f"row_{i}_{field}"
+                for i in range(4)
+                for field in (
+                    "stage",
+                    "start_rule",
+                    "delay_seconds",
+                    "wait_timeout_seconds",
+                    "condition_source",
+                    "condition_operator",
+                    "condition_value",
+                    "weekdays",
+                )
+            ),
         }
         assert set(content["config"]["error"]) == {
             "invalid_name",

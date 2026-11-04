@@ -36,7 +36,7 @@ class FeedbackSelector(selector.NumberSelector):
         return result
 
 
-def schema(values, *, include_name=False):
+def schema(values, *, include_name=False, version=4):
     fields = {}
     if include_name:
         fields[vol.Required("name", default=values.get("name", "Tank"))] = str
@@ -119,7 +119,7 @@ def schema(values, *, include_name=False):
                         )
                     )
                 )
-        for stage in STAGES:
+        for stage in () if version == 5 else STAGES:
             fields[
                 vol.Optional(
                     stage + "_weekdays",
@@ -128,6 +128,8 @@ def schema(values, *, include_name=False):
             ] = selector.SelectSelector(
                 selector.SelectSelectorConfig(options=list(DAYS), multiple=True)
             )
+    if not include_name and version in (2, 3, 4, 5):
+        fields[vol.Optional("flow_plan", default=False)] = selector.BooleanSelector()
     return vol.Schema(fields)
 
 
@@ -195,6 +197,8 @@ class NutricultureOptionsFlow(OptionsFlow):
         )
 
         errors = {}
+        if user_input and user_input.get("flow_plan") is True:
+            return await self.async_step_plan()
         if not hasattr(self, "_revision"):
             self._revision = self.config_entry.options.get("settings_revision", 0)
         if user_input is not None:
@@ -262,11 +266,11 @@ class NutricultureOptionsFlow(OptionsFlow):
                             control=config,
                             acid_parameters=acid
                             if new_stage
-                            or self.config_entry.options.get("control_contract_version") == 4
+                            or self.config_entry.options.get("control_contract_version") in (4, 5)
                             else _UNSET,
                             mix_parameters=mix
                             if new_stage
-                            or self.config_entry.options.get("control_contract_version") == 4
+                            or self.config_entry.options.get("control_contract_version") in (4, 5)
                             else _UNSET,
                             safety_parameters={
                                 k: user_input.get(
@@ -281,7 +285,7 @@ class NutricultureOptionsFlow(OptionsFlow):
                                 for k in SAFETY_KEYS
                             }
                             if new_stage
-                            or self.config_entry.options.get("control_contract_version") == 4
+                            or self.config_entry.options.get("control_contract_version") in (4, 5)
                             else _UNSET,
                             dosing_parameters=dosing,
                             sources={
@@ -291,7 +295,7 @@ class NutricultureOptionsFlow(OptionsFlow):
                             expected_revision=self._revision
                             if nutrient_edit
                             or new_stage
-                            or self.config_entry.options.get("control_contract_version") == 4
+                            or self.config_entry.options.get("control_contract_version") in (4, 5)
                             else None,
                         )
                 except ServiceValidationError as err:
@@ -342,4 +346,103 @@ class NutricultureOptionsFlow(OptionsFlow):
             **suggested,
             **(user_input or {}),
         }
-        return self.async_show_form(step_id="init", data_schema=schema(values), errors=errors)
+        return self.async_show_form(
+            step_id="init",
+            data_schema=schema(
+                values, version=self.config_entry.options.get("control_contract_version", 2)
+            ),
+            errors=errors,
+        )
+
+    async def async_step_plan(self, user_input=None):
+        """A draft-only native four-row editor; only explicit Save commits."""
+        from copy import deepcopy
+
+        from .control_auth import authorize
+        from .flow_settings import default_plan, preview, save, validate_plan
+        from .plan_options import parse_plan, plan_schema
+
+        tank = self.config_entry.runtime_data
+        if not hasattr(self, "_plan_draft"):
+            self._revision = self.config_entry.options.get("settings_revision", 0)
+            self._plan_revision = self.config_entry.options.get("flow_plan_revision", 0)
+            self._plan_draft = deepcopy(
+                self.config_entry.options.get("flow_plan") or default_plan(tank)
+            )
+            self._plan_days = deepcopy(
+                self.config_entry.options.get("control", {}).get(
+                    "allowed_weekdays", {s: list(DAYS) for s in STAGES}
+                )
+            )
+        errors = {}
+        report = ""
+        if user_input is not None:
+            action = user_input.get("action", "save")
+            if action == "cancel":
+                return self.async_abort(reason="plan_cancelled")
+            try:
+                plan, days = parse_plan(user_input)
+                if action.startswith("row_"):
+                    index = int(action.split("_")[1])
+                    other = index + (1 if action.endswith("down") else -1)
+                    plan["rows"][index], plan["rows"][other] = (
+                        plan["rows"][other],
+                        plan["rows"][index],
+                    )
+                plan, days = validate_plan(plan, days)
+                self._plan_draft, self._plan_days = plan, days
+                await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                async with tank.lock:
+                    await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                    from homeassistant.config_entries import ConfigEntryState
+
+                    if (
+                        not tank.active
+                        or self.config_entry.runtime_data is not tank
+                        or self.config_entry.state is not ConfigEntryState.LOADED
+                    ):
+                        raise ServiceValidationError("entry_not_loaded")
+                    if action == "save":
+                        save(
+                            tank,
+                            dict(
+                                expected_revision=self._revision,
+                                expected_flow_plan_revision=self._plan_revision,
+                                flow_plan=plan,
+                                allowed_weekdays=days,
+                            ),
+                        )
+                        return self.async_create_entry(
+                            title="", data=dict(self.config_entry.options)
+                        )
+                    report = "\n".join(
+                        day
+                        + ": "
+                        + ", ".join(
+                            r["stage"] + "=" + r["eligibility"]
+                            for r in preview(tank, plan, days, day)["rows"]
+                        )
+                        for day in DAYS
+                    )
+            except ServiceValidationError as err:
+                code = str(err)
+                errors["base"] = (
+                    code
+                    if code
+                    in {
+                        "invalid_flow_plan",
+                        "invalid_flow_condition",
+                        "invalid_weekdays",
+                        "settings_conflict",
+                        "settings_schema_mismatch",
+                        "control_busy",
+                        "entry_not_loaded",
+                    }
+                    else "invalid_flow_plan"
+                )
+        return self.async_show_form(
+            step_id="plan",
+            data_schema=plan_schema(self._plan_draft, self._plan_days),
+            errors=errors,
+            description_placeholders={"preview": report},
+        )

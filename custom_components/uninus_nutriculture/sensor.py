@@ -175,6 +175,10 @@ class ControlStatus(TankStatus):
                 ),
                 "output_states": outputs,
             }
+        if self.tank.entry.options.get("control_contract_version") == 5:
+            from .p3c_projection import snapshot_v5
+
+            return snapshot_v5(self.tank, base, targets)
         if self.tank.entry.options.get("control_contract_version") == 4:
             from .p3b_projection import snapshot_v4
 

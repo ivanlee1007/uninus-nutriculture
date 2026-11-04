@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ivanlee1007/uninus-nutriculture-card
-          ref: 2499060e69b8e532f5d7d08dca768454dc68e7d0
+          ref: 9867602939ea0b04cafdcec9873eca77c8b7e1ed
           path: uninus-nutriculture-card
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -35,24 +35,29 @@ jobs:
         run: |
           echo "P3A_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
           echo "P3B_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
+          echo "P3C_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
+          echo "PYTHONDONTWRITEBYTECODE=1" >> "$GITHUB_ENV"
+          echo "PYTHONPYCACHEPREFIX=$GITHUB_WORKSPACE/p3c-ci-evidence/pycache" >> "$GITHUB_ENV"
           echo "NODE=$(command -v node)" >> "$GITHUB_ENV"
-          echo "BROWSER_EVIDENCE_DIR=$GITHUB_WORKSPACE/p3b-ci-evidence/browser" >> "$GITHUB_ENV"
+          echo "BROWSER_EVIDENCE_DIR=$GITHUB_WORKSPACE/p3c-ci-evidence/browser" >> "$GITHUB_ENV"
           echo "PYTHONPATH=$GITHUB_WORKSPACE/uninus-nutriculture:$GITHUB_WORKSPACE/uninus-nutriculture/tests" >> "$GITHUB_ENV"
+      - name: Verify permanent suite collection
+        run: python -m pytest tests --collect-only -q -p no:cacheprovider
       - name: Complete native regression with real shipped consumer
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
-          mkdir -p ../p3b-ci-evidence
-          python -m pytest tests -v -s --basetemp ../p3b-ci-evidence/pytest --junitxml=../p3b-ci-evidence/native.xml | tee ../p3b-ci-evidence/native.log
+          mkdir -p ../p3c-ci-evidence
+          python -m pytest tests -v -s -p no:cacheprovider --basetemp ../p3c-ci-evidence/pytest --junitxml=../p3c-ci-evidence/native.xml | tee ../p3c-ci-evidence/native.log
       - name: Verify cases, companion bytes, and all six real terminal receipts
         run: |
           python - <<'PY'
           import hashlib, itertools, json, pathlib, re, xml.etree.ElementTree as E
-          root = pathlib.Path('../p3b-ci-evidence')
+          root = pathlib.Path('../p3c-ci-evidence')
           cases = list(E.parse(root/'native.xml').getroot().iter('testcase'))
-          assert len(cases) == 295
+          assert len(cases) == 335
           assert not any(c.find(k) is not None for c in cases for k in ('skipped','failure','error'))
           shipped = pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js')
-          expected = '4d6615afa83d736677fcf8f8791c695dcbd92b22b0e9d9aeeb731e2d75ab41bd'
+          expected = '4fd326a406531c601e490393d77e4ac1632a2e72cd1df9bc424aaa1909250e0f'
           assert hashlib.sha256(shipped.read_bytes()).hexdigest() == expected
           receipts = {}
           for line in (root/'native.log').read_text().splitlines():
@@ -74,16 +79,62 @@ jobs:
       - run: python -m compileall -q custom_components tests
       - run: ruff check custom_components tests tools/evidence.py
       - run: ruff format --check custom_components tests tools/evidence.py
-      - run: python tests/check.py --evidence ../p3b-ci-evidence/card
+      - run: python tests/check.py --evidence ../p3c-ci-evidence/card
         working-directory: uninus-nutriculture-card
+      - name: Bidirectional shipped S5 and native Core join
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        env:
+          P3C_JOIN_OUTPUT: ${{ github.workspace }}/p3c-ci-evidence/join
+          P3C_TERMINAL_ROOT: ${{ github.workspace }}/uninus-nutriculture
+        run: python -B tools/p3c_native_join.py attempt1 | tee ../p3c-ci-evidence/join-parent.log
+      - name: Verify native S5 join results and current source binding
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib
+          base=pathlib.Path.cwd(); root=base.parent/'p3c-ci-evidence/join'; run=root/'attempt1'
+          h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          result=json.loads((run/'result.json').read_text()); wire=json.loads((run/'wire.json').read_text())
+          assert result['exit_code']==0 and result['native_requests']==13 and len(wire)==13
+          assert len([w for w in wire if w['request']['service']=='preview_flow_plan_v5'])==7
+          done=[e for e in result['events'] if e.get('case')=='browser_done']; assert len(done)==1 and done[0]['page_errors']==[]
+          errors=[w['reply'].get('error',{}) for w in wire if not w['reply']['success']]
+          assert any('settings_conflict' in e.get('message','') for e in errors)
+          assert any(e.get('message')=='Unauthorized' for e in errors)
+          multi=json.loads((run/'multistage.json').read_text()); snap=multi['snapshot']; a=snap['states'][snap['status_id']]['attributes']
+          assert all(x['result']=='completed' for x in a['step_runtime'].values())
+          assert set(a['output_states'])=={'nutrient','acid','circulation','refill'} and all(v=='off' for v in a['output_states'].values())
+          plans=[w for w in wire if w['request']['service']=='apply_flow_plan_v5']
+          store=json.loads((run/'store-readback.json').read_text()); assert store['options']==plans[-1]['options']
+          imported=json.loads((run/'actual-imports.json').read_text()); assert imported
+          for name,row in imported.items():
+              path=pathlib.Path(row['path']).resolve(); assert path.is_relative_to(base) or path.is_relative_to(root)
+              assert h(path)==row['sha256']
+              if name.startswith('custom_components.uninus_nutriculture'):
+                  parts=path.parts; rel=pathlib.Path(*parts[parts.index('custom_components'):]); assert h(base/rel)==row['sha256']
+              else:
+                  source=base/'tests'/(name+'.py'); assert source.is_file() and h(source)==row['sha256']
+          shipped=base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js'
+          assert h(shipped)=='4fd326a406531c601e490393d77e4ac1632a2e72cd1df9bc424aaa1909250e0f'
+          terminals={e['terminal_source']:e['sha256'] for e in result['events'] if 'terminal_source' in e}
+          assert len(terminals)==2
+          for path,digest in terminals.items():
+              p=pathlib.Path(path).resolve(); assert p.parent==base and h(p)==digest
+          (root/'ci-verified.json').write_text(json.dumps({'native_requests':13,'native_previews':7,'imports':len(imported),'shipped_sha256':h(shipped),'terminal_sources':terminals,'four_completed_four_off':True},indent=2))
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: p3b-companion-native-evidence
+          name: p3c-companion-native-evidence
           path: |
-            p3b-ci-evidence/native.log
-            p3b-ci-evidence/native.xml
-            p3b-ci-evidence/terminal-proof.json
-            p3b-ci-evidence/card/**
+            p3c-ci-evidence/native.log
+            p3c-ci-evidence/native.xml
+            p3c-ci-evidence/terminal-proof.json
+            p3c-ci-evidence/card/**
+            p3c-ci-evidence/join-parent.log
+            p3c-ci-evidence/join/ci-verified.json
+            p3c-ci-evidence/join/attempt1/*.json
+            p3c-ci-evidence/join/attempt1/browser.stderr.log
+            p3c-ci-evidence/join/final-browser.png
+            !**/pycache/**
             !**/.storage/**
 # No HACS/live-device acceptance, release, or deployment claim.

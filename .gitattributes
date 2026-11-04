@@ -11,3 +11,7 @@ P3B_Q_REPAIR_PROGRESS.md -text whitespace=blank-at-eol,blank-at-eof,space-before
 docs/P3B_FINISH_SOURCES.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 docs/reviews/p3b-spec-q/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 docs/reviews/p3b-quality-q/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# P3c source approval receipts retain their reviewed bytes.
+docs/reviews/p3c-spec-r4/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/reviews/p3c-quality-r4/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

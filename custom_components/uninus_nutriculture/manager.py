@@ -91,7 +91,7 @@ class Tank:
         if not self.active:
             raise ServiceValidationError("entry_not_loaded")
         options = dict(self.entry.options)
-        if options.get("control_contract_version", 3) not in (3, 4):
+        if options.get("control_contract_version", 3) not in (3, 4, 5):
             raise ServiceValidationError("settings_schema_mismatch")
         revision = options.get("settings_revision", 0)
         if expected_revision is not None and (
@@ -131,6 +131,10 @@ class Tank:
             for value in days.values()
         ):
             raise ServiceValidationError("invalid_weekdays")
+        if options.get("control_contract_version") == 5 and days != options["control"].get(
+            "allowed_weekdays"
+        ):
+            raise ServiceValidationError("settings_schema_mismatch")
         dosing = (
             dosing_parameters
             if dosing_parameters is not _UNSET and dosing_parameters is not None
@@ -140,7 +144,7 @@ class Tank:
             if config.get("nutrient_commissioned") or (
                 acid_parameters is _UNSET
                 and mix_parameters is _UNSET
-                and options.get("control_contract_version") != 4
+                and options.get("control_contract_version") not in (4, 5)
             ):
                 validate_dosing(params, dosing, config)
             candidate["dosing_parameters"] = dict(dosing)
@@ -149,7 +153,7 @@ class Tank:
         if (
             acid_parameters is not _UNSET
             or mix_parameters is not _UNSET
-            or options.get("control_contract_version") == 4
+            or options.get("control_contract_version") in (4, 5)
         ):
             from .p3b_settings import validate_v4
 
@@ -161,6 +165,8 @@ class Tank:
                 None if mix_parameters is _UNSET else mix_parameters,
                 None if safety_parameters is _UNSET else safety_parameters,
             )
+        if options.get("control_contract_version") == 5:
+            candidate["control_contract_version"] = 5
         if parameters is not _UNSET or "parameters" in options:
             candidate["parameters"] = params
         if control is not _UNSET:
