@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_P3A_REVIEWED_PENDING_EXACT_INDEX_AND_CI",
+  "status": "P3A_SOURCE_PUBLISHED_EXACT_HEAD_CI_VERIFIED",
   "implementation": {
     "native_options_and_atomic_settings": "implemented and exercised",
     "schema3_group_ui": "implemented and exercised",
@@ -24,9 +24,9 @@
     "physical_device_test": false
   },
   "remaining": [
-    "Explicit source/index inventory, canonical-byte equivalence and exact-index gates",
-    "Exact remote-head CI before claiming source publication complete; no deployment",
-    "Acid/standalone mix isolated development and configurable flow remain unfinished"
+    "P3b acid/standalone mix isolated development and independent review",
+    "P3c full configurable flow and P4/P5",
+    "HACS/physical acceptance not authorized or executed"
   ],
   "safety": {
     "committed_p3": false,
@@ -90,5 +90,15 @@
     "postrun_native_to_shipped_cases": 4,
     "chromium_passed": 30,
     "approved": false
+  },
+  "publication": {
+    "backend_commit": "ba40214d8756b73879940cb53563b9479c49ec5e",
+    "card_commit": "342f19c0aa88bf8b5ac0473c836cf27b109d24b5",
+    "backend_ci_run": 41774224570,
+    "card_ci_run": 41774237676,
+    "backend_ci_native_passed": 249,
+    "card_ci_node_passed": 10,
+    "card_ci_browser_passed": 30,
+    "tag_release_deployment": false
   }
 }
