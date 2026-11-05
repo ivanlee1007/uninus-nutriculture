@@ -161,4 +161,7 @@ async def async_setup(hass, config):
     from .recipes import register as register_recipes
 
     register_recipes(hass)
+    from .quality_services import register as register_quality
+
+    register_quality(hass)
     return True

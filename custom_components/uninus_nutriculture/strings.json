@@ -83,7 +83,8 @@
           "mix_safe_min_level_m": "mix safe min level m",
           "mix_flow_timeout_seconds": "mix flow timeout seconds",
           "flow_plan": "Open flow plan editor (no settings saved)",
-          "recipe_management": "Manage recipes"
+          "recipe_management": "Manage recipes",
+          "quality_management": "品質策略管理（不操作輸出）"
         }
       },
       "plan": {
@@ -156,6 +157,28 @@
         "data": {
           "action": "Action"
         }
+      },
+      "quality": {
+        "title": "品質與唯讀灌溉許可策略",
+        "description": "時間均以秒計。必要階段只影響資格，不改流程啟用。許可不控制灌溉裝置。",
+        "data": {
+          "enabled": "啟用品質資格策略",
+          "stable_samples": "穩定樣本輪數",
+          "stable_interval_seconds": "最短輪次間隔（秒）",
+          "stable_duration_seconds": "連續穩定跨度（秒）",
+          "permit_ttl_seconds": "許可最長有效期（秒）",
+          "required_stages": "資格必要階段（多選，不改流程）",
+          "action": "儲存／取消",
+          "ph_mode": "酸鹼值 新實測合約（報告／序號／時間戳）",
+          "ph_attribute": "酸鹼值 序號／時間戳屬性（reported 留空）",
+          "ph_report_contract_confirmed": "酸鹼值 已確認每次為真實新測量",
+          "ec_mode": "電導度 新實測合約（報告／序號／時間戳）",
+          "ec_attribute": "電導度 序號／時間戳屬性（reported 留空）",
+          "ec_report_contract_confirmed": "電導度 已確認每次為真實新測量",
+          "level_mode": "水位 新實測合約（報告／序號／時間戳）",
+          "level_attribute": "水位 序號／時間戳屬性（reported 留空）",
+          "level_report_contract_confirmed": "水位 已確認每次為真實新測量"
+        }
       }
     },
     "error": {
@@ -175,18 +198,23 @@
       "invalid_sample_contract": "Choose reported, sequence or timestamp with an explicit supported attribute.",
       "invalid_dosing_relationship": "Pulse/budget/deadline or target/danger limits are inconsistent.",
       "settings_conflict": "Settings changed since this form opened. Reopen and reconcile; nothing was saved.",
-      "entry_not_loaded": "This tank is not currently loaded.",
+      "entry_not_loaded": "entry_not_loaded",
       "recipe_conflict": "recipe conflict",
       "recipe_not_found": "recipe not found",
       "invalid_recipe": "invalid recipe",
       "recipe_limit": "recipe limit",
       "busy": "busy",
       "confirmation_required": "confirmation required",
-      "unauthorized": "unauthorized"
+      "unauthorized": "unauthorized",
+      "settings_schema_mismatch": "settings_schema_mismatch",
+      "quality_conflict": "quality_conflict",
+      "invalid_quality_policy": "invalid_quality_policy"
     },
     "abort": {
       "plan_cancelled": "Plan cancelled; nothing saved.",
-      "recipe_cancelled": "Recipe management closed"
+      "recipe_cancelled": "Recipe management closed",
+      "quality_saved": "品質策略已儲存",
+      "quality_cancelled": "已取消，未寫入"
     }
   }
 }

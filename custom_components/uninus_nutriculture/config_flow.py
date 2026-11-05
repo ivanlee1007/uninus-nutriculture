@@ -10,6 +10,7 @@ from homeassistant.helpers import selector
 
 from .const import DOMAIN, SOURCE_KEYS
 from .control_settings import DAYS, STAGES, resolve, settings_candidate
+from .quality_options import QualityOptions
 from .recipe_options import RecipeOptions
 
 
@@ -133,6 +134,7 @@ def schema(values, *, include_name=False, version=4):
         fields[vol.Optional("flow_plan", default=False)] = selector.BooleanSelector()
     if not include_name and version == 5:
         fields[vol.Optional("recipe_management", default=False)] = selector.BooleanSelector()
+        fields[vol.Optional("quality_management", default=False)] = selector.BooleanSelector()
     return vol.Schema(fields)
 
 
@@ -187,7 +189,7 @@ class NutricultureConfigFlow(ConfigFlow, domain=DOMAIN):
         return NutricultureOptionsFlow()
 
 
-class NutricultureOptionsFlow(RecipeOptions, OptionsFlow):
+class NutricultureOptionsFlow(QualityOptions, RecipeOptions, OptionsFlow):
     async def async_step_init(self, user_input=None):
         from .control_auth import authorize
         from .dosing_settings import (
@@ -200,6 +202,8 @@ class NutricultureOptionsFlow(RecipeOptions, OptionsFlow):
         )
 
         errors = {}
+        if user_input and user_input.get("quality_management") is True:
+            return await self.async_step_quality()
         if user_input and user_input.get("recipe_management") is True:
             return await self.async_step_recipes()
         if user_input and user_input.get("flow_plan") is True:

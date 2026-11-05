@@ -10,7 +10,13 @@ from homeassistant.helpers.event import async_track_state_change_event, async_tr
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    async_add_entities([TankStatus(entry.runtime_data), ControlStatus(entry.runtime_data)])
+    async_add_entities(
+        [
+            TankStatus(entry.runtime_data),
+            ControlStatus(entry.runtime_data),
+            QualityStatus(entry.runtime_data),
+        ]
+    )
 
 
 class TankStatus(SensorEntity):
@@ -56,6 +62,27 @@ class TankStatus(SensorEntity):
     @property
     def extra_state_attributes(self):
         return self.tank.snapshot()[1]
+
+
+class QualityStatus(TankStatus):
+    def __init__(self, tank):
+        super().__init__(tank)
+        self._attr_unique_id = f"{tank.entry.entry_id}:quality_status"
+        self._attr_name = f"{tank.entry.title} 品質狀態"
+
+    @property
+    def native_value(self):
+        try:
+            return self.tank.quality.dto()["quality"]["state"]
+        except Exception:
+            return "invalid"
+
+    @property
+    def extra_state_attributes(self):
+        try:
+            return self.tank.quality.dto()
+        except Exception:
+            return {}
 
 
 class ControlStatus(TankStatus):

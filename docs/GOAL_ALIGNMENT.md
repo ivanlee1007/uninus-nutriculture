@@ -1,4 +1,4 @@
-> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
+> 現行狀態（2026-11-05）：P1–P3與P4a參數配方軟體來源已交付。P4a Backend `5c22e68be935121a853a9351e14cd6d49e38b03d`／Card `108071a744ccc373c300d919b5741b1400a8a047` 的 exact-HEAD CI `41989334445`／`41989315312` 均全job成功，SPEC、完整品質、出版等價及hosted產物驗證已過；P3c實機待辦仍保留。P4b品質／完成／灌溉許可來源已實作並完成獨立SPEC與完整品質兩審及本機隔離驗證，正在出版準備，以[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)為準；出版等價、exact-index與新commit hosted CI仍待驗。採獨立quality_v1與唯讀permit binary_sensor，不改S1–S5既有ready=false。P4c通知結果與P5均未完；未連原HA／認證、未實機接管、未HACS實際安裝、未tag/release或部署。
 
 # 開發目標對齊與有限後續順序
 
@@ -21,7 +21,7 @@
 | 補水、加養、加酸、必要及獨立混合 | 補水已發布；加養／必要循環本機已接通；P3b 酸／獨立混合已接通並完成兩審 | P3c 可編流程來源已接通並完成兩審；不以另一個輔助框架代替主要功能 |
 | 可編順序、合法重疊、條件、相對延遲、星期與預覽 | 星期／參數群已可保存，actual-admission 檢查有 native 路徑；完整有限圖與編輯／七日預覽已接通並完成兩審 | 已交付；P4a原生/配套Card參數配方已實作並通過兩審，不重做P3 |
 | 慢感測不過量、使用者可調 | EC 中點停泵、pulse/mix/new sample、可調界限已本機執行；P3b 指定安全反例已完成兩審，實機能力仍待校驗 | 有限關閉已知缺口，不把預設當物理認證 |
-| 配方、結果／通知、品質及灌溉許可 | 尚未交付；高 pH 原生延時原因已接通不等於通知系統 | P4；未完成前 ready_for_irrigation 固定 false |
+| 配方、結果／通知、品質及灌溉許可 | P4a已交付；P4b已實作並兩審及隔離驗證；高pH延時原因不等於通知系統 | P4b出版/CI待驗；P4c通知/結果待開發；legacy ready=false不代表新permit永遠false |
 
 ## 不變邊界
 
@@ -37,7 +37,7 @@
 2. P3a／P3b 已依凍結來源完成整合 SPEC→獨立品質；P3b功能來源及CI早已交付；P3c兩審/出版等價/精確HEAD CI及軟體named驗收亦完成，不再停留於出版準備。發布／exact-head CI／部署／實機分開。
 3. **P3b 酸與獨立攪拌可操作切片（已接通並完成兩審）**：重用安全／採樣／循環所有權與原生控制入口，不能只新增 capability 或空 helper。
 4. **完整四階段可編執行＋最小 UI／預覽**：有界圖工程模型與實際執行已接通，凍結來源已完成兩審；publication-equivalence 與 exact-commit CI 均已完成；不重開P3 gate。純保存／預覽不冒稱可執行編排。
-5. P4a已實作並通過兩審：原生與Card配方保存/選擇/原子套用至10個Number，不只是新模組。P4b品質/完成/許可、P4c互通/通知與P5進階體驗仍保留；不能再以額外P3證據工作替代主功能。
+5. P4a已實作並通過兩審：原生與Card配方保存/選擇/原子套用至10個Number，不只是新模組。P4b品質/完成/許可已實作並兩審及隔離驗證，待出版；P4c互通/通知與P5進階體驗仍待開發；不能再以額外P3證據工作替代主功能。
 
 P3a 來源交付與歷史證據保持不變。P3b 已審來源具備加酸／獨立攪拌／S4 原生與 shipped Card 路徑，以及 295 項 native 假硬體驗證；P3b與P3c的出版等價與對應exactHEAD CI均已完成，證據與實機驗收分開。P3c 四階段可編執行與真正預覽已接通並完成兩審；Issue #3 保持 OPEN。不從頭重做 P1/P2/P3a，不重問已確認政策。
 
@@ -57,5 +57,9 @@ P3a 來源交付與歷史證據保持不變。P3b 已審來源具備加酸／獨
 
 - [參數配方契約](P4A_RECIPE_CONTRACT.md)
 - 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
-- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 本slice只交參數配方；P4b品質/完成/許可已實作並兩審；完整配方擴充及P4c外部結果/通知仍待後續，不標全P4完成；舊S1–S5 ready_for_irrigation固定false；新quality_v1／唯讀permit有效時可True。
 - 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。
+
+## P4b 現行操作與交付界線
+
+見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source實作、兩審與本機隔離驗證完成，不等同已push、hosted CI、HACS或實機驗收。P4c通知/結果、P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。

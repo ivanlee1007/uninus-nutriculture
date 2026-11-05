@@ -276,3 +276,45 @@ apply_recipe_v1:
       required: true
       selector:
         text: {}
+
+get_quality_v1:
+  name: 讀取品質與許可
+  description: 唯讀許可由後端決定，不操作灌溉裝置。
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text:
+save_quality_policy_v1:
+  name: 儲存品質策略
+  description: 唯讀許可由後端決定，不操作灌溉裝置。
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text:
+    expected_policy_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 9007199254740991
+          mode: box
+    expected_settings_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 9007199254740991
+          mode: box
+    expected_flow_plan_revision:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 9007199254740991
+          mode: box
+    policy:
+      required: true
+      selector:
+        object:

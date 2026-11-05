@@ -1,4 +1,4 @@
-> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
+> 現行狀態（2026-11-05）：P1–P3與P4a參數配方軟體來源已交付。P4a Backend `5c22e68be935121a853a9351e14cd6d49e38b03d`／Card `108071a744ccc373c300d919b5741b1400a8a047` 的 exact-HEAD CI `41989334445`／`41989315312` 均全job成功，SPEC、完整品質、出版等價及hosted產物驗證已過；P3c實機待辦仍保留。P4b品質／完成／灌溉許可來源已實作並完成獨立SPEC與完整品質兩審及本機隔離驗證，正在出版準備，以[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)為準；出版等價、exact-index與新commit hosted CI仍待驗。採獨立quality_v1與唯讀permit binary_sensor，不改S1–S5既有ready=false。P4c通知結果與P5均未完；未連原HA／認證、未實機接管、未HACS實際安裝、未tag/release或部署。
 
 
 > 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
@@ -113,9 +113,17 @@
 - Preview 使用相同有限依賴／略過與資源模型，反映停用、星期、條件、等待和依賴，不再只是單一 eligible 清單。未來感測、實際加藥／補水完成時刻及跨日 admission 可能未知；七日預覽不是確切時間表、成功保證或灌溉許可。無致動也不建立運行任務。
 - P3c交付時永久 native suite 為 335；本輪P4a suite 為378；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
 
-## P4a 本輪交付範圍（已實作並兩審；非完整P4/發布宣稱）
+## P4a 已交付範圍（兩審、出版與精確HEAD CI已完成；非完整P4／實機）
 
 - [參數配方契約](P4A_RECIPE_CONTRACT.md)
 - 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
-- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 本slice只交參數配方；P4b品質/完成/許可已實作並兩審；完整配方擴充及P4c外部結果/通知仍待後續，不標全P4完成；舊S1–S5 ready_for_irrigation固定false；新quality_v1／唯讀permit有效時可True。
 - 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。
+
+## P4b 來源完成（兩審與本機隔離驗證；出版與實機分開）
+
+以[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)與[P4B_QUALITY_API_SCHEMA.json](P4B_QUALITY_API_SCHEMA.json)為唯一新介面契約。原生Options／Card可調品質策略；品質、整輪必要完成及唯讀灌溉許可分離，新樣本穩定、真整輪與輸出閉合、期限／失效撤銷與不復活必須端到端驗證。舊S1–S5與recipe_v1保持，不以舊ready欄位當新授權。P4b修復預算已用4/4，不重置或另開第五輪；P4a2/2與P3歷史4/4不重置；P4c、P5及另行授權的實機／HACS／發行仍保留。
+
+## P4b 現行操作與交付界線
+
+見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source實作、兩審與本機隔離驗證完成，不等同已push、hosted CI、HACS或實機驗收。P4c通知/結果、P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。

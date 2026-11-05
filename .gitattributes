@@ -15,3 +15,7 @@ docs/reviews/p3b-quality-q/** -text whitespace=blank-at-eol,blank-at-eof,space-b
 # P3c source approval receipts retain their reviewed bytes.
 docs/reviews/p3c-spec-r4/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 docs/reviews/p3c-quality-r4/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Preserve exact independently reviewed P4b source/fixture bytes; retain whitespace checks.
+P4B_R1_HANDOFF.md -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4b_native_safety_matrix.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

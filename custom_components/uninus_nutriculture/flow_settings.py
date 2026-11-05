@@ -263,6 +263,8 @@ def save(tank, payload):
             "settings_revision": o.get("settings_revision", 0) + 1,
             "control": {**o["control"], "allowed_weekdays": days},
         }
+        if hasattr(tank, "quality"):
+            tank.quality.invalidate("settings_changed")
         tank.hass.config_entries.async_update_entry(tank.entry, options=candidate)
         tank.publish()
     o = tank.entry.options

@@ -1,4 +1,4 @@
-> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
+> 現行狀態（2026-11-05）：P1–P3與P4a參數配方軟體來源已交付。P4a Backend `5c22e68be935121a853a9351e14cd6d49e38b03d`／Card `108071a744ccc373c300d919b5741b1400a8a047` 的 exact-HEAD CI `41989334445`／`41989315312` 均全job成功，SPEC、完整品質、出版等價及hosted產物驗證已過；P3c實機待辦仍保留。P4b品質／完成／灌溉許可來源已實作並完成獨立SPEC與完整品質兩審及本機隔離驗證，正在出版準備，以[P4B_QUALITY_CONTRACT.md](docs/P4B_QUALITY_CONTRACT.md)為準；出版等價、exact-index與新commit hosted CI仍待驗。採獨立quality_v1與唯讀permit binary_sensor，不改S1–S5既有ready=false。P4c通知結果與P5均未完；未連原HA／認證、未實機接管、未HACS實際安裝、未tag/release或部署。
 
 
 > 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
@@ -15,7 +15,7 @@ P3a 工程來源已交付，兩審與功能來源 CI 已完成，見 [P3A_PUBLIC
 - 本機已接通原生 Options、整組參數／星期 CAS、schema3 Card，以及必要循環→加養脈衝→中點停泵→混合→新樣本穩定確認。設定保存不致動；原生 Switch 與外部 `start_flow` 共用後端。
 - 隔離原生回歸、實際 Card 的設定與加養跨層已執行；都是假硬體，不是原 HA／HACS／實機驗收。精確來源與剩餘關卡見[本機 checkpoint](docs/P3A_LOCAL_CHECKPOINT.json)及[加養接手紀錄](docs/P3A_REVIEW_CANDIDATE.md)。
 - **P3b 加酸與獨立攪拌已接通；P3c 四階段可編順序／合法重疊／相對延遲與條件／星期及七日真正預覽亦已提供。** P3a 只是開發順序，不代表整個 P3，也不能把核心編排延至 P5。
-- 配方、通知／外部結果、品質與灌溉許可仍屬 P4；目前 `ready_for_irrigation` 固定 false。沒有內建排程器、獨立 stage_link 或瀏覽器關泵計時器。
+- P4a配方已交付；P4b品質/完成/許可已實作並兩審及本機隔離驗證。舊S1–S5 `ready_for_irrigation` 固定false，新quality_v1與唯讀permit有效時可True；P4c通知/外部結果待開發。沒有內建排程器、獨立 stage_link 或瀏覽器關泵計時器。
 - 已凍結的工程策略不再反覆要求使用者逐項決定；實際設備保護、最低液位與來源採樣能力仍由每槽 commissioning 明確確認。
 
 目標對齊與有限後續順序見[GOAL_ALIGNMENT.md](docs/GOAL_ALIGNMENT.md)。下方 P2 段落是已發布基線的歷史範圍，不限制本倉 P3a／P3b 已提供的功能；現況以上方交付狀態為準。
@@ -109,7 +109,7 @@ reasons: []
 | P1 | 影子監測、原生來源選擇／選項、十個原生 Number、固定 status 契約 | 本 alpha 已實作與離線原生 Core 測試 |
 | P2 | 總/四子開關、統一gate、外部整輪服務契約、補水安全骨架 | 補水候選已實作；native/瀏覽器/跨層測試通過，獨立審查已通過；發布/CI以對應commit為準，實機尚未驗收 |
 | P3 | 四階段可配置順序/重疊/相對延遲與條件、每階段七日複選、最小階段列UI/預覽、加藥/混合/仲裁、原子群組參數 | P3a 群組 CAS、schema3 與加養已在本機接通，已完成兩審與功能來源 CI；P3b 酸／獨立混合已接通並完成兩審，P3c 可編流程已接通並完成兩審；P3c有限圖語意已凍結並交付；實機commissioning另列 |
-| P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | P4a參數配方已實作並兩審，出版等價與exact-commit CI待驗；其餘品質/許可/結果/通知保留，不建排程器、不管理外部腳本 |
+| P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | P4a已交付且exact-HEAD CI通過；P4b品質/完成/許可已實作並兩審及本機隔離驗證，出版/hosted CI待驗；P4c結果/通知待開發，不建排程器、不管理外部腳本 |
 | P5 | 進階視覺化編輯器、手機/鍵盤、診斷/歷史、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
 
 本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供P1相容、P2補水與P3a/b/c加藥/混合/有限流程編輯預覽Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。P2已完成獨立審查，不代表HACS安裝或實機驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
@@ -152,5 +152,9 @@ Linux 改用 `.venv/bin/python`。`tools/evidence.py` 會建立新的不可覆�
 
 - [參數配方契約](docs/P4A_RECIPE_CONTRACT.md)
 - 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
-- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 本slice只交參數配方；P4b品質/完成/許可已實作並兩審；完整配方擴充及P4c外部結果/通知仍待後續，不標全P4完成；舊S1–S5 ready_for_irrigation固定false；新quality_v1／唯讀permit有效時可True。
 - 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。
+
+## P4b 現行操作與交付界線
+
+見[P4b原生／Card操作與唯一權威](docs/P4B_OPERATION.md)。P4b source實作、兩審與本機隔離驗證完成，不等同已push、hosted CI、HACS或實機驗收。P4c通知/結果、P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。

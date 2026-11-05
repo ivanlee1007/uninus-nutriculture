@@ -125,6 +125,7 @@ def transact(tank, service, data):
                 parameters=found["parameters"],
                 expected_revision=data["expected_settings_revision"],
                 _recipe_catalog=c,
+                _recipe_application=True,
             )
     return dto(tank)
 

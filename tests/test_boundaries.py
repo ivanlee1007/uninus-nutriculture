@@ -79,6 +79,7 @@ def test_metadata_and_translations():
             "mix_weekdays",
             "flow_plan",  # P3c native editor entry, preserving the legacy field set.
             "recipe_management",  # P4a adds a separate nonactuating native recipe page.
+            "quality_management",  # P4b additive native policy editor.
             # P3a native configuration extends, not removes, the P1/P2 fields.
             "nutrient_output",
             "circulation_output",

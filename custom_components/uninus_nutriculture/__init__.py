@@ -11,9 +11,12 @@ async def async_setup_entry(hass, entry):
 
     entry.runtime_data = Tank(hass, entry)
     entry.runtime_data.control = Controller(entry.runtime_data)
+    from .quality import QualityCoordinator
+
+    entry.runtime_data.quality = QualityCoordinator(entry.runtime_data)
     await hass.config_entries.async_forward_entry_setups(entry, [Platform.NUMBER])
     await hass.config_entries.async_forward_entry_setups(
-        entry, [Platform.SENSOR, Platform.SWITCH, Platform.BUTTON]
+        entry, [Platform.SENSOR, Platform.SWITCH, Platform.BUTTON, Platform.BINARY_SENSOR]
     )
     entry.async_on_unload(entry.add_update_listener(_options_updated))
     return True
@@ -33,9 +36,17 @@ async def _options_updated(hass, entry):
 
 
 async def async_unload_entry(hass, entry):
+    entry.runtime_data.quality.close()
     if not await entry.runtime_data.control.shutdown():
         return False
     unloaded = await hass.config_entries.async_unload_platforms(
-        entry, [Platform.NUMBER, Platform.SENSOR, Platform.SWITCH, Platform.BUTTON]
+        entry,
+        [
+            Platform.NUMBER,
+            Platform.SENSOR,
+            Platform.SWITCH,
+            Platform.BUTTON,
+            Platform.BINARY_SENSOR,
+        ],
     )
     return unloaded

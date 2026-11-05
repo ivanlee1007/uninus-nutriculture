@@ -47,6 +47,8 @@ class Tank:
         self.listeners = set()
 
     def publish(self):
+        if hasattr(self, "quality"):
+            self.quality.observe()
         for listener in tuple(self.listeners):
             listener()
 
@@ -84,6 +86,7 @@ class Tank:
         sources=_UNSET,
         expected_revision=None,
         _recipe_catalog=_UNSET,
+        _recipe_application=False,
     ):
         """Synchronous commit under Tank.lock. No await between admission and effect."""
         from .control_settings import DAYS, STAGES
@@ -176,6 +179,9 @@ class Tank:
             candidate.update(sources)
         if candidate != options:
             candidate["settings_revision"] = revision + 1
+        if hasattr(self, "quality") and (candidate != options or _recipe_application):
+            self.quality.invalidate("settings_changed")
+            self.quality.notify()
         if _recipe_catalog is not _UNSET:
             candidate["recipe_catalog"] = _recipe_catalog
         if candidate != options:
