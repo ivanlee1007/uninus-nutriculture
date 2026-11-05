@@ -1,8 +1,8 @@
-> 現行交付狀態：P3a 工程來源與歷史兩審／功能來源 CI 保持不變。本倉 P3b 加酸、獨立攪拌及 P3c 四階段可編順序、合法重疊、相對延遲、有限條件、actual-admission 星期與七日有效流程 Preview 已提供，P3c 凍結來源已完成獨立 SPEC／品質兩審。這是來源與隔離假硬體驗證，不是原 HA、HACS 或物理 cutoff 認證；完整 P3 Issue #3 保持 OPEN。本文件不操作遠端 Issue。Hosted CI 僅以 exact commit 的實際 Actions 為準，不以本機 gate 代替；沒有內建 scheduler、獨立 stage_link 或灌溉許可，未建立正式 tag/release 或部署。
+> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
 
 # 開發目標對齊與有限後續順序
 
-檢視日期：2026-11-03。這是本機工作樹對齊，不是發布／部署或獨立安全批准。
+檢視日期：2026-11-05。本次對齊候選只修現行宣稱與後續順序，不重寫歷史、不構成P4來源批准或部署授權。
 
 ## 結論
 
@@ -19,7 +19,7 @@
 | 可重用、多槽、重用原生 MQTT Entities | 每槽 config entry、三來源及原十 Number 已實作；完整多槽產品驗收仍待後續 | 保留身份／隔離，不硬綁農場名稱或值 |
 | 原生前台及 Card 共用啟停 | P2 補水已發布；P3a 加養與群組設定已走真 native/shipped Card bridge | 已完成 P3a 具體阻擋與兩審；P3b 酸／獨立攪拌已完成兩審，P3c 來源已接通並完成兩審 |
 | 補水、加養、加酸、必要及獨立混合 | 補水已發布；加養／必要循環本機已接通；P3b 酸／獨立混合已接通並完成兩審 | P3c 可編流程來源已接通並完成兩審；不以另一個輔助框架代替主要功能 |
-| 可編順序、合法重疊、條件、相對延遲、星期與預覽 | 星期／參數群已可保存，actual-admission 檢查有 native 路徑；完整有限圖與編輯／七日預覽已接通並完成兩審 | 完整 P3 有界圖與最小階段列 UI，不拖延到 P5 |
+| 可編順序、合法重疊、條件、相對延遲、星期與預覽 | 星期／參數群已可保存，actual-admission 檢查有 native 路徑；完整有限圖與編輯／七日預覽已接通並完成兩審 | 已交付；P4a原生/配套Card參數配方已實作並通過兩審，不重做P3 |
 | 慢感測不過量、使用者可調 | EC 中點停泵、pulse/mix/new sample、可調界限已本機執行；P3b 指定安全反例已完成兩審，實機能力仍待校驗 | 有限關閉已知缺口，不把預設當物理認證 |
 | 配方、結果／通知、品質及灌溉許可 | 尚未交付；高 pH 原生延時原因已接通不等於通知系統 | P4；未完成前 ready_for_irrigation 固定 false |
 
@@ -34,12 +34,12 @@
 ## 有限執行順序
 
 1. **P3a 收尾已完成（下列為歷史工作內容）**：先修初始採樣 token admission、下一輪放寬重新取值、native request cache64；接著針對混合 commissioning 急停／未收束角色、明確必要循環 ownership 及可達取消／trace 界線完成具體反例。每個凍結條款保留主要 native 行為與必要鄰界，不追求無窮笛卡兒積。
-2. P3a／P3b 已依凍結來源完成整合 SPEC→獨立品質；P3b 功能修補兩輪已結束，本次僅作出版工程準備，不自行核准。發布／exact-head CI／部署／實機分開。
+2. P3a／P3b 已依凍結來源完成整合 SPEC→獨立品質；P3b功能來源及CI早已交付；P3c兩審/出版等價/精確HEAD CI及軟體named驗收亦完成，不再停留於出版準備。發布／exact-head CI／部署／實機分開。
 3. **P3b 酸與獨立攪拌可操作切片（已接通並完成兩審）**：重用安全／採樣／循環所有權與原生控制入口，不能只新增 capability 或空 helper。
-4. **完整四階段可編執行＋最小 UI／預覽**：有界圖工程模型與實際執行已接通，凍結來源已完成兩審；publication-equivalence 與 exact-commit CI 分別確認。純保存／預覽不冒稱可執行編排。
-5. P4 配方／互通／品質／許可，再 P5 進階體驗與實際 HACS／實機關卡。
+4. **完整四階段可編執行＋最小 UI／預覽**：有界圖工程模型與實際執行已接通，凍結來源已完成兩審；publication-equivalence 與 exact-commit CI 均已完成；不重開P3 gate。純保存／預覽不冒稱可執行編排。
+5. P4a已實作並通過兩審：原生與Card配方保存/選擇/原子套用至10個Number，不只是新模組。P4b品質/完成/許可、P4c互通/通知與P5進階體驗仍保留；不能再以額外P3證據工作替代主功能。
 
-P3a 來源交付與歷史證據保持不變。P3b 已審來源具備加酸／獨立攪拌／S4 原生與 shipped Card 路徑，以及 295 項 native 假硬體驗證；出版候選的實際 gate 另記，不能冒稱遠端 CI。P3c 四階段可編執行與真正預覽已接通並完成兩審；Issue #3 保持 OPEN。不從頭重做 P1/P2/P3a，不重問已確認政策。
+P3a 來源交付與歷史證據保持不變。P3b 已審來源具備加酸／獨立攪拌／S4 原生與 shipped Card 路徑，以及 295 項 native 假硬體驗證；P3b與P3c的出版等價與對應exactHEAD CI均已完成，證據與實機驗收分開。P3c 四階段可編執行與真正預覽已接通並完成兩審；Issue #3 保持 OPEN。不從頭重做 P1/P2/P3a，不重問已確認政策。
 
 ## P3c 現行流程與原生操作
 
@@ -51,4 +51,11 @@ P3a 來源交付與歷史證據保持不變。P3b 已審來源具備加酸／獨
 - `action=preview` 讀草稿，列出七日有效流程；`save` 才以版本衝突檢查原子保存，作用於下一輪，不啟動設備；`cancel` 不保存。其他頁面已改設定時須重開並協調，不能覆蓋新版本。Card 同樣提供階段列、上下移動、星期、Preview／套用／取消；參數群與流程草稿為分開 namespace。
 - 每階段真正 admission 前依 **HA 設定時區** 的當地星期重查；跨午夜不沿用整輪開始日。星期是允許 gate，不會自行排程、補跑或啟動。外部 automation／`uninus_nutriculture.start_flow` 與原生整輪 Switch 共用後端；Enable 開關不是 start。
 - Preview 使用相同有限依賴／略過與資源模型，反映停用、星期、條件、等待和依賴，不再只是單一 eligible 清單。未來感測、實際加藥／補水完成時刻及跨日 admission 可能未知；七日預覽不是確切時間表、成功保證或灌溉許可。無致動也不建立運行任務。
-- 永久 native suite 為 335；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+- P3c交付時永久 native suite 為 335；本輪P4a suite 為378；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+
+## P4a 本輪交付範圍（已實作並兩審；非完整P4/發布宣稱）
+
+- [參數配方契約](P4A_RECIPE_CONTRACT.md)
+- 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
+- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。

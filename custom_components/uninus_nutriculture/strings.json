@@ -82,7 +82,8 @@
           "acid_flow_timeout_seconds": "acid flow timeout seconds",
           "mix_safe_min_level_m": "mix safe min level m",
           "mix_flow_timeout_seconds": "mix flow timeout seconds",
-          "flow_plan": "Open flow plan editor (no settings saved)"
+          "flow_plan": "Open flow plan editor (no settings saved)",
+          "recipe_management": "Manage recipes"
         }
       },
       "plan": {
@@ -124,6 +125,37 @@
           "row_3_condition_value": "Row 4: condition value",
           "row_3_weekdays": "Row 4: weekdays"
         }
+      },
+      "recipes": {
+        "title": "Recipe management",
+        "data": {
+          "recipe_id": "Recipe",
+          "action": "Action"
+        }
+      },
+      "recipe_edit": {
+        "title": "Edit recipe (Save does not Apply)",
+        "data": {
+          "name": "Name",
+          "level_low": "Level Low",
+          "level_high": "Level High",
+          "ph_low": "Ph Low",
+          "ph_high": "Ph High",
+          "ec_low": "Ec Low",
+          "ec_high": "Ec High",
+          "refill_timeout": "Refill Timeout",
+          "ec_timeout": "Ec Timeout",
+          "ph_timeout": "Ph Timeout",
+          "mix_duration": "Mix Duration",
+          "action": "Action"
+        }
+      },
+      "recipe_delete": {
+        "title": "Confirm recipe deletion",
+        "description": "Applied history is preserved. Cancel makes no changes.",
+        "data": {
+          "action": "Action"
+        }
       }
     },
     "error": {
@@ -143,10 +175,18 @@
       "invalid_sample_contract": "Choose reported, sequence or timestamp with an explicit supported attribute.",
       "invalid_dosing_relationship": "Pulse/budget/deadline or target/danger limits are inconsistent.",
       "settings_conflict": "Settings changed since this form opened. Reopen and reconcile; nothing was saved.",
-      "entry_not_loaded": "This tank is not currently loaded."
+      "entry_not_loaded": "This tank is not currently loaded.",
+      "recipe_conflict": "recipe conflict",
+      "recipe_not_found": "recipe not found",
+      "invalid_recipe": "invalid recipe",
+      "recipe_limit": "recipe limit",
+      "busy": "busy",
+      "confirmation_required": "confirmation required",
+      "unauthorized": "unauthorized"
     },
     "abort": {
-      "plan_cancelled": "Plan cancelled; nothing saved."
+      "plan_cancelled": "Plan cancelled; nothing saved.",
+      "recipe_cancelled": "Recipe management closed"
     }
   }
 }

@@ -83,6 +83,7 @@ class Tank:
         control=_UNSET,
         sources=_UNSET,
         expected_revision=None,
+        _recipe_catalog=_UNSET,
     ):
         """Synchronous commit under Tank.lock. No await between admission and effect."""
         from .control_settings import DAYS, STAGES
@@ -175,6 +176,9 @@ class Tank:
             candidate.update(sources)
         if candidate != options:
             candidate["settings_revision"] = revision + 1
+        if _recipe_catalog is not _UNSET:
+            candidate["recipe_catalog"] = _recipe_catalog
+        if candidate != options:
             self.hass.config_entries.async_update_entry(self.entry, options=candidate)
             self.parameters = params
             self.publish()

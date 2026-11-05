@@ -157,4 +157,8 @@ async def async_setup(hass, config):
     from .flow_settings import register
 
     register(hass)
+
+    from .recipes import register as register_recipes
+
+    register_recipes(hass)
     return True

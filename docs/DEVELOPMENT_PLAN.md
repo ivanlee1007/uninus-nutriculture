@@ -1,12 +1,14 @@
-> 現行交付狀態：P3a 工程來源與歷史兩審／功能來源 CI 保持不變。本倉 P3b 加酸、獨立攪拌及 P3c 四階段可編順序、合法重疊、相對延遲、有限條件、actual-admission 星期與七日有效流程 Preview 已提供，P3c 凍結來源已完成獨立 SPEC／品質兩審。這是來源與隔離假硬體驗證，不是原 HA、HACS 或物理 cutoff 認證；完整 P3 Issue #3 保持 OPEN。本文件不操作遠端 Issue。Hosted CI 僅以 exact commit 的實際 Actions 為準，不以本機 gate 代替；沒有內建 scheduler、獨立 stage_link 或灌溉許可，未建立正式 tag/release 或部署。
+> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
 
+
+> 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
 # UNiNUS Nutriculture — 分階段開發與驗收契約
 
-> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；P2 已發布且保留 P1 wire；P3a 加養／群組設定本機候選已接通，完整 P3 與 P4–P5 尚未完成。
+> 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；P2 已發布且保留 P1 wire；P3a/P3b/P3c軟體來源與精確HEAD CI已交付；P3實機commissioning未驗，P4a已實作並兩審，完整P4–P5尚未完成。
 
 ## 核准產品方向與授權界線
 
-產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。本輪依使用者授權繼續 P3 開發，包含控制程式、Card 與必要測試；不操作外部HA、不部署、不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
+產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。本輪依使用者授權繼續 P4 開發，包含控制程式、Card 與必要測試；不操作外部HA、不部署、不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
 
 完整產品目標不因先交付最小功能而縮減：既有 MQTT Entity 重用、多槽、integration-owned 可調參數、總開關＋四階段子開關、使用者可配置順序／重疊／相對時序與每階段星期的流程組合、補水/加養/加酸/混合流程、補水與加養跟隨重疊、安全互鎖/急停/復歸、資料有效性、重啟復原、外部整輪啟動入口、下游灌溉許可、通知與響應式 Card。不得將配置成功或綠色測試當作實機驗收。
 
@@ -14,14 +16,14 @@
 
 - P1 程式已交付與通過原生隔離、瀏覽器、跨層對接及對應 commit 的 CI；仍未部署原站、未做實體設備接管。P2 補水已發布並有隔離／跨層驗證；P3a 加養及群組設定本機已接通、已通過兩審並交付功能來源／CI，P3b 酸／獨立混合已接通並完成兩審；P3c 可編流程已接通並完成兩審，P4–P5 未完成，不將候選誇稱全產品或實機完成。
 - [DEVELOPMENT_SPEC.md](DEVELOPMENT_SPEC.md)為跨倉庫共同產品規範；本計畫為分期/驗收契約；[CONTROL_SWITCHES.md](CONTROL_SWITCHES.md) 定義啟用與組合語意；[FUNCTIONAL_PARITY_REVIEW.md](FUNCTIONAL_PARITY_REVIEW.md) 保留原始行為、既有規格缺口與待決策，不能將待定項當成已核准演算法。[FLOW_DESIGN_RESEARCH.md](FLOW_DESIGN_RESEARCH.md) 為本次流程/UI研究依據；R01已確認取消獨立stage_link，R03已確認階段實際開始前檢查星期；新增整輪運行Switch入口。R04 及 P3a 策略已由具體契約凍結；P3c 有限圖語意已依 P3C_FLOW_CONTRACT.md 凍結，不是等待使用者重複回答已定政策。
-- 本輪新增版本化P2控制，保留P1 schema v1、Number參數上下限與舊監測安全語意。歷史 P1 驗收證據與凍結來源不改寫。
+- 歷史P2新增版本化控制，保留P1 schema v1、Number參數上下限與舊監測安全語意。歷史 P1 驗收證據與凍結來源不改寫。
 
 ## 有限後續順序（不以安全切片取代主要功能）
 
 1. （P3a 已完成）收斂既有程式的具體安全阻擋；不另建測試框架或追求無界笛卡兒積。凍結完整候選後，獨立 SPEC→品質，最多兩輪具體修正。
 2. （P3b 已接通並完成兩審）酸與獨立攪拌的可操作原生／Card 路徑，重用同一授權、採樣、關閉與必要循環所有權，不複製互相矛盾的計時器。
 3. （P3c 來源已接通並完成兩審）完整四階段可編順序／合法重疊／條件／相對延遲／星期及最小編輯與預覽 UI；不以固定補水→加養流程代替。
-4. 再完成 P4 配方、通知／外部結果、品質與許可；P5 才是進階視覺化與完整發行體驗。
+4. P4a已實作並通過兩審：原生Options與Card參數配方保存/原子套用；品質/許可、外部結果/通知接續P4b/P4c，均未取消；P5進階視覺化與完整發行體驗保留。P3未授權實機項不作隔離P4前置。
 
 [目標對齊](GOAL_ALIGNMENT.md)記錄本次現況修正；[P3A_NUTRIENT_CONTRACT.md](P3A_NUTRIENT_CONTRACT.md)僅限定加養切片，不縮減完整 P3。
 
@@ -99,4 +101,11 @@ P2補水候選已通過隔離測試及獨立SPEC／品質安全審查；舊P1監
 - `action=preview` 讀草稿，列出七日有效流程；`save` 才以版本衝突檢查原子保存，作用於下一輪，不啟動設備；`cancel` 不保存。其他頁面已改設定時須重開並協調，不能覆蓋新版本。Card 同樣提供階段列、上下移動、星期、Preview／套用／取消；參數群與流程草稿為分開 namespace。
 - 每階段真正 admission 前依 **HA 設定時區** 的當地星期重查；跨午夜不沿用整輪開始日。星期是允許 gate，不會自行排程、補跑或啟動。外部 automation／`uninus_nutriculture.start_flow` 與原生整輪 Switch 共用後端；Enable 開關不是 start。
 - Preview 使用相同有限依賴／略過與資源模型，反映停用、星期、條件、等待和依賴，不再只是單一 eligible 清單。未來感測、實際加藥／補水完成時刻及跨日 admission 可能未知；七日預覽不是確切時間表、成功保證或灌溉許可。無致動也不建立運行任務。
-- 永久 native suite 為 335；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+- P3c交付時永久 native suite 為 335；本輪P4a suite 為378；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+
+## P4a 本輪交付範圍（已實作並兩審；非完整P4/發布宣稱）
+
+- [參數配方契約](P4A_RECIPE_CONTRACT.md)
+- 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
+- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。

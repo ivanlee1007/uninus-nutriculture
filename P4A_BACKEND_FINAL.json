@@ -1,0 +1,45 @@
+{
+  "state": "implemented_primary_path_required_gate_blocked",
+  "files_sha256": {
+    "custom_components/uninus_nutriculture/manager.py": "0f6b0986344eb194869afd14240a4ca08ecb3c211162beea3875ac3eb4c5999d",
+    "custom_components/uninus_nutriculture/services.py": "45ae94d230489851382d7028112dea58383fac08089a9f9c61f47168aa49d3b8",
+    "custom_components/uninus_nutriculture/config_flow.py": "e4e418d3424d6c0c9e896c6a33086fc7ab8dd840090a57e78d6b5b999b140414",
+    "custom_components/uninus_nutriculture/services.yaml": "51ef1083f2da03601a2787995c9348e0bf11dde11ec91ed90d81a65209e9dc54",
+    "custom_components/uninus_nutriculture/strings.json": "033cd6e4874eafe6cc32376f5f86fca5f5b31fac229ab9f28931dd06dfc442c7",
+    "custom_components/uninus_nutriculture/translations/en.json": "033cd6e4874eafe6cc32376f5f86fca5f5b31fac229ab9f28931dd06dfc442c7",
+    "custom_components/uninus_nutriculture/translations/zh-Hant.json": "e6abe845267916d6d3ef457c9edfadb839ff123093f0db20a51888cdf23459ff",
+    "custom_components/uninus_nutriculture/recipes.py": "543da916bd5f76fdc88bc77216420787bd50aa6ff2270b6668a04d58b66dc1c0",
+    "custom_components/uninus_nutriculture/recipe_options.py": "e545de91c41aefe901816cbba0ae6bd86c9807b050fdb09a7129266cfa366f30",
+    "tests/test_p4a_recipes.py": "9611bd99e8a71c7ad7c5925be98e411fcd42a2f71b58a4c52be9621bca6339b8",
+    "tests/test_p4a_recipes_options.py": "bb5406b19b0d081e7e2b2fd731a5f6a787b22a671c34d0717095f101d8c6c6b9",
+    "tests/test_p4a_recipes_boundaries.py": "c57e86354c6d7f965b5518389b4e2ec0ae366aaf0284eb5c8eaafcb935935c60"
+  },
+  "latest_full": {
+    "receipt": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4a-isolated-development\\_backend-work\\full-final2\\receipt.json",
+    "exit_code": 1,
+    "collected": 350,
+    "passed": 349,
+    "failed": 1,
+    "skipped": 0
+  },
+  "focused": {
+    "collected": 15,
+    "passed": 15,
+    "exit_code": 0
+  },
+  "safety_focused": {
+    "collected": 16,
+    "passed": 16,
+    "exit_code": 0
+  },
+  "baseline_card": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p3c-exact-index\\TREE\\uninus-nutriculture-card",
+  "source_prepost_equal": true,
+  "remaining": [
+    "Frozen test_boundaries.py exact Options field set requires parent-authorized P4a additive recipe_management rescope; assertions unmodified.",
+    "Full matrix ACL initial-denial/protected-target-read instrumentation, limit100, full two-v5-tank recipe isolation, all busy ownership variants and fault-settled apply still need named probes.",
+    "New Card joint bridge and independent SPEC/quality reviews are parent-owned, not complete.",
+    "actual imported source paths were fixture-owned copies, but explicit path receipt not instrumented; base6579 raw-blob gate not performed (HEAD a85 raw comparison retained)."
+  ],
+  "publication": false,
+  "repair_budget_used": 0
+}

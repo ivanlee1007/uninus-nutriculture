@@ -200,3 +200,79 @@ apply_control_settings_v5:
       required: true
       selector:
         object:
+
+get_recipes_v1:
+  name: get recipes v1
+  description: Recipe v1 data-only transaction; never starts hardware.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text: {}
+
+save_recipe_v1:
+  name: save recipe v1
+  description: Recipe v1 data-only transaction; never starts hardware.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text: {}
+    expected_catalog_revision:
+      required: true
+      selector:
+        number: {}
+    recipe_id:
+      required: true
+      selector:
+        text: {}
+    name:
+      required: true
+      selector:
+        text: {}
+    parameters:
+      required: true
+      selector:
+        object: {}
+
+delete_recipe_v1:
+  name: delete recipe v1
+  description: Recipe v1 data-only transaction; never starts hardware.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text: {}
+    expected_catalog_revision:
+      required: true
+      selector:
+        number: {}
+    recipe_id:
+      required: true
+      selector:
+        text: {}
+    confirm_delete:
+      required: true
+      selector:
+        boolean: {}
+
+apply_recipe_v1:
+  name: apply recipe v1
+  description: Recipe v1 data-only transaction; never starts hardware.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text: {}
+    expected_catalog_revision:
+      required: true
+      selector:
+        number: {}
+    expected_settings_revision:
+      required: true
+      selector:
+        number: {}
+    recipe_id:
+      required: true
+      selector:
+        text: {}

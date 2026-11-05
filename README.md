@@ -1,5 +1,7 @@
-> 現行交付狀態：P3a 工程來源與歷史兩審／功能來源 CI 保持不變。本倉 P3b 加酸、獨立攪拌及 P3c 四階段可編順序、合法重疊、相對延遲、有限條件、actual-admission 星期與七日有效流程 Preview 已提供，P3c 凍結來源已完成獨立 SPEC／品質兩審。這是來源與隔離假硬體驗證，不是原 HA、HACS 或物理 cutoff 認證；完整 P3 Issue #3 保持 OPEN。本文件不操作遠端 Issue。Hosted CI 僅以 exact commit 的實際 Actions 為準，不以本機 gate 代替；沒有內建 scheduler、獨立 stage_link 或灌溉許可，未建立正式 tag/release 或部署。
+> 現行交付狀態（2026-11-05）：P1–P3軟體來源已交付；P3c Backend `a85c120b80bcb1b92d9459637cfa1d36c5a9ac16`／Card `9867602939ea0b04cafdcec9873eca77c8b7e1ed` 的 exact-HEAD hosted CI `41848490751`／`41848470366` 均成功，SPEC、品質、出版等價及已列軟體驗收完成。Issue #3 保持 OPEN，15個軟體項已勾、2個實體保護／別名commissioning未勾。P4a 參數配方（原生Options＋Card保存/原子套用）已實作並通過整合SPEC與全slice品質兩審；出版等價與exact-commit CI待驗；P4b品質/許可、P4c結果通知及P5未完。物理驗收不阻擋隔離P4；未存取原HA／認證、未HACS安裝、未tag/release或部署。後端唯一權威；無stage_link、內建scheduler或外部腳本管理，IRR仍false。
 
+
+> 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
 # UNiNUS Nutriculture
 
 ## 目前開發狀態與完整目標
@@ -100,17 +102,17 @@ reasons: []
 
 `reasons` 最多三項，順序固定 pH → EC → level。每個來源只取一個穩定碼，優先序為 `{key}_missing`、`{key}_unit`、`{key}_invalid`、`{key}_stale`、`{key}_out_of_range`。不包含任意例外文字或來源機密。
 
-## 完整產品範圍（P2補水候選已接通，其餘分期保留）
+## 完整產品範圍（P1–P3軟體已交付；P4a已實作並兩審）
 
 | 階段 | 範圍 | 目前狀態 |
 |---|---|---|
 | P1 | 影子監測、原生來源選擇／選項、十個原生 Number、固定 status 契約 | 本 alpha 已實作與離線原生 Core 測試 |
 | P2 | 總/四子開關、統一gate、外部整輪服務契約、補水安全骨架 | 補水候選已實作；native/瀏覽器/跨層測試通過，獨立審查已通過；發布/CI以對應commit為準，實機尚未驗收 |
-| P3 | 四階段可配置順序/重疊/相對延遲與條件、每階段七日複選、最小階段列UI/預覽、加藥/混合/仲裁、原子群組參數 | P3a 群組 CAS、schema3 與加養已在本機接通，已完成兩審與功能來源 CI；P3b 酸／獨立混合已接通並完成兩審，P3c 可編流程已接通並完成兩審；完整圖語意另行工程凍結 |
-| P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | 待實作；不建排程器、不匯入排程、不管理外部腳本/旁支 |
+| P3 | 四階段可配置順序/重疊/相對延遲與條件、每階段七日複選、最小階段列UI/預覽、加藥/混合/仲裁、原子群組參數 | P3a 群組 CAS、schema3 與加養已在本機接通，已完成兩審與功能來源 CI；P3b 酸／獨立混合已接通並完成兩審，P3c 可編流程已接通並完成兩審；P3c有限圖語意已凍結並交付；實機commissioning另列 |
+| P4 | 配方、外部action/結果互通與通知、完成/品質/灌溉許可介面 | P4a參數配方已實作並兩審，出版等價與exact-commit CI待驗；其餘品質/許可/結果/通知保留，不建排程器、不管理外部腳本 |
 | P5 | 進階視覺化編輯器、手機/鍵盤、診斷/歷史、多槽產品體驗、release candidate | 待實作；P1 已有 entry 隔離，不等同完整多槽產品 |
 
-本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供 P1相容／P2操作 Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。P2已完成獨立審查，不代表HACS安裝或實機驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
+本庫僅包含後端整合；[伴隨儲存庫 `uninus-nutriculture-card`](https://github.com/ivanlee1007/uninus-nutriculture-card) 已提供P1相容、P2補水與P3a/b/c加藥/混合/有限流程編輯預覽Card，不在本庫內。也可使用 HA 原生 Entities 卡片呈現 Numbers 與 status。P2已完成獨立審查，不代表HACS安裝或實機驗收。完整計畫仍以 `docs/DEVELOPMENT_PLAN.md` 為準。
 
 ## 控制規範與後續設計
 
@@ -144,4 +146,11 @@ Linux 改用 `.venv/bin/python`。`tools/evidence.py` 會建立新的不可覆�
 - `action=preview` 讀草稿，列出七日有效流程；`save` 才以版本衝突檢查原子保存，作用於下一輪，不啟動設備；`cancel` 不保存。其他頁面已改設定時須重開並協調，不能覆蓋新版本。Card 同樣提供階段列、上下移動、星期、Preview／套用／取消；參數群與流程草稿為分開 namespace。
 - 每階段真正 admission 前依 **HA 設定時區** 的當地星期重查；跨午夜不沿用整輪開始日。星期是允許 gate，不會自行排程、補跑或啟動。外部 automation／`uninus_nutriculture.start_flow` 與原生整輪 Switch 共用後端；Enable 開關不是 start。
 - Preview 使用相同有限依賴／略過與資源模型，反映停用、星期、條件、等待和依賴，不再只是單一 eligible 清單。未來感測、實際加藥／補水完成時刻及跨日 admission 可能未知；七日預覽不是確切時間表、成功保證或灌溉許可。無致動也不建立運行任務。
-- 永久 native suite 為 335；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+- P3c交付時永久 native suite 為 335；本輪P4a suite 為378；R4 full 339 包含四項外加 QA probes，不屬正常 repo，不能要求乾淨 CI 收集 339。源碼兩審不取代 publication-equivalence 審核或 exact-commit hosted CI。內嵌版本未升正式發行版本；不為顯示美觀修改 bundle/hash/version metadata。
+
+## P4a 本輪交付範圍（已實作並兩審；非完整P4/發布宣稱）
+
+- [參數配方契約](docs/P4A_RECIPE_CONTRACT.md)
+- 原生Options與Card共用entry-owned UUID配方庫：建立/編輯/選擇/刪除二確認，Save/Cancel不改運行參數，Apply原子更新既有10參數且零致動。不能變更commissioning、Enable、fault、流程、星期或裝置保護。
+- 本slice只交參數配方；完整配方擴充、品質/完成/許可與外部結果/通知仍屬後續P4，不標全P4完成；未完成前IRR維持false。
+- 不新建通用測試框架，不重做已交付P3，不用物理驗收待辦阻擋隔離軟體開發。每個主要行為真RED→GREEN、一次整合SPEC→品質；P4a最多兩輪具體repair，P3的4/4歷史不重置。

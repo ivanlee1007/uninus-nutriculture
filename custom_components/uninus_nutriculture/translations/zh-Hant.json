@@ -82,7 +82,8 @@
           "acid_flow_timeout_seconds": "加酸 · 整輪最長期限（秒）",
           "mix_safe_min_level_m": "獨立攪拌最低安全液位（m；按實際設備填寫）",
           "mix_flow_timeout_seconds": "獨立攪拌整輪期限（秒）",
-          "flow_plan": "Open flow plan editor (no settings saved)"
+          "flow_plan": "Open flow plan editor (no settings saved)",
+          "recipe_management": "配方管理"
         }
       },
       "plan": {
@@ -124,6 +125,37 @@
           "row_3_condition_value": "Row 4: condition value",
           "row_3_weekdays": "Row 4: weekdays"
         }
+      },
+      "recipes": {
+        "title": "配方管理",
+        "data": {
+          "recipe_id": "配方",
+          "action": "動作"
+        }
+      },
+      "recipe_edit": {
+        "title": "編輯配方（保存不套用）",
+        "data": {
+          "name": "Name",
+          "level_low": "Level Low",
+          "level_high": "Level High",
+          "ph_low": "Ph Low",
+          "ph_high": "Ph High",
+          "ec_low": "Ec Low",
+          "ec_high": "Ec High",
+          "refill_timeout": "Refill Timeout",
+          "ec_timeout": "Ec Timeout",
+          "ph_timeout": "Ph Timeout",
+          "mix_duration": "Mix Duration",
+          "action": "Action"
+        }
+      },
+      "recipe_delete": {
+        "title": "再次確認刪除配方",
+        "description": "歷史快照保留，取消不寫入。",
+        "data": {
+          "action": "動作"
+        }
       }
     },
     "error": {
@@ -143,10 +175,18 @@
       "invalid_sample_contract": "請明選 reported／sequence／timestamp 與設備確實提供的採樣屬性。",
       "invalid_dosing_relationship": "脈衝、累積額度、期限或正常／危險門檻的組合不合法。",
       "settings_conflict": "開啟表單後設定已改變；本次未儲存。請重開並核對最新值。",
-      "entry_not_loaded": "此養液槽目前未載入。"
+      "entry_not_loaded": "此養液槽目前未載入。",
+      "recipe_conflict": "recipe conflict",
+      "recipe_not_found": "recipe not found",
+      "invalid_recipe": "invalid recipe",
+      "recipe_limit": "recipe limit",
+      "busy": "busy",
+      "confirmation_required": "confirmation required",
+      "unauthorized": "unauthorized"
     },
     "abort": {
-      "plan_cancelled": "Plan cancelled; nothing saved."
+      "plan_cancelled": "Plan cancelled; nothing saved.",
+      "recipe_cancelled": "已關閉配方管理"
     }
   }
 }
