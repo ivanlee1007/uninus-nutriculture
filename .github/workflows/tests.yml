@@ -49,6 +49,7 @@ jobs:
           echo "P3B_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
           echo "P3C_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
           echo "PYTHONDONTWRITEBYTECODE=1" >> "$GITHUB_ENV"
+          echo "P3C_CAPTURE_DIR=$GITHUB_WORKSPACE/uninus-nutriculture" >> "$GITHUB_ENV"
           echo "PYTHONPYCACHEPREFIX=$GITHUB_WORKSPACE/p3c-ci-evidence/pycache" >> "$GITHUB_ENV"
           echo "NODE=$(command -v node)" >> "$GITHUB_ENV"
           echo "BROWSER_EVIDENCE_DIR=$GITHUB_WORKSPACE/p3c-ci-evidence/browser" >> "$GITHUB_ENV"
