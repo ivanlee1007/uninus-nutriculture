@@ -1,6 +1,8 @@
+> 現行狀態（2026-11-07）：P4b正式交付與exact-HEAD hosted CI／產物核對已完成。P4c R4來源已通過SPEC及獨立品質兩審，本機完整553 cases／82 modules（144／116／137／156）與真Core／shipped Card join已完成；目前僅準備出版successor，尚未push，未驗新exact-HEAD hosted CI。P4c初始2輪＋explicit Options卸載1輪＋explicit quota1輪＝4/4；P3歷史4輪＋explicit mix1輪＝5/5，皆結案、不重置。完整P4／P5、實機commissioning及HACS實裝未完成，未tag／release／部署。內嵌0.2.0保留既有封裝，不代表功能階段。
+
 # 已確認控制決策：鏈結移除、階段星期與整輪運行Switch
 
-> 控制政策於2026-11-03確認；現況於2026-11-05對齊。P1–P3軟體來源與精確HEAD CI已交付，四階段/有限圖/原生與Card最小編輯預覽已實作；實機及HACS尚未驗收。現行有限圖/略過/版本語意以[P3C_FLOW_CONTRACT.md](P3C_FLOW_CONTRACT.md)§7已採納補充為準，不因原提案段落而重開政策。P4a參數配方已完成來源交付／兩審／出版等價／精確HEAD hosted CI；P4b品質/完成/許可已實作並兩審及隔離驗證，出版/hosted CI待驗、P4c結果通知/P5未完。舊S1–S5 IRR false，新唯讀permit契約見[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)，來源已兩審，本機隔離驗證非實機驗收；未部署/tag/release。
+> 控制政策於2026-11-03確認；現況於2026-11-07對齊。P1–P3軟體來源與精確HEAD CI已交付，四階段/有限圖/原生與Card最小編輯預覽已實作；實機及HACS尚未驗收。現行有限圖/略過/版本語意以[P3C_FLOW_CONTRACT.md](P3C_FLOW_CONTRACT.md)§7已採納補充為準，不因原提案段落而重開政策。P4a參數配方已完成來源交付／兩審／出版等價／精確HEAD hosted CI；P4b品質/完成/許可已完成兩審、出版等價、push與exact-HEAD hosted CI／產物核對；P4c R4來源已兩審與本機553／82全gate完成，尚待出版與新HEAD hosted CI，P5未完。舊S1–S5 IRR false，新唯讀permit契約見[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)，來源已兩審，本機隔離驗證非實機驗收；未部署/tag/release。
 
 ## 1. 已確認方向
 
@@ -49,4 +51,4 @@ R01已結案為取消鏈結；R03的資格評估時點已定案，沒有手動�
 
 ## P4b 現行操作與交付界線
 
-見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source實作、兩審與本機隔離驗證完成，不等同已push、hosted CI、HACS或實機驗收。P4c通知/結果、P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。
+見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source、兩審、出版等價、push與exact-HEAD hosted CI及下載產物核對均已完成；仍不等同HACS或實機驗收。P4c來源兩審／本機gate完成但出版／新HEAD CI未完；P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。

@@ -1,0 +1,144 @@
+{
+  "join": {
+    "status": "pass",
+    "native_exit": 0,
+    "browser_exit": 0,
+    "registered_WS_requests": 5,
+    "registered_routes": [
+      "uninus_nutriculture/notification_v1/ack",
+      "uninus_nutriculture/notification_v1/get",
+      "uninus_nutriculture/notification_v1/reconcile",
+      "uninus_nutriculture/notification_v1/save"
+    ],
+    "checkpoints": 4,
+    "actual_imports": 44,
+    "framework_copies": 1,
+    "exact_terminal_Card_native_API": true,
+    "exact_terminal_notification_cache": true,
+    "driver_assertions": 8,
+    "management_zero_actuator": true,
+    "fresh_Store_matches_physical": true,
+    "native_options_save_reopen_cancel": true,
+    "terminal_run_state": "completed",
+    "terminal_closure": "confirmed",
+    "leases": {},
+    "flow_pending": false,
+    "bundle_sha256": "b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359",
+    "delivery_states": [
+      "handoff_returned",
+      "handoff_returned"
+    ],
+    "provider_claim": "native handoff_returned only; no external-delivery confirmation"
+  },
+  "schema_validation": {
+    "provider": "parent existing jsonschema; no SDK install",
+    "results": [
+      {
+        "label": "terminal-result",
+        "kind": "ResultDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "terminal-notification",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "accepted-result",
+        "kind": "ResultDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "event-0",
+        "kind": "Event",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "event-1",
+        "kind": "Event",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "event-2",
+        "kind": "Event",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "wire-0",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "wire-1",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "wire-2",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "wire-3",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      },
+      {
+        "label": "wire-4",
+        "kind": "NotificationDTO",
+        "valid": true,
+        "errors": []
+      }
+    ],
+    "all_valid": true
+  },
+  "local_only_raw_anchors": {
+    "wire.json": {
+      "sha256": "859e28a886f1eb6d4b17e88542520488ef2ae5e5550ca89eb6a63a5109565650",
+      "bytes": 6551
+    },
+    "physical-store.json": {
+      "sha256": "83644460cd5e2bf96828a6b92024e3d460a7496ba7b8937517efc8654c67cd96",
+      "bytes": 1404
+    },
+    "native-options.json": {
+      "sha256": "3939bbdfba2a058c2f9265519555671897e6f886920fbe1feeb7cab440d230e5",
+      "bytes": 771
+    },
+    "terminal-native.json": {
+      "sha256": "25c91e4d886a5f3bce231c794d3df5eb6947d317591562a8bcc483dc169e204b",
+      "bytes": 39438
+    },
+    "terminal.dom.json": {
+      "sha256": "ef12f69e37d7047d29d3f6fe834e4427dbd9fb73c57e4b39eae2a54c1217ec32",
+      "bytes": 18438
+    },
+    "accepted-result.json": {
+      "sha256": "fcaca689549368c357e0c7d5b0bbc7268296bce84f5e9ef0b78f5857f210fb29",
+      "bytes": 2891
+    },
+    "registered-routes.json": {
+      "sha256": "5e4c5e3f0d0c22349575c8d6910162777b1f237fa7242e3e3220f74f0f770924",
+      "bytes": 194
+    },
+    "checkpoints.json": {
+      "sha256": "dbfaae5972d6aa29dfc211b1d4ee02b135bde2cb9ef3a34d76e443628beea07e",
+      "bytes": 5836
+    },
+    "result.json": {
+      "sha256": "c141a4024bda390084c80ba251029751cba26f5db88b80f2d15a4a47b6a39aa8",
+      "bytes": 124
+    }
+  },
+  "policy": "Only hashes/summary exported; raw local wire/Store/terminal snapshots and runtime .storage/auth are excluded from closed artifact list."
+}

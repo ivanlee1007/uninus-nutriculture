@@ -318,3 +318,11 @@ save_quality_policy_v1:
       required: true
       selector:
         object:
+get_result_v1:
+  name: 讀取流程結果
+  description: 純快取結果；已受理不代表完成。結果不授予灌溉許可。
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text: {}

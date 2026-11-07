@@ -84,7 +84,8 @@
           "mix_flow_timeout_seconds": "mix flow timeout seconds",
           "flow_plan": "Open flow plan editor (no settings saved)",
           "recipe_management": "Manage recipes",
-          "quality_management": "品質策略管理（不操作輸出）"
+          "quality_management": "品質策略管理（不操作輸出）",
+          "notification_management": "通知管理（不操作輸出）"
         }
       },
       "plan": {
@@ -179,6 +180,18 @@
           "level_attribute": "水位 序號／時間戳屬性（reported 留空）",
           "level_report_contract_confirmed": "水位 已確認每次為真實新測量"
         }
+      },
+      "notifications": {
+        "title": "通知管理",
+        "description": "已受理不代表已完成。交付返回不代表已送達；逾時結果未知。重新讀取通知設定只讀盤，不重送。",
+        "data": {
+          "enabled": "啟用通知",
+          "provider": "原生通知提供者",
+          "target_entity_id": "通知實體",
+          "events": "通知事件",
+          "cooldown_seconds": "冷卻秒數",
+          "action": "儲存／取消／重新讀取通知設定"
+        }
       }
     },
     "error": {
@@ -208,13 +221,21 @@
       "unauthorized": "unauthorized",
       "settings_schema_mismatch": "settings_schema_mismatch",
       "quality_conflict": "quality_conflict",
-      "invalid_quality_policy": "invalid_quality_policy"
+      "invalid_quality_policy": "invalid_quality_policy",
+      "invalid_notification_policy": "通知設定無效",
+      "invalid_provider": "通知提供者不可用",
+      "notification_conflict": "通知設定已變更，請重開",
+      "notification_not_found": "通知事件不存在",
+      "storage_failed": "通知儲存失敗",
+      "indeterminate": "通知儲存結果未知，請重新讀取通知設定"
     },
     "abort": {
       "plan_cancelled": "Plan cancelled; nothing saved.",
       "recipe_cancelled": "Recipe management closed",
       "quality_saved": "品質策略已儲存",
-      "quality_cancelled": "已取消，未寫入"
+      "quality_cancelled": "已取消，未寫入",
+      "notification_saved": "通知設定已儲存",
+      "notification_cancelled": "已取消，未寫入"
     }
   }
 }

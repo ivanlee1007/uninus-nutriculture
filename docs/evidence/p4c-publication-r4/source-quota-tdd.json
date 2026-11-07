@@ -1,0 +1,69 @@
+{
+  "status": "R4_FOCUSED98_AUTHENTICATED_NOT_SPEC_QUALITY_APPROVAL",
+  "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-reload-quota-r4",
+  "FINAL_sha256": "10d455c71b437ddf298c401c200ad4d8a8fe47b5f78509af51413169b69901c9",
+  "whole6665guardverified": true,
+  "runs": [
+    {
+      "run": "red",
+      "cases": 1,
+      "unique": 1,
+      "failures": 1,
+      "errors": 0,
+      "skips": 0,
+      "child_exit": 1
+    },
+    {
+      "run": "green",
+      "cases": 1,
+      "unique": 1,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "child_exit": 0
+    },
+    {
+      "run": "adjacent",
+      "cases": 7,
+      "unique": 7,
+      "failures": 2,
+      "errors": 0,
+      "skips": 0,
+      "child_exit": 1
+    },
+    {
+      "run": "adjacent2",
+      "cases": 7,
+      "unique": 7,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "child_exit": 0
+    },
+    {
+      "run": "affected",
+      "cases": 98,
+      "unique": 98,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "child_exit": 0
+    }
+  ],
+  "samefirstREDGREENtestbytes": true,
+  "firstGREENtofinal_productASTsame": true,
+  "frameworkcopytrees_verified": 99,
+  "frameworkcopied_files_verified": 4059,
+  "copy_receipt_scope": "row.files counts .py only; parent additionally verifiesJSON/YAML41totalperfixture",
+  "changes": {
+    "uninus-nutriculture/custom_components/uninus_nutriculture/notification_dispatch.py": "980aeed830f72e64facceb25feef2fba419a89f39686da7cf7e7af4c79092f02",
+    "uninus-nutriculture/tests/test_p4c_reload_quota.py": "aa785aa467ebb1a6a417d4b384d7e0d90a5962cd314556b7db68741a3bf235b3"
+  },
+  "knownharnessfailures_preserved": [
+    "adjacent: epoch rotation intentionally clears delivery ledger; invalid assumption caused IndexError",
+    "adjacent: B policy save denied settings_schema_mismatch because B lacked v5 options; corrected using real configured options at native entry creation",
+    "ruff.json: initial new-test import-group I001; removed blank line; final check/format pass"
+  ],
+  "budget": "explicitP4c4/4 used; nofifthround",
+  "next": "N06SPEC thenboundedwholequalityclosure; old546notR4fullgate"
+}

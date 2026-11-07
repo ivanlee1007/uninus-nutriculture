@@ -1,3 +1,7 @@
+> 現行狀態（2026-11-07）：P1–P3、P4a、P4b軟體來源已交付；正式P4b Backend `48b148c05de50dd976952462d50c86871acffc5c`／Card `14dad5f2bed79baab52001bf47a8be80ffc5ff35` 及 exact-HEAD hosted CI／產物已核。P4c原M1整合回歸成功但wholeSPEC為REQUEST_CHANGES：確認故障episode去重會吞不相關failed通知，現進行第1/2輪定點修復；必要未審格、獨立品質、出版與新HEAD CI尚未完成。舊P3急停callback例外已明確增授一輪窄修（歷史4/4＋1，整體5/5），不重置其他預算。完整P4／P5、現場commissioning、HACS實際安裝、tag/release與部署未完成。
+
+> 下文為2026-11-03舊commit的歷史盤點，原文保留；其「尚未實作／未定」不代表現行進度，現行以本行上方及P4c凍結契約為準。
+
 # 原系統與新設計規範：功能差異重新盤點
 
 > 最新定案：取消獨立stage_link；各階段實際開始前檢查星期；增加原生整輪運行Switch並保留start_flow。以[已確認控制決策](CONTROL_DECISIONS.md)為準；尚未實作，P1不變。

@@ -47,6 +47,8 @@ class Tank:
         self.listeners = set()
 
     def publish(self):
+        if hasattr(self, "results"):
+            self.results.observe()
         if hasattr(self, "quality"):
             self.quality.observe()
         for listener in tuple(self.listeners):

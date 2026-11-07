@@ -1,0 +1,32 @@
+{
+  "verdict": "APPROVED",
+  "scope": "whole required P4c source SPEC on exact R4 freeze; N06 reverified + 16 explicit carried clauses",
+  "manifest_sha256": "c8432ecf9d9bdec0d091890af9f90466b4edf68e60f69ca0893e1723daa42ba3",
+  "clauses": 17,
+  "carried": 16,
+  "reverified": [
+    "N06"
+  ],
+  "blocked": 0,
+  "affected_run": {
+    "cases": 13,
+    "unique": 13,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "actual_child_exit": 0,
+  "provenance_repeated_cases": 2,
+  "unique_behavioral_cases_not_added_to_total": true,
+  "finding_disposition": {
+    "P4C-QUALITY-01": "original assertion closed for R4 SPEC; historical Q REQUEST_CHANGES preserved"
+  },
+  "quality_security_publication_approved": false,
+  "pending": [
+    "R4 full553/82 gate",
+    "independent whole quality/security review",
+    "publication/deployment gates"
+  ],
+  "source_guard": "SOURCE_GUARD.json",
+  "repair_budget": "P4c4/4 and P3closed5/5 unchanged; no fix or fifth-round authorization"
+}

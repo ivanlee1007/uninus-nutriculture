@@ -1,0 +1,73 @@
+{
+  "provider": "existing Hermes kernel jsonschema; no SDK modification",
+  "count": 11,
+  "all_valid": true,
+  "results": [
+    {
+      "label": "terminal-result",
+      "kind": "ResultDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "terminal-notification",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "accepted-result",
+      "kind": "ResultDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "event-0",
+      "kind": "Event",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "event-1",
+      "kind": "Event",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "event-2",
+      "kind": "Event",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "wire-0",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "wire-1",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "wire-2",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "wire-3",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    },
+    {
+      "label": "wire-4",
+      "kind": "NotificationDTO",
+      "errors": [],
+      "valid": true
+    }
+  ]
+}

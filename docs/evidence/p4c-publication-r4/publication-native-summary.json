@@ -1,0 +1,17 @@
+{
+  "native_requests": 5,
+  "behavior_checkpoints": 4,
+  "child_exit": 0,
+  "imports": 44,
+  "source_inputs": 144,
+  "bundle_sha256": "b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359",
+  "sdk": "2026.10.4",
+  "browser": "156.0.8078.4",
+  "physical_Store_freshload_Card_equal": true,
+  "Options_Save_reopen_Cancel": true,
+  "management_zero_IO": true,
+  "four_stages_completed_confirmed_empty_leases": true,
+  "result_GET_native_Card_exact": true,
+  "page_errors": [],
+  "provider_claim": "native handoff_returned only; not delivered"
+}

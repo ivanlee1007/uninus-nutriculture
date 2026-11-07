@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -273,9 +274,12 @@ async def test_native_save_preview_four_stage_overlap_terminal(dosing_hass, entr
         assert all(v["result"] == "completed" for v in status["step_runtime"].values())
         assert set(status["output_states"]) == {"refill", "nutrient", "acid", "circulation"}
         assert all(v == "off" for v in status["output_states"].values())
-        (Path(__file__).parents[1] / ("p3c-terminal-" + entrance + ".json")).write_text(
-            json.dumps(status, default=str, indent=2)
-        )
+        if capture_dir := os.environ.get("P3C_CAPTURE_DIR"):
+            output = Path(capture_dir)
+            output.mkdir(parents=True, exist_ok=True)
+            (output / ("p3c-terminal-" + entrance + ".json")).write_text(
+                json.dumps(status, default=str, indent=2)
+            )
     finally:
         await toggle(hass, entry, "flow_run", False)
 

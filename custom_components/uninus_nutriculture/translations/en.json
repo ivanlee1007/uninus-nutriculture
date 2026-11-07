@@ -84,7 +84,8 @@
           "mix_flow_timeout_seconds": "mix flow timeout seconds",
           "flow_plan": "Open flow plan editor (no settings saved)",
           "recipe_management": "Manage recipes",
-          "quality_management": "品質策略管理（不操作輸出）"
+          "quality_management": "品質策略管理（不操作輸出）",
+          "notification_management": "Notification management (no actuation)"
         }
       },
       "plan": {
@@ -179,6 +180,18 @@
           "level_attribute": "水位 序號／時間戳屬性（reported 留空）",
           "level_report_contract_confirmed": "水位 已確認每次為真實新測量"
         }
+      },
+      "notifications": {
+        "title": "Notification management",
+        "description": "Accepted is not completed. Handoff returned is not delivery confirmation; timeout is unknown. Reconcile reads disk without replay.",
+        "data": {
+          "enabled": "Enable notifications",
+          "provider": "Native provider",
+          "target_entity_id": "Notify entity",
+          "events": "Events",
+          "cooldown_seconds": "Cooldown seconds",
+          "action": "Save / Cancel / Reconcile notification settings"
+        }
       }
     },
     "error": {
@@ -208,13 +221,21 @@
       "unauthorized": "unauthorized",
       "settings_schema_mismatch": "settings_schema_mismatch",
       "quality_conflict": "quality_conflict",
-      "invalid_quality_policy": "invalid_quality_policy"
+      "invalid_quality_policy": "invalid_quality_policy",
+      "invalid_notification_policy": "Invalid notification policy",
+      "invalid_provider": "Invalid provider",
+      "notification_conflict": "Notification conflict",
+      "notification_not_found": "Notification not found",
+      "storage_failed": "Storage failed",
+      "indeterminate": "Indeterminate"
     },
     "abort": {
       "plan_cancelled": "Plan cancelled; nothing saved.",
       "recipe_cancelled": "Recipe management closed",
       "quality_saved": "品質策略已儲存",
-      "quality_cancelled": "已取消，未寫入"
+      "quality_cancelled": "已取消，未寫入",
+      "notification_saved": "Notification settings saved",
+      "notification_cancelled": "Cancelled; nothing written"
     }
   }
 }

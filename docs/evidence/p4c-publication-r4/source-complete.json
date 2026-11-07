@@ -1,0 +1,60 @@
+{
+  "status": "P4C_R4_SOURCE_TWO_REVIEWS_AND_FINAL_GATE_AUTHENTICATED_NOT_PUBLISHED",
+  "manifest_sha256": "c8432ecf9d9bdec0d091890af9f90466b4edf68e60f69ca0893e1723daa42ba3",
+  "source6660plus5_exact": true,
+  "native": {
+    "unique": 553,
+    "modules": 82,
+    "shards": [
+      144,
+      116,
+      137,
+      156
+    ],
+    "failure_error_skip_dup": 0
+  },
+  "gate_final_sha256": "872d4f91fef16aba1084bce17f3a5c64055a9ea877de1bd8b263542f6024d044",
+  "gate437_closed_artifacts_verified": true,
+  "quality_verdict_sha256": "aaec13ad044ec932d2efd6c3988945926041773a64bc70a6a0cdda5e2f2a2398",
+  "quality252_closed_artifacts_verified": true,
+  "quality52paths_hashbound_zero_unreviewed": true,
+  "qualitynative5PASS": true,
+  "critical": 0,
+  "important": 0,
+  "prior_QUALITY01": "independentlyclosed; originalREQUEST_CHANGESpreserved",
+  "wholeSPEC": "parentR4WHOLESPEC17approvedreceipt retained",
+  "currentjoin": {
+    "status": "pass",
+    "native_exit": 0,
+    "browser_exit": 0,
+    "registered_WS_requests": 5,
+    "registered_routes": [
+      "uninus_nutriculture/notification_v1/ack",
+      "uninus_nutriculture/notification_v1/get",
+      "uninus_nutriculture/notification_v1/reconcile",
+      "uninus_nutriculture/notification_v1/save"
+    ],
+    "checkpoints": 4,
+    "actual_imports": 44,
+    "framework_copies": 1,
+    "exact_terminal_Card_native_API": true,
+    "exact_terminal_notification_cache": true,
+    "driver_assertions": 8,
+    "management_zero_actuator": true,
+    "fresh_Store_matches_physical": true,
+    "native_options_save_reopen_cancel": true,
+    "terminal_run_state": "completed",
+    "terminal_closure": "confirmed",
+    "leases": {},
+    "flow_pending": false,
+    "bundle_sha256": "b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359",
+    "delivery_states": [
+      "handoff_returned",
+      "handoff_returned"
+    ],
+    "provider_claim": "native handoff_returned only; no external-delivery confirmation"
+  },
+  "schema11": true,
+  "remaining": "publication-only docs/CI portableacceptance/realCardcommitpin and boundedpublicationequivalence/exactheadhosted; no site/release/deploy",
+  "budget": "P4c4/4 andP3closed5/5 no resets"
+}

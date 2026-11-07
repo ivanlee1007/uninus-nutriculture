@@ -1,3 +1,5 @@
+> 現行狀態（2026-11-07）：P4b正式交付與exact-HEAD hosted CI／產物核對已完成。P4c R4來源已通過SPEC及獨立品質兩審，本機完整553 cases／82 modules（144／116／137／156）與真Core／shipped Card join已完成；目前僅準備出版successor，尚未push，未驗新exact-HEAD hosted CI。P4c初始2輪＋explicit Options卸載1輪＋explicit quota1輪＝4/4；P3歷史4輪＋explicit mix1輪＝5/5，皆結案、不重置。完整P4／P5、實機commissioning及HACS實裝未完成，未tag／release／部署。內嵌0.2.0保留既有封裝，不代表功能階段。
+
 # P1 測試紀錄
 
 ## 實際執行環境與範圍
@@ -88,3 +90,9 @@ PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe tools/evidence.py 12-target-f
 - 實際 HA UI、實際裝置、農場資料、任何 P2–P5 控制功能。
 
 Windows evidence runner 目前強制使用 Hermes-owned scratch 作 pytest 臨時目錄；早期 runner 尚未設定 basetemp，原始日誌如實保留其 pytest 預設暫存路徑。歷史腳手架產生器移到 `docs/evidence/scaffolding/`，不是可安裝整合的一部分，勿重新執行或安裝 evidence 中的舊 snapshots。
+
+## P4c現行portable驗收
+
+Card canonical gate執行unit14及DOM38＋16＋21＋16＝91；P4c既有16 cases正式註冊，沒有wrapper或重複計數。Backend永久suite為553／82；完整gate是R4歷史來源驗收，本出版prep只重跑Card canonical及portable真join，不冒稱再次執行553。
+
+Backend與Card使用明確sibling checkout；`python -B tools/p4c_native_join.py --output <owned-output>` 後執行 `python -B tools/p4c_native_verify.py --output <owned-output>`。可用`--card-repo`指定Card；`P4C_CARD_PYTHON`指定browser SDK，預設當前Python。Chromium可由Playwright安裝或`CHROMIUM_EXECUTABLE`明確指定。只用loopback假硬體；不讀現場auth。CI pins保持Ubuntu24.04／Backend Python3.14／Card Python3.13／Node22，本機Node18.6非hosted驗收。

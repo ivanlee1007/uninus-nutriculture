@@ -1,0 +1,41 @@
+[
+  {
+    "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-final-wide-r4\\finaljoin\\source\\native.py",
+    "target": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-publication-prep\\uninus-nutriculture\\tools\\p4c_native_join.py",
+    "original_sha256": "1bff32e014d96f2cee68fccb1fd12721d0fda7a35dc7527f7602b4a585abfad1",
+    "adapted_sha256": "c7b68a8bafbd05f35ddecb4bd57f43ff98d539a92e170f1cdc4838a1b5f2786a",
+    "bytes_exact": false,
+    "full_AST_equal": false,
+    "original_assertions": 20,
+    "new_assertions": 22,
+    "all_original_assertions_retained": true,
+    "embedded_JS_equal": true,
+    "intent": "source/output/SDK routing, formatting/import hygiene; native finally always closes fixtures and bounded-drains child pipes; browser pageerror receipt added; unused overlap local renamed only"
+  },
+  {
+    "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-final-wide-r4\\finaljoin\\source\\browser.py",
+    "target": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-publication-prep\\uninus-nutriculture\\tools\\p4c_browser_join.py",
+    "original_sha256": "d43238a736c7326072671a5acf361b68ea461cec855f979234695741c718f4a1",
+    "adapted_sha256": "17cc5f106896b1b0692eccb598be242d5f5131f2897d8cdb6eecc0dcac2b8ece",
+    "bytes_exact": false,
+    "full_AST_equal": false,
+    "original_assertions": 5,
+    "new_assertions": 6,
+    "all_original_assertions_retained": true,
+    "embedded_JS_equal": true,
+    "intent": "source/output/SDK routing, formatting/import hygiene; native finally always closes fixtures and bounded-drains child pipes; browser pageerror receipt added; unused overlap local renamed only"
+  },
+  {
+    "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-final-wide-r4\\finaljoin\\source\\four_stage.py",
+    "target": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-publication-prep\\uninus-nutriculture\\tools\\p4c_four_stage.py",
+    "original_sha256": "79d8095de4af18b10dd65871ede1f60660fa08e8e5dfe682542971fb5a95f1d9",
+    "adapted_sha256": "e2c9f03415425ce622fe2e512e61731c6ab6a99a139f4b1ab382ccea7d9d8c29",
+    "bytes_exact": false,
+    "full_AST_equal": false,
+    "original_assertions": 8,
+    "new_assertions": 8,
+    "all_original_assertions_retained": true,
+    "embedded_JS_equal": true,
+    "intent": "source/output/SDK routing, formatting/import hygiene; native finally always closes fixtures and bounded-drains child pipes; browser pageerror receipt added; unused overlap local renamed only"
+  }
+]

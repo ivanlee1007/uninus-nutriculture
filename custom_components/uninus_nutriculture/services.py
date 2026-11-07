@@ -164,4 +164,10 @@ async def async_setup(hass, config):
     from .quality_services import register as register_quality
 
     register_quality(hass)
+    from .result_services import register as register_results
+
+    register_results(hass)
+    from .notification_api import register as register_notifications
+
+    register_notifications(hass)
     return True

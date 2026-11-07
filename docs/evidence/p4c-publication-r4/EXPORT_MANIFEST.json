@@ -1,0 +1,111 @@
+{
+  "files": [
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-complete.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-isolated-development\\PARENT_R4_SOURCE_COMPLETE_VERIFIED.json",
+      "sha256": "bbd7df6bdf4f42a1f311ce8495d5757bac963928b0c7a7348d087ec6e2df5ef0",
+      "bytes": 2184,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-spec-verdict.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-affected-spec\\WHOLE_SPEC_VERDICT.json",
+      "sha256": "f8723a9cb9533bc2d42723591b626fe839037fd39bf431a90c66abcdcd5b949b",
+      "bytes": 1010,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-spec-map.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-affected-spec\\WHOLE_SPEC_17_MAP.json",
+      "sha256": "d6b9c095b05d2c52c6010028b20e256a463e8bc8e9d785bf0573fcde47ff46bb",
+      "bytes": 19924,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-spec-report.md",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-affected-spec\\REPORT.md",
+      "sha256": "d8d0898f08b6700d9d322add7e9333f537969793f25c96465fa9b7d0c91e9606",
+      "bytes": 3381,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-quality-verdict.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-quality-recheck\\VERDICT.json",
+      "sha256": "aaec13ad044ec932d2efd6c3988945926041773a64bc70a6a0cdda5e2f2a2398",
+      "bytes": 2183,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-quality-coverage.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-quality-recheck\\COVERAGE.json",
+      "sha256": "27fa7e038aae8d71895642e7d9c7dc7df743b6d5bcc3ea72d4347f4124be37c8",
+      "bytes": 39342,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-quality-report.md",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-quota-r4-quality-recheck\\REPORT.md",
+      "sha256": "b88c9a1189fa3df21e29b08cdf8ff1636f7f9e37f5013f1df6607127973a1270",
+      "bytes": 6298,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-quota-tdd.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-isolated-development\\PARENT_RELOAD_QUOTA_R4_VERIFIED.json",
+      "sha256": "396bf0a3a83563d642effc262f0f67eab101317823d25e6831acc1c38f3f5f33",
+      "bytes": 2167,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-persistence-tdd.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-isolated-development\\PARENT_FRESH_PERSISTENCE_REDO_VERIFIED.json",
+      "sha256": "dcda7c1a551c85a3ae6afb608ff15ba02cc240aa78b6fe41633840eecdce4b47",
+      "bytes": 5453,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-final-gate-report.md",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-final-wide-r4\\REPORT.md",
+      "sha256": "c78087316685e20a3e9ab7ea8e083d80e500ad1c772eee968d0c8fc89a02eda4",
+      "bytes": 2247,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/source-final-join-summary.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-final-wide-r4\\JOIN_PROOF.json",
+      "sha256": "408e7d601874d76514a6d81597e5e397603e17ba6da89fd1be62a7779045cb37",
+      "bytes": 4110,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/publication-native-summary.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-publication-preparation-evidence\\native-join-final-safe-export\\ci-verified.json",
+      "sha256": "b94909ed0bc71d4460e58d132a5e2c1895065b7bc35f62f0ae6b85e4c20e6b6b",
+      "bytes": 568,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/publication-schema11.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-publication-preparation-evidence\\SCHEMA_FINAL.json",
+      "sha256": "1c929cd01f538a74120882d09ecc46885d675ccfc9daf4403f6faa7a0b1d0595",
+      "bytes": 1416,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/publication-card-result.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-publication-preparation-evidence\\card-gate-final\\result.json",
+      "sha256": "ffdc1991c87ed7a3cf8ac82cd4130761395c45a399c757e9baab04a537324dd6",
+      "bytes": 3809,
+      "bytes_exact": true
+    },
+    {
+      "path": "uninus-nutriculture/docs/evidence/p4c-publication-r4/publication-migration.json",
+      "source": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-publication-preparation-evidence\\MIGRATION.json",
+      "sha256": "58d6de3dd98d14ede575b4bd9c8d2c2903545e22bc86a88a7461cd89ad9c3fe0",
+      "bytes": 2512,
+      "bytes_exact": true
+    }
+  ],
+  "policy": "only explicit source-acceptance summaries, TDD/independent review/final-gate reports and new portable acceptance summaries; no raw runtime/Store/auth/capability data",
+  "earlier_pending_claims": "historical verdict/report bytes preserved; source-complete.json is the later parent closure"
+}

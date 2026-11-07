@@ -1,0 +1,1063 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:uninus:p4c:proposal:1",
+  "title": "P4c frozen result_v1 and private notification_v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ResultDTO"
+    },
+    {
+      "$ref": "#/$defs/NotificationDTO"
+    },
+    {
+      "$ref": "#/$defs/Event"
+    },
+    {
+      "$ref": "#/$defs/StoreDocument"
+    },
+    {
+      "$ref": "#/$defs/GetResultRequest"
+    },
+    {
+      "$ref": "#/$defs/NotificationGetRequest"
+    },
+    {
+      "$ref": "#/$defs/NotificationSaveRequest"
+    },
+    {
+      "$ref": "#/$defs/NotificationAckRequest"
+    },
+    {
+      "$ref": "#/$defs/NotificationReconcileRequest"
+    }
+  ],
+  "$defs": {
+    "Stage": {
+      "type": "object",
+      "properties": {
+        "phase": {
+          "anyOf": [
+            {
+              "enum": [
+                "confirming_off",
+                "mixing",
+                "pulsing",
+                "refilling",
+                "stabilizing",
+                "starting",
+                "starting_circulation",
+                "stopping",
+                "waiting_condition",
+                "waiting_delay",
+                "waiting_resource",
+                "waiting_sample"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "enum": [
+                "completed",
+                "aborted",
+                "fault",
+                "skipped_disabled",
+                "skipped_weekday",
+                "blocked_dependency"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settled_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "waiting_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "circulation_lost",
+                "condition_not_met",
+                "delay_pending",
+                "dependency_not_started",
+                "dose_budget_exhausted",
+                "ec_danger",
+                "ec_high",
+                "ec_timeout",
+                "emergency_stop",
+                "entry_inactive",
+                "flow_timeout",
+                "level_unsafe",
+                "no_actual_start",
+                "none",
+                "operation_failed",
+                "output_already_owned",
+                "output_identity_invalid",
+                "output_not_off",
+                "output_unbound",
+                "output_unexpected",
+                "ph_danger",
+                "ph_high",
+                "ph_low",
+                "ph_timeout",
+                "refill_timeout",
+                "resource_chemical",
+                "restart_output_not_off",
+                "revoked",
+                "sample_invalid",
+                "sample_timeout",
+                "source_invalid",
+                "stage_skipped",
+                "start_cancelled",
+                "start_unconfirmed",
+                "stop_unconfirmed",
+                "weekday"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "phase",
+        "result",
+        "started_at",
+        "settled_at",
+        "waiting_reason"
+      ],
+      "additionalProperties": false
+    },
+    "Run": {
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "settings_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "flow_plan_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "running",
+            "stopping",
+            "completed",
+            "stopped",
+            "incomplete",
+            "failed"
+          ]
+        },
+        "closure": {
+          "enum": [
+            "pending",
+            "unconfirmed",
+            "confirmed"
+          ]
+        },
+        "reason": {
+          "enum": [
+            "circulation_lost",
+            "condition_not_met",
+            "delay_pending",
+            "dependency_not_started",
+            "dose_budget_exhausted",
+            "ec_danger",
+            "ec_high",
+            "ec_timeout",
+            "emergency_stop",
+            "entry_inactive",
+            "flow_timeout",
+            "level_unsafe",
+            "no_actual_start",
+            "none",
+            "operation_failed",
+            "output_already_owned",
+            "output_identity_invalid",
+            "output_not_off",
+            "output_unbound",
+            "output_unexpected",
+            "ph_danger",
+            "ph_high",
+            "ph_low",
+            "ph_timeout",
+            "refill_timeout",
+            "resource_chemical",
+            "restart_output_not_off",
+            "revoked",
+            "sample_invalid",
+            "sample_timeout",
+            "source_invalid",
+            "stage_skipped",
+            "start_cancelled",
+            "start_unconfirmed",
+            "stop_unconfirmed",
+            "weekday"
+          ]
+        },
+        "accepted_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transition_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+        },
+        "stages": {
+          "type": "object",
+          "properties": {
+            "refill": {
+              "$ref": "#/$defs/Stage"
+            },
+            "nutrient": {
+              "$ref": "#/$defs/Stage"
+            },
+            "acid": {
+              "$ref": "#/$defs/Stage"
+            },
+            "mix": {
+              "$ref": "#/$defs/Stage"
+            }
+          },
+          "required": [
+            "refill",
+            "nutrient",
+            "acid",
+            "mix"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "run_id",
+        "epoch",
+        "settings_revision",
+        "flow_plan_revision",
+        "state",
+        "closure",
+        "reason",
+        "accepted_at",
+        "started_at",
+        "finished_at",
+        "transition_at",
+        "stages"
+      ],
+      "additionalProperties": false
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "observation_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}:[1-9][0-9]{0,15}$"
+        },
+        "kind": {
+          "enum": [
+            "accepted",
+            "running",
+            "stopping",
+            "completed",
+            "stopped",
+            "incomplete",
+            "failed",
+            "stop_unconfirmed",
+            "ph_low",
+            "ec_high",
+            "ph_high"
+          ]
+        },
+        "reason": {
+          "enum": [
+            "circulation_lost",
+            "condition_not_met",
+            "delay_pending",
+            "dependency_not_started",
+            "dose_budget_exhausted",
+            "ec_danger",
+            "ec_high",
+            "ec_timeout",
+            "emergency_stop",
+            "entry_inactive",
+            "flow_timeout",
+            "level_unsafe",
+            "no_actual_start",
+            "none",
+            "operation_failed",
+            "output_already_owned",
+            "output_identity_invalid",
+            "output_not_off",
+            "output_unbound",
+            "output_unexpected",
+            "ph_danger",
+            "ph_high",
+            "ph_low",
+            "ph_timeout",
+            "refill_timeout",
+            "resource_chemical",
+            "restart_output_not_off",
+            "revoked",
+            "sample_invalid",
+            "sample_timeout",
+            "source_invalid",
+            "stage_skipped",
+            "start_cancelled",
+            "start_unconfirmed",
+            "stop_unconfirmed",
+            "weekday"
+          ]
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+        },
+        "run": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Run"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "config_entry_id",
+        "epoch",
+        "observation_revision",
+        "sequence",
+        "event_id",
+        "kind",
+        "reason",
+        "occurred_at",
+        "run"
+      ],
+      "additionalProperties": false
+    },
+    "ResultDTO": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "observation_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "support": {
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "current_run": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Run"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Run"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latest_event": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Event"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "config_entry_id",
+        "epoch",
+        "observation_revision",
+        "support",
+        "current_run",
+        "last_result",
+        "latest_event"
+      ],
+      "additionalProperties": false
+    },
+    "TargetBinding": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "string",
+          "pattern": "^notify\\.[a-z0-9_]+$",
+          "maxLength": 255
+        },
+        "registry_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "unique_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "config_entry_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "entity_id",
+        "registry_entry_id",
+        "platform",
+        "unique_id",
+        "config_entry_id"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationPolicy": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "provider": {
+          "enum": [
+            null,
+            "persistent_notification",
+            "notify_entity"
+          ]
+        },
+        "target_binding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "start",
+              "stop",
+              "completed",
+              "incomplete",
+              "failed",
+              "danger",
+              "timeout",
+              "stop_unconfirmed"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "cooldown_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 86400
+        }
+      },
+      "required": [
+        "enabled",
+        "provider",
+        "target_binding",
+        "events",
+        "cooldown_seconds"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyInput": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "provider": {
+          "enum": [
+            null,
+            "persistent_notification",
+            "notify_entity"
+          ]
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "start",
+              "stop",
+              "completed",
+              "incomplete",
+              "failed",
+              "danger",
+              "timeout",
+              "stop_unconfirmed"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "cooldown_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 86400
+        },
+        "target_entity_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^notify\\.[a-z0-9_]+$",
+              "maxLength": 255
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "enabled",
+        "provider",
+        "events",
+        "cooldown_seconds",
+        "target_entity_id"
+      ],
+      "additionalProperties": false
+    },
+    "Delivery": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}:[1-9][0-9]{0,15}$"
+        },
+        "kind": {
+          "enum": [
+            "accepted",
+            "running",
+            "stopping",
+            "completed",
+            "stopped",
+            "incomplete",
+            "failed",
+            "stop_unconfirmed",
+            "ph_low",
+            "ec_high",
+            "ph_high"
+          ]
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "handoff_returned",
+            "failed",
+            "suppressed",
+            "cancelled",
+            "timed_out"
+          ]
+        },
+        "code": {
+          "anyOf": [
+            {
+              "enum": [
+                "provider_unavailable",
+                "provider_failed",
+                "provider_timeout",
+                "queue_full",
+                "cooldown",
+                "expired",
+                "cancelled",
+                "revoked",
+                "storage_failed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acknowledged": {
+          "type": "boolean"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T.*\\+00:00$"
+        }
+      },
+      "required": [
+        "event_id",
+        "kind",
+        "status",
+        "code",
+        "acknowledged",
+        "updated_at"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogItem": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "string",
+          "pattern": "^notify\\.[a-z0-9_]+$",
+          "maxLength": 255
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "available": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entity_id",
+        "label",
+        "available"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationDTO": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "policy": {
+          "$ref": "#/$defs/NotificationPolicy"
+        },
+        "availability": {
+          "enum": [
+            "disabled",
+            "available",
+            "unavailable",
+            "indeterminate"
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "enum": [
+                "provider_unavailable",
+                "storage_failed",
+                "indeterminate"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "catalog": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CatalogItem"
+          },
+          "minItems": 0,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "deliveries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Delivery"
+          },
+          "minItems": 0,
+          "maxItems": 32,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "config_entry_id",
+        "epoch",
+        "revision",
+        "policy",
+        "availability",
+        "error",
+        "catalog",
+        "deliveries"
+      ],
+      "additionalProperties": false
+    },
+    "StoreDocument": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "policy": {
+          "$ref": "#/$defs/NotificationPolicy"
+        }
+      },
+      "required": [
+        "schema_version",
+        "config_entry_id",
+        "revision",
+        "policy"
+      ],
+      "additionalProperties": false
+    },
+    "GetResultRequest": {
+      "type": "object",
+      "properties": {
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "config_entry_id"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationGetRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "const": "uninus_nutriculture/notification_v1/get"
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "config_entry_id"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationSaveRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "const": "uninus_nutriculture/notification_v1/save"
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expected_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "policy": {
+          "$ref": "#/$defs/PolicyInput"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "config_entry_id",
+        "expected_epoch",
+        "expected_revision",
+        "policy"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationAckRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "const": "uninus_nutriculture/notification_v1/ack"
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expected_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}:[1-9][0-9]{0,15}$"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "config_entry_id",
+        "expected_epoch",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationReconcileRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "const": "uninus_nutriculture/notification_v1/reconcile"
+        },
+        "config_entry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expected_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "config_entry_id",
+        "expected_epoch"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "x-contract": {
+    "status": "FROZEN_INTEGRATED_CANDIDATE_NOT_YET_REVIEW_APPROVED",
+    "result_service": {
+      "name": "uninus_nutriculture.get_result_v1",
+      "response": "ONLY",
+      "input": "GetResultRequest",
+      "output": "ResultDTO"
+    },
+    "result_event": "uninus_nutriculture_result_v1",
+    "ws_response": "native WS result envelope result=NotificationDTO; id is transport request id",
+    "policy_input_to_stored": "server resolves target_entity_id into identity-bound target_binding; never accepts client binding",
+    "defaults": {
+      "enabled": false,
+      "provider": null,
+      "target_binding": null,
+      "events": [],
+      "cooldown_seconds": 300
+    },
+    "cross_field": [
+      "enabled implies provider non-null and events nonempty",
+      "notify_entity iff target_binding non-null; null or persistent_notification provider implies target_binding null",
+      "PolicyInput applies equivalent target_entity_id predicates",
+      "Run terminal iff closure confirmed and finished_at non-null; nonterminal finished_at null",
+      "current_run nonterminal only; last_result terminal only; all nested run epochs equal enclosing epoch",
+      "event_id equals epoch:sequence; sequence integer bounded (regex alone not sufficient)",
+      "Event.run null only for alarm outside run; accepted event run.state accepted; terminal events match run.state",
+      "unsupported: current_run,last_result,latest_event null",
+      "delivery event IDs belong to same entry+epoch, unknown ACK rejected",
+      "all integer fields reject bool,float,string before coercion",
+      "all strings valid Unicode scalars, reject control/bidi controls; catalog labels NFC escaped and capped",
+      "notification config independent Store; no changes to quality/settings/options",
+      "result GET cache only; pure reads zero Store/provider I/O and event emissions",
+      "reconcile is only explicit private disk-read recovery beyond setup/save; no Core entry reload or replay; GETs remain pure"
+    ],
+    "errors": [
+      "unauthorized",
+      "entry_not_loaded",
+      "settings_schema_mismatch",
+      "invalid_notification_policy",
+      "invalid_provider",
+      "notification_conflict",
+      "notification_not_found",
+      "storage_failed",
+      "indeterminate"
+    ],
+    "event_to_notification": {
+      "accepted": "start",
+      "running": null,
+      "stopping": "timeout only if reason in flow_timeout/ec_timeout/ph_timeout/refill_timeout/sample_timeout",
+      "completed": "completed",
+      "stopped": "stop",
+      "incomplete": "incomplete",
+      "failed": "failed unless same fault episode already notified timeout/danger/stop_unconfirmed",
+      "stop_unconfirmed": "stop_unconfirmed",
+      "ph_low": "danger",
+      "ec_high": "danger",
+      "ph_high": "danger"
+    },
+    "replay": "none; latest_event is one cached hint, not backlog",
+    "at_most_once": "one native handoff attempt per event per epoch; external effects not exactly once; no retry/restart replay",
+    "phase_source": "Stage.phase passes only exact inspected native phase vocabulary; unknown maps stopping + operation_failed without raw text; do not call flow.refresh on GET.",
+    "catalog_bounds": "private catalog sorted by entity_id capped256; include configured target by replacing last item if necessary; no arbitrary native friendlyname in public result/message",
+    "notification_reconcile": "Explicit authenticated admin-only IO recovery; get remains cache-pure. Drain admitted write first; native load plus physical envelope verification; no save/rollback/control reload/dispatch/replay. Require current epoch and reject stale auth/lifecycle after every await. Failed or regressing durable revision remains indeterminate; success replaces private cache at actual disk revision.",
+    "native_result_state": "supported: current_run.state else last_result.state else idle; unsupported: unsupported. Terminal result remains visible, not permit authority.",
+    "lifecycle_stop": "Home Assistant stopping/entry disable/unload closes notifications; ordinary flow OFF/stop, emergency/master OFF leaves notification plane available for stopped/failed/stop_unconfirmed reporting if opted-in. Never gate delivery on master or permit.",
+    "global_dispatch_bound": "Two native provider slots per Home Assistant integration lifetime including retired/quarantined epochs and failed unload/reload; never recreate a semaphore to forget unfinished native tasks."
+  }
+}

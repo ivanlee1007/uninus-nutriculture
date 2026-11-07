@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ivanlee1007/uninus-nutriculture-card
-          ref: 14dad5f2bed79baab52001bf47a8be80ffc5ff35
+          ref: 0134d7cec1146b802073264b9e81a9ff72c8924d
           path: uninus-nutriculture-card
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -49,6 +49,18 @@ jobs:
           pin=re.search(r'^          ref: ([0-9a-f]{40})$',text,re.M).group(1)
           assert pin != '108071a744ccc373c300d919b5741b1400a8a047', 'P4B_PUBLICATION_BLOCKED: parent must replace companion ref with real reviewed P4b Card commit'
           PY
+      - name: P4c publication real companion pin and approved bundle guard
+        run: |
+          python - <<'PY'
+          import hashlib,pathlib,re,subprocess
+          text=pathlib.Path('.github/workflows/tests.yml').read_text()
+          pin=re.search(r'^          ref: ([0-9a-f]{40})$',text,re.M).group(1)
+          assert pin != '14dad5f2bed79baab52001bf47a8be80ffc5ff35', 'P4C_PUBLICATION_BLOCKED: parent must replace the historical P4b ref with the real reviewed P4c Card candidate commit'
+          assert pin != '0'*40
+          actual=subprocess.check_output(['git','-C','../uninus-nutriculture-card','rev-parse','HEAD'],text=True).strip()
+          assert actual==pin
+          assert hashlib.sha256(pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js').read_bytes()).hexdigest()=='b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359'
+          PY
       - name: Require native bridge activation environment
         run: |
           python - <<'PY'
@@ -70,11 +82,11 @@ jobs:
           import hashlib, itertools, json, pathlib, re, os, xml.etree.ElementTree as E
           root = pathlib.Path(os.environ.get('CI_EVIDENCE_ROOT', '../p3c-ci-evidence'))
           cases = list(E.parse(root/'native.xml').getroot().iter('testcase'))
-          assert len(cases) == 451
-          assert len({c.attrib['classname'] for c in cases}) == 71
+          assert len(cases) == 553
+          assert len({c.attrib['classname'] for c in cases}) == 82
           assert not any(c.find(k) is not None for c in cases for k in ('skipped','failure','error'))
           shipped = pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js')
-          expected = '85304603e7870baa1d31ac27f74f11b206d1a0cac24bfe281c8a1bf308c41798'
+          expected = 'b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359'
           assert hashlib.sha256(shipped.read_bytes()).hexdigest() == expected
           receipts = {}
           for line in (root/'native.log').read_text().splitlines():
@@ -131,7 +143,7 @@ jobs:
               else:
                   source=base/'tests'/(name+'.py'); assert source.is_file() and h(source)==row['sha256']
           shipped=base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js'
-          assert h(shipped)=='85304603e7870baa1d31ac27f74f11b206d1a0cac24bfe281c8a1bf308c41798'
+          assert h(shipped)=='b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359'
           terminals={e['terminal_source']:e['sha256'] for e in result['events'] if 'terminal_source' in e}
           assert len(terminals)==2
           for path,digest in terminals.items():
@@ -170,7 +182,7 @@ jobs:
           for relative,digest in source_before.items():
            assert h(base.parent/relative)==digest
           assert metadata.version('homeassistant')=='2026.10.4'
-          assert h(base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js')=='85304603e7870baa1d31ac27f74f11b206d1a0cac24bfe281c8a1bf308c41798'
+          assert h(base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js')=='b8db3cfd204222f5226be1c3b05ff35355bac7a64bf284983d1f2bc22781a359'
           result=load('result.json'); wire=load('wire.json'); events=load('events.json')
           expected=['native_GET_empty_no_write','first_native_SAVE_checkpoint','Apply_ten_Numbers_S5_one_commit_preserve_nonrecipe_zero_IO','edit_catalog_only_and_Cancel_zero_mutation','same_name_distinct_native_UUIDs','second_delete_confirmation_only_then_native_delete','two_Cards_catalog_CAS_denial_draft_preserved','two_Cards_stale_settings_CAS_no_partial_write','native_active_admin_revoked_denial_and_no_target_metadata_read','SPEC01_native_ascii80_save_edit_select_apply_delete_history','SPEC01_native_astral80_save_edit_select_apply_delete_history','SPEC01_native_mixed80_save_edit_select_apply_delete_history','normal_STOP_fresh_SDK_process_full_options_catalog_and_parameters_readback']
           assert result['exit_code']==0 and result['native_requests']==28 and len(wire)==28
@@ -193,14 +205,14 @@ jobs:
             assert wire[index]['options']==wire[index-1]['options'] and wire[index]['commit_count']==wire[index-1]['commit_count']
           assert load('protected-denial.json')=={'denied':'Unauthorized','target_reads':[]}
           fresh=load('stop-fresh-process-readback.json');assert fresh['options']==wire[-1]['options'] and fresh['effective_parameters']==wire[-1]['numbers'] and fresh['status_parameters']==wire[-1]['numbers'] and fresh['pid']>0
-          imports=load('actual-imports.json');assert len(imports)==35
+          imports=load('actual-imports.json');assert len(imports)==42
           for name,row in imports.items():
            p=pathlib.Path(row['path']).resolve();assert p.is_relative_to(base) or p.is_relative_to(root);assert h(p)==row['sha256']
            if name.startswith('custom_components.uninus_nutriculture'):
             parts=p.parts;source=base/pathlib.Path(*parts[parts.index('custom_components'):])
            else:source=base/'tests'/(name+'.py')
            assert source.is_file() and h(source)==row['sha256']
-          (root/'ci-verified.json').write_text(json.dumps({'requests':28,'behavior_checkpoints':13,'imports':35,'zero_IO':True,'fresh_readback':True,'sdk':metadata.version('homeassistant')},indent=2))
+          (root/'ci-verified.json').write_text(json.dumps({'requests':28,'behavior_checkpoints':13,'imports':42,'zero_IO':True,'fresh_readback':True,'sdk':metadata.version('homeassistant')},indent=2))
           PY
       - name: P4b live quality native and shipped Card
         env:
@@ -214,47 +226,33 @@ jobs:
           python - <<'PY'
           import os,pathlib,subprocess,sys
           assert os.environ['P4B_JOIN_OUTPUT']
-          subprocess.run([sys.executable,'-B','tools/p4b_quality_verify.py','attempt1'],check=True)
+          subprocess.run([sys.executable,'-B','tools/p4c_legacy_verify.py','attempt1'],check=True)
           PY
+      - name: Portable P4c real native Core and shipped Card join
+        env:
+          P4C_CARD_PYTHON: python
+          P4C_JOIN_OUTPUT: ${{ github.workspace }}/p4c-ci-evidence/join
+        run: python -B tools/p4c_native_join.py
+      - name: Strict P4c result physical Store and source binding verification
+        env:
+          P4C_JOIN_OUTPUT: ${{ github.workspace }}/p4c-ci-evidence/join
+        run: python -B tools/p4c_native_verify.py
+      - name: Check portable P4c acceptance tooling
+        run: |
+          ruff check --no-cache --config pyproject.toml tools/p4c_*.py ../uninus-nutriculture-card/tests/check.py
+          ruff format --check --no-cache --config pyproject.toml tools/p4c_*.py ../uninus-nutriculture-card/tests/check.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: p3c-companion-native-evidence
+          # Exact allowlist: no raw wires/DOM, capability grants, pytest or storage/auth.
           path: |
-            p3c-ci-evidence/native.log
-            p3c-ci-evidence/native.xml
-            p3c-ci-evidence/terminal-proof.json
-            p3c-ci-evidence/card/**
-            p3c-ci-evidence/join-parent.log
+            p3c-ci-evidence/card/result.json
             p3c-ci-evidence/join/ci-verified.json
-            p3c-ci-evidence/join/attempt1/*.json
-            p3c-ci-evidence/join/attempt1/browser.stderr.log
-            p3c-ci-evidence/join/final-browser.png
             p4a-ci-evidence/recipe/ci-verified.json
-            p4a-ci-evidence/recipe/attempt1/result.json
-            p4a-ci-evidence/recipe/attempt1/events.json
-            p4a-ci-evidence/recipe/attempt1/wire.json
-            p4a-ci-evidence/recipe/attempt1/actual-imports.json
-            p4a-ci-evidence/recipe/attempt1/stop-fresh-process-readback.json
-            p4a-ci-evidence/recipe/attempt1/protected-denial.json
-            p4a-ci-evidence/recipe/attempt1/browser.stderr.log
             p4b-ci-evidence/live/ci-verified.json
-            p4b-ci-evidence/live/attempt1/result.json
-            p4b-ci-evidence/live/attempt1/events.json
-            p4b-ci-evidence/live/attempt1/wire.json
-            p4b-ci-evidence/live/attempt1/actual-imports.json
-            p4b-ci-evidence/live/attempt1/source-before.json
-            p4b-ci-evidence/live/attempt1/source-after.json
-            p4b-ci-evidence/live/attempt1/command.json
-            p4b-ci-evidence/live/attempt1/protected-denial.json
-            p4b-ci-evidence/live/attempt1/stop-fresh-process-readback.json
-            p4b-ci-evidence/live/attempt1/expiry-wire-exact.json
-            p4b-ci-evidence/live/attempt1/grant.json
-            p4b-ci-evidence/live/attempt1/deadline.json
-            p4b-ci-evidence/live/attempt1/multistage.json
-            p4b-ci-evidence/live/attempt1/pre-stop-quality.json
-            p4b-ci-evidence/live/attempt1/browser.stderr.log
-            p4b-ci-evidence/live/attempt1/fresh.stderr.log
-            !**/pycache/**
-            !**/.storage/**
+            p4c-ci-evidence/join-safe-export/ci-verified.json
+            p4c-ci-evidence/join-safe-export/source-before.json
+            p4c-ci-evidence/join-safe-export/source-after.json
+            p4c-ci-evidence/join-safe-export/EXPORT_MANIFEST.json
 # No HACS/live-device acceptance, release, or deployment claim.

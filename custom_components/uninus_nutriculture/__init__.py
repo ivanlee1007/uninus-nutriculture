@@ -14,11 +14,20 @@ async def async_setup_entry(hass, entry):
     from .quality import QualityCoordinator
 
     entry.runtime_data.quality = QualityCoordinator(entry.runtime_data)
+    from .results import ResultCoordinator
+
+    entry.runtime_data.results = ResultCoordinator(entry.runtime_data)
+    from .notifications import Notifications
+
+    entry.runtime_data.notifications = Notifications(entry.runtime_data)
+    await entry.runtime_data.notifications.setup()
     await hass.config_entries.async_forward_entry_setups(entry, [Platform.NUMBER])
     await hass.config_entries.async_forward_entry_setups(
         entry, [Platform.SENSOR, Platform.SWITCH, Platform.BUTTON, Platform.BINARY_SENSOR]
     )
     entry.async_on_unload(entry.add_update_listener(_options_updated))
+    # Rebuild the non-persistent provider cache from the loaded policy, not defaults.
+    entry.runtime_data.notifications.refresh_catalog()
     return True
 
 
@@ -36,9 +45,12 @@ async def _options_updated(hass, entry):
 
 
 async def async_unload_entry(hass, entry):
+    entry.runtime_data.notifications.close()
+    entry.runtime_data.results.close()
     entry.runtime_data.quality.close()
     if not await entry.runtime_data.control.shutdown():
         return False
+    await entry.runtime_data.notifications.drain()
     unloaded = await hass.config_entries.async_unload_platforms(
         entry,
         [

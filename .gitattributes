@@ -19,3 +19,16 @@ docs/reviews/p3c-quality-r4/** -text whitespace=blank-at-eol,blank-at-eof,space-
 # Preserve exact independently reviewed P4b source/fixture bytes; retain whitespace checks.
 P4B_R1_HANDOFF.md -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 tests/test_p4b_native_safety_matrix.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# P4c frozen source/permanent-test raw-byte preservation; no whitespace waiver.
+custom_components/uninus_nutriculture/notification_dispatch.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+custom_components/uninus_nutriculture/sensor.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+custom_components/uninus_nutriculture/services.yaml -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4b_native_safety_matrix.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4c_final_completion.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4c_notifications.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4c_provenance.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p4c_results.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Immutable P4c allowlisted evidence retains raw bytes and historical whitespace only.
+docs/evidence/p4c-publication-r4/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

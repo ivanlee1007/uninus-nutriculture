@@ -1,0 +1,164 @@
+[
+  {
+    "clause": "R01",
+    "requirement": "external response/nonresponse start_flow與flow_run同gate；masterOFF/fault/weekday/來源/commissioning拒絕無新增run/event；重複ON/request receipt不重做、同槽busy不排第二輪",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Admission observation is read-only and only sees a new active run plan. Same request token on A does not return A receipt for uncommissioned B. No dual-commissioned-flow claim.",
+    "historical_evidence": "G current 532 union: registered service/switch admission, P3 request receipts/rejection gates; scope/N09-same-request.json",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "R02",
+    "requirement": "四row完整、refill已足無actual ON、enabled skip weekday、dependency blocked、disabled stage、timeout/abort/急停；current→last只在closure confirmed；不捏造quality或permit",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Native prestart emergency now confirms failed/emergency_stop, with actual OFF/owners/tasks/flow closed. Started/prestart held OFF ACK remain nonterminal until ACK; G four-stage true native/shippedCard join proves completed remains separate from quality.",
+    "historical_evidence": "originals/junit.xml; G/JOIN_PROOF.json; scope four nested-overflow cases",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "R03",
+    "requirement": "Flow.run finally、Flow.stop、Refill.cleanup、Controller._stop_locked連續publish；fault＋pendingON/lateOFF/仍ownsIO/lease/unknown輸出時不得completed；stop_unconfirmed一次告警、晚閉合failed、ack不能改停止未確認",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "R5 guard distinguishes emergency ownership from an unfinished execution task; start initializes all clocks synchronously before task assignment. No exception suppression, ownership clearing, seeded prestart clocks or false terminal.",
+    "historical_evidence": "originals six PASS incl reviewer completed-mix adjacency; G pending ON/OFF closures",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "R04",
+    "requirement": "同revision sensor extraattrs＝GET；event.run＝該轉移cached run；GET x100與兩種return_response、zeroStore/provider/publish/time sampling；invalid request不可污染epochs/revisions；native event不可當授權token",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "GET copies cache after native auth/entry check, no clock/provider/Store/observe. Bus context is fresh and projection contains only frozen public fields. §8 terminal sensor keeps last_result.state.",
+    "historical_evidence": "G current registered result/native cache equality and real Card terminal equality; bounded-current cached clocks",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "R05",
+    "requirement": "新runtime epoch、current/last/event全空，舊Card/latecallback拒；不恢復run/qualitygrant/notificationqueue/ACK，不補送風暴。保存config可恢復但不產生歷史事件",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Canonical setup makes fresh ephemeral epoch/current/last/event/ledger/queue. Saved private policy reload is not replay. Old Q restart success is not carried wholesale across changed imported mix/dispatcher; current G source receipts are the authority.",
+    "historical_evidence": "G current setup/reload tests; bounded-current selected target fresh setup PASS",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "R06",
+    "requirement": "UTC倒退/前跳不影響monotonic cooldown/TTL；duration/highpH原生clock、source freshness invalid→不能累積；timestamps getter不漂移，event序只依sequence",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Re-executed old small clock probes on final source rather than claiming unchanged consumed input. Source freshness clears candidates; cached timestamps and monotonic resource clocks do not drift. Existing high-pH controller timing remains G baseline scope.",
+    "historical_evidence": "bounded-current R06 UTC +/-600 two PASS; scope real held-provider TTL/cooldown",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N01",
+    "requirement": "disabled virtual defaults零disk；notify/PN逐一save→真nativeStore envelope+freshCore load；target_bind由後端registry生成；cancel/navigation/get/invalidCAS全不寫；save不emit訊息或動作",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Accepted save revision always advances, physically read back; rejected/unadmitted actions do not write. Private native Store isolated from options/settings/quality. N02 post-revocation form response is separately blocked, not waived by durable-save success.",
+    "historical_evidence": "G current permanent persistence-redo cases + G native Options/Card save automatic GET/fresh Store join",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N02",
+    "requirement": "nativeOptions/WS admin active real human可用；缺user/nonadmin/inactive/systemgenerated拒；auth await中刪user／撤權、owner replacement／entry disable/unload／STOP前後all fenced；client id物件/number/空字串及truthy is_admin拒",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "R3 one-line getattr routes missing owner through existing shared authority/live-entry checks. Original native manager and HTTP-view exceptions closed with entry_not_loaded abort; missing runtime plus actual nonowner revocation yields unauthorized before private serialization, clears retained private fields and makes no effects. Original privacy and stale revision/epoch CAS controls pass.",
+    "historical_evidence": "affected manager/HTTP original Q3 probe, original privacy3+last-form1, R2 permanent12 and loaded save/reopen/cancel; adjacent-native native nonowner revoke after actual unload",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N03",
+    "requirement": "notify namespace只是第一層，還須nativecomponent NotifyEntity＋registry stable identity；switch.turn_on/reset/script/service/action/url/template/device/area/label與任意data拒；不存在entity／服務不載入／target消失／同ID重建／rename；無legacy服務fallback",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Exact native type + stable registry binding; no ServiceRegistry or legacy notify fallback. Selected target remains in bounded native catalog. Compatibility remains pinned to Core2026.10.4.",
+    "historical_evidence": "G typed NotifyEntity/title/identity/rename/recreation/A-to-B cases; bounded-current catalog256 selected target/reload PASS",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N04",
+    "requirement": "對所有新publicnative sensor/bus以及整個Core call_service事件收集設誘餌target/provider/exception秘密字串，必零洩漏；save走privateWS不是call_service；fake provider payload只固定模板。未知/known-prefix/空異常只能固定allowlist，faultsetter／hydratedfault既有測試保留",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Reviewed all newly added public producers: result sensor, result service DTO and result bus; same cached allowlist. Collected complete call_service events during private save/dispatch and new public sensor/event payloads; synthetic target/binding/provider diagnostic canaries absent. Unknown/known-prefix/empty errors yield fixed provider_failed; control setter unknown becomes operation_failed. Native notify own preexisting state/registry/host/provider visibility is explicitly excluded by contract. Not a substring test against a normal public tank label. N02 private Options cache response is a distinct revocation violation.",
+    "historical_evidence": "scope three synthetic canary native cases + N04-*.json; G closed-fault setter/hydration",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N05",
+    "requirement": "provider success/fail/timeout/ignorecancel/lateack、queue滿/TTL/cooldown、ack/disable/save concurrent stop；原ON/OFF次數與安全owner全真，無新增lease；notification變更不讓quality policy/settings_revision變更或permit因通知失效",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Native provider waiting never holds control/tank/safety locks or leases. Result observations/queue operations are synchronous and do not gate OFF. Timeout keeps native slot quarantined until actual settle. No new permit authority; provider synchronous event-loop blocking remains declared trust boundary.",
+    "historical_evidence": "scope actual slow-provider timeout/quarantine + native OFF/late-owner case PASS; originals held OFF ACK PASS; G unload/drain",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N06",
+    "requirement": "queue16、entry1/global2、dedupe64、ledger32、catalog256、cooldown60..86400、timeout5、TTL60；不合作provider占slot不開新task；criticalqueue滿明示queue_full；Unicode/lone-surrogate/C0/C1/bidi超長與整數bool/float/NaN拒",
+    "status": "PASS_REVERIFIED_R4",
+    "historical_assessment": "No physical full-flow stress requirement: bounded real native dispatcher seam closes resource boundaries, actual selected native provider occupies slot. Overflow rejects MAX policy revision and rotates result epoch without stale nested rows. Strict bool/float/NaN/Inf/duplicate/C0/C1/bidi/surrogate/non-ASCII target/overlength rejected; inclusive 60 and 86400 accepted. 5s native timeout independently exercised. Global2 includes retired task owners by shared hass set.",
+    "historical_evidence": "scope real held-native-provider queue16/ledger32/dedupe64/TTL60/cooldown boundary PASS + four result overflow; bounded-current 6 strict+14 scalar+max cooldown/revision overflow+catalog256 PASS; adjacent-current retired global2 native rerun",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim.",
+    "assessment": "P4C-QUALITY-01 original exact probe now passes true native same-entry reload: old held provider owns sole entry slot; fresh epoch queues. Native second-entry global2 isolation, repeated reload and policy/epoch/TTL fences pass. Independent native exception/cancel settlement plus explicit reconcile preserve old reservation, then fresh handoff; repeated old callbacks cannot clear new owner; final entry map empty. Other N06 bounds/strict validation carried unchanged.",
+    "evidence": [
+      "native/counterexample.json",
+      "native/adjacent_exception.json",
+      "native/adjacent_cancel.json",
+      "native/junit.xml",
+      "provenance/imports.json"
+    ],
+    "supersedes_only": "N06 reopened by P4C-QUALITY-01; not the historical whole-quality verdict"
+  },
+  {
+    "clause": "N07",
+    "requirement": "已讀只本entry/currentepoch/ledger event；未知/跨槽/舊epoch拒；重複ACK idempotent、不Store、不dismiss/reset/permit；Provider返回handoff_returned非delivery confirmed",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "ACK only mutates current entry ledger in memory; no Store, dismissal, control reset or permit. Crossentry event cannot ACK; provider handoff_returned is not external delivery confirmation.",
+    "historical_evidence": "bounded-current registered ACK idempotence/unknown/old epoch and crossentry ACK PASS",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N08",
+    "requirement": "unload/STOP先closeadmission立即走OFF；worker cancel不等慢provider才OFF；late native ack無新owner mutation；real Store吞錯/readback失敗/cancel/indeterminate、revision+1避免同bytes假成功、Core stopping/final_write/stopped拒寫與lateI/Odrain；fresh setup只讀不存在檔不建檔",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Close admission before control shutdown, do not wait provider slot before OFF; native Store real I/O drains. Indeterminate is not false no-effect; reconcile explicit and fenced. Native private _async_write_data completion seam is Core-pinned; heldStage2 is not process destruction. N02 cached Options serialization after denial remains blocked separately.",
+    "historical_evidence": "G current persistence-redo and Core held Stage2 STOP/unload native reports; scope current postwrite revoke+slow-provider tests PASS",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "N09",
+    "requirement": "A/B policy,run,event,epoch,queue/ledger隔離；A的storedtarget/WS late reply不能寫B；same notify entity可分享訊息出口但不共享run或ack；共享輸出實機commissioning仍P5，不在此假證",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Same request token does not return A run receipt for B; policy and ACK use explicit entry/epoch/current owner. Exact genuine native A private reply held across Card switch to B does not repopulate A cache/baseline/DOM. B uncommissioned; two successful commissioned flows/shared-output arbitration remain explicit P5, not a new blocker or claimed acceptance.",
+    "historical_evidence": "scope/N09-same-request.json; bounded-current registered crossentry ACK/policy/epoch PASS; wire/entry-A-held.json, entry-B-released.json, checkpoints.json",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "A01",
+    "requirement": "既有ph_high_alarm_active false→true通知、恢復／cooldown／invalid reset／閾值前台可調；G1 idle/pumpOFF ph<ph_danger_low、ec>ec_danger_high read-only observer必補；同fault episode不雙送、從不改控制策略",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Successful matching cause/occurrence + same policy/revision alone can merge; run ID alone is insufficient. Own original path retains actual callbacks/native emergency and confirms an unrelated failed/emergency_stop notice is handed off. Unhanded queue/expired/revoked/provider-failed attempts are not successful notices. Historical seeded first regression remains qualified, not used as P3 proof.",
+    "historical_evidence": "originals native resolved alarm then native emergency WITHOUT seed PASS; G permanent 21 episode regressions; bounded-current R06",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  },
+  {
+    "clause": "C01",
+    "requirement": "shippedCard lateGET/lateSAVE、connection/ws換、同id role降權/active變、object id、entry換/epoch換、offline/reconnect/disconnect、dirty draft取消；私有target不能殘留DOM／新owner，read-only無managementcall，回讀才顯示保存成功",
+    "status": "PASS_CARRIED_R3_SOURCE_CLOSED",
+    "historical_assessment": "Genuine native GET and SAVE replies were produced and held before same-user primitive role demotion. Separate native read refused while same user ID/callWS function/connection/entry/epoch/revision stayed unchanged; exact native reply then released. Shipped Chromium cache/baseline/target draft/render remained purged; fresh authorized GET needed after role restoration. Crossentry exact native GET separately passed. Other strict-ID/connection/offline dirty-draft fences remain authenticated Card carry, not claimed rerun.",
+    "historical_evidence": "wire/checkpoints.json + wire/held-{get,save}.json, demoted-*.json, released-*.json; EVIDENCE_AUTHENTICATION exact membership; G 31-input Card carry",
+    "source_map": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-options-r3-affected-spec\\WHOLE_SPEC_17_MAP.json",
+    "boundary": "Only private in-flight ownership changed; old tests/docs/Card and all other product files byte-identical (DELTA.json). No full-matrix rerun claim."
+  }
+]

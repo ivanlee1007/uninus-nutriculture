@@ -52,7 +52,8 @@ class MixStage(NutrientStage):
             raise ServiceValidationError("flow_timeout")
 
     def tighten(self):
-        if self.owns_io:
+        # Emergency OFF ownership does not imply a started mix execution.
+        if self.owns_io and self.task is not None and not self.task.done():
             self.deadline = min(
                 self.deadline,
                 self.started + self.tank.entry.options["mix_parameters"]["flow_timeout_seconds"],

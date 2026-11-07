@@ -1,0 +1,69 @@
+{
+  "verdict": "APPROVED",
+  "review_type": "independent composed whole source-quality/security",
+  "candidate": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\nutriculture-p4c-reload-quota-r4",
+  "manifest_sha256": "c8432ecf9d9bdec0d091890af9f90466b4edf68e60f69ca0893e1723daa42ba3",
+  "baseline_backend": "48b148c05de50dd976952462d50c86871acffc5c",
+  "baseline_card": "14dad5f2bed79baab52001bf47a8be80ffc5ff35",
+  "coverage": {
+    "total": 52,
+    "changed": 27,
+    "added": 25,
+    "layers": {
+      "docs": 18,
+      "source": 18,
+      "test": 16
+    },
+    "unreviewed": 0,
+    "previous_complete_review_paths": 51,
+    "exact_unchanged_carry": 50,
+    "re_reviewed": 1,
+    "new_full_reviewed": 1,
+    "file": "COVERAGE.json"
+  },
+  "composition": {
+    "previous_verdict": "REQUEST_CHANGES",
+    "previous_verdict_preserved": true,
+    "previous_report": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-whole-quality-r3\\REPORT.md",
+    "previous_coverage": "C:\\Users\\ivanl\\.hermes\\cache\\scratch\\p4c-whole-quality-r3\\COVERAGE.json",
+    "closed_prior_important": [
+      "P4C-QUALITY-01"
+    ],
+    "carry_scope": "all unchanged conclusions and limits from complete 51path review; changed dispatcher replaced by current independent assessment",
+    "inventory_delta": "INVENTORY_DELTA.json"
+  },
+  "critical": 0,
+  "important": 0,
+  "minor": 1,
+  "new_security_findings": 0,
+  "new_run": {
+    "cases": 5,
+    "unique": 5,
+    "passed": 5,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_exit": 0,
+    "full_suite": false,
+    "proof": "native"
+  },
+  "source_guard": {
+    "source": 6660,
+    "metadata": 5,
+    "total": 6665,
+    "prepost_exact": true,
+    "metadata_independent_prehash_and_posthash": true
+  },
+  "references": "REFERENCES_VERIFIED.json",
+  "evidence": "EVIDENCE_VERIFIED.json",
+  "wholeSPEC": {
+    "verdict": "APPROVED",
+    "clauses": 17,
+    "closed_artifacts_verified": 711,
+    "not_rerun": true
+  },
+  "final553gate": "NOT_VERIFIED_BY_THIS_REVIEW; separate parent gate",
+  "publication_approval": false,
+  "product_edits": false,
+  "repair_permission": false
+}

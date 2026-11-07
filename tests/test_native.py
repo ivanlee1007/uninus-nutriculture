@@ -9,7 +9,11 @@ async def test_native_owned_numbers_and_status(hass):
     rows = er.async_entries_for_config_entry(er.async_get(hass), tank.entry_id)
     numbers = [r for r in rows if r.domain == "number"]
     assert len(numbers) == 10
-    assert len([r for r in rows if r.domain == "sensor"]) == 3
+    assert len([r for r in rows if r.domain == "sensor"]) == 4
+    assert {r.unique_id for r in rows if r.domain == "sensor"} == {
+        f"{tank.entry_id}:{key}"
+        for key in ("status", "control_status", "quality_status", "result_status")
+    }
     assert len([r for r in rows if r.domain == "binary_sensor"]) == 1
     defaults = {
         "level_low": 2.25,

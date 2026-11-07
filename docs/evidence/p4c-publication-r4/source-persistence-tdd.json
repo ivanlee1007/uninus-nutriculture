@@ -1,0 +1,123 @@
+{
+  "status": "FRESH_REIMPLEMENTATION_EXECUTION_AUTHENTICATED_NOT_REVIEW_APPROVAL",
+  "authorization_sha256": "44438285e4776f28fa9723fb605bfe1732d170f0d0563f3e5de720899049a2ee",
+  "FINAL_sha256": "dad0e41a3f70f59e3bec05242ef0a2993eae89f660297c7bf06033a6d84094ff",
+  "newtruebusinessRED_authenticated": true,
+  "historical_invalidRED_not_relabelled": true,
+  "native_Core_fakeequipment_only": true,
+  "allrun_prebytes_snapshots_hashmatch": true,
+  "run_seals": [
+    {
+      "run": "01-GREEN",
+      "BEFORE_sha256": "afda3fd3b9907c4c1f91dc7bc7e83f892a6144a2f455f3a8857008c3177d4c39",
+      "AFTER_sha256": "af6f16824458d30890e85d14c799001a562cccf9e973947103d8c451c8ede8f8",
+      "raw_sha256": "cd563f1aeaf3d433c67bc47c64c409ce3493ed5d32367fd1870f37f5b1cc6422",
+      "actual_childexit": 0
+    },
+    {
+      "run": "01-RED",
+      "BEFORE_sha256": "95a3ee8c007ebfc8d254e05b8f0ce393970c7b5aadf78a56092ca094c1536a1e",
+      "AFTER_sha256": "56d506f1627ec34e517ff6fe1506b9a550db76c86b775c79501c76ec60bd9385",
+      "raw_sha256": "2139ab00be786a700420766b7e623ec486e37330b6e168070930e6c2b2afcec4",
+      "actual_childexit": 1
+    },
+    {
+      "run": "02-DRAIN-GREEN-RECONCILE-RED",
+      "BEFORE_sha256": "fe339d79efa25dfd2d515a59c48e38fa6f47fe902225a7023a242db7b3b65c08",
+      "AFTER_sha256": "045798e744b31e384be1b678a774ff1da582f8ba957afa0401add8a64a1c432f",
+      "raw_sha256": "75405e453ffd8251914fd18a7acf654fdbecdf8b916b018be962b30a8c4a33dc",
+      "actual_childexit": 1
+    },
+    {
+      "run": "02-GREEN",
+      "BEFORE_sha256": "730ab84cf134f9739a9a29941b525219e119dc032fef8e07b37e1c3d08406ac6",
+      "AFTER_sha256": "4bba96d009752bcb5ba16ab10b36ed8e659897d981aaeaff773295b92d9e20e9",
+      "raw_sha256": "1bff8bfe1c5dc3a202bf3cc9fe8dace32d34f6ae540db53b932ad5309a6c550f",
+      "actual_childexit": 0
+    },
+    {
+      "run": "02-RED",
+      "BEFORE_sha256": "eafabaa8f764c77ccda0d49b08a30f272122f9fcd30790e23efd3ab9194db4d0",
+      "AFTER_sha256": "7723a1d78f7b42eece31b111d764ac3e8fe038c3bfaa482e9e74945e768658c2",
+      "raw_sha256": "f0f98bb475cd669ef7746c88c0bb357dbcfeb2e5e83d75e5ab600434913e2eb1",
+      "actual_childexit": 1
+    },
+    {
+      "run": "03-GREEN",
+      "BEFORE_sha256": "c256c88a1a76e178d3569fdc13aeb3926b0c06c0a7d0c3b0d0a2438a0a39dd63",
+      "AFTER_sha256": "f71eb6c11e9c8216a8e43436b0470e0ab5cd6e2faab5ba208593ac9dc6fe614a",
+      "raw_sha256": "911b37536461fc5a155f8dcb191ea85e6da60e0724d35a105665f22f662b09e2",
+      "actual_childexit": 0
+    },
+    {
+      "run": "03-RED",
+      "BEFORE_sha256": "58f40e90b73d3cc668d56216d86a75301176ec61120e72394c8ab69bfc30e550",
+      "AFTER_sha256": "48c53033b1d88f507b914e2d088ccd79676fef29112643ad140c226d9db34757",
+      "raw_sha256": "16635148f271b066a63a2a7c2314214682bd0579a0194bcd3e9d7f3e2fe40c5e",
+      "actual_childexit": 1
+    },
+    {
+      "run": "04-GREEN",
+      "BEFORE_sha256": "57c24079a00e3bf0414a2721b99a4e8f3f75022132ef27a5a47ddce80f45e133",
+      "AFTER_sha256": "db0d06cfeaf145a28d8a9a2956bf658e2ebe1a57258fb982d8953e50c2c82db2",
+      "raw_sha256": "63133deb5d53e83d4a25abf09781e45a673386892e7cb044e247fe3a4766fbb3",
+      "actual_childexit": 0
+    },
+    {
+      "run": "04-RED-AND-SUPPLEMENTARY",
+      "BEFORE_sha256": "c0940437678b0094e821c767dfa0bdbd1fa9fc413c403c3edc98b743dde94fc4",
+      "AFTER_sha256": "2ea8b179a1562c6dbc3b0add619d3ce1ce99edee7811dbaa54afd05b1dc66e3b",
+      "raw_sha256": "80a61c11e9f46ebec57b7e5b787ad389b51294bc7c31b0eb74cf114ae7b2cd4c",
+      "actual_childexit": 1
+    },
+    {
+      "run": "04-STOP-DIAGNOSTIC",
+      "BEFORE_sha256": "100b5ed0eb67e9ba7292885986115cc1f0d366901d62f9e417973ee81a683b4a",
+      "AFTER_sha256": "82bd6075f8393081534825f00a147ad6eac7d54fc8bcbfb7ddbfc055f0d39c55",
+      "raw_sha256": "79b600b996f4080bc74c47a9a99f81ab7f2e4f1cfcb3c84f438444c90ac2b4f6",
+      "actual_childexit": 1
+    },
+    {
+      "run": "05-INTEGRATED",
+      "BEFORE_sha256": "f567c26a3390658d65a7b330d78cf7879e044adbd8d505aec26b3106938b2e3e",
+      "AFTER_sha256": "99c1bf69bd60dee6ed50e2d6ed1c167da266369066938ff8c4011eed877e56a2",
+      "raw_sha256": "dff367904a509e1a8af781945c88a1f13fb72d395f9c7dcbb1abfb7c1dc77ced",
+      "actual_childexit": 0
+    },
+    {
+      "run": "06-DRAIN-RED",
+      "BEFORE_sha256": "810abffda276a6442fe929091a5372b547330223be86aad734a1e369b6cc7f10",
+      "AFTER_sha256": "1c0f002dadacd91f7fd50a34c7584302186f3dd476ad2f7c4848fc5cfdd5ebcd",
+      "raw_sha256": "f3dc27fc7470abed6a29c059f1f67fde6b443f58b01f9e138d6bdb80a7cd256a",
+      "actual_childexit": 1
+    },
+    {
+      "run": "06-GREEN-FINAL",
+      "BEFORE_sha256": "d86adec5d9032a458fd2346e24928440d927b3129038ca2afdedd58537887c6e",
+      "AFTER_sha256": "bb9337395260c1d4e07ac0e03ada6dea1e6de4c777201bc24ea4e5cf87593b62",
+      "raw_sha256": "840199d946ca6ed9214ac6f7b87fc4b252b930659beb659831aa21a7b6ef36e5",
+      "actual_childexit": 0
+    }
+  ],
+  "final48_childexit": 0,
+  "finalcurrent_inputs_match": true,
+  "unchanged_nonpersistence_methods": [
+    "__init__",
+    "live",
+    "close",
+    "changed",
+    "refresh_catalog",
+    "dto",
+    "enqueue"
+  ],
+  "new_persistence_helpers": [
+    "_persistence_fence",
+    "_persistence_job",
+    "_persistence_native_save",
+    "_persistence_read",
+    "_persistence_wait"
+  ],
+  "qualified_STOP": "heldStage2 only not processdestruction",
+  "next": "narrowmerge nonpersistencefinalWB plusfreshR Store and tests then finalregression/wire/SPEC/quality",
+  "budget": "P4c0/2"
+}

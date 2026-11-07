@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import os
 from copy import deepcopy
 from pathlib import Path
 
@@ -11,11 +12,12 @@ from test_p3_dosing import dosing_hass as dosing_hass
 from test_p3_dosing import start_native
 from test_p3c_flow import DAYS, STAGES, call, plan, prepared, save_v5, until
 
-OUT = Path(__file__).resolve().parents[2]
-
 
 def capture(name, data):
-    (OUT / (name + ".json")).write_text(json.dumps(data, default=str, indent=2))
+    if capture_dir := os.environ.get("P3C_CAPTURE_DIR"):
+        output = Path(capture_dir)
+        output.mkdir(parents=True, exist_ok=True)
+        (output / (name + ".json")).write_text(json.dumps(data, default=str, indent=2))
 
 
 async def test_native_options_open_abort_and_plan_form(dosing_hass):
