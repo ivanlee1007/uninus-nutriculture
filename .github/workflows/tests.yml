@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ivanlee1007/uninus-nutriculture-card
-          ref: 0134d7cec1146b802073264b9e81a9ff72c8924d
+          ref: 127b6ee181b0a3b49cd16aa3ca1a3d79d020c6cf
           path: uninus-nutriculture-card
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -31,6 +31,18 @@ jobs:
           node-version: '22'
       - run: python -m pip install -r requirements-test.txt -r ../uninus-nutriculture-card/requirements-test.txt
       - run: python -m playwright install --with-deps chromium
+      - name: Export installed Chromium executable
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              executable = Path(os.environ.get('CHROMIUM_EXECUTABLE') or p.chromium.executable_path)
+              assert executable.is_file(), executable
+              with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as env:
+                  env.write(f'CHROMIUM_EXECUTABLE={executable}\n')
+          PY
       - name: Explicit native and browser environment
         run: |
           echo "P3A_CARD_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
