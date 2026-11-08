@@ -11,7 +11,7 @@ import re
 from datetime import datetime
 from pathlib import Path, PurePosixPath
 
-BUNDLE = "e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe"
+BUNDLE = "591eb021ebf0117d0cab48297603409807672c2b423c9eb15c7dd1ce384c670b"
 HANDLER = "5b3fdf3acfa0c8e254819473e24408a9d54d3b0cedb8cda6f13551b5bf8ed7c0"
 FLAGS = {
     "include_start_time_state": True,

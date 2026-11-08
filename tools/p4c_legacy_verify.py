@@ -16,7 +16,7 @@ assert (
     == "2e1e4c29462e76db28c476c91fe529b34805ea5b462e3bce3ae2cafb1f0db5e9"
 )
 old = "85304603e7870baa1d31ac27f74f11b206d1a0cac24bfe281c8a1bf308c41798"
-new = "e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe"
+new = "591eb021ebf0117d0cab48297603409807672c2b423c9eb15c7dd1ce384c670b"
 text = raw.decode("utf-8")
 assert text.count(old) == 1
 adapted = text.replace(old, new)

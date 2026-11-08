@@ -35,3 +35,6 @@ docs/evidence/p4c-publication-r4/** -text whitespace=-blank-at-eol,-blank-at-eof
 
 # Preserve exact reviewed P5b native acceptance helper bytes.
 tools/p5b_history_native.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Preserve approved P5c native helper bytes; retain executable whitespace checks.
+tools/p5c_runtime_native.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

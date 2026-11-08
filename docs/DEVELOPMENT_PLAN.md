@@ -1,4 +1,4 @@
-> 現行來源狀態（2026-11-08）：P1–P3、P4a／P4b／P4c與P5a首片已完成軟體來源交付。P5a交付基線：Backend `4a08e615bf1949ecbeea37fdba4696c5bf8d3062`（CI `42458123964`）、Card `3eaa78c55043598fd4bc666c8ef432b8870d6701`（CI `42458104719`）；獨立SPEC／品質、出版等價與遠端產物核驗已完成。 本提交新增P5b同槽pH／EC／液位歷史，功能、真Recorder整合與獨立SPEC／品質兩審已完成，B-01已關閉；出版與hosted CI以本提交的實際核驗結果為準，不冒用P5a基線CI。P5b唯一修補批次1/1已用，不重置舊額度。P5a joint-review修補1/1與具名read-side revocation修補1/1已用；P4c 4/4、P3 5/5結案不重置。完整P5十二組保留，部分已交付不等於全組完成；未實機／HACS／tag／release／部署。
+> 現行來源：P5b同槽pH／EC／液位歷史已完成正式來源交付（Backend `53e4f0b5dceb2cbd8c76bcef0470636d37868e41`、Card `863406040b2537f57001caa0d59c56f16af97a67`；精確CI `42476705488`／`42476693050` 已核驗）。P5c重要UI已完成隔離整合與獨立SPEC／品質安全兩審；來源出版與本提交hosted CI分別按實際核驗結果為準，不冒用舊批准。最新順序：重要UI → 另行確認測試機與致動範圍後實機測試 → 其餘P5。完整P5仍保留，未部署、HACS、tag或release；P3／P4／P5a／P5b結案修補額度不重置。
 
 
 > 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
@@ -8,7 +8,7 @@
 
 ## 核准產品方向與授權界線
 
-產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。P5a首片已完成正式軟體來源交付。本輪依使用者要求校正方向並接續同槽pH／EC／液位歷史完整使用路徑；Card沿既有source_entities讀Core History／Recorder，backend產品與schema及既有永久測試不改；只新增必要歷史驗收工具；不操作外部HA、不部署、不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
+產品由 `ivanlee1007/uninus-nutriculture`（HA integration）與 `ivanlee1007/uninus-nutriculture-card`（Lovelace Card）組成。兩個 repository 已依使用者要求改為 Public；初次 P1 交付時為私人，歷史證據不回寫。P5a首片已完成正式軟體來源交付。P5b同槽pH／EC／液位歷史完整使用路徑已正式交付；目前P5c依最新順序開發重要runtime／事件時間軸UI，沿既有原生Entity與Core History／Recorder，不改backend產品／schema；不操作外部HA、不部署、不建立tag/release。原站維持唯讀。本專案不得包含原站 URL、Token、使用者識別、完整設定匯出或未授權複製的 SVG/CSS。
 
 完整產品目標不因先交付最小功能而縮減：既有 MQTT Entity 重用、多槽、integration-owned 可調參數、總開關＋四階段子開關、使用者可配置順序／重疊／相對時序與每階段星期的流程組合、補水/加養/加酸/混合流程、補水與加養跟隨重疊、安全互鎖/急停/復歸、資料有效性、重啟復原、外部整輪啟動入口、下游灌溉許可、通知與響應式 Card。不得將配置成功或綠色測試當作實機驗收。
 
@@ -128,6 +128,15 @@ P2補水候選已通過隔離測試及獨立SPEC／品質安全審查；舊P1監
 
 四階段關係按鈕可進入既有規則欄位，保留調序／重疊／延遲／有限條件／星期→七日後端Preview→明確套用→native讀回／重開路徑；見[P5a視覺工作台操作說明](P5A_VISUAL_WORKFLOW.md)。真隔離Core19 requests整合與修正後獨立SPEC→品質兩審已完成；既有P5a基線精確HEAD hosted CI與遠端交付核驗亦已完成；後續新候選另驗自身CI，不宣稱完整P5或實機完成。草稿示意／Preview不保證物理可行性或arrival；不增加schema、scheduler、raw IO或現場控制。
 
-## 本輪P5b：同槽歷史（功能與兩審完成）
+## P5b：同槽歷史（來源已正式交付）
 
-完整使用路徑、真值／權限／生命週期與保留範圍以[P5b歷史契約](P5B_HISTORY_CONTRACT.md)為準；本片功能、整合驗收與兩審已完成，來源出版與hosted CI按本提交實際結果分開核驗。不重開P5a既有交付或已結案修補額度。
+完整使用路徑、真值／權限／生命週期與保留範圍以[P5b歷史契約](P5B_HISTORY_CONTRACT.md)為準；本片功能、整合驗收、兩審、正式來源出版與exact-HEAD hosted CI及產物核驗已完成。不重開P5a既有交付或已結案修補額度。
+
+
+## P5c重要UI與後續順序（隔離整合與兩審完成）
+
+1. **重要UI已實作並完成隔離驗證／兩審**：四階段即時運行視覺、真資源等待／略過／停止確認、HA觀察輸出、Recorder的stage／output／permit與停止原因時間軸；補齊新增畫面的手機／鍵盤與切槽一致性。沿用後端唯一權威，不把草稿當運行計畫、不把輸出狀態當物理到達、不把歷史許可當現行授權。
+2. **再進行實機測試**：完成必要整合與獨立SPEC→品質後，先確認指定測試機、硬體、可連線／可致動範圍與停止條件。此排序不解除原站不連線、不讀取現場憑證、不部署的現行界線。
+3. **最後補其餘P5**：選配水溫／通訊診斷、完整兩槽commissioned與共享輸出矩陣、完整HA宿主／HACS、文件／備份還原及另授發行準備；不是取消這些需求。
+
+P5a編輯入口與P5b感測歷史已交付，不重做。P5c契約見[P5C_RUNTIME_TRACE_CONTRACT.md](P5C_RUNTIME_TRACE_CONTRACT.md)。

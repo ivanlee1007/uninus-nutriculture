@@ -48,4 +48,13 @@ Cancel捨棄本流程草稿／預覽並採當前後端值，零mutation；不取
 - **P5-HACS-RELEASE — 實際HACS安裝與發行準備**：另授乾淨宿主HACS安裝→integration loaded→真resource→Card/native workflow；相容版本/回退/發行清單，tag/release另授。
 - **P5-PHYSICAL — 物理commissioning/斷電耐久/採樣保護**：另授兩槽別名/最大ON保護/液位幾何/脈衝採樣/OFF回饋/斷電復原與外部雙控驗收，不取憑證或連原站。
 
-已交付P5a首片改善可操作關係、手機鍵盤、必要相容與current文件；同槽歷史為下一開發片；完整歷史／診斷、兩槽皆commissioned矩陣、共享output預設拒絕及另授例外契約、備份恢復、原生宿主／HACS與實機／正式發行仍保留。外部scheduler／cron／19排程匯入、8個滴灌腳本管理、Card raw IO／瀏覽器關泵timer始終排除。P4c 4/4、P3 5/5不重置；P5a修正後兩審均批准；joint-review repair 1/1與具名read-side revocation修補1/1已用，不自動新增修補批次。
+已交付P5a首片改善可操作關係、手機鍵盤、必要相容與current文件；P5b同槽感測歷史已交付；本輪P5c先重要runtime／時間軸UI，再實機，最後選配診斷、兩槽皆commissioned矩陣、共享output預設拒絕及另授例外契約、備份恢復、原生宿主／HACS與實機／正式發行仍保留。外部scheduler／cron／19排程匯入、8個滴灌腳本管理、Card raw IO／瀏覽器關泵timer始終排除。P4c 4/4、P3 5/5不重置；P5a修正後兩審均批准；joint-review repair 1/1與具名read-side revocation修補1/1已用，不自動新增修補批次。
+
+
+## P5c重要UI與後續順序（隔離整合與兩審完成）
+
+1. **重要UI已實作並完成隔離驗證／兩審**：四階段即時運行視覺、真資源等待／略過／停止確認、HA觀察輸出、Recorder的stage／output／permit與停止原因時間軸；補齊新增畫面的手機／鍵盤與切槽一致性。沿用後端唯一權威，不把草稿當運行計畫、不把輸出狀態當物理到達、不把歷史許可當現行授權。
+2. **再進行實機測試**：完成必要整合與獨立SPEC→品質後，先確認指定測試機、硬體、可連線／可致動範圍與停止條件。此排序不解除原站不連線、不讀取現場憑證、不部署的現行界線。
+3. **最後補其餘P5**：選配水溫／通訊診斷、完整兩槽commissioned與共享輸出矩陣、完整HA宿主／HACS、文件／備份還原及另授發行準備；不是取消這些需求。
+
+P5a編輯入口與P5b感測歷史已交付，不重做。P5c契約見[P5C_RUNTIME_TRACE_CONTRACT.md](P5C_RUNTIME_TRACE_CONTRACT.md)。

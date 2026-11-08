@@ -1,4 +1,4 @@
-> 現行來源狀態（2026-11-08）：P1–P3、P4a／P4b／P4c與P5a首片已完成軟體來源交付。P5a交付基線：Backend `4a08e615bf1949ecbeea37fdba4696c5bf8d3062`（CI `42458123964`）、Card `3eaa78c55043598fd4bc666c8ef432b8870d6701`（CI `42458104719`）；獨立SPEC／品質、出版等價與遠端產物核驗已完成。 本提交新增P5b同槽pH／EC／液位歷史，功能、真Recorder整合與獨立SPEC／品質兩審已完成，B-01已關閉；出版與hosted CI以本提交的實際核驗結果為準，不冒用P5a基線CI。P5b唯一修補批次1/1已用，不重置舊額度。P5a joint-review修補1/1與具名read-side revocation修補1/1已用；P4c 4/4、P3 5/5結案不重置。完整P5十二組保留，部分已交付不等於全組完成；未實機／HACS／tag／release／部署。
+> 現行來源：P5b同槽pH／EC／液位歷史已完成正式來源交付（Backend `53e4f0b5dceb2cbd8c76bcef0470636d37868e41`、Card `863406040b2537f57001caa0d59c56f16af97a67`；精確CI `42476705488`／`42476693050` 已核驗）。P5c重要UI已完成隔離整合與獨立SPEC／品質安全兩審；來源出版與本提交hosted CI分別按實際核驗結果為準，不冒用舊批准。最新順序：重要UI → 另行確認測試機與致動範圍後實機測試 → 其餘P5。完整P5仍保留，未部署、HACS、tag或release；P3／P4／P5a／P5b結案修補額度不重置。
 
 
 > 導航優先序：FUNCTIONAL_PARITY_REVIEW.md是舊commit的歷史F/D盤點，不代表目前沒有控制能力或所有D/R仍未決；不改寫其原文。P3C_FLOW_CONTRACT.md頂部提案語句屬來源歷史，現行以其§7已採納補充及本輪交付狀態為準，不再次凍結或重審。
@@ -15,7 +15,7 @@ P3a 工程來源已交付，兩審與功能來源 CI 已完成，見 [P3A_PUBLIC
 - 本機已接通原生 Options、整組參數／星期 CAS、schema3 Card，以及必要循環→加養脈衝→中點停泵→混合→新樣本穩定確認。設定保存不致動；原生 Switch 與外部 `start_flow` 共用後端。
 - 隔離原生回歸、實際 Card 的設定與加養跨層已執行；都是假硬體，不是原 HA／HACS／實機驗收。精確來源與剩餘關卡見[本機 checkpoint](docs/P3A_LOCAL_CHECKPOINT.json)及[加養接手紀錄](docs/P3A_REVIEW_CANDIDATE.md)。
 - **P3b 加酸與獨立攪拌已接通；P3c 四階段可編順序／合法重疊／相對延遲與條件／星期及七日真正預覽亦已提供。** P3a 只是開發順序，不代表整個 P3，也不能把核心編排延至 P5。
-- P4a配方已交付；P4b品質/完成/許可已實作並兩審及本機隔離驗證。舊S1–S5 `ready_for_irrigation` 固定false，新quality_v1與唯讀permit有效時可True；P4c通知/外部結果R4來源已兩審及本機完整gate，尚未出版。沒有內建排程器、獨立 stage_link 或瀏覽器關泵計時器。
+- P4a配方已交付；P4b品質/完成/許可已實作並兩審及本機隔離驗證。舊S1–S5 `ready_for_irrigation` 固定false，新quality_v1與唯讀permit有效時可True；P4c通知／外部結果軟體來源與exact-HEAD hosted CI／產物核驗已正式交付。沒有內建排程器、獨立 stage_link 或瀏覽器關泵計時器。
 - 已凍結的工程策略不再反覆要求使用者逐項決定；實際設備保護、最低液位與來源採樣能力仍由每槽 commissioning 明確確認。
 
 目標對齊與有限後續順序見[GOAL_ALIGNMENT.md](docs/GOAL_ALIGNMENT.md)。下方 P2 段落是已發布基線的歷史範圍，不限制本倉 P3a／P3b 已提供的功能；現況以上方交付狀態為準。
@@ -35,7 +35,7 @@ P3a 工程來源已交付，兩審與功能來源 CI 已完成，見 [P3A_PUBLIC
 
 
 
-Home Assistant自訂整合，網域`uninus_nutriculture`。**內嵌版本0.2.0保留既有封裝metadata，不代表目前只到P2：P1–P3與P4a／P4b軟體來源已交付；P4c結果／通知R4來源已兩審及本機完整gate、尚未出版。現行能力以本文件頂端狀態及共同規範為準，實機與HACS安裝未驗收。**
+Home Assistant自訂整合，網域`uninus_nutriculture`。**內嵌版本0.2.0保留既有封裝metadata，不代表目前只到P2：P1–P3與P4a／P4b軟體來源已交付；P4c結果／通知軟體來源與exact-HEAD hosted CI／產物核驗已正式交付。現行能力以本文件頂端狀態及共同規範為準，實機與HACS安裝未驗收。**
 
 舊schema1 Sensor僅監測；另有schema2控制Sensor、總/階段/整輪Switch與急停/復歸。初始無綁定、總OFF，不會自動啟動；沒有MQTT客戶端或原站帳密。P1及P2的ready_for_irrigation都固定false。監測Sensor的shadow表示此介面不控制，不代表同槽控制器一定閒置。
 
@@ -170,3 +170,12 @@ Linux 改用 `.venv/bin/python`。`tools/evidence.py` 會建立新的不可覆�
 選擇槽的狀態Entity後，展開「歷史」並選擇1／6／24小時；來源自動沿用後端`source_entities`，不另填感測ID。支援分圖、觸控／鍵盤選點及資料表。正常密集資料採保留首尾、分段極值與缺口的有界代表抽樣；無法安全表示的指標獨立提示，不清空其他指標。原始／正規化／顯示筆數均明示。
 
 無可讀紀錄可能是Recorder保留／排除或READ權限過濾，不代表健康或確定沒有Recorder；歷史不影響控制、品質或灌溉許可。詳見[P5b操作與限制](docs/P5B_HISTORY_CONTRACT.md)。本片不等於完整P5、HACS實裝或實機驗收；未部署／tag／release。
+
+
+## P5c重要UI與後續順序（隔離整合與兩審完成）
+
+1. **重要UI已實作並完成隔離驗證／兩審**：四階段即時運行視覺、真資源等待／略過／停止確認、HA觀察輸出、Recorder的stage／output／permit與停止原因時間軸；補齊新增畫面的手機／鍵盤與切槽一致性。沿用後端唯一權威，不把草稿當運行計畫、不把輸出狀態當物理到達、不把歷史許可當現行授權。
+2. **再進行實機測試**：完成必要整合與獨立SPEC→品質後，先確認指定測試機、硬體、可連線／可致動範圍與停止條件。此排序不解除原站不連線、不讀取現場憑證、不部署的現行界線。
+3. **最後補其餘P5**：選配水溫／通訊診斷、完整兩槽commissioned與共享輸出矩陣、完整HA宿主／HACS、文件／備份還原及另授發行準備；不是取消這些需求。
+
+P5a編輯入口與P5b感測歷史已交付，不重做。P5c契約見[P5C_RUNTIME_TRACE_CONTRACT.md](docs/P5C_RUNTIME_TRACE_CONTRACT.md)。
