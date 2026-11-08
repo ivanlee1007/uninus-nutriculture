@@ -1,8 +1,8 @@
-> 現行狀態（2026-11-07）：P4b正式交付與exact-HEAD hosted CI／產物核對已完成。P4c R4來源已通過SPEC及獨立品質兩審，本機完整553 cases／82 modules（144／116／137／156）與真Core／shipped Card join已完成；目前僅準備出版successor，尚未push，未驗新exact-HEAD hosted CI。P4c初始2輪＋explicit Options卸載1輪＋explicit quota1輪＝4/4；P3歷史4輪＋explicit mix1輪＝5/5，皆結案、不重置。完整P4／P5、實機commissioning及HACS實裝未完成，未tag／release／部署。內嵌0.2.0保留既有封裝，不代表功能階段。
+> 現行來源狀態（2026-11-08）：P1–P3、P4a／P4b／P4c軟體來源及對應精確HEAD hosted CI已交付。本版P5a四階段視覺工作台／手機鍵盤已實作，修正後完整SPEC與品質兩審均批准，Q-01已關閉；Preview／Apply／Options／Store與fresh SDK隔離驗收已通過。P5a joint-review repair 1/1已用，P4c 4/4及P3 5/5結案不重置。本提交仍須以其精確HEAD hosted CI與遠端產物完成來源交付核驗；不得將本機或來源審查當成hosted CI／完整P5／實機／HACS驗收。完整P5十二項後續範圍保留，未tag／release／部署。
 
 # 已確認控制決策：鏈結移除、階段星期與整輪運行Switch
 
-> 控制政策於2026-11-03確認；現況於2026-11-07對齊。P1–P3軟體來源與精確HEAD CI已交付，四階段/有限圖/原生與Card最小編輯預覽已實作；實機及HACS尚未驗收。現行有限圖/略過/版本語意以[P3C_FLOW_CONTRACT.md](P3C_FLOW_CONTRACT.md)§7已採納補充為準，不因原提案段落而重開政策。P4a參數配方已完成來源交付／兩審／出版等價／精確HEAD hosted CI；P4b品質/完成/許可已完成兩審、出版等價、push與exact-HEAD hosted CI／產物核對；P4c R4來源已兩審與本機553／82全gate完成，尚待出版與新HEAD hosted CI，P5未完。舊S1–S5 IRR false，新唯讀permit契約見[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)，來源已兩審，本機隔離驗證非實機驗收；未部署/tag/release。
+> 控制政策於2026-11-03確認；現況於2026-11-07對齊。P1–P3軟體來源與精確HEAD CI已交付，四階段/有限圖/原生與Card最小編輯預覽已實作；實機及HACS尚未驗收。現行有限圖/略過/版本語意以[P3C_FLOW_CONTRACT.md](P3C_FLOW_CONTRACT.md)§7已採納補充為準，不因原提案段落而重開政策。P4a參數配方已完成來源交付／兩審／出版等價／精確HEAD hosted CI；P4b品質/完成/許可已完成兩審、出版等價、push與exact-HEAD hosted CI／產物核對；P4c R4來源兩審、本機553／82全gate、正式來源出版與新HEAD hosted CI／產物核驗完成；P5a僅本機候選，完整P5未完。舊S1–S5 IRR false，新唯讀permit契約見[P4B_QUALITY_CONTRACT.md](P4B_QUALITY_CONTRACT.md)，來源已兩審，本機隔離驗證非實機驗收；未部署/tag/release。
 
 ## 1. 已確認方向
 
@@ -51,4 +51,8 @@ R01已結案為取消鏈結；R03的資格評估時點已定案，沒有手動�
 
 ## P4b 現行操作與交付界線
 
-見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source、兩審、出版等價、push與exact-HEAD hosted CI及下載產物核對均已完成；仍不等同HACS或實機驗收。P4c來源兩審／本機gate完成但出版／新HEAD CI未完；P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；Issue #4維持OPEN。修復預算4/4不重置。
+見[P4b原生／Card操作與唯一權威](P4B_OPERATION.md)。P4b source、兩審、出版等價、push與exact-HEAD hosted CI及下載產物核對均已完成；仍不等同HACS或實機驗收。P4c正式來源交付、出版等價、push、新exact-HEAD hosted CI及遠端／下載產物核驗均已完成；P5進階體驗、兩槽皆commissioned與shared-output實機驗收仍pending；本文件不寫入遠端Issue，完整P5仍保留。修復預算4/4不重置。
+
+## P5a 視覺工作台與操作入口
+
+四階段關係按鈕可進入既有規則欄位，保留調序／重疊／延遲／有限條件／星期→七日後端Preview→明確套用→native讀回／重開路徑；見[P5a視覺工作台操作說明](P5A_VISUAL_WORKFLOW.md)。真隔離Core19 requests整合與修正後獨立SPEC→品質兩審已完成；精確HEAD hosted CI與遠端交付核驗另列，不宣稱完整P5或實機完成。草稿示意／Preview不保證物理可行性或arrival；不增加schema、scheduler、raw IO或現場控制。

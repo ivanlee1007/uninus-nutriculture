@@ -1,0 +1,149 @@
+{
+  "kind": "safe allowlist source-review summary, not publication equivalence approval",
+  "source_manifest_sha256": "6fc60aa420175c1700e24f6d6436bb4841c5f54abbf8d97950fe181c5d3b7608",
+  "selected_source_files": 299,
+  "current_corrected_source_gates": {
+    "WHOLE_SPEC": {
+      "verdict": "APPROVED",
+      "clauses": 26,
+      "affected_cleanup_requirements": 5,
+      "verdict_sha256": "25722d70baedd279e74e37bbf965b0ce7e40ea190177461b3dd227a04f007802"
+    },
+    "WHOLE_QUALITY_SECURITY": {
+      "verdict": "APPROVED",
+      "reviewed": 19,
+      "unreviewed": 0,
+      "critical": 0,
+      "important": 0,
+      "minor": 0,
+      "Q-01": "CLOSED",
+      "verdict_sha256": "844a1f08d1400a4d7fb360323e3b0a6f15cb9747de8587993daf356e30f16d96"
+    }
+  },
+  "reviewed_changed_source": [
+    {
+      "path": "uninus-nutriculture/docs/CONTROL_DECISIONS.md",
+      "sha256": "7a3ac81b20006884c7eee6daa21e423f061be394a5213eac7d691bafb79a0a04"
+    },
+    {
+      "path": "uninus-nutriculture/docs/DEVELOPMENT_PLAN.md",
+      "sha256": "db002c092d1ec9ebdeff81a7d7ff8b68289ff7dcd99205869a903b46b90c3342"
+    },
+    {
+      "path": "uninus-nutriculture/docs/DEVELOPMENT_SPEC.md",
+      "sha256": "c2d9dcd0eff1b28c2389daacf55601624be6d456ab3c5fbad00f9384b3120f2b"
+    },
+    {
+      "path": "uninus-nutriculture/docs/FUNCTIONAL_PARITY_REVIEW.md",
+      "sha256": "31e0d2b85336ff98f36804be269571e94c74c54046a34d5fb2c1f35c12c7c60c"
+    },
+    {
+      "path": "uninus-nutriculture/docs/GOAL_ALIGNMENT.md",
+      "sha256": "3969cef6879dafb8730e7a2431e7dab5d5dcdff1c6b76d1833e2395f7b1edf62"
+    },
+    {
+      "path": "uninus-nutriculture/tools/p3c_browser_join.py",
+      "sha256": "4238c6831ad91f798e1dd31d23c75ec08addc2c4c7f7bb0de4fe984089665428"
+    },
+    {
+      "path": "uninus-nutriculture/docs/P5A_VISUAL_WORKFLOW.md",
+      "sha256": "84b6db818e44195c8481da94dee2c4e699cce1d103705690891a256a72d57260"
+    },
+    {
+      "path": "uninus-nutriculture/tests/test_p5a_helper_cleanup.py",
+      "sha256": "577c9c5f0ea419031131ec2b05fbdc8251a158781274b974e444e99b26cbb0dc"
+    },
+    {
+      "path": "uninus-nutriculture/tools/p5a_visual_browser.py",
+      "sha256": "12ae9a82ffa0cf60281b17f73b1e994516901e324fa37ccacacced3a4edc8e92"
+    },
+    {
+      "path": "uninus-nutriculture/tools/p5a_visual_native.py",
+      "sha256": "4657299bc9016074fede7aabb37f4fdf7245d88b93101ebcd521ca2019a68f7a"
+    },
+    {
+      "path": "uninus-nutriculture-card/README.md",
+      "sha256": "014f74fafdfa7e7f97af19f6739431be3d3bf23d2dba33223eafd56ab9b31799"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/CONTROL_DECISIONS.md",
+      "sha256": "7a3ac81b20006884c7eee6daa21e423f061be394a5213eac7d691bafb79a0a04"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/DEVELOPMENT_PLAN.md",
+      "sha256": "db002c092d1ec9ebdeff81a7d7ff8b68289ff7dcd99205869a903b46b90c3342"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/DEVELOPMENT_SPEC.md",
+      "sha256": "c2d9dcd0eff1b28c2389daacf55601624be6d456ab3c5fbad00f9384b3120f2b"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/FUNCTIONAL_PARITY_REVIEW.md",
+      "sha256": "31e0d2b85336ff98f36804be269571e94c74c54046a34d5fb2c1f35c12c7c60c"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/GOAL_ALIGNMENT.md",
+      "sha256": "3969cef6879dafb8730e7a2431e7dab5d5dcdff1c6b76d1833e2395f7b1edf62"
+    },
+    {
+      "path": "uninus-nutriculture-card/tests/test_browser.py",
+      "sha256": "939c9b14f4c44a76f5bc588365ce323a6ae944a2248ad26763f106c4263fce94"
+    },
+    {
+      "path": "uninus-nutriculture-card/uninus-nutriculture-card.js",
+      "sha256": "8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01"
+    },
+    {
+      "path": "uninus-nutriculture-card/docs/P5A_VISUAL_WORKFLOW.md",
+      "sha256": "84b6db818e44195c8481da94dee2c4e699cce1d103705690891a256a72d57260"
+    }
+  ],
+  "qualifications": [
+    "Historical REQUEST_CHANGES and inherited SPEC-only wording remain unchanged; this summary names the current corrected successor WHOLE_QUALITY_SECURITY gate explicitly.",
+    "557 cases / 83 modules are collection only, not a new full-suite execution; previous 553/82 and added permanent4 are separate evidence.",
+    "Fresh SDK integration_platform shutdown task warning retained; no zero-warning or arbitrary uncooperative SDK hard-stop guarantee.",
+    "Full P5 twelve-item backlog retained; visual/mobile-keyboard slice only; no version bump.",
+    "No publication-equivalence approval, exact-head hosted CI, HACS, field/physical acceptance, provider delivery, tag, release or deploy."
+  ],
+  "publication_pending": [
+    "real Card commit created by parent first, then literal Backend companion pin",
+    "freeze exact raw index candidate and freshly run affected source-before/producer/verifier chains",
+    "publication-equivalence review and both new exact-HEAD hosted CI"
+  ],
+  "additional_read_side_revocation_repair": {
+    "scope": [
+      "custom_components/uninus_nutriculture/quality.py",
+      "tests/test_p4b_read_revocation.py"
+    ],
+    "source_manifest_sha256": "e4ee41d87ccd8a42384127f76af0fad916236eefd017d0e06adc9a9b6389d75e",
+    "quality_sha256": "a4fe2d0fec3c388ba6325494466c45da894075463afd08de2f1f73e7eb82e746",
+    "permanent_test_sha256": "7d66f461600e7264bc6593e0340b2ced7343060131d1a94ca870df9e33c0af87",
+    "SPEC": {
+      "verdict": "AFFECTED_SPEC_APPROVED",
+      "clauses": 8,
+      "verdict_sha256": "ae4441595877d33b9f9d2b81b1129f04edc92bc63b505eae61caf089671ee80c"
+    },
+    "quality": {
+      "verdict": "AFFECTED_QUALITY_SECURITY_APPROVED",
+      "reviewed": 2,
+      "unreviewed": 0,
+      "critical": 0,
+      "important": 0,
+      "minor": 0,
+      "verdict_sha256": "dffcf6b0c445c9dc82708208957ce6c7522007dba0340e693f1c497d192b3f40"
+    },
+    "same_final_test_bytes": "behavioral RED1 -> GREEN8; affected86 includes8, not additive",
+    "collection": "565/84 collection only at source freeze, not a new full-suite result",
+    "original_independent_counterexample": "closed on corrected source; native OFF after fixed .150 yield",
+    "historical_P4b_2_15_failure_causality": "UNPROVEN/OPEN; one new success is not a flakiness or root-cause claim",
+    "qualifications": [
+      "previous SPEC three behavior passes with teardown error/process1 preserved; quality separate3cases exit0",
+      "prefreeze four Ruff-cache boundary violations preserved outside final source",
+      "two fresh P5a SDK shutdown-warning lines retained",
+      "prior557 test assertions passed but owned observer exit1 retained, not full gate PASS"
+    ],
+    "budget": "explicit named extension1/1 used; all previous budgets unchanged",
+    "publication": "source reviews only; final exact-head CI, remote bytes and publication equivalence separate",
+    "NoField": true
+  }
+}

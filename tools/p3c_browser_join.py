@@ -30,10 +30,10 @@ def main():
   page.evaluate('''async()=>{
    await customElements.whenDefined('uninus-nutriculture-card');
    window.cards={};window.receipts=[];window.pending=0;
-   window.refreshCard=(name,s)=>{const c=cards[name];c.hass={states:s.states,user:{id:s.user_id,is_admin:true},connection:{connected:true},callWS:async m=>{
+   window.refreshCard=(name,s)=>{const c=cards[name];c.hass={...c.hass,states:s.states,user:{id:s.user_id,is_admin:true}};};
+   window.makeCard=async(name,s)=>{const c=document.createElement('uninus-nutriculture-card');c.id=name;cards[name]=c;document.body.append(c);c.setConfig({entity:s.status_id});c.hass={connection:{connected:true},callWS:async m=>{
      pending++;try{const r=await nativeRPC('ws',{name,message:m});receipts.push(r);refreshCard(name,r.snapshot);if(!r.reply.success)throw r.reply.error;return r.reply.result;}finally{pending--}
-   },callService:async(domain,service,data)=>{pending++;try{const r=await nativeRPC('ws',{name,message:{type:'call_service',domain,service,service_data:data}});receipts.push(r);refreshCard(name,r.snapshot);if(!r.reply.success)throw r.reply.error;return r.reply.result;}finally{pending--}}};};
-   window.makeCard=async(name,s)=>{const c=document.createElement('uninus-nutriculture-card');c.id=name;cards[name]=c;document.body.append(c);c.setConfig({entity:s.status_id});refreshCard(name,s);};
+   },callService:async(domain,service,data)=>{pending++;try{const r=await nativeRPC('ws',{name,message:{type:'call_service',domain,service,service_data:data}});receipts.push(r);refreshCard(name,r.snapshot);if(!r.reply.success)throw r.reply.error;return r.reply.result;}finally{pending--}}};refreshCard(name,s);};
    const r=await nativeRPC('snapshot');window.initial=r.snapshot;await makeCard('A',initial);
   }''')
   a=page.locator('#A')

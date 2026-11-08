@@ -1,4 +1,4 @@
-> 現行狀態（2026-11-07）：P1–P3、P4a、P4b軟體來源已交付；正式P4b Backend `48b148c05de50dd976952462d50c86871acffc5c`／Card `14dad5f2bed79baab52001bf47a8be80ffc5ff35` 及 exact-HEAD hosted CI／產物已核。P4c原M1整合回歸成功但wholeSPEC為REQUEST_CHANGES：確認故障episode去重會吞不相關failed通知，現進行第1/2輪定點修復；必要未審格、獨立品質、出版與新HEAD CI尚未完成。舊P3急停callback例外已明確增授一輪窄修（歷史4/4＋1，整體5/5），不重置其他預算。完整P4／P5、現場commissioning、HACS實際安裝、tag/release與部署未完成。
+> 現行來源狀態（2026-11-08）：P1–P3、P4a／P4b／P4c軟體來源及對應精確HEAD hosted CI已交付。本版P5a四階段視覺工作台／手機鍵盤已實作，修正後完整SPEC與品質兩審均批准，Q-01已關閉；Preview／Apply／Options／Store與fresh SDK隔離驗收已通過。P5a joint-review repair 1/1已用，P4c 4/4及P3 5/5結案不重置。本提交仍須以其精確HEAD hosted CI與遠端產物完成來源交付核驗；不得將本機或來源審查當成hosted CI／完整P5／實機／HACS驗收。完整P5十二項後續範圍保留，未tag／release／部署。
 
 > 下文為2026-11-03舊commit的歷史盤點，原文保留；其「尚未實作／未定」不代表現行進度，現行以本行上方及P4c凍結契約為準。
 

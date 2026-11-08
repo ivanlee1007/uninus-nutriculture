@@ -26,6 +26,7 @@ class QualityCoordinator:
         self._projection_monotonic = self.clock()
         self.closed = False
         self.timer = None
+        self._withdrawal_notification = None
         self.tokens = {}
         self.samples = {}
         self.used = {}
@@ -81,6 +82,7 @@ class QualityCoordinator:
                 "sample_regressed",
             )
         )
+        withdrawn = self.granted
         self.granted = False
         self.candidate = None
         self.consumed = self.consumed if corrective else True
@@ -90,7 +92,21 @@ class QualityCoordinator:
         self.observation_revision += 1
         self.schedule()
 
+        # Getters can withdraw authority during native entity serialization.
+        # Publish once after that stack unwinds, never recursively from a DTO.
+        if withdrawn and not self.closed and self._withdrawal_notification is None:
+            self._withdrawal_notification = self.tank.hass.loop.call_soon(self._publish_withdrawal)
+
+    @callback
+    def _publish_withdrawal(self):
+        self._withdrawal_notification = None
+        if not self.closed and self.tank.quality is self:
+            self.notify()
+
     def notify(self):
+        if self._withdrawal_notification is not None:
+            self._withdrawal_notification.cancel()
+            self._withdrawal_notification = None
         for listener in tuple(self.tank.listeners):
             owner = getattr(listener, "__self__", None)
             if getattr(owner, "tank", None) is self.tank and hasattr(owner, "async_write_ha_state"):
