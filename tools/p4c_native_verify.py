@@ -9,7 +9,7 @@ from pathlib import Path
 
 from p4c_source_inputs import source_hashes
 
-BUNDLE = "8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01"
+BUNDLE = "e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe"
 B = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument("--output", default=os.environ.get("P4C_JOIN_OUTPUT"))

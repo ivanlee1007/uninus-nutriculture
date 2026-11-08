@@ -1,6 +1,6 @@
 # P5a 四階段視覺工作台操作說明
 
-> P5a視覺工作台來源與修正後獨立SPEC／品質兩審已完成；本提交精確HEAD CI與遠端交付核驗另列，未部署或建立正式發行。既有P4c軟體來源已正式交付；以下為實際介面說明，不要求或代替使用者執行設備控制。
+> P5a視覺工作台／手機鍵盤首片已完成獨立SPEC／品質、正式來源出版、精確HEAD hosted CI與遠端交付核驗；交付基線見本文README／目標對齊。後續新候選另驗自身CI。未部署、實機、HACS或建立tag/release；以下說明已交付介面，不要求或代替使用者執行設備控制。
 
 ## 入口、草稿與真值
 
@@ -33,10 +33,10 @@ Cancel捨棄本流程草稿／預覽並採當前後端值，零mutation；不取
 
 隔離Chromium已測Card本身320×360（viewport1280×900）、320×740、360×640及768×900、明暗主題、真鍵盤與連續輸入；短卡需垂直捲動到Preview／套用／取消。這不代表所有手機／輔助科技／HA宿主都已驗收。沒有完整screen-reader認證、實站瀏覽器、HACS安裝或物理arrival保證。
 
-## 完整P5保留清單（本片不結案）
+## 完整P5十二組inventory（含首片已交付部分，非十二組全未做）
 
-- **P5-VISUAL — 四階段可操作視覺關係編輯**：關係卡可操作定位原欄位→改計畫→後端Preview→Save→native/Store重開。
-- **P5-RESPONSIVE — 手機短窄/窄高、桌面窄欄與純鍵盤**：Card自身dimensions、trusted連續輸入、stage導航/reorder焦點、Tab/Shift+Tab、Preview/Save/Cancel全程。
+- **P5-VISUAL — 四階段可操作視覺關係編輯**：關係卡可操作定位原欄位→改計畫→後端Preview→Save→native/Store重開。 **其中本段P5a入口路徑已交付；完整進階runtime視覺與其餘視覺能力仍保留，不重做首片。**
+- **P5-RESPONSIVE — 手機短窄/窄高、桌面窄欄與純鍵盤**：Card自身dimensions、trusted連續輸入、stage導航/reorder焦點、Tab/Shift+Tab、Preview/Save/Cancel全程。 **P5a上述首片操作已交付；完整產品及後續新增頁面的響應／可及驗收仍保留。**
 - **P5-RUNTIME — 真階段/資源等待/停止確認/物理輸出視覺**：完整運行圖分清disabled/skips/blocked/waiting/running/completed/aborted/fault/stopping；計畫與實際分開，不估算物理arrival。
 - **P5-HISTORY — pH/EC/液位歷史曲線**：既有native recorder/history資料→時窗選擇→槽隔離→權限/無資料/無recorder降級，不先建新資料庫。
 - **P5-TRACE — stage/output/permit變化與停止原因時間軸**：定義可得事件/週期欄位與來源→歷史查詢→時間軸與停止原因/缺資料展示；非timed估計。
@@ -48,4 +48,4 @@ Cancel捨棄本流程草稿／預覽並採當前後端值，零mutation；不取
 - **P5-HACS-RELEASE — 實際HACS安裝與發行準備**：另授乾淨宿主HACS安裝→integration loaded→真resource→Card/native workflow；相容版本/回退/發行清單，tag/release另授。
 - **P5-PHYSICAL — 物理commissioning/斷電耐久/採樣保護**：另授兩槽別名/最大ON保護/液位幾何/脈衝採樣/OFF回饋/斷電復原與外部雙控驗收，不取憑證或連原站。
 
-首片只改善可操作關係、手機鍵盤、必要相容與current文件；完整歷史／診斷、兩槽皆commissioned矩陣、共享output預設拒絕及另授例外契約、備份恢復、原生宿主／HACS與實機／正式發行仍保留。外部scheduler／cron／19排程匯入、8個滴灌腳本管理、Card raw IO／瀏覽器關泵timer始終排除。P4c 4/4、P3 5/5不重置；P5a修正後兩審均批准；joint-review repair 1/1已用，不自動新增修補批次。
+已交付P5a首片改善可操作關係、手機鍵盤、必要相容與current文件；同槽歷史為下一開發片；完整歷史／診斷、兩槽皆commissioned矩陣、共享output預設拒絕及另授例外契約、備份恢復、原生宿主／HACS與實機／正式發行仍保留。外部scheduler／cron／19排程匯入、8個滴灌腳本管理、Card raw IO／瀏覽器關泵timer始終排除。P4c 4/4、P3 5/5不重置；P5a修正後兩審均批准；joint-review repair 1/1與具名read-side revocation修補1/1已用，不自動新增修補批次。

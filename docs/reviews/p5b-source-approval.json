@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "scope": "P5b history source review, not publication/hosted/live approval",
+  "bundle_sha256": "e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe",
+  "review_source_files": 409,
+  "review_manifest_sha256": "d5bc9c12d031cc772846fff035c2acdecf09bb58395e0909164c1980273b2c5c",
+  "spec": "WHOLE_SPEC_APPROVED",
+  "quality_security": "WHOLE_QUALITY_SECURITY_APPROVED",
+  "B01": "closed",
+  "P5b_repair_used": 1,
+  "P5b_repair_limit": 1,
+  "native": "Core2026.10.4 Recorder/registered ActiveConnection; readonly",
+  "limits": [
+    "recent samples, not24h-retention-age proof",
+    "uncommissioned entries, not multi-flow commissioning",
+    "no HTTP token handshake acceptance",
+    "no deployment/HACS/tag/release"
+  ]
+}

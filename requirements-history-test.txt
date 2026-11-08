@@ -1,0 +1,5 @@
+# Test-only native Recorder dependencies from Core 2026.10.4 recorder/manifest.json.
+# psutil-home-assistant 0.0.1 metadata requires psutil (installed transitively).
+SQLAlchemy==2.0.54
+fnv-hash-fast==2.0.3
+psutil-home-assistant==0.0.1

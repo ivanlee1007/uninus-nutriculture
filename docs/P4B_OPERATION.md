@@ -1,6 +1,6 @@
 # P4b 原生／Card 操作與唯一權威
 
-狀態時間：2026-11-05（本機日期工具確認，UTC+08:00）。F4來源已實作、獨立SPEC與完整品質兩審及本機隔離驗證完成；本次僅出版準備，不宣稱新commit已push、hosted CI、實機或HACS驗收。
+現行軟體狀態（2026-11-08）：P4b／P4c與P5a首片已完成正式來源、獨立兩審、出版等價、exact-HEAD hosted CI及產物核驗。原F4等實作／驗證記錄保留；不再列為僅出版準備。完整P5、實機及HACS尚未驗收，未部署或建立tag/release。
 
 ## 設定路徑
 
@@ -28,4 +28,4 @@ terminal實際輸出OFF、所有operation/owner/lease閉合後，才收集新的
 
 ## 尚未完成
 
-P4c通知／外部結果、P5進階視覺化／歷史與多槽產品體驗、兩槽都commissioned與shared-output驗收、實機commissioning、HA部署、HACS安裝、tag/release皆pending。原19排程與8腳本不導入、不接管；不內建scheduler、不直接操作灌溉。Issue #4保持OPEN。本次不能重置已用4/4修復預算，也不是最終出版等價APPROVED。
+P4c通知／外部結果與P5a視覺入口／手機鍵盤首片已正式軟體交付。完整P5後續歷史／診斷與多槽產品體驗、兩槽都commissioned與shared-output驗收、實機commissioning、HA部署、HACS安裝、tag/release仍保留。原19排程與8腳本不導入、不接管；不內建scheduler、不直接操作灌溉。Issue #4為歷史追蹤連結，不在此斷言其即時狀態。已用4/4修補不重置，後續新候選另驗自身出版關卡。

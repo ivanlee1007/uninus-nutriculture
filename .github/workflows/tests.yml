@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ivanlee1007/uninus-nutriculture-card
-          ref: 3eaa78c55043598fd4bc666c8ef432b8870d6701
+          ref: 863406040b2537f57001caa0d59c56f16af97a67
           path: uninus-nutriculture-card
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: python -m pip install -r requirements-test.txt -r ../uninus-nutriculture-card/requirements-test.txt
+      - run: python -m pip install -r requirements-test.txt -r requirements-history-test.txt -r ../uninus-nutriculture-card/requirements-test.txt
       - run: python -m playwright install --with-deps chromium
       - name: Export installed Chromium executable
         run: |
@@ -55,6 +55,18 @@ jobs:
           echo "NODE=$(command -v node)" >> "$GITHUB_ENV"
           echo "BROWSER_EVIDENCE_DIR=$GITHUB_WORKSPACE/p3c-ci-evidence/browser" >> "$GITHUB_ENV"
           echo "PYTHONPATH=$GITHUB_WORKSPACE/uninus-nutriculture:$GITHUB_WORKSPACE/uninus-nutriculture/tests" >> "$GITHUB_ENV"
+      - name: P5b publication blocked until real reviewed Card commit exists
+        run: |
+          python - <<'PY'
+          import hashlib,pathlib,re,subprocess
+          text=pathlib.Path('.github/workflows/tests.yml').read_text()
+          pin=re.search(r'^          ref: ([0-9a-f]{40})$',text,re.M).group(1)
+          assert pin != '3eaa78c55043598fd4bc666c8ef432b8870d6701', 'P5B_PUBLICATION_BLOCKED: parent must replace baseline ref with the real reviewed P5b Card commit'
+          assert pin != '0'*40
+          card=pathlib.Path('../uninus-nutriculture-card')
+          assert subprocess.check_output(['git','-C',str(card),'rev-parse','HEAD'],text=True).strip()==pin
+          assert hashlib.sha256((card/'uninus-nutriculture-card.js').read_bytes()).hexdigest()=='e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
+          PY
       - name: P4b publication companion pin guard
         run: |
           python - <<'PY'
@@ -71,7 +83,7 @@ jobs:
           pin=re.search(r'^          ref: ([0-9a-f]{40})$',text,re.M).group(1)
           assert pin != '127b6ee181b0a3b49cd16aa3ca1a3d79d020c6cf', 'P5A_PUBLICATION_BLOCKED: parent must first create the real reviewed P5a Card commit, then replace the literal companion ref'
           assert pin != '0'*40
-          assert hashlib.sha256(pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js').read_bytes()).hexdigest()=='8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01'
+          assert hashlib.sha256(pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js').read_bytes()).hexdigest()=='e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
           PY
       - name: P4c publication real companion pin and approved bundle guard
         run: |
@@ -83,7 +95,7 @@ jobs:
           assert pin != '0'*40
           actual=subprocess.check_output(['git','-C','../uninus-nutriculture-card','rev-parse','HEAD'],text=True).strip()
           assert actual==pin
-          assert hashlib.sha256(pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js').read_bytes()).hexdigest()=='8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01'
+          assert hashlib.sha256(pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js').read_bytes()).hexdigest()=='e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
           PY
       - name: Require native bridge activation environment
         run: |
@@ -110,7 +122,7 @@ jobs:
           assert len({c.attrib['classname'] for c in cases}) == 84
           assert not any(c.find(k) is not None for c in cases for k in ('skipped','failure','error'))
           shipped = pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js')
-          expected = '8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01'
+          expected = 'e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
           assert hashlib.sha256(shipped.read_bytes()).hexdigest() == expected
           receipts = {}
           for line in (root/'native.log').read_text().splitlines():
@@ -167,7 +179,7 @@ jobs:
               else:
                   source=base/'tests'/(name+'.py'); assert source.is_file() and h(source)==row['sha256']
           shipped=base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js'
-          assert h(shipped)=='8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01'
+          assert h(shipped)=='e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
           terminals={e['terminal_source']:e['sha256'] for e in result['events'] if 'terminal_source' in e}
           assert len(terminals)==2
           for path,digest in terminals.items():
@@ -206,7 +218,7 @@ jobs:
           for relative,digest in source_before.items():
            assert h(base.parent/relative)==digest
           assert metadata.version('homeassistant')=='2026.10.4'
-          assert h(base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js')=='8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01'
+          assert h(base.parent/'uninus-nutriculture-card/uninus-nutriculture-card.js')=='e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe'
           result=load('result.json'); wire=load('wire.json'); events=load('events.json')
           expected=['native_GET_empty_no_write','first_native_SAVE_checkpoint','Apply_ten_Numbers_S5_one_commit_preserve_nonrecipe_zero_IO','edit_catalog_only_and_Cancel_zero_mutation','same_name_distinct_native_UUIDs','second_delete_confirmation_only_then_native_delete','two_Cards_catalog_CAS_denial_draft_preserved','two_Cards_stale_settings_CAS_no_partial_write','native_active_admin_revoked_denial_and_no_target_metadata_read','SPEC01_native_ascii80_save_edit_select_apply_delete_history','SPEC01_native_astral80_save_edit_select_apply_delete_history','SPEC01_native_mixed80_save_edit_select_apply_delete_history','normal_STOP_fresh_SDK_process_full_options_catalog_and_parameters_readback']
           assert result['exit_code']==0 and result['native_requests']==28 and len(wire)==28
@@ -270,6 +282,53 @@ jobs:
           P5A_CARD_PYTHON: python
           P5A_JOIN_OUTPUT: ${{ github.workspace }}/p5a-ci-evidence/visual
         run: python -B tools/p5a_visual_verify.py --run-default
+      - name: P5b isolated selected-source native History then strict tiny safe export
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        run: |
+          # Only this step retires legacy writer destinations; historical steps keep their contract.
+          unset P3C_CAPTURE_DIR P3C_TERMINAL_ROOT P4B_JOIN_OUTPUT P5A_JOIN_OUTPUT
+          export P5B_PAIR="$RUNNER_TEMP/p5b-source-pair"
+          export P5B_OUT="$RUNNER_TEMP/p5b-native-runtime"
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil,subprocess
+          workspace=pathlib.Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          pair=pathlib.Path(os.environ['P5B_PAIR']).resolve()
+          out=pathlib.Path(os.environ['P5B_OUT']).resolve()
+          assert pair.parent==out.parent and pair!=out and not pair.exists() and not out.exists()
+          pair.mkdir()
+          hashes={}
+          root_files={'.gitattributes','.gitignore','README.md','hacs.json','package.json','pyproject.toml','requirements-test.txt','requirements-history-test.txt','uninus-nutriculture-card.js','P3C_SPEC_FIX_AUTHENTICATION.json','P4A_BACKEND_FINAL.json'}
+          for name in ('uninus-nutriculture','uninus-nutriculture-card'):
+              repo=workspace/name
+              tracked=subprocess.check_output(['git','-C',str(repo),'ls-files','-z']).decode().split('\0')
+              for relative in filter(None,tracked):
+                  rel=pathlib.PurePosixPath(relative)
+                  assert not rel.is_absolute() and '..' not in rel.parts
+                  if any(p in {'.git','.venv','__pycache__','.pytest_cache','.ruff_cache','node_modules','runtime','.storage','private-ha','test-results'} for p in rel.parts): continue
+                  if rel.parts[:2]==('docs','evidence'): continue
+                  if rel.parts[0] not in {'custom_components','tests','tools','.github','docs','demo'} and relative not in root_files: continue
+                  source=repo.joinpath(*rel.parts); target=pair/name/rel
+                  assert source.is_file() and not source.is_symlink() and source.resolve().is_relative_to(repo.resolve())
+                  target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,target)
+                  sha=hashlib.sha256(source.read_bytes()).hexdigest()
+                  assert hashlib.sha256(target.read_bytes()).hexdigest()==sha
+                  hashes[name+'/'+relative]=sha
+          for relative in ('uninus-nutriculture/tools/p5b_history_native.py','uninus-nutriculture/tools/p5b_history_verify.py','uninus-nutriculture-card/tests/p5b_history_browser.py','uninus-nutriculture-card/tests/p5b_history_native_browser.py','uninus-nutriculture-card/tests/p4a_capture.py','uninus-nutriculture-card/demo/index.html',*('uninus-nutriculture-card/tests/p4b_r2_capture/'+n for n in ('events.json','wire.json','grant.json'))):
+              assert relative in hashes,relative
+          (pair.parent/'p5b-selected-source.json').write_text(json.dumps(hashes,sort_keys=True,indent=2))
+          PY
+          python -B "$P5B_PAIR/uninus-nutriculture/tools/p5b_history_native.py" --source-pair "$P5B_PAIR" --out "$P5B_OUT" --card-python "$(command -v python)"
+          python -B "$P5B_PAIR/uninus-nutriculture/tools/p5b_history_verify.py" --source-pair "$P5B_PAIR" --out "$P5B_OUT" --safe-export "$RUNNER_TEMP/p5b-safe-export/ci-verified.json"
+      - name: Check P5b strict verifier formatting
+        run: |
+          ruff check --no-cache --config pyproject.toml tools/p5b_history_verify.py
+          ruff format --check --no-cache --config pyproject.toml tools/p5b_history_verify.py
+      - name: Upload P5b tiny scalar-only proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: p5b-history-safe-proof
+          if-no-files-found: error
+          path: ${{ runner.temp }}/p5b-safe-export/ci-verified.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

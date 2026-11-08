@@ -32,3 +32,6 @@ tests/test_p4c_results.py -text whitespace=blank-at-eol,blank-at-eof,space-befor
 
 # Immutable P4c allowlisted evidence retains raw bytes and historical whitespace only.
 docs/evidence/p4c-publication-r4/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+
+# Preserve exact reviewed P5b native acceptance helper bytes.
+tools/p5b_history_native.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

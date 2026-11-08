@@ -10,7 +10,7 @@ from pathlib import Path
 
 B = Path(__file__).resolve().parents[1]
 C = B.parent / "uninus-nutriculture-card"
-BUNDLE = "8cfa1894d9ce6453bcc715aa5d4a650f8d3b08397551ed22232bb6e5fe441a01"
+BUNDLE = "e2b683af4bf40c16e328f8ae4108b0a0a519818cf84862b1e14ba317c49af4fe"
 CASES = [
     "native_auth_setup_registered_smoke",
     "visual_buttons_focus_existing_rules",
