@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ivanlee1007/uninus-nutriculture-card
-          ref: 5a77b38b4658fb7dc6dbe6c43ba0a601da823c9f
+          ref: 2112c09f3b756a5b69aa8566c26ec32039b18a06
           path: uninus-nutriculture-card
           persist-credentials: false
       - uses: actions/setup-python@v5
