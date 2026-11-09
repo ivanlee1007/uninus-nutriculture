@@ -29,7 +29,7 @@ def rpc(kind, payload=None):
     global COUNTER
     COUNTER += 1
     print(json.dumps({"id": COUNTER, "kind": kind, "payload": payload}), flush=True)
-    line = INBOX.get(timeout=15)
+    line = INBOX.get(timeout=65 if kind == "fresh_sdk" else 15)
     if line is None:
         raise RuntimeError("native parent EOF")
     result = json.loads(line)

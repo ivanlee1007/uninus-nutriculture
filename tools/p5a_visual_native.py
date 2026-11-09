@@ -494,7 +494,11 @@ async def main():
                 "store_readback",
                 "fresh_sdk",
             ):
-                await action(kind, None)
+                if kind == "fresh_sdk":
+                    async with asyncio.timeout(60):
+                        await action(kind, None)
+                else:
+                    await action(kind, None)
                 events.append({"case": kind, "smoke_only": True})
             child_code = 0
         else:
@@ -519,7 +523,12 @@ async def main():
                         stream.write(line)
                     message = json.loads(line)
                     try:
-                        result = await action(message["kind"], message.get("payload"))
+                        if message["kind"] == "fresh_sdk":
+                            # Cancellation deadline; owned cleanup still completes before reply.
+                            async with asyncio.timeout(60):
+                                result = await action(message["kind"], message.get("payload"))
+                        else:
+                            result = await action(message["kind"], message.get("payload"))
                     except Exception as error:
                         traceback.print_exc(file=sys.stderr)
                         result = {"harness_error": f"{type(error).__name__}: {error}"}

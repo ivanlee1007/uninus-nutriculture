@@ -294,7 +294,9 @@ jobs:
         env:
           P5A_CARD_PYTHON: python
           P5A_JOIN_OUTPUT: ${{ github.workspace }}/p5a-ci-evidence/visual
-        run: python -B tools/p5a_visual_verify.py --run-default
+        run: |
+          python -B tools/p5a_transport_regression.py
+          python -B tools/p5a_visual_verify.py --run-default
       - name: P5b isolated selected-source native History then strict tiny safe export
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
