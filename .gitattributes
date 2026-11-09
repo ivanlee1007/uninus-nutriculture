@@ -38,3 +38,6 @@ tools/p5b_history_native.py -text whitespace=blank-at-eol,blank-at-eof,space-bef
 
 # Preserve approved P5c native helper bytes; retain executable whitespace checks.
 tools/p5c_runtime_native.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Preserve reviewed schema5 refill mapping regression bytes; no whitespace waiver.
+tests/test_schema5_refill_mapping_f01.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

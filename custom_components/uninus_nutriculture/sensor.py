@@ -142,7 +142,7 @@ class ControlStatus(TankStatus):
         ):
             if (
                 key == "refill_enabled"
-                and self.tank.entry.options.get("control_contract_version") == 4
+                and self.tank.entry.options.get("control_contract_version") in (4, 5)
                 and not config.get("commissioned")
             ):
                 continue
