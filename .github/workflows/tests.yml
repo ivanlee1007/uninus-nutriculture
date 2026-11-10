@@ -131,8 +131,8 @@ jobs:
           import hashlib, itertools, json, pathlib, re, os, xml.etree.ElementTree as E
           root = pathlib.Path(os.environ.get('CI_EVIDENCE_ROOT', '../p3c-ci-evidence'))
           cases = list(E.parse(root/'native.xml').getroot().iter('testcase'))
-          assert len(cases) == 628
-          assert len({c.attrib['classname'] for c in cases}) == 88
+          assert len(cases) == 629
+          assert len({c.attrib['classname'] for c in cases}) == 89
           assert not any(c.find(k) is not None for c in cases for k in ('skipped','failure','error'))
           shipped = pathlib.Path('../uninus-nutriculture-card/uninus-nutriculture-card.js')
           expected = '591eb021ebf0117d0cab48297603409807672c2b423c9eb15c7dd1ce384c670b'

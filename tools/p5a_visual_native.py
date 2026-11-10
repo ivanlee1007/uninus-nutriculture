@@ -132,7 +132,10 @@ async def readback(directory, entry_id):
         for key, value, unit in (("ph", 5.6, "pH"), ("ec", 0.85, "mS/cm"), ("level", 2, "m")):
             hass.states.async_set("sensor." + key, value, {"unit_of_measurement": unit})
         assert await hass.config_entries.async_setup(entry.entry_id)
-        await barrier()
+        # Entry LOADED does not drain component-loaded platform imports. Unlike
+        # fixed loop turns, Core's public barrier waits for tracked setup work
+        # (not background tasks), inside the existing owned lifecycle budget.
+        await asyncio.wait_for(hass.async_block_till_done(), 10)
         assert serial(dict(entry.options)) == before
         status = hass.states.get(target(hass, entry, "sensor", "control_status"))
         attr = serial(dict(status.attributes))
