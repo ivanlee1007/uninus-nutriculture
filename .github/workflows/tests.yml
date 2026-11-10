@@ -254,14 +254,15 @@ jobs:
             assert wire[index]['options']==wire[index-1]['options'] and wire[index]['commit_count']==wire[index-1]['commit_count']
           assert load('protected-denial.json')=={'denied':'Unauthorized','target_reads':[]}
           fresh=load('stop-fresh-process-readback.json');assert fresh['options']==wire[-1]['options'] and fresh['effective_parameters']==wire[-1]['numbers'] and fresh['status_parameters']==wire[-1]['numbers'] and fresh['pid']>0
-          imports=load('actual-imports.json');assert len(imports)==42
+          imports=load('actual-imports.json');assert len(imports)==43
+          assert 'custom_components.uninus_nutriculture.options_auth' in imports
           for name,row in imports.items():
            p=pathlib.Path(row['path']).resolve();assert p.is_relative_to(base) or p.is_relative_to(root);assert h(p)==row['sha256']
            if name.startswith('custom_components.uninus_nutriculture'):
             parts=p.parts;source=base/pathlib.Path(*parts[parts.index('custom_components'):])
            else:source=base/'tests'/(name+'.py')
            assert source.is_file() and h(source)==row['sha256']
-          (root/'ci-verified.json').write_text(json.dumps({'requests':28,'behavior_checkpoints':13,'imports':42,'zero_IO':True,'fresh_readback':True,'sdk':metadata.version('homeassistant')},indent=2))
+          (root/'ci-verified.json').write_text(json.dumps({'requests':28,'behavior_checkpoints':13,'imports':43,'zero_IO':True,'fresh_readback':True,'sdk':metadata.version('homeassistant')},indent=2))
           PY
       - name: P4b live quality native and shipped Card
         env:
