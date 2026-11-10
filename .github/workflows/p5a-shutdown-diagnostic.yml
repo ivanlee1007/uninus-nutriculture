@@ -1,0 +1,64 @@
+name: P5a passive shutdown diagnostic (one authorized push)
+on:
+  push:
+    branches:
+      - diagnostics/p5a-shutdown-471f7e5-c5fe192a
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    if: ${{ github.run_attempt == '1' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Diagnostic control only
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: diagnostic-control
+          persist-credentials: false
+      - name: Immutable backend control source
+        uses: actions/checkout@v4
+        with:
+          ref: 471f7e56e0ec9a28667fdec0c6e9dd76d7e751f4
+          path: pinned-source/uninus-nutriculture
+          persist-credentials: false
+      - name: Immutable Card control source
+        uses: actions/checkout@v4
+        with:
+          repository: ivanlee1007/uninus-nutriculture-card
+          ref: 2112c09f3b756a5b69aa8566c26ec32039b18a06
+          path: pinned-source/uninus-nutriculture-card
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Original pinned native and browser dependencies
+        run: python -m pip install -r pinned-source/uninus-nutriculture/requirements-test.txt -r pinned-source/uninus-nutriculture/requirements-history-test.txt -r pinned-source/uninus-nutriculture-card/requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Closed schema and sanitizer regressions
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python -B diagnostic-control/tools/diagnostics/p5a_shutdown/test_passive.py
+      - name: One bounded instrumented original full-default P5a
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          export NODE="$(command -v node)"
+          export CHROMIUM_EXECUTABLE="$(python -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path); p.stop()')"
+          mkdir -p "$RUNNER_TEMP/p5a-diagnostic-driver"
+          # Native exceptions/data remain private even on failure. No tee/cat/log upload.
+          python -B diagnostic-control/tools/diagnostics/p5a_shutdown/run.py --pair "$GITHUB_WORKSPACE/pinned-source" --private "$RUNNER_TEMP/p5a-diagnostic-private" --output "$RUNNER_TEMP/p5a-diagnostic-safe/diagnostic.json" > "$RUNNER_TEMP/p5a-diagnostic-driver/stdout.log" 2> "$RUNNER_TEMP/p5a-diagnostic-driver/stderr.log"
+      - name: Upload sole closed-schema diagnostic, never private runtime
+        if: ${{ always() && github.run_attempt == '1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: p5a-passive-shutdown-diagnostic
+          if-no-files-found: error
+          retention-days: 7
+          path: ${{ runner.temp }}/p5a-diagnostic-safe/diagnostic.json
+# No dispatch, PR, deployment, runtime/log directory artifact or rerun-to-green.

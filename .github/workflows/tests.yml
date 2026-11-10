@@ -2,6 +2,8 @@
 name: Native Core tests
 on:
   push:
+    branches-ignore:
+      - diagnostics/p5a-shutdown-471f7e5-c5fe192a
   pull_request:
 permissions:
   contents: read
