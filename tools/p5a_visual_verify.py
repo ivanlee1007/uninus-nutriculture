@@ -95,7 +95,11 @@ def main():
         assert path.is_relative_to(B) or path.is_relative_to(C)
         assert sha(path) == digest, relative
     imports = load("actual-imports.json")
-    assert len(imports) == 46 and "custom_components.uninus_nutriculture.plan_options" in imports
+    assert (
+        len(imports) == 47
+        and "custom_components.uninus_nutriculture.plan_options" in imports
+        and "custom_components.uninus_nutriculture.options_auth" in imports
+    )
     for name, row in imports.items():
         path = Path(row["path"]).resolve()
         assert path.is_relative_to(B) and sha(path) == row["sha256"]

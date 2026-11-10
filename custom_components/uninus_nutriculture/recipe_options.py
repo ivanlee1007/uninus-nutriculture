@@ -1,11 +1,11 @@
 """Native recipe forms; transactions go through registered authenticated services."""
 
 import voluptuous as vol
-from homeassistant.core import Context
 from homeassistant.exceptions import ServiceValidationError, Unauthorized
 from homeassistant.helpers import selector
 
 from .const import SPECS
+from .options_auth import human_options, options_context
 
 CODES = {
     "settings_schema_mismatch",
@@ -37,7 +37,7 @@ class RecipeOptions:
 
         return await execute(
             self.hass,
-            Context(user_id=self.context.get("user_id")),
+            options_context(self),
             service,
             {"config_entry_id": self.config_entry.entry_id, **data},
         )
@@ -48,6 +48,7 @@ class RecipeOptions:
         code = str(err)
         return code if code in CODES else "invalid_recipe"
 
+    @human_options
     async def async_step_recipes(self, user_input=None):
         errors = {}
         try:
@@ -105,6 +106,7 @@ class RecipeOptions:
             ),
         )
 
+    @human_options
     async def async_step_recipe_edit(self, user_input=None):
         errors = {}
         if user_input is not None:
@@ -134,6 +136,7 @@ class RecipeOptions:
             step_id="recipe_edit", errors=errors, data_schema=vol.Schema(fields)
         )
 
+    @human_options
     async def async_step_recipe_delete(self, user_input=None):
         errors = {}
         if user_input is not None:

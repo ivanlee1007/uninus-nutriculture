@@ -4,13 +4,14 @@ import math
 
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow, OptionsFlow
-from homeassistant.core import Context, callback
+from homeassistant.core import callback
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import selector
 
 from .const import DOMAIN, SOURCE_KEYS
 from .control_settings import DAYS, STAGES, resolve, settings_candidate
 from .notification_options import NotificationOptions
+from .options_auth import native_options, options_context
 from .quality_options import QualityOptions
 from .recipe_options import RecipeOptions
 
@@ -192,6 +193,7 @@ class NutricultureConfigFlow(ConfigFlow, domain=DOMAIN):
 
 
 class NutricultureOptionsFlow(NotificationOptions, QualityOptions, RecipeOptions, OptionsFlow):
+    @native_options
     async def async_step_init(self, user_input=None):
         from .control_auth import authorize
         from .dosing_settings import (
@@ -218,10 +220,10 @@ class NutricultureOptionsFlow(NotificationOptions, QualityOptions, RecipeOptions
             errors = errors_for(self.hass, user_input)
             if not errors:
                 try:
-                    await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                    await authorize(self.hass, options_context(self))
                     tank = self.config_entry.runtime_data
                     async with tank.lock:
-                        await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                        await authorize(self.hass, options_context(self))
                         config = settings_candidate(self.hass, self.config_entry, user_input)
                         edited_dosing = any(key in user_input for key in RANGES)
                         dosing = None
@@ -367,6 +369,7 @@ class NutricultureOptionsFlow(NotificationOptions, QualityOptions, RecipeOptions
             errors=errors,
         )
 
+    @native_options
     async def async_step_plan(self, user_input=None):
         """A draft-only native four-row editor; only explicit Save commits."""
         from copy import deepcopy
@@ -404,9 +407,9 @@ class NutricultureOptionsFlow(NotificationOptions, QualityOptions, RecipeOptions
                     )
                 plan, days = validate_plan(plan, days)
                 self._plan_draft, self._plan_days = plan, days
-                await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                await authorize(self.hass, options_context(self))
                 async with tank.lock:
-                    await authorize(self.hass, Context(user_id=self.context.get("user_id")))
+                    await authorize(self.hass, options_context(self))
                     from homeassistant.config_entries import ConfigEntryState
 
                     if (

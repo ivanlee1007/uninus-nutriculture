@@ -1,15 +1,16 @@
 """Notification-only native Options. Never create_entry with control options."""
 
 import voluptuous as vol
-from homeassistant.core import Context
 from homeassistant.exceptions import ServiceValidationError, Unauthorized
 from homeassistant.helpers import selector
 
 from .notification_api import execute
 from .notifications import EVENTS
+from .options_auth import human_options, options_context
 
 
 class NotificationOptions:
+    @human_options
     async def async_step_notifications(self, user_input=None):
         def retire(reason):
             self._notification_dto = None
@@ -23,7 +24,7 @@ class NotificationOptions:
         if user_input is not None and user_input.get("action") == "cancel":
             return retire("notification_cancelled")
         errors = {}
-        ctx = Context(user_id=self.context.get("user_id"))
+        ctx = options_context(self)
         base = {"config_entry_id": self.config_entry.entry_id}
         if not hasattr(self, "_notification_owner"):
             self._notification_owner = getattr(self.config_entry, "runtime_data", None)

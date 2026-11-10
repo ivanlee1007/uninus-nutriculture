@@ -233,7 +233,12 @@ def verify(out, candidate, expected_js_sha):
     require(inventory(candidate) == before, "candidate source differs from run")
     require(before[BUNDLE] == expected_js_sha, "unapproved bundle")
     imports = read("actual-imports.json")
-    require(len(imports) == 41 and FIXTURES <= imports.keys(), "import receipt incomplete")
+    require(
+        len(imports) == 42
+        and FIXTURES <= imports.keys()
+        and "custom_components.uninus_nutriculture.options_auth" in imports,
+        "import receipt incomplete",
+    )
     for name, row in imports.items():
         if name in FIXTURES:
             rel = "uninus-nutriculture/tests/" + name + ".py"

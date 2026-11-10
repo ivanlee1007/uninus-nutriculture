@@ -1,21 +1,22 @@
 """Native selectors for every quality field; never a JSON text editor."""
 
 import voluptuous as vol
-from homeassistant.core import Context
 from homeassistant.exceptions import ServiceValidationError, Unauthorized
 from homeassistant.helpers import selector
 
+from .options_auth import human_options, options_context
 from .quality_services import execute
 
 
 class QualityOptions:
+    @human_options
     async def async_step_quality(self, user_input=None):
         errors = {}
         try:
             if not hasattr(self, "_quality_dto"):
                 self._quality_dto = await execute(
                     self.hass,
-                    Context(user_id=self.context.get("user_id")),
+                    options_context(self),
                     "get_quality_v1",
                     {"config_entry_id": self.config_entry.entry_id},
                 )
@@ -52,7 +53,7 @@ class QualityOptions:
                 d = self._quality_dto
                 await execute(
                     self.hass,
-                    Context(user_id=self.context.get("user_id")),
+                    options_context(self),
                     "save_quality_policy_v1",
                     dict(
                         config_entry_id=self.config_entry.entry_id,
