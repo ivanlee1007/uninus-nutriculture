@@ -11,7 +11,10 @@ import signal
 import subprocess
 import sys
 
-from passive import MAX_EVENTS, MAX_JOURNAL_BYTES, PHRASE, validate_event, exact, integer, boolean, load_domains
+def load_passive():
+    # Descriptor validation can fail during passive import: defer until output is known.
+    global MAX_EVENTS, MAX_JOURNAL_BYTES, PHRASE, validate_event, exact, integer, boolean, load_domains
+    from passive import MAX_EVENTS, MAX_JOURNAL_BYTES, PHRASE, validate_event, exact, integer, boolean, load_domains
 
 BASE='471f7e56e0ec9a28667fdec0c6e9dd76d7e751f4'
 CARD='2112c09f3b756a5b69aa8566c26ec32039b18a06'
@@ -38,6 +41,7 @@ def source_path(value):
 
 def validate_installed_catalog():
     # Parent preflight only, before native launch. No component imports or user data.
+    load_passive()
     path=HERE/'source_pins.json'
     domains=load_domains(path)
     catalog=json.loads(path.read_bytes())['public_core_catalog']['catalog']
@@ -74,6 +78,7 @@ def inventory(pair):
 
 
 def read_events(private,actor):
+    load_passive()
     path=private/(actor+'.jsonl')
     if not path.is_file() or path.stat().st_size>MAX_JOURNAL_BYTES: raise ValueError('journal')
     lines=path.read_bytes().splitlines()
@@ -97,7 +102,113 @@ def consistent(rows,count):
             ids==list(range(1,count+1)) and sorted(done)==ids)
 
 
+# Fixed public roles only. No exception values, paths, argv or environment are exported.
+FAILURE_STAGES={'PATHS':'DIAGNOSTIC','SOURCE_PINS':'PINNED_INPUTS',
+                'CATALOG':'CORE_CATALOG','INVENTORY':'PINNED_INPUTS',
+                'RUNTIME':'RUNTIME','HOOK':'DIAGNOSTIC','NATIVE':'NATIVE_CONTROL',
+                'REPORT':'REPORT'}
+CONSUMED_INPUTS=('uninus-nutriculture-card/requirements-test.txt',
+    'uninus-nutriculture-card/uninus-nutriculture-card.js',
+    'uninus-nutriculture/custom_components/uninus_nutriculture/manifest.json',
+    'uninus-nutriculture/requirements-history-test.txt',
+    'uninus-nutriculture/requirements-test.txt',
+    'uninus-nutriculture/tools/p5a_visual_browser.py',
+    'uninus-nutriculture/tools/p5a_visual_native.py',
+    'uninus-nutriculture/tools/p5a_visual_verify.py')
+
+
+def validate_source_pins(pair):
+    load_passive()
+    path=HERE/'source_pins.json'
+    if path.stat().st_size>131072: raise ValueError('pins')
+    pins=json.loads(path.read_bytes())
+    exact(pins,('backend_pin','card_pin','files','public_core_catalog'))
+    if pins['backend_pin']!=BASE or pins['card_pin']!=CARD: raise ValueError('pins')
+    exact(pins['files'],CONSUMED_INPUTS)
+    for relative in CONSUMED_INPUTS:
+        expected=pins['files'][relative]; hash_value(expected)
+        target=pair/relative
+        if any(p.is_symlink() for p in (target,*target.parents)) or not target.resolve().is_relative_to(pair.resolve()):
+            raise ValueError('pins')
+        if sha(target)!=expected: raise ValueError('pins')
+    return pins
+
+
+def validate_runtime_files():
+    # Metadata and file hashes only: no Core/component import or process launch.
+    ha=importlib.metadata.distribution('homeassistant')
+    pw=importlib.metadata.distribution('playwright')
+    if ha.version!='2026.10.4' or pw.version!='1.56.0': raise ValueError('runtime')
+    core=Path(ha.locate_file('homeassistant'))
+    driver=Path(pw.locate_file('playwright'))/'driver'/('node.exe' if os.name=='nt' else 'node')
+    executables={'python':Path(sys.executable),'base_python':Path(sys._base_executable),
+        'node':Path(os.environ['NODE']),'chromium':Path(os.environ['CHROMIUM_EXECUTABLE']),
+        'playwright_node':driver}
+    if not all(p.is_file() for p in executables.values()): raise ValueError('runtime')
+    module_bindings={'homeassistant/'+p:sha(core/p) for p in CORE_FILES}
+    executable_bindings={k:sha(p) for k,p in executables.items()}
+    return core,executables,module_bindings,executable_bindings
+
+
+def pure_preflight(pair):
+    validate_source_pins(pair)
+    validate_installed_catalog()
+    return validate_runtime_files()
+
+
+def validate_failure(report):
+    if type(report) is not dict or set(report)!=set(('schema','status','stage','source_role','backend_pin','card_pin','native_started')):
+        raise ValueError('schema')
+    if type(report['schema']) is not int or report['schema']!=1: raise ValueError('schema')
+    stage=report['stage']
+    if type(stage) is not str or stage not in FAILURE_STAGES: raise ValueError('schema')
+    if type(report['source_role']) is not str or report['source_role']!=FAILURE_STAGES[stage]: raise ValueError('schema')
+    if type(report['backend_pin']) is not str or report['backend_pin']!=BASE: raise ValueError('schema')
+    if type(report['card_pin']) is not str or report['card_pin']!=CARD: raise ValueError('schema')
+    if type(report['native_started']) is not bool: raise ValueError('schema')
+    if type(report['status']) is not str: raise ValueError('schema')
+    expected='DIAGNOSTIC_FAILED' if report['native_started'] else 'PRECHECK_FAILED'
+    if report['status']!=expected: raise ValueError('schema')
+    if report['native_started'] and stage not in ('NATIVE','REPORT'): raise ValueError('schema')
+    if stage=='REPORT' and not report['native_started']: raise ValueError('schema')
+    if len(canonical(report))+1>2048: raise ValueError('schema')
+    return report
+
+
+def write_report(output,report):
+    # One exclusive artifact for either schema, never read an existing target.
+    validate_report(report)
+    if output.name!='diagnostic.json' or any(x.lower() in ('.storage','auth','private-ha','.git') for x in output.parts):
+        raise ValueError('output')
+    if output.exists() or output.is_symlink(): raise ValueError('output')
+    if any(p.is_symlink() for p in output.parents): raise ValueError('output')
+    raw=canonical(report)+b'\n'
+    if len(raw)>131072: raise ValueError('schema')
+    output.parent.mkdir(parents=True,exist_ok=True)
+    with output.open('xb') as stream: stream.write(raw)
+    validate_report(json.loads(output.read_bytes()))
+
+
+def cli(state=None):
+    state={'output':None,'stage':'PATHS','native_started':False} if state is None else state
+    try: return main(state)
+    except Exception:
+        try:
+            if state['output'] is not None:
+                stage=state['stage']
+                write_report(state['output'],{'schema':1,
+                    'status':'DIAGNOSTIC_FAILED' if state['native_started'] else 'PRECHECK_FAILED',
+                    'stage':stage,'source_role':FAILURE_STAGES[stage],
+                    'backend_pin':BASE,'card_pin':CARD,'native_started':state['native_started']})
+        except Exception: pass
+        print('DIAGNOSTIC_FAILED_CLOSED',file=sys.stderr)
+        return 2
+
+
 def validate_report(report):
+    if type(report) is dict and type(report.get('status')) is str and report['status'] in ('PRECHECK_FAILED','DIAGNOSTIC_FAILED'):
+        return validate_failure(report)
+    load_passive()
     exact(report,('schema','status','native_exit','native_children','native_export_warning_count','warning_counts','observer_counts','observer_consistent','events','source_binding','runtime','module_bindings','diagnostic_bindings','limitations'))
     if type(report['schema']) is not int or report['schema']!=1: raise ValueError('schema')
     if report['status'] not in ('OBSERVED','INCONCLUSIVE_NO_WARNING_OBSERVED','INVALID'): raise ValueError('schema')
@@ -160,36 +271,43 @@ def validate_report(report):
     return report
 
 
-def main():
-    parser=argparse.ArgumentParser()
+class SafeParser(argparse.ArgumentParser):
+    def error(self,message): raise ValueError('arguments')
+
+
+def main(state):
+    parser=SafeParser()
     parser.add_argument('--pair',type=Path,required=True)
     parser.add_argument('--private',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
+    # Refuse unsafe/existing destinations before making one eligible for fallback.
+    if args.output.name!='diagnostic.json' or any(x.lower() in ('.storage','auth','private-ha','.git') for x in args.output.parts):
+        raise ValueError('output')
+    if args.output.exists() or args.output.is_symlink() or any(p.is_symlink() for p in args.output.parents):
+        raise ValueError('output')
     pair=args.pair.resolve(); private=args.private.resolve(); output=args.output.resolve()
     backend=pair/'uninus-nutriculture'; card=pair/'uninus-nutriculture-card'
-    assert not private.is_relative_to(pair) and not output.is_relative_to(pair)
-    assert not output.exists() and not private.exists()
+    if private.is_relative_to(pair) or output.is_relative_to(pair) or output.is_relative_to(private):
+        raise ValueError('paths')
+    state['output']=output
+    assert not private.exists()
     private.mkdir(parents=True,exist_ok=False)
     # This exclusive directory is the one-attempt marker. Never reuse it.
-    pins=json.loads((HERE/'source_pins.json').read_bytes())
-    assert pins['backend_pin']==BASE and pins['card_pin']==CARD
-    for relative,expected in pins['files'].items(): assert sha(pair/relative)==expected
+    state['stage']='SOURCE_PINS'
+    validate_source_pins(pair)
+    state['stage']='CATALOG'
     validate_installed_catalog()
+    state['stage']='INVENTORY'
     before=inventory(pair); dump(private/'source-before.json',before)
-    import homeassistant
-    import playwright
-    core=Path(homeassistant.__file__).parent
-    driver=Path(playwright.__file__).parent/'driver'/('node.exe' if os.name=='nt' else 'node')
-    executables={'python':Path(sys.executable),'base_python':Path(sys._base_executable),'node':Path(os.environ['NODE']),'chromium':Path(os.environ['CHROMIUM_EXECUTABLE']),'playwright_node':driver}
-    assert all(p.is_file() for p in executables.values())
+    state['stage']='RUNTIME'
+    core,executables,module_bindings,executable_bindings=validate_runtime_files()
     runtime={'python':'.'.join(map(str,sys.version_info[:3])),
              'core':importlib.metadata.version('homeassistant'),
              'playwright':importlib.metadata.version('playwright'),
              'node':subprocess.check_output([str(executables['node']),'--version'],stderr=subprocess.DEVNULL,text=True).strip(),
-             'browser':None,'executables':{k:sha(p) for k,p in executables.items()}}
-    assert runtime['core']=='2026.10.4' and runtime['playwright']=='1.56.0'
-    module_bindings={'homeassistant/'+p:sha(core/p) for p in CORE_FILES}
+             'browser':None,'executables':executable_bindings}
+    state['stage']='HOOK'
     hook=private/'hook';hook.mkdir()
     shutil.copyfile(HERE/'passive.py',hook/'passive.py')
     shutil.copyfile(HERE/'source_pins.json',hook/'source_pins.json')
@@ -203,15 +321,18 @@ def main():
         PYTHONPATH=os.pathsep.join([str(hook),str(backend),str(backend/'tests'),*filter(None,os.environ.get('PYTHONPATH','').split(os.pathsep))]))
     cmd=[sys.executable,'-B',str(backend/'tools/p5a_visual_verify.py'),'--run-default']
     # Never forward native stdout/stderr, DTOs, traces or exception messages.
+    state['stage']='NATIVE'
     with (private/'verifier.stdout.log').open('wb') as out,(private/'verifier.stderr.log').open('wb') as err:
         child=subprocess.Popen(cmd,cwd=backend,env=env,stdin=subprocess.DEVNULL,stdout=out,stderr=err,
             start_new_session=os.name!='nt',creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name=='nt' else 0)
+        state['native_started']=True
         dump(private/'owned-launch.json',{'pid':child.pid,'bounded_seconds':480})
         try: code=child.wait(timeout=480)
         except subprocess.TimeoutExpired:
             if os.name=='nt': subprocess.run(['taskkill','/PID',str(child.pid),'/T','/F'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=20)
             else: os.killpg(child.pid,signal.SIGKILL)
             code=child.wait(timeout=20)
+    state['stage']='REPORT'
     after=inventory(pair);dump(private/'source-after.json',after)
     if module_bindings != {'homeassistant/'+p:sha(core/p) for p in CORE_FILES}:
         raise ValueError('runtime_source_changed')
@@ -256,16 +377,10 @@ def main():
         'runtime':runtime,'module_bindings':module_bindings,
         'diagnostic_bindings':{name:sha(HERE/name) for name in ('passive.py','run.py','test_passive.py','README.md','source_pins.json')},
         'limitations':LIMITATIONS}
-    validate_report(report)
-    output.parent.mkdir(parents=True,exist_ok=True);dump(output,report)
-    # Read back and revalidate the sole artifact; no other files may be uploaded.
-    validate_report(load(output))
+    write_report(output,report)
     print(json.dumps({'status':report['status'],'native_exit':code,'warning_count':sum(counts.values())}))
     return code if code!=0 else (0 if valid else 2)
 
 
 if __name__=='__main__':
-    try: sys.exit(main())
-    except Exception:
-        print('DIAGNOSTIC_FAILED_CLOSED',file=sys.stderr)
-        sys.exit(2)
+    sys.exit(cli())

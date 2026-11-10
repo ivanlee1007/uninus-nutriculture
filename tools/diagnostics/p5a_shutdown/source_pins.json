@@ -2,7 +2,7 @@
   "backend_pin": "471f7e56e0ec9a28667fdec0c6e9dd76d7e751f4",
   "card_pin": "2112c09f3b756a5b69aa8566c26ec32039b18a06",
   "files": {
-    "uninus-nutriculture-card/requirements-test.txt": "40d8f2021cae086a3388f297f959c54a15b65748ba77bd488bdb5206e60ee3ed",
+    "uninus-nutriculture-card/requirements-test.txt": "237f68beb9e5198d94b217868a1d08f3a26a58f9d9837a10b3ce09bec8a8727f",
     "uninus-nutriculture-card/uninus-nutriculture-card.js": "591eb021ebf0117d0cab48297603409807672c2b423c9eb15c7dd1ce384c670b",
     "uninus-nutriculture/custom_components/uninus_nutriculture/manifest.json": "d48ad5a883440b7122bcce8988bfa5d3f7f28c3a489d66071c43818b7ccfd20d",
     "uninus-nutriculture/requirements-history-test.txt": "3074a80bc94ded8f1ecfb9e743a5e16402aec63067f37c418f7bb2f07ba75ebd",

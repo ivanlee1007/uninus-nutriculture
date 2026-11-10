@@ -287,6 +287,94 @@ class PrivacyTests(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(ValueError): runner.source_path(path)
 
 
+
+
+class PreflightFailureTests(unittest.TestCase):
+    def test_closed_failure_schema_rejects_private_values_and_success(self):
+        row={'schema':1,'status':'PRECHECK_FAILED','stage':'SOURCE_PINS',
+             'source_role':'PINNED_INPUTS','backend_pin':runner.BASE,
+             'card_pin':runner.CARD,'native_started':False}
+        self.assertEqual(runner.validate_report(row),row)
+        for key,value in [('extra',SECRET),('stage',SECRET),('source_role',Explosive()),
+                          ('backend_pin',SECRET),('native_started',0),
+                          ('native_started',True),('status','OBSERVED'),('schema',True)]:
+            with self.subTest(key=key):
+                changed=dict(row);changed[key]=value
+                with self.assertRaises(ValueError): runner.validate_report(changed)
+        for stage,role in runner.FAILURE_STAGES.items():
+            changed=dict(row,stage=stage,source_role=role)
+            if stage=='REPORT':
+                with self.assertRaises(ValueError): runner.validate_report(changed)
+            else:
+                runner.validate_report(changed)
+        with self.assertRaises(ValueError): runner.validate_report(dict(row,native_started=True,status='DIAGNOSTIC_FAILED'))
+        changed=dict(row,status='DIAGNOSTIC_FAILED',native_started=True,stage='REPORT',source_role='REPORT')
+        runner.validate_report(changed)
+        with self.assertRaises(ValueError): runner.validate_report(dict(changed,native_started=False))
+
+    def test_real_missing_pin_child_exits_two_with_one_safe_artifact(self):
+        import subprocess
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[4]/'test-private') as temp:
+            root=Path(temp);output=root/'safe/diagnostic.json'
+            command=[sys.executable,'-B',str(runner.HERE/'run.py'),'--pair',str(root/SECRET),
+                     '--private',str(root/'private'),'--output',str(output)]
+            result=subprocess.run(command,capture_output=True,timeout=30)
+            self.assertEqual(result.returncode,2)
+            self.assertTrue(output.is_file(),'early error must emit the sole safe report')
+            raw=output.read_bytes();row=runner.validate_report(json.loads(raw))
+            self.assertEqual(row['status'],'PRECHECK_FAILED')
+            self.assertEqual(row['stage'],'SOURCE_PINS')
+            self.assertIs(row['native_started'],False)
+            self.assertLessEqual(len(raw),2048)
+            self.assertNotIn(SECRET.encode(),raw+result.stdout+result.stderr)
+            self.assertEqual(list(output.parent.iterdir()),[output])
+            self.assertFalse((root/'private/hook').exists())
+
+    def test_existing_or_auth_output_is_never_overwritten_or_read(self):
+        import subprocess
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[4]/'test-private') as temp:
+            root=Path(temp)
+            for path in (root/'safe/diagnostic.json',root/'.storage/auth/diagnostic.json'):
+                path.parent.mkdir(parents=True);path.write_bytes(SECRET.encode())
+                result=subprocess.run([sys.executable,'-B',str(runner.HERE/'run.py'),
+                    '--pair',str(root/'pair'),'--private',str(root/'private'),
+                    '--output',str(path)],capture_output=True,timeout=30)
+                self.assertEqual(result.returncode,2)
+                self.assertEqual(path.read_bytes(),SECRET.encode())
+                self.assertNotIn(SECRET.encode(),result.stdout+result.stderr)
+
+    def test_malformed_descriptor_import_failure_is_private_and_artifacted(self):
+        import subprocess
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[4]/'test-private') as temp:
+            root=Path(temp);code=root/'code';code.mkdir()
+            for name in ('run.py','passive.py'):
+                (code/name).write_bytes((runner.HERE/name).read_bytes())
+            (code/'source_pins.json').write_text('{'+SECRET)
+            output=root/'safe/diagnostic.json'
+            result=subprocess.run([sys.executable,'-B',str(code/'run.py'),
+                '--pair',str(root/'pair'),'--private',str(root/'private'),
+                '--output',str(output)],capture_output=True,timeout=30)
+            self.assertEqual(result.returncode,2)
+            self.assertTrue(output.exists(),'descriptor import failure must reach closed report')
+            raw=output.read_bytes()
+            self.assertEqual(runner.validate_report(json.loads(raw))['status'],'PRECHECK_FAILED')
+            self.assertNotIn(SECRET.encode(),raw+result.stdout+result.stderr)
+            self.assertNotIn(b'Traceback',result.stderr)
+
+    def test_explosive_exception_is_not_formatted_and_report_is_bounded(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[4]/'test-private') as temp:
+            output=Path(temp)/'diagnostic.json'
+            class PrivateFailure(Exception):
+                def __str__(self): raise AssertionError(SECRET)
+                def __repr__(self): raise AssertionError(SECRET)
+            state={'output':output,'stage':'CATALOG','native_started':False}
+            def fail(state): raise PrivateFailure(Explosive())
+            with patch.object(runner,'main',side_effect=fail):
+                self.assertEqual(runner.cli(state),2)
+            raw=output.read_bytes()
+            self.assertNotIn(SECRET.encode(),raw)
+            self.assertEqual(runner.validate_report(json.loads(raw))['stage'],'CATALOG')
+
 if __name__=='__main__':
     (Path(__file__).resolve().parents[4]/'test-private').mkdir(exist_ok=True)
     unittest.main()
